@@ -7,7 +7,7 @@ target/
 /resources/application.properties
 
 # db.properties 파일 무시
-src/main/resources/db.properties
+/src/main/resources/db.properties
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
