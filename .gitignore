@@ -6,6 +6,9 @@ target/
 # Ignore application.properties file inside resources folder
 /resources/application.properties
 
+# db.properties 파일 무시
+src/main/resources/db.properties
+
 ### IntelliJ IDEA ###
 .idea/modules.xml
 .idea/jarRepositories.xml
