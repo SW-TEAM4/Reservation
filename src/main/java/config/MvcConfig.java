@@ -30,6 +30,9 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.jsp("/WEB-INF/views/", ".jsp");
     }
 
+    @Value("${db.driver}")
+    private String datasourceDriver;
+
     @Value("${db.url}")
     private String datasourceUrl;
 
@@ -43,7 +46,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public DataSource dataSource(){
 
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        config.setDriverClassName(datasourceDriver);
         config.setJdbcUrl(datasourceUrl);
         config.setUsername(datasourceUsername);
         config.setPassword(datasourcePassword);
