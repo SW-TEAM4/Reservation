@@ -2,7 +2,7 @@ $(function(){
     // swiper
     var swiper = new Swiper('.swiper-visual',{
         autoplay : {
-            delay:3000
+            delay:1000
         },
         loop : true
     });
