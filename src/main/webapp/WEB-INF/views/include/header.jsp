@@ -4,14 +4,16 @@
 <c:set var="currentURI" value="${pageContext.request.requestURI}"/>
 <div class="header">
     <div class="size">
-        <div><a href="/home.do"><img src="/img/logo.svg" width="1440" height="260"></a></div>
+<%--        <div class="gobuddy">--%>
+<%--            <div><a href="/home.do"><img src="/img/logo_gobuddy.svg" width="127px" height="44px"></a></div>--%>
+<%--        </div>--%>
+        <div><a href="/home.do"><img src="/img/logo.svg" width="1398px" height="216.33px"></a></div>
         <div class="login">
             <c:if test="${empty login }">
                 <a href="/member/login.do">로그인</a>  |
                 <a href="/member/regist.do">회원가입</a>
             </c:if>
             <c:if test="${!empty login }">
-                <a href="/member/logout.do">로그아웃</a>  |
                 <a href="/member/edit.do">마이페이지</a>
             </c:if>
         </div>
