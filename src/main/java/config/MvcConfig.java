@@ -79,4 +79,17 @@ public class MvcConfig implements WebMvcConfigurer {
         config.setLocations(new ClassPathResource("db.properties"));
         return config;
     }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/img/**")
+                .addResourceLocations("/img/");
+
+        registry.addResourceHandler("/css/**")
+                .addResourceLocations("/css/");
+
+        registry.addResourceHandler("/js/**")
+                .addResourceLocations("/js/");
+    }
+
 }
