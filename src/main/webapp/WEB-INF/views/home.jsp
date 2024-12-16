@@ -21,7 +21,6 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" style="background-image:url('/img/home_visual1.svg');"></div>
         <div class="swiper-slide" style="background-image:url('/img/home_visual2.svg');"></div>
-        <div class="swiper-slide" style="background-image:url('/img/home_visual3.svg');"></div>
       </div>
     </div>
   </div>

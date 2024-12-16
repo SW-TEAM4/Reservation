@@ -78,6 +78,12 @@ html, body {
     background-color: #8A5642; /* 배경색 설정 */
 }
 
+.gobuddy {
+    position: absolute;
+    left: 24px; /* 오른쪽 정렬 */
+    top: 24px; /* 상단 고정 */
+}
+
 .login {
     position: absolute;
     right: 36px; /* 오른쪽 정렬 */
@@ -97,9 +103,8 @@ html, body {
     height: 100%; /* 헤더 높이에 맞춤 */
 }
 
-.div img {
-    max-width: 100%; /* 최대 너비를 100%로 제한 */
-    height: auto; /* 높이 자동 조정 */
+.size a img {
+    transform: translateY(67px); /* Y축으로 -100px 이동 */
 }
 
 .menu {
@@ -162,7 +167,7 @@ html, body {
 
 .footer > .size {
     width: 1200px;
-    height: 176px;
+    height: 156px;
     margin: 0 auto;
 }
 
