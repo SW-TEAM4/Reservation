@@ -78,12 +78,6 @@ html, body {
     background-color: #8A5642; /* 배경색 설정 */
 }
 
-.gobuddy {
-    position: absolute;
-    left: 24px; /* 오른쪽 정렬 */
-    top: 24px; /* 상단 고정 */
-}
-
 .login {
     position: absolute;
     right: 36px; /* 오른쪽 정렬 */
