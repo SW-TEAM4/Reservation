@@ -80,6 +80,7 @@ public class MvcConfig implements WebMvcConfigurer {
         return config;
     }
 
+    // 정적 리소스(이미지, CSS, 자바스크립트 파일)에 대한 접근 경로를 설정
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/img/**")
