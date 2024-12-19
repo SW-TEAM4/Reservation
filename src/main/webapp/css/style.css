@@ -52,6 +52,7 @@ body, h1, h2, h3, h4, h5, h6, input, textarea, select {
 
 a {
     text-decoration: none;
+    box-sizing: border-box;
 }
 
 html, body {
@@ -78,6 +79,10 @@ html, body {
     background-color: #8A5642; /* 배경색 설정 */
 }
 
+.header > .logo {
+    transform: translateY(67px); /* Y축으로 -100px 이동 */
+}
+
 .login {
     position: absolute;
     right: 36px; /* 오른쪽 정렬 */
@@ -95,10 +100,6 @@ html, body {
     justify-content: center; /* 가로 중앙 정렬 */
     align-items: center; /* 세로 중앙 정렬 */
     height: 100%; /* 헤더 높이에 맞춤 */
-}
-
-.size a img {
-    transform: translateY(67px); /* Y축으로 -100px 이동 */
 }
 
 .menu {
@@ -171,27 +172,24 @@ html, body {
 .container, .size, .section {
     margin: 0;
     padding: 0;
+    justify-content: center;
+    align-items: center;
 }
 
 .section {
     display: flex;
     flex-direction: column;
-    align-items: center; /* 가로 중앙 정렬 */
-    justify-content: center; /* 세로 중앙 정렬 */
     width: 31.3333%;
     margin: 1%;
-    padding: 0; /* 패딩 제거 */
 }
 
 .section a {
-    display: block; /* 링크를 블록 요소로 변환 */
-    margin: 0;
-    padding: 0;
-    line-height: 0; /* 인라인 요소의 기본 여백 제거 */
+    display: block;
+    line-height: 0;
 }
 
 .section img {
-    display: block; /* 이미지 주변 여백 제거 */
+    display: block;
     margin: 0;
     padding: 0;
     width: 100%; /* 부모 요소에 맞춤 */
@@ -211,12 +209,13 @@ html, body {
 
 .container {
     flex: 1;
-    width: 1150px;
     max-width: 100%; /* 화면 너비에 맞게 반응형 설정 */
     display: flex;
     flex-direction: column;
     align-items: center;
     box-sizing: content-box;
+    padding-right: 130px;
+    padding-left: 130px;
 }
 
 .container > .size {
@@ -226,7 +225,7 @@ html, body {
 
 .container > .size > .section {
     width: 31.3333%;
-    float: left;
+    clear :both;
     margin: 1%;
 }
 
