@@ -38,19 +38,19 @@
             <img src="/img/home_txt_sub.svg">
         </div>
     </div>
-    <div class="container">
+<div class="container">
         <div class="size">
             <div class="section">
-                <a href=""><img src="/img/home_thumbnail_seoul.png"></a>
-                <a href=""><img src="/img/home_btn_seoul.svg" style="width: 128px; height: 50px;"></a>
+                <a href=""><img src="/img/home_thumbnail_gangwon.png"></a>
+                <a href=""><img src="/img/home_btn_gangwon.svg" style="width: 128px; height: 50px;"></a>
             </div>
             <div class="section">
                 <a href=""><img src="/img/home_thumbnail_gyeonggi.svg"></a>
-                <a href=""><img src="/img/home_btn_incheon.svg" style="width: 128px; height: 50px;"></a>
+                <a href=""><img src="/img/home_btn_gyeonggi.svg" style="width: 128px; height: 50px;"></a>
             </div>
             <div class="section">
                 <a href=""><img src="/img/home_thumbnail_incheon.svg"></a>
-                <a href=""><img src="/img/home_btn_gyeonggi.svg" style="width: 128px; height: 50px;"></a>
+                <a href=""><img src="/img/home_btn_incheon.svg" style="width: 128px; height: 50px;"></a>
             </div>
         </div>
         <div class="home_plus_btn">

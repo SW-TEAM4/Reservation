@@ -39,17 +39,26 @@
                 <img src="/img/search_icon_down.svg" class="icon" alt="arrow"/>
             </div>
 
-            <!-- 펜션 / 글램핑 -->
-            <div class="button type-button" id="type-selector">
-                <span>펜션</span>
+            <!-- 전체 / 펜션 / 글램핑 -->
+            <div class="button max-button">
+            <select class="select" name="type">
+                <option value="type_all">전체</option>
+                <option value="type_pension">펜션</option>
+                <option value="type_glamping">글램핑</option>
+            </select>
                 <img src="/img/search_icon_down.svg" class="icon" alt="arrow"/>
             </div>
 
             <!-- 반려동물 몸무게 -->
-            <div class="button kg-button" id="weight-selector">
-                <span>10kg 이상</span>
+            <div class="button max-button">
+                <select class="select" name="kg">
+                    <option value="kg_5kg">5kg 미만</option>
+                    <option value="kg_5-10kg">5kg 이상 ~ 10kg 이하ㅤ</option>
+                    <option value="kg_10kg">10kg 초과</option>
+                </select>
                 <img src="/img/search_icon_down.svg" class="icon" alt="arrow"/>
             </div>
+
         </div>
         <div class="tab-container">
             <a href="#" class="tab active" id="tab-all">전체</a>
