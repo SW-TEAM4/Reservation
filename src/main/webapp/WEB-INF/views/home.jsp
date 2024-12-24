@@ -22,12 +22,12 @@
                 <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_1.svg');"></div>
                 <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_2.svg');"></div>
             </div>
-                        <div class="swiper-button-prev">
-                            <img src="/img/home_left_foot.svg" class="paw-button">
-                        </div>
-                        <div class="swiper-button-next">
-                            <img src="/img/home_right_foot.svg" class="paw-button">
-                        </div>
+            <%--            <div class="swiper-button-prev">--%>
+            <%--                <img src="/img/home_left_foot.svg" class="paw-button">--%>
+            <%--            </div>--%>
+            <%--            <div class="swiper-button-next">--%>
+            <%--                <img src="/img/home_right_foot.svg" class="paw-button">--%>
+            <%--            </div>--%>
         </div>
     </div>
     <div class="home_txt">

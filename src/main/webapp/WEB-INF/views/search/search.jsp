@@ -34,7 +34,7 @@
             </div>
 
             <!-- 최대 인원수 -->
-            <div class="button max-button" id="max-selector">
+            <div class="button max-button" id="max-selector" action="home" method="get">
                 <span>성인 0, 반려동물 0</span>
                 <img src="/img/search_icon_down.svg" class="icon" alt="arrow"/>
             </div>
