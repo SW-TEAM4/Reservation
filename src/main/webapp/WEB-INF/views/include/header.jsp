@@ -4,7 +4,7 @@
 <c:set var="currentURI" value="${pageContext.request.requestURI}"/>
 <div class="header">
     <div class="size">
-        <div><a href="/home.do"><img src="/img/logo.svg" width="1398px" height="216.33px"></a></div>
+        <div class="logo"><a href="/home.do"><img src="/img/logo.svg" width="1398px" height="216.33px"></a></div>
         <div class="login">
             <c:if test="${empty login }">
                 <a href="/member/login.do">로그인</a>  |
