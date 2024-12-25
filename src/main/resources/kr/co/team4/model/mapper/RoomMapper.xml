@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.team4.model.mapper.RoomMapper">
-    <select id="availableRooms" parameterType="kr.co.team4.model.dto.RoomDTO" resultType="kr.co.team4.model.dto.RoomDTO">
-    SELECT R.room_img_url, R.room_name, L.lod_name,
-           L.lod_check_in, L.lod_check_out,
-           R.max_people_cnt, R.max_pet_cnt, R.room_price, R.room_notice,
-           DATEDIFF(#{res.RES_END_DATE}, #{res.RES_STR_DATE})  AS stay_nights -- 숙박 일수 계산
-    FROM ROOM R INNER JOIN LODGMENT L
-    ON R.lod_idx = L.lod_idx
-    WHERE R.lod_idx = #{lod_idx}
-        AND R.max_people_cnt >= COALESCE(#{people_count}, 2)  -- 사람 수 필터링, 기본값 2
-        AND R.max_pet_cnt >= COALESCE(#{dog_count}, 1)      -- 마리 수 필터링, 기본값 1
-        AND NOT EXISTS (
-                        SELECT 1
-                        FROM RESERVATION RES
-                        WHERE RES.room_idx = R.room_idx
-                        AND (#{RES.RES_STR_DATE} BETWEEN RES.res_str_date AND RES.res_end_date
-                        OR #{RES.RES_END_DATE} BETWEEN RES.res_str_date AND RES.res_end_date)
-        );
+        <!-- room_idx로 객실 상세 정보 조회 -->
+    <select id="getRoomDetail" parameterType="int" resultType="kr.co.team4.model.dto.RoomDTO">
+        SELECT
+            R.room_idx,
+            R.room_name,
+            R.room_notice,
+            R.room_img_url,
+            R.room_price,
+            R.max_people_cnt,
+            R.max_pet_cnt,
+            R.avg_rating,
+            R.number_of_review,
+            L.lod_name,
+            L.lod_address,
+            L.lod_check_in,
+            L.lod_check_out
+        FROM ROOM R INNER JOIN LODGMENT L
+        ON R.lod_idx = L.lod_idx
+        WHERE R.room_idx = #{room_idx};
     </select>
 </mapper>
+

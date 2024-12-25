@@ -30,6 +30,7 @@ public class TestHomeController {
 
     @RequestMapping("/")
     public String x(){
+
         return "index";
     }
 }
