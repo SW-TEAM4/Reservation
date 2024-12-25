@@ -1,6 +1,7 @@
 package kr.co.team4.model.service;
 
 import kr.co.team4.model.dto.LodgmentDTO;
+import kr.co.team4.model.dto.RoomDTO;
 import kr.co.team4.model.mapper.LodgmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +17,17 @@ public class LodgmentServiceImpl implements LodgmentService {
 
     @Override
     public Map<String, Object> lodgmentDetail(LodgmentDTO lodgmentDTO) {
-        List<LodgmentDTO> lodgmentDetail = lodgmentMapper.lodgmentDetail(lodgmentDTO);
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("list", lodgmentDetail);
+        LodgmentDTO lodgmentDetail = lodgmentMapper.lodgmentDetail(lodgmentDTO).get(0); // 한 개의 데이터 반환
+        resultMap.put("lodgment", lodgmentDetail);  // 숙소 정보 담기
         return resultMap;
     }
+    @Override
+    public List<RoomDTO> getRoomsByLodgment(int lodIdx) {
+        return lodgmentMapper.getRoomsByLodgment(lodIdx);
+    }
+
+
+
+
 }
