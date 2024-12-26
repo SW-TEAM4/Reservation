@@ -2,6 +2,7 @@ package kr.co.team4.controller;
 
 import kr.co.team4.model.dto.ReservationDTO;
 import kr.co.team4.model.dto.RoomDTO;
+import kr.co.team4.model.dto.UserReservedDTO;
 import kr.co.team4.model.service.ReservationService;
 import kr.co.team4.model.service.RoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class ReservationController {
 
     @GetMapping("/reserve/reservationtest.do")
     public String index(){
-        return "reserveation";
+        return "reserve/reservation";
     }
 
     // 날짜 형식 설정 (yyyy-MM-dd'T'HH:mm)
@@ -70,6 +71,14 @@ public class ReservationController {
             model.addAttribute("msg", "예약이 마감되었습니다");
             model.addAttribute("cmd", "back");
             return "common/alert";
+        }
+    }
+
+    @GetMapping("/reserve/getUserReserved.do")
+    public void getUserReserved(Model model, UserReservedDTO userReservedDTO){
+        // userReservedDTO의 user_idx가 널이 아니라면 해당 유저의 예약 정보들 가져옴
+        if(userReservedDTO.getUser_idx() != null){
+            model.addAttribute("userReservedDTO", reservationService.getUserReservations(userReservedDTO));
         }
     }
 }
