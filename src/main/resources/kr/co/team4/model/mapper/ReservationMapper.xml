@@ -6,6 +6,23 @@
         SELECT R.RESERVATION_IDX,R.LOD_IDX,R.ROOM_IDX,R.USER_IDX,R.RES_STR_DATE,R.RES_END_DATE,L.LOD_IMG_URL,L.LOD_NAME,R.STATUS FROM RESERVATION R JOIN LODGMENT L ON R.LOD_IDX = L.LOD_IDX WHERE R.USER_IDX = #{user_idx}
     </select>
 
+    <insert id="reserveAdd" parameterType="kr.co.team4.model.dto.ReservationDTO" >
+        insert into RESERVATION (
+            lod_idx,room_idx, user_idx, res_merchant_id, res_name, res_phone_number,
+            res_str_date, res_end_date, res_people_cnt, res_pets_cnt,
+            request, status
+        ) values (
+            #{lod_idx}, #{room_idx}, #{user_idx}, #{res_merchant_id} ,#{res_name}, #{res_phone_number},
+            #{res_str_date}, #{res_end_date}, #{res_people_cnt}, #{res_pets_cnt},
+            #{request},#{status}
+        )
+    </insert>
+
+    <select id="getUserInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.UserDTO">
+        select user_name, user_email, user_phone_number
+        from USERS
+        where user_idx = #{user_idx}
+    </select>
 
 
 </mapper>

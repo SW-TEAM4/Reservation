@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.RoomMapper">
+        <!-- room_idx로 객실 상세 정보 조회 -->
+    <select id="getRoomDetail" parameterType="int" resultType="kr.co.team4.model.dto.RoomDTO">
+        SELECT
+            R.room_idx,
+            R.room_name,
+            R.room_notice,
+            R.room_img_url,
+            R.room_price,
+            R.max_people_cnt,
+            R.max_pet_cnt,
+            R.avg_rating,
+            R.number_of_review,
+            L.lod_name,
+            L.lod_address,
+            L.lod_check_in,
+            L.lod_check_out
+        FROM ROOM R INNER JOIN LODGMENT L
+        ON R.lod_idx = L.lod_idx
+        WHERE R.room_idx = #{room_idx};
+    </select>
+</mapper>
+
