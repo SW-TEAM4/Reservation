@@ -18,7 +18,21 @@
 </form>
 
 <form action="/home.do" method="get">
-    <button type="submit">Go to homes</button>
+    <button type="submit">Go to Home Index</button>
 </form>
+
+<form action="/test/index.do" method="get">
+    <button type="submit">Go to Test Index</button>
+</form>
+
+<form action="/reserve/reserve.do" method="get">
+    <button type="submit">Go to Reserve Index</button>
+</form>
+
+<form action="/common/gos3.do" method="get">
+    <button type="submit">Go to s3 test Index</button>
+</form>
+
+
 </body>
 </html>

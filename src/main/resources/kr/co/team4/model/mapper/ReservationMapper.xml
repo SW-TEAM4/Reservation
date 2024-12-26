@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.ReservationMapper">
+
+    <insert id="reserveAdd" parameterType="kr.co.team4.model.dto.ReservationDTO" >
+        insert into RESERVATION (
+            lod_idx,room_idx, user_idx, res_merchant_id, res_name, res_phone_number,
+            res_str_date, res_end_date, res_people_cnt, res_pets_cnt,
+            request, status
+        ) values (
+            #{lod_idx}, #{room_idx}, #{user_idx}, #{res_merchant_id} ,#{res_name}, #{res_phone_number},
+            #{res_str_date}, #{res_end_date}, #{res_people_cnt}, #{res_pets_cnt},
+            #{request},#{status}
+        )
+    </insert>
+
+    <select id="getUserInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.UserDTO">
+        select user_name, user_email, user_phone_number
+        from USERS
+        where user_idx = #{user_idx}
+    </select>
+
+
+</mapper>
