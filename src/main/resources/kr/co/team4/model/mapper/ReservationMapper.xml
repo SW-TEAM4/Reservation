@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.ReservationMapper">
+
+    <select id="list" parameterType="kr.co.team4.model.dto.ReseravtionDTO" resultType="kr.co.team4.model.dto.ReseravtionDTO">
+        SELECT R.RESERVATION_IDX,R.LOD_IDX,R.ROOM_IDX,R.USER_IDX,R.RES_STR_DATE,R.RES_END_DATE,L.LOD_IMG_URL,L.LOD_NAME,R.STATUS FROM RESERVATION R JOIN LODGMENT L ON R.LOD_IDX = L.LOD_IDX WHERE R.USER_IDX = #{user_idx}
+    </select>
+
+
+
+</mapper>

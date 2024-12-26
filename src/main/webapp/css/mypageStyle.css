@@ -1,0 +1,195 @@
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 100;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 300;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');
+}
+
+@font-face {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 900;
+    src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
+}
+
+body, h1, h2, h3, h4, h5, h6, input, textarea, select {
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+html, body {
+    height: 100%; /* 전체 높이를 화면에 맞춤 */
+    margin: 0;
+    padding: 0;
+}
+
+.wrap {
+    min-height: 100%; /* 최소 높이를 화면 높이와 동일하게 설정 */
+    display: flex;
+    flex-direction: column; /* 세로로 요소를 정렬 */
+    justify-content: space-between; /* 컨텐츠와 푸터 사이에 자동 마진을 줌 */
+}
+
+.header {
+    width: 100%; /* 전체 너비 사용 */
+    height: 260px; /* 높이 조정 */
+    display: flex; /* Flex 사용 */
+    flex-direction: column; /* 아이템을 세로로 배치 */
+    justify-content: flex-end; /* 아이템을 하단으로 정렬 */
+    align-items: center; /* 아이템을 가로 중앙으로 정렬 */
+    padding: 10px 0;
+    background-color: #8A5642; /* 배경색 설정 */
+}
+
+.gobuddy {
+    position: absolute;
+    left: 24px; /* 오른쪽 정렬 */
+    top: 24px; /* 상단 고정 */
+}
+
+.login {
+    position: absolute;
+    right: 36px; /* 오른쪽 정렬 */
+    top: 24px; /* 상단 고정 */
+}
+
+.login > a {
+    color: #352018;
+    font-size: 16px;
+}
+
+.size {
+    width: auto; /* 자동 너비 설정 */
+    display: flex; /* Flex 사용 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 100%; /* 헤더 높이에 맞춤 */
+}
+
+.size a img {
+    transform: translateY(67px); /* Y축으로 -100px 이동 */
+}
+
+.menu {
+    width: 1200px;
+    margin: 20px auto 0; /* 상단에 간격 추가 */
+    height: 40px;
+}
+
+.menu > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.menu > ul > li {
+    float: left; /* 메뉴 항목을 가로로 배열 */
+    width: 25%; /* 메뉴 너비 설정 */
+}
+
+.menu > ul > li > a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 14px 23px; /* 상하 14px, 좌우 23px 패딩 */
+    border-radius: 20px;
+    transition: background-color 0.3s;
+    background-color: #fff; /* 기본 배경색 */
+    color: #352018;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.menu > ul > li > a.active {
+    background-color: #352018;
+    color: white;
+}
+
+.menu > ul > li {
+    list-style: none;
+}
+
+.profilImg {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    margin-top: 100px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.icon{
+    width: 30px;
+    height: 30px;
+}
+
+.mypageBox {
+    width: 578px;
+    height: 332px;
+    border-radius: 10px;
+    background-color: #8A5642;
+    display: flex;
+    margin: 0 auto;
+    margin-top: 100px;
+    justify-content: center;
+}
+
+.footer {
+    width: 100%; /* 푸터의 너비를 전체로 설정 */
+    text-align: center;
+    padding: 10px 0; /* 푸터 내부 패딩 */
+    border-top: 1px solid #929292; /* 상단 테두리 설정: 너비, 스타일, 색상 */
+    justify-content: center;
+    align-items: center;
+}
+
+.footer > .size {
+    width: 1200px;
+    height: 156px;
+    margin: 0 auto;
+}
+
+.footer > .size > .info > p {
+    line-height: 20px;
+    color: gray;
+    font-weight: bold;
+}
+
