@@ -5,6 +5,7 @@
     <select id="getRoomDetail" parameterType="int" resultType="kr.co.team4.model.dto.RoomDTO">
         SELECT
             R.room_idx,
+            L.lod_idx,
             R.room_name,
             R.room_notice,
             R.room_img_url,

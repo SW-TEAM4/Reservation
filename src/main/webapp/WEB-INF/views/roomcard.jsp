@@ -25,7 +25,7 @@
   </div>
 
   <!-- 예약 버튼 -->
-  <button class="booking-button" onclick="location.href='/booking?roomId=${room.room_idx}'">
+  <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">
     예약하기
   </button>
 </div>
