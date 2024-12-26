@@ -30,13 +30,13 @@
             <p>${room.room_notice}</p>
         </div>
 
-        <button onclick="location.href='/reservation?room_idx=${room.room_idx}'">예약하기</button>
+        <button onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">예약하기</button>
     </div>
 
 </c:if>
 <c:if test="${empty room}">
     <p>예약 가능한 방이 없습니다.</p>
-</c:if>
+</c:if>RES_PHONE_NUMBER
 
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
