@@ -34,7 +34,7 @@
         <button onclick="adjust('child', 'plus')">+</button>
     </div>
 
-    <form action="/index.do" method="get">
+    <form action="/search/search.do" method="get">
         <input type="hidden" id="totalAdult" name="adultCount" value="${adultCount != null ? adultCount : 2}">
         <input type="hidden" id="totalChild" name="childCount" value="${childCount != null ? childCount : 1}">
         <button type="submit">확인</button>
