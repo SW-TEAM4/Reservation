@@ -1,0 +1,24 @@
+/* 예약 버튼 스타일 */
+.booking-button {
+    justify-content: center;
+    text-align: center;
+    background-image: url('../img/button_foot.svg'); /* 이미지 경로 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-x: 30px;
+    background-size: 24px;
+    align-items: center;
+    width: 212px;
+    height: 77px;
+    border-radius: 10px;
+    background-color: #352018; /* 배경색 */
+    color: white; /* 텍스트 색상 */
+    font-size: 24px; /* 글씨 크기 */
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.booking-button:hover {
+    background-color: #3a2116;
+}
