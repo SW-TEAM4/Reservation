@@ -89,9 +89,9 @@ html, body {
 }
 
 .menu {
-    width: 1200px;
-    margin: 20px auto 0; /* 상단에 간격 추가 */
+    margin: 20px auto 0;
     height: 40px;
+    max-width: 1200px;
 }
 
 .menu > ul {
@@ -297,7 +297,7 @@ html, body {
     width: 100%;
     max-width: 1200px;
     display: flex;
-    margin-bottom: 26px;
+    margin-bottom: 20px;
     white-space: nowrap;
 }
 
@@ -428,6 +428,14 @@ p.popup-subtitle {
 }
 
 /*지역 선택 : 전체 - 강원도 - 경기 - 인천*/
+.tab-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    max-width: 1200px;
+    margin-bottom: 14px;
+}
+
 .tab {
     flex: 1;
     padding: 12px 16px;
@@ -454,7 +462,7 @@ p.popup-subtitle {
 .tab.active {
     background: rgba(217, 217, 217, 0.5); /* 회색 배경 */
     color: #352018;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 /* 비선택된 탭 (흰 배경) */
@@ -586,4 +594,31 @@ p.popup-subtitle {
 /* 숨김 처리 */
 .hidden {
     display: none;
+}
+
+/*필터 적용된 숙소 검색 결과*/
+/*.result-container{*/
+/*    width: 100%;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    max-width: 1200px;*/
+/*    margin-bottom: 14px;*/
+/*}*/
+
+/* 기본 설정 */
+.result-container {
+    display: flex;            /* Flexbox 사용 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center;     /* 세로 중앙 정렬 */
+    height: 100vh;           /* 화면 전체 높이를 차지 */
+}
+
+/* 이미지 숨김 기본값 */
+/*.result-container img {*/
+/*    display: none; !* 기본적으로 숨김 처리 *!*/
+/*}*/
+
+/* 검색 결과 없을 때만 이미지 표시 */
+.result-container.no-results img {
+    display: block; /* 검색 결과 없을 때만 표시 */
 }

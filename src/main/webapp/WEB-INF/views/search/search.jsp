@@ -119,9 +119,12 @@
             <div class="product-count">144</div>
             <div class="product-text">개의 상품</div>
         </div>
-        <div class="size">
-            <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+        <div style="width: 1200px; height: 1px; background-color: #DBD6D6;"></div>
+
+        <div class="result-container">
+            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>
         </div>
+        <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div>
 </div>
 </body>
