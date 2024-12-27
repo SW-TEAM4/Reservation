@@ -1,0 +1,152 @@
+/*
+    파일명 : detailPage.css
+    생성자 : JDeok
+    날 짜  : 2024.12.24
+    시 간  : 오전 10:01
+    기 능  : 객실 정보 등록 페이지 스타일
+    변경사항
+     - 2024.12.24 : JDeok(최초작성)
+*/
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf7f3;
+    color: #8A5642;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+/* 콘텐츠 영역 스타일 */
+.content {
+    flex: 1;
+    padding: 40px;
+    background-color: #fff;
+}
+
+h1 {
+    font-size: 28px;
+    color: #8A5642;
+    margin-bottom: 10px;
+}
+
+.sub-title {
+    font-size: 16px;
+    color: #B07960;
+    margin-bottom: 30px;
+}
+
+/* 테이블 스타일 */
+.room-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.room-table th, .room-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+}
+
+.room-table th {
+    background-color: #f7d3c5;
+    color: #8A5642;
+    font-weight: bold;
+}
+
+.room-table td input[type="text"],
+.room-table td input[type="number"],
+.room-table td input[type="file"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fdf7f3;
+    color: #8A5642;
+    font-size: 14px;
+}
+
+.room-table td input[type="text"]:focus,
+.room-table td input[type="number"]:focus {
+    outline: none;
+    border: 1px solid #B07960;
+    background-color: #fff;
+}
+
+.room-table td label {
+    display: block;
+    font-size: 14px;
+    color: #8A5642;
+    margin: 5px 0;
+}
+
+.room-table td input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* 사진 삭제 버튼 스타일 */
+.delete-photo {
+    background-color: #B07960;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12px;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-photo:hover {
+    background-color: #8A5642;
+}
+
+/* 추가/등록 버튼 스타일 */
+.actions {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.actions .btn {
+    background-color: #8A5642;
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.actions .btn:hover {
+    background-color: #B07960;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s ease;
+}
+
+.menu-link.active {
+    font-weight: bold; /* 활성화된 메뉴에 bold 처리 */
+    color: #f7d3c5;
+}
+
+.menu-link:hover {
+    color: #f7d3c5;
+}
+.active {
+    font-weight: bold; /* 활성화된 메뉴에 bold 스타일 적용 */
+    color: #f7d3c5;
+}
+
+.menu-link:hover {
+    color: #f7d3c5;
+}
+

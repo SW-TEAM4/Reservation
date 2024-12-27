@@ -2,10 +2,13 @@ package kr.co.team4.model.service;
 
 import kr.co.team4.model.dto.ReservationDTO;
 import kr.co.team4.model.dto.UserDTO;
+import kr.co.team4.model.dto.UserReservedDTO;
 import kr.co.team4.model.mapper.ReservationMapper;
 import kr.co.team4.model.mapper.RoomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -32,5 +35,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public UserDTO getUserInform(ReservationDTO dto) {
         return reservationMapper.getUserInform(dto);
+    }
+
+    @Override
+    public List<UserReservedDTO> getUserReservations(UserReservedDTO dto) {
+        return reservationMapper.getUserReservations(dto);
     }
 }
