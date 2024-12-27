@@ -1,0 +1,53 @@
+/*
+    파일명 : sellerSiderbar.css
+    생성자 : JDeok
+    날 짜  : 2024.12.24
+    시 간  : 오전 11:42
+    기 능  : 사장님페이지 왼쪽 사이드바
+    변경사항
+     - 2024.12.24 : JDeok(최초작성)
+*/
+/* 사이드바 스타일 */
+.sidebar {
+    width: 10%;
+    background-color: #ffffff; /* 백그라운드 컬러를 흰색으로 변경 */
+    color: #8A5642;
+    padding: 20px;
+    border-right: 1px solid #ddd; /* 오른쪽에 구분선 추가 */
+}
+.sidebar h2 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #8A5642; /* 텍스트 색상 */
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin-bottom: 15px;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: #8A5642;
+    font-size: 14px;
+    display: block;
+    padding: 10px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidebar ul li a.active {
+    font-weight: bold;
+    color: #8A5642;
+}
+
+
+.sidebar ul li a:hover {
+    background-color: #f7d3c5;
+    color: white;
+    border-radius: 4px;
+}
