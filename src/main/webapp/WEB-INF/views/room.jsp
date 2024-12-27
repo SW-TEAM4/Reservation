@@ -11,34 +11,52 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/roomcard.css"/>
     <script src="/js/home.js"></script>
+    <style>
+        .room-detail {
+            margin-left: 80px;
+            margin-right: 80px;
+        }
+
+    </style>
 </head>
 <body>
 <div class="wrap">
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
-<c:if test="${not empty room}">
-    <div class="room-detail">
-        <h2>${room.room_name}</h2>
-        <img src="${room.room_img_url}" alt="${room.room_name}" class="detail-img">
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
-        <div class="detail-info">
-            <p><strong>숙소 이름:</strong> ${room.room_name}</p>
-            <p><strong>가격:</strong> ${room.room_price}원</p>
-            <p><strong>최대 인원:</strong> ${room.max_people_cnt}명</p>
-            <p><strong>최대 반려동물 수:</strong> ${room.max_pet_cnt}마리</p>
-            <p>${room.room_notice}</p>
+    <c:if test="${not empty room}">
+        <div class="room-detail">
+            <img src="${room.room_img_url}" alt="${room.room_name}" class="detail-img"
+            width="1280px" height="800px">
+
+            <div class="detail-info">
+                <p><strong>숙소 이름:</strong> ${room.room_name}</p>
+                <p><strong>가격:</strong> ${room.room_price}원</p>
+                <p><strong>최대 인원:</strong> ${room.max_people_cnt}명</p>
+                <p><strong>최대 반려동물 수:</strong> ${room.max_pet_cnt}마리</p>
+            </div>
+
+            <!-- 예약 공지 -->
+            <div class="room-notice">
+                <h3>예약 공지</h3>
+                <p>${room.room_notice}</p>
+            </div>
+
+            <!-- 예약 버튼 -->
+            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">
+                예약하기
+            </button>
         </div>
 
-        <button onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">예약하기</button>
-    </div>
+    </c:if>
 
-</c:if>
-<c:if test="${empty room}">
-    <p>예약 가능한 방이 없습니다.</p>
-</c:if>RES_PHONE_NUMBER
+    <c:if test="${empty room}">
+        <p>예약 가능한 방이 없습니다.</p>
+    </c:if>
 
-<%@ include file="/WEB-INF/views/include/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
 </body>
 </html>

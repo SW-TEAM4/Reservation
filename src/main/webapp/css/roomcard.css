@@ -1,0 +1,67 @@
+/* room-card 스타일 */
+.room-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 800px; /* 카드 전체 크기 조정 */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.room-card:hover {
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* 객실 이미지 스타일 */
+.room-image-link {
+    flex: 1;
+}
+
+.room-img {
+    width: 400px; /* 이미지 크기 조정 */
+    height: auto; /* 비율 유지 */
+}
+
+/* 객실 정보 스타일 */
+.room-info {
+    flex: 1;
+    padding: 20px;
+}
+
+.room-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.room-capacity,
+.check-in-out,
+.room-price {
+    margin-top: 10px;
+}
+
+/* 예약 버튼 스타일 */
+.booking-button {
+    justify-content: center;
+    text-align: center;
+    background-image: url('../img/button_foot.svg'); /* 이미지 경로 */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-position-x: 30px;
+    background-size: 24px;
+    align-items: center;
+    width: 212px;
+    height: 77px;
+    border-radius: 10px;
+    background-color: #352018; /* 배경색 */
+    color: white; /* 텍스트 색상 */
+    font-size: 24px; /* 글씨 크기 */
+    font-weight: bold;
+    cursor: pointer;
+    border: none;
+}
+
+.booking-button:hover {
+    background-color: #3a2116;
+}
+
