@@ -4,6 +4,7 @@
 <html lang="ko">
 <head>
   <link rel="stylesheet" href="/css/roomcard.css"/>
+  <link rel="stylesheet" href="/css/button.css"/>
 </head>
 <body>
 <div class="room-card">
