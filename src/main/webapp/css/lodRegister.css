@@ -1,0 +1,300 @@
+/*
+    파일명 : lodRegister.css
+    생성자 : JDeok
+    날 짜  : 2024.12.23
+    시 간  : 오후 02:10
+    기 능  : 사장님 숙소등록페이지(css)
+    변경사항
+     - 2024.12.23 : JDeok(최초작성)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #8A5642;
+}
+
+.container {
+    width: 60%;
+    margin: 50px auto;
+    background-color: #fff;
+    padding: 20px 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #8A5642;
+}
+
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* 모든 텍스트와 입력 필드 중앙 정렬 */
+    margin-bottom: 40px; /* 간격 확대 */
+}
+
+/* 레이블 스타일 */
+.form-group label {
+    width: 260px;             /* 레이블 고정 너비 */
+    font-weight: bold;        /* 텍스트 굵게 */
+    font-size: 16px;          /* 텍스트 크기 */
+    color: #8A5642;           /* 텍스트 색상 */
+    text-align: left;         /* 텍스트를 왼쪽 정렬 */
+    margin-right: 20px;       /* 텍스트박스와 간격 유지 */
+    display: inline-block;    /* 고정된 너비로 정렬 */
+    vertical-align: top;      /* 레이블 상단 정렬 */
+}
+
+/* 지역 유형 그룹 */
+.other-group {
+    display: flex;            /* 레이블과 라디오 버튼을 한 줄에 배치 */
+    align-items: center;      /* 세로축 중앙 정렬 */
+    margin-bottom: 40px;      /* 아래 간격 추가 */
+
+}
+/* 지역 유형 라디오 버튼 */
+.other-type {
+    display: flex;            /* 라디오 버튼을 한 줄에 배치 */
+    gap: 210px;                /* 버튼 간 간격 */
+    align-items: center;      /* 세로축 중앙 정렬 */
+}
+/* 숙소 주소 그룹 */
+.lod-group {
+    display: flex;            /* 레이블과 라디오 버튼을 한 줄에 배치 */
+    align-items: center;      /* 세로축 중앙 정렬 */
+    margin-bottom: 10px;      /* 아래 간격 추가 */
+}
+
+/* 숙소 주소 레이블 */
+.lod-label {
+    width: 260px;             /* 레이블 고정 너비 */
+    font-weight: bold;        /* 텍스트 굵게 */
+    font-size: 16px;          /* 텍스트 크기 */
+    color: #8A5642;           /* 텍스트 색상 */
+    text-align: left;         /* 텍스트를 왼쪽 정렬 */
+    margin-right: 16px;       /* 텍스트박스와 간격 유지 */
+    display: inline-block;    /* 고정된 너비로 정렬 */
+    vertical-align: top;      /* 레이블 상단 정렬 */
+}
+
+/* 주소 입력 필드와 버튼 */
+.address-inputs {
+    display: flex;            /* 우편번호 텍스트박스와 버튼을 한 줄에 배치 */
+    gap: 10px;                /* 텍스트박스와 버튼 간 간격 */
+    flex-wrap: nowrap;        /* 한 줄에서 감싸지 않도록 설정 */
+}
+
+/* 우편번호 텍스트박스 */
+.address-inputs input[type="text"] {
+    width: 200px;             /* 텍스트박스 크기 */
+    padding: 10px;            /* 내부 여백 */
+    border: 1px solid #ccc;   /* 테두리 */
+    border-radius: 4px;       /* 모서리 둥글게 */
+    font-size: 16px;          /* 텍스트 크기 */
+    color: #8A5642;           /* 텍스트 색상 */
+    text-align: center;       /* 텍스트 중앙 정렬 */
+}
+
+/* 우편번호 버튼 */
+.btn-postcode {
+    background-color: #d7b4a3; /* 버튼 배경색 */
+    color: #5a382a;           /* 버튼 텍스트 색상 */
+    border: none;             /* 테두리 제거 */
+    border-radius: 4px;       /* 모서리 둥글게 */
+    padding: 10px 20px;       /* 버튼 크기 */
+    font-size: 14px;          /* 버튼 텍스트 크기 */
+    cursor: pointer;          /* 커서 포인터 */
+    transition: background-color 0.3s ease; /* 호버 애니메이션 */
+}
+
+/* 우편번호 버튼 호버 */
+.btn-postcode:hover {
+    background-color: #c49c8a; /* 호버 시 버튼 배경색 변경 */
+}
+
+
+
+.form-group input[type="text"],
+.form-group input[type="tel"],
+.form-group input[type="file"],
+.form-group input[type="time"] {
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: center;
+}
+/* 우편번호 및 버튼 그룹 */
+.address-inputs {
+    display: flex;
+    gap: 10px; /* 우편번호 텍스트박스와 버튼 간 간격 */
+}
+
+/* 주소 텍스트박스 */
+.address-input {
+    width: 50%; /* 텍스트박스 크기 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: center; /* 텍스트박스 내부 텍스트 중앙 정렬 */
+    margin-left: 415px;
+    margin-bottom: 40px; /* 간격 확대 */
+}
+/* 체크인/체크아웃 시간 */
+.time-input {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* 체크인과 ~, 체크아웃 간 간격 */
+}
+
+.time-input input[type="time"] {
+    width: 40%; /* 체크인/체크아웃 텍스트박스 크기 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: center;
+}
+
+.time-input span {
+    font-size: 16px;
+    font-weight: bold;
+    color: #8A5642;
+}
+
+/* 숙소 정보 등록 버튼 */
+.submit-button {
+    display: block;
+    width: 50%; /* 버튼 크기 설정 */
+    margin: 20px auto; /* 중앙 정렬 */
+    padding: 10px 20px;
+    background-color: #8A5642;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* 호버 효과 추가 */
+}
+
+.submit-button:hover {
+    background-color: #a0522d; /* 버튼 호버 시 색상 변경 */
+}
+.box{
+    width: 100%;
+    max-width: 140px;
+}
+.facility-container {
+    display: flex;
+    align-items: flex-start;  /* 레이블과 콘텐츠의 정렬을 위쪽으로 */
+    margin-bottom: 40px;      /* 아래 간격 추가 */
+    font-family: 'Noto Sans', sans-serif;
+    color: #8A5642;
+}
+
+.other-label {
+    width: 160px;             /* 레이블 고정 너비 */
+    font-weight: bold;        /* 텍스트 굵게 */
+    font-size: 16px;          /* 텍스트 크기 */
+    text-align: left;         /* 텍스트를 왼쪽 정렬 */
+    margin-right: 115px;      /* 텍스트박스와 간격 유지 */
+    display: inline-block;    /* 고정된 너비로 정렬 */
+    vertical-align: top;      /* 레이블 상단 정렬 */
+}
+
+.facility-input {
+    display: flex;
+    gap: 10px;                /* 텍스트박스와 버튼 간 간격 */
+    align-items: center;      /* 세로축 중앙 정렬 */
+}
+
+.facility-input input[type="text"] {
+    width: 300px;             /* 텍스트박스 크기 */
+    padding: 10px;            /* 내부 여백 */
+    border: 1px solid #ccc;   /* 테두리 */
+    border-radius: 4px;       /* 모서리 둥글게 */
+    font-size: 16px;          /* 텍스트 크기 */
+    color: #8A5642;           /* 텍스트 색상 */
+}
+
+.facility-input button {
+    background-color: #8A5642;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.facility-input button:hover {
+    background-color: #a0522d;
+}
+
+.selected-facilities {
+    margin-top: 10px;         /* 위 입력창과 간격 추가 */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.facility-tag {
+    display: flex;
+    align-items: center;
+    background-color: #d7b4a3;
+    color: #5a382a;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.facility-tag button {
+    background: none;
+    border: none;
+    color: #5a382a;
+    font-size: 16px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.facility-tag button:hover {
+    color: #8A5642;
+}
+.time-label {
+    width: 140px;             /* 레이블 고정 너비 (줄임) */
+    font-weight: bold;        /* 텍스트 굵게 */
+    font-size: 14px;          /* 텍스트 크기 (줄임) */
+    color: #8A5642;
+    text-align: left;
+    margin-right: 135px;       /* 간격 조정 */
+    display: inline-block;
+}
+.time-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;      /* 아래 간격 조정 */
+}
+select {
+    width: 80px;              /* 선택 박스 너비 (줄임) */
+    padding: 6px;             /* 내부 여백 (줄임) */
+    font-size: 12px;          /* 텍스트 크기 (줄임) */
+    border: 1px solid #ccc;   /* 테두리 */
+    border-radius: 4px;       /* 모서리 둥글게 */
+    background-color: #f9f9f9;
+    color: #8A5642;
+    cursor: pointer;          /* 포인터 커서 */
+}
