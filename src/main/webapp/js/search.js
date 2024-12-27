@@ -107,27 +107,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-    // === 탭 선택 기능 ===
-    const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            // 모든 탭에서 active 클래스 제거
-            tabs.forEach(t => t.classList.remove('active'));
-            tabs.forEach(t => t.classList.add('inactive'));
-
-            // 현재 클릭한 탭에 active 추가
-            tab.classList.remove('inactive'); // 비활성화 클래스 제거
-            tab.classList.add('active');     // 활성화 클래스 추가
-
-            // 나중에 쿼리 연동을 위한 선택된 지역 정보
-            const selectedRegion = tab.getAttribute('id'); // ID로 지역 구분
-            console.log("선택된 지역:", selectedRegion); // 선택 확인용 (테스트)
-
-            // 나중에 여기에 DB 쿼리 호출 함수 넣으면 됨
-            // fetchFilteredResults(selectedRegion);
-        });
-    });
-});
-

@@ -4,7 +4,6 @@
 <head>
   <title>숙소 상세</title>
   <link rel="stylesheet" href="/css/style.css"/>
-  <link rel="stylesheet" href="/css/counter.css"/>
   <link rel="stylesheet" href="/css/style.css?after"/>
 
   <style>
@@ -97,16 +96,6 @@
       <img src="<c:url value='/img/search_icon_calendar.svg'/>" alt="달력 아이콘">
     </div>
 
-    <!-- 인원수 선택 -->
-    <div class="selection-item" onclick="toggleCounter()">
-      <span id="selected-max">성인 2명, 아동 1명</span>
-      <img src="<c:url value='/img/search_icon_down.svg'/>" alt="화살표 아이콘">
-    </div>
-  </div>
-
-  <!-- 인원수 선택 드롭다운 -->
-  <div id="counter-dropdown" class="counter-dropdown hidden">
-    <%@ include file="/WEB-INF/views/counter.jsp" %>
   </div>
 
   <!-- 캘린더 컨테이너 -->

@@ -622,3 +622,13 @@ p.popup-subtitle {
 .result-container.no-results img {
     display: block; /* 검색 결과 없을 때만 표시 */
 }
+
+/* 캘린더 컨테이너 */
+#calendar-container {
+    display: none; /* 기본적으로 숨김 */
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+}
