@@ -2,34 +2,76 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.team4.model.mapper.LodgmentMapper">
     <select id="lodgmentDetail" parameterType="kr.co.team4.model.dto.LodgmentDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
-        SELECT L.lod_img_url,
-               L.lod_name,
-               L.x,
-               L.y,
-               L.lod_address,
-               L.seller_notice,
-               L.reservation_notice,
-               L.avg_rating
+        SELECT lod_img_url,
+               lod_name,
+               x,
+               y,
+               lod_address,
+               seller_notice,
+               reservation_notice,
+               avg_rating
         FROM LODGMENT L
-        WHERE L.lod_idx = 3;
+        WHERE lod_idx = 3;
     </select>
 
     <!--lod_idx로 객실 리스트 조회 -->
     <select id="getRoomsByLodgment" parameterType="kr.co.team4.model.dto.RoomDTO" resultType="kr.co.team4.model.dto.RoomDTO">
-        SELECT R.room_idx,
-               R.lod_idx,
-               R.room_name,
-               R.room_notice,
-               R.room_price,
-               R.room_img_url,
-               R.max_people_cnt,
-               R.max_pet_cnt,
-               R.avg_rating,
-               R.number_of_review,
-               R.created,
-               R.updated,
-               R.status
-        FROM ROOM R
-        WHERE R.lod_idx = 3
+        SELECT room_idx,
+               lod_idx,
+               room_name,
+               room_notice,
+               room_price,
+               room_img_url,
+               max_people_cnt,
+               max_pet_cnt,
+               avg_rating,
+               number_of_review,
+               created,
+               updated,
+               status
+        FROM ROOM
+        WHERE lod_idx = 3
+    </select>
+
+    <!-- 판매자 정보 조회 -->
+    <select id="getSellerInfo" parameterType="int" resultType="kr.co.team4.model.dto.SellerDTO">
+        SELECT
+            SELLER.SELLER_IDX,
+            SELLER.SELLER_ID,
+            SELLER.SELLER_PWD,
+            SELLER.SELLER_NAME,
+            SELLER.SELLER_NICK_NAME,
+            SELLER.SELLER_EMAIL,
+            SELLER.SELLER_PHONE_NUMBER
+        FROM SELLER
+                 JOIN LODGMENT ON SELLER.SELLER_IDX = LODGMENT.LOD_IDX
+        WHERE LODGMENT.LOD_IDX = 3
+        AND SELLER.SELLER_NICK_NAME = '지현';
+    </select>
+
+
+    <select id="getAvailableRooms" parameterType="map" resultType="kr.co.team4.model.dto.RoomDTO">
+# SELECT
+#     R.room_idx,
+#     R.lod_idx,
+#     R.room_name,
+#     R.room_price,
+#     R.room_img_url,
+#     R.max_people_cnt,
+#     R.max_pet_cnt
+# FROM ROOM R LEFT JOIN RESERVATION RES
+# ON R.room_idx = RES.room_idx
+<!--AND #{checkinDate}  <= RES.res_end_date-->
+# AND #{checkoutDate}  >= RES.res_str_date
+# WHERE R.lod_idx = #{lodIdx}
+# GROUP BY
+#     R.room_idx,
+#     R.lod_idx,
+#     R.room_name,
+#     R.room_price,
+#     R.room_img_url,
+#     R.max_people_cnt,
+#     R.max_pet_cnt
+# HAVING COUNT(RES.room_idx) = 0;
     </select>
 </mapper>

@@ -32,7 +32,7 @@
     // 마커 위치 설정 (동적 데이터 사용)
     var markerPosition = new kakao.maps.LatLng(centerX, centerY);
 
-    var imageSrc = "img/lodgment_map_marker.png"; // 마커 이미지 경로
+    var imageSrc = "img/lod_map_marker.png"; // 마커 이미지 경로
     var imageSize = new kakao.maps.Size(64, 69); // 마커 사이즈 설정
     var imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커 위치 조정 옵션
     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption);
