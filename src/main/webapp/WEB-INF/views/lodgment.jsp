@@ -8,9 +8,8 @@
   <link rel="stylesheet" href="/css/style.css?after"/>
 
   <style>
-    .wrap {
-      margin: 0 auto;
-      width: 80%; /* 가운데 정렬 */
+    .lodgment-container {
+      margin: 0 80px; /* 위아래는 0, 좌우는 20px */
     }
     .selection-container {
       display: flex;
@@ -64,11 +63,85 @@
       background-color: #fff;
     }
 
+    .lodgment-address {
+      display: flex;
+      align-items: center; /* 세로 정렬을 가운데로 */
+      gap: 10px; /* 아이콘과 텍스트 사이 간격 */
+    }
+    .address-icon {
+      width: 20px; /* 아이콘 크기 조정 (필요시) */
+      height: auto;
+    }
+
+
     #selected-dates {
       color: blueviolet; /* 텍스트 색상 */
       font-size: 16px; /* 텍스트 크기 */
     }
+    .fc-daygrid-day.in-range {
+      background-color: #ffddc1; /* Light orange background */
+      color: #000; /* Black text */
+    }
 
+    .fc-daygrid-day.in-range:hover {
+      background-color: #ffc299; /* Darker orange on hover */
+    }
+    /* 팝업 배경 */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup.hidden {
+      display: none; /* 숨김 */
+    }
+
+    /* 팝업 내용 */
+    .popup-content {
+      position: relative; /* 닫기 버튼 위치 조정을 위해 추가 */
+      background-color: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 400px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    /* 닫기 버튼 */
+    .close-popup {
+      position: absolute; /* 부모 요소를 기준으로 위치 지정 */
+      top: 10px; /* 상단 여백 */
+      left: 10px; /* 왼쪽 여백 */
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f4f4f4;
+    }
   </style>
 </head>
 <body>
@@ -78,31 +151,106 @@
 
   <!-- 숙소 정보 -->
   <div class="lodgment-container">
+    <img src="<c:url value='/img/lod_toolbar.svg'/>" alt="객실 상세">
     <c:if test="${not empty lodgment.lodgment}">
-      <img src="${lodgment.lodgment.lod_img_url}" alt="${lodgment.lodgment.lod_name}">
-      <p>숙소 이름: ${lodgment.lodgment.lod_name}</p>
+      <img src="${lodgment.lodgment.lod_img_url}" alt="${lodgment.lodgment.lod_name}"
+           width="1280px" height="800px">
+      <p>${lodgment.lodgment.lod_name}</p>
       <p>평균 평점: ${lodgment.lodgment.avg_rating}</p>
     </c:if>
     <c:if test="${empty lodgment.lodgment}">
-      <p>숙소 정보를 찾을 수 없습니다.</p>
+      <img src="<c:url value='/img/search_no_result.svg'/>" alt="결과 없음">
     </c:if>
-  </div>
 
-  <!-- 날짜 및 인원수 선택 -->
-  <div class="selection-container">
-    <!-- 날짜 선택 -->
-    <div class="selection-item" onclick="toggleCalendar()">
-      <span id="checkin-date"></span>
-      <span id="checkout-date"> ~ </span>
-      <img src="<c:url value='/img/search_icon_calendar.svg'/>" alt="달력 아이콘">
+    <h3>객실 선택</h3>
+    <!-- 날짜 및 인원수 선택 -->
+    <div class="selection-container">
+      <!-- 날짜 선택 -->
+      <div class="selection-item" onclick="toggleCalendar()">
+        <span id="checkin-date"></span>
+        <span id="checkout-date"> ~ </span>
+        <img src="<c:url value='/img/search_icon_calendar.svg'/>" alt="달력 아이콘">
+      </div>
+
+      <!-- 인원수 선택 -->
+      <div class="selection-item" onclick="toggleCounter()">
+        <span id="selected-max">성인 2명, 아동 1명</span>
+        <img src="<c:url value='/img/search_icon_down.svg'/>" alt="화살표 아이콘">
+      </div>
+    </div>
+    <!-- 객실 리스트 -->
+
+    <div class="room-list">
+      <c:forEach var="room" items="${roomList}">
+        <%@ include file="/WEB-INF/views/roomcard.jsp" %>
+      </c:forEach>
+    </div>
+    <!-- 지도 -->
+    <div class="lodgment-map">
+      <h3>위치/교통</h3>
+      <c:set var="centerX" value="${lodgment.lodgment.x}" />
+      <c:set var="centerY" value="${lodgment.lodgment.y}" />
+      <c:set var="zoomLevel" value="3" />
+      <c:set var="markerX" value="${lodgment.lodgment.x}" />
+      <c:set var="markerY" value="${lodgment.lodgment.y}" />
+      <c:set var="markerImage" value="/img/lod_map_marker.png" />
+      <c:set var="mapWidth" value="1305px" />
+      <c:set var="mapHeight" value="661px" />
+
+      <%@ include file="/WEB-INF/views/map.jsp" %>
     </div>
 
-    <!-- 인원수 선택 -->
-    <div class="selection-item" onclick="toggleCounter()">
-      <span id="selected-max">성인 2명, 아동 1명</span>
-      <img src="<c:url value='/img/search_icon_down.svg'/>" alt="화살표 아이콘">
+    <!-- 숙소 주소 -->
+    <div class="lodgment-address">
+      <img src="/img/lod_map_location.svg" alt="숙소 주소 아이콘" class="address-icon">
+      <span>${lodgment.lodgment.lod_address}</span>
+    </div>
+
+    <!-- 사장님이 알려주개 -->
+    <div class="lodgment-seller-notice">
+      <h3>사장님이 알려주개</h3>
+      <p>${lodgment.lodgment.seller_notice}</p>
+    </div>
+
+    <!-- 예약 공지 -->
+    <div class="lodgment-reservation-notice">
+      <h3>예약 공지</h3>
+      <p>${lodgment.lodgment.reservation_notice}</p>
+    </div>
+
+    <!-- 시설/서비 -->
+    <div class="lodgment-reservation-notice">
+      <h3>시설/서비스</h3>
+      <p>${lodgment.lodgment.reservation_notice}</p>
+    </div>
+
+    <div class="seller-info-container">
+      <button onclick="showSellerPopup()">판매자 정보 보기</button>
+    </div>
+
+    <div id="seller-popup" class="popup hidden">
+      <div class="popup-content">
+        <button class="close-popup" onclick="closeSellerPopup()">X</button>
+        <h3>판매자 정보</h3>
+        <table>
+          <tr>
+            <th>이름</th>
+            <td>${sellerInfo.seller_name}</td>
+          </tr>
+          <tr>
+            <th>이메일</th>
+            <td>${sellerInfo.seller_email}</td>
+          </tr>
+          <tr>
+            <th>전화번호</th>
+            <td>${sellerInfo.seller_phone_number}</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
+
+
 
   <!-- 인원수 선택 드롭다운 -->
   <div id="counter-dropdown" class="counter-dropdown hidden">
@@ -151,23 +299,24 @@
         selectAllow: (selectInfo) => selectInfo.start >= today, // 과거 날짜 선택 방지
         select(info) {
           const selectedDate = new Date(info.startStr);
-          console.log("selectedDate:", selectedDate);
-          if (!checkinDate || (checkinDate && checkoutDate)) {
-            checkinDate = info.startStr;
-            checkinDateEl.textContent = formatDate(selectedDate);
-            checkoutDate = null;
-            checkoutDateEl.textContent = '';
-            console.log("if1: checkin:", checkinDate);
-            console.log("if1: checkout:", checkoutDate);
 
+          if (!checkinDate || (checkinDate && checkoutDate)) {
+            // 체크인 날짜 설정 및 체크아웃 초기화
+            checkinDate = info.startStr;
+            checkoutDate = null;
+            checkinDateEl.textContent = formatDate(selectedDate);
+            checkoutDateEl.textContent = '';
             resetStyles();
           } else if (checkinDate && !checkoutDate) {
-            const startDate = new Date(checkinDate);
-            console.log("if2: startdate:", startDate);
+            let startDate = new Date(checkinDate);
 
-            if (selectedDate <= startDate) {
-              alert('퇴실일은 입실일 이후 날짜여야 합니다.');
-            } else {
+            if (selectedDate < startDate) {
+              // 이전 날짜를 선택한 경우 체크인 날짜 변경
+              checkinDate = info.startStr;
+              checkinDateEl.textContent = formatDate(selectedDate);
+              resetStyles();
+            } else if (selectedDate > startDate) {
+              // 이후 날짜를 선택한 경우 체크아웃 날짜 설정 및 범위 스타일 적용
               checkoutDate = info.startStr;
               checkoutDateEl.textContent = " ~ " + formatDate(selectedDate);
               applyRangeStyles(startDate, selectedDate);
@@ -181,6 +330,7 @@
 
       calendar.render(); // 캘린더 렌더링
     }
+
     //서버에 선택된 날짜 전달
     function updateDatesOnServer(checkin, checkout) {
       const xhr = new XMLHttpRequest();
@@ -217,27 +367,35 @@
       return date.toLocaleDateString('ko-KR', options);
     }
 
-    function applyDates(startDate, endDate) {
-      if (startDate && endDate) {
-        const formattedStart = formatDate(startDate);
-        const formattedEnd = formatDate(endDate);
+    function applyRangeStyles(startDate, endDate) {
+      resetStyles(); // 기존 스타일 초기화
 
-        // DOM 업데이트
-        const selectedDatesEl = document.getElementById('selected-dates');
-        if (selectedDatesEl) {
-          selectedDatesEl.innerText = `${formattedStart} ~ ${formattedEnd}`; // 텍스트 템플릿 리터럴로 수정
-        } else {
-          console.error("Element with ID 'selected-dates' not found.");
+      let currentDate = new Date(startDate);
+
+      while (currentDate <= endDate) {
+        const dateStr = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
+        const dayCell = document.querySelector(`[data-date="${dateStr}"]`); // 해당 날짜 셀 선택
+
+        if (dayCell) {
+          dayCell.style.backgroundColor = '#ffddc1'; // 원하는 배경색 적용
+          dayCell.style.color = '#000'; // 글자 색상 설정 (선택 사항)
         }
-      } else {
-        console.log("날짜 선택 실패: 시작일 또는 종료일 없음");
+
+        currentDate.setDate(currentDate.getDate() + 1); // 다음 날짜로 이동
       }
     }
 
+
+
     // 스타일 초기화
     function resetStyles() {
-      document.querySelectorAll('.fc-day-in-range').forEach(day => day.classList.remove('fc-day-in-range'));
+      // 모든 날짜 셀의 스타일 초기화
+      document.querySelectorAll('[data-date]').forEach(day => {
+        day.style.backgroundColor = ''; // 배경색 초기화
+        day.style.color = ''; // 글자 색상 초기화 (선택 사항)
+      });
     }
+
 
     // 날짜 범위 스타일 적용
     function applyRangeStyles(startDate, endDate) {
@@ -269,45 +427,22 @@
       // 캘린더 숨기기
       document.getElementById("calendar-container").style.display = "none";
     }
+    // 팝업 열기
+    function showSellerPopup() {
+      const popup = document.getElementById("seller-popup");
+      popup.classList.remove("hidden");
+    }
+
+    // 팝업 닫기
+    function closeSellerPopup() {
+      const popup = document.getElementById("seller-popup");
+      popup.classList.add("hidden");
+    }
   </script>
 
-  <!-- 객실 리스트 -->
-  <div class="room-list">
-    <c:forEach var="room" items="${roomList}">
-      <%@ include file="/WEB-INF/views/roomcard.jsp" %>
-    </c:forEach>
-  </div>
-  <!-- 지도 -->
-  <div class="lodgment-map">
-    <c:set var="centerX" value="${lodgment.lodgment.x}" />
-    <c:set var="centerY" value="${lodgment.lodgment.y}" />
-    <c:set var="zoomLevel" value="3" />
-    <c:set var="markerX" value="${lodgment.lodgment.x}" />
-    <c:set var="markerY" value="${lodgment.lodgment.y}" />
-    <c:set var="markerImage" value="/img/lodgment_map_marker.png" />
-    <c:set var="mapWidth" value="1305px" />
-    <c:set var="mapHeight" value="661px" />
 
-    <%@ include file="/WEB-INF/views/map.jsp" %>
-  </div>
 
-  <!-- 숙소 주소 -->
-  <div class="lodgment-address">
-    <img src="/img/lod_map_location.svg" alt="숙소 주소 아이콘" class="address-icon">
-    <span>${lodgment.lodgment.lod_address}</span>
-  </div>
 
-  <!-- 사장님이 알려주개 -->
-  <div class="lodgment-seller-notice">
-    <h3>사장님이 알려주개</h3>
-    <p>${lodgment.lodgment.seller_notice}</p>
-  </div>
-
-  <!-- 예약 공지 -->
-  <div class="lodgment-reservation-notice">
-    <h3>예약 공지</h3>
-    <p>${lodgment.lodgment.reservation_notice}</p>
-  </div>
 
   <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>

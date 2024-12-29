@@ -18,6 +18,9 @@
             margin-left: 80px;
             margin-right: 80px;
         }
+        .lod-tool-bar {
+            margin: 0 80px;
+        }
 
     </style>
 </head>
@@ -25,7 +28,7 @@
 <div class="wrap">
     <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-
+    <img src="<c:url value='/img/lod_toolbar.svg'/>" alt="객실 상세" class="lod-tool-bar">
     <c:if test="${not empty room}">
         <div class="room-detail">
             <img src="${room.room_img_url}" alt="${room.room_name}" class="detail-img"
@@ -49,11 +52,10 @@
                 예약하기
             </button>
         </div>
-
     </c:if>
 
     <c:if test="${empty room}">
-        <p>예약 가능한 방이 없습니다.</p>
+        <img src="<c:url value='/img/search_no_result.svg'/>" alt="결과 없음">
     </c:if>
 
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
