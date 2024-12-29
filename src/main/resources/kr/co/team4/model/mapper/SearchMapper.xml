@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.SearchMapper">
+    <select id="searchLodgments" parameterType="kr.co.team4.model.dto.SearchFilterDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
+        SELECT B.*
+        FROM ROOM        A
+           , LODGMENT    B
+           , RESERVATION C
+        WHERE 1=1
+          AND A.LOD_IDX = B.LOD_IDX
+          AND A.LOD_IDX = C.LOD_IDX
+          AND #{checkinDate} NOT BETWEEN  C.RES_STR_DATE AND C.RES_END_DATE
+          AND #{checkoutDate} NOT BETWEEN  C.RES_STR_DATE AND C.RES_END_DATE
+          AND A.MAX_PEOPLE_CNT >= #{guestCount}
+          AND A.MAX_PET_CNT    >= #{petCount}
+          AND (#{type} = '전체' OR B.LOD_CATEGORY_IDX IN (SELECT IDX FROM CATEGORY WHERE NAME = #{type}))
+          AND (#{weight} = '5kg 미만' OR A.PET_WEIGHT_RANGE = #{weight})
+          AND (#{region} = '전체' OR B.REGION_IDX IN (SELECT IDX FROM REGION WHERE NAME = #{region}))
+        GROUP BY B.LOD_IDX
+    </select>
+</mapper>
+
