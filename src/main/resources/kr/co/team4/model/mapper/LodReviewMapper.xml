@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.LodReviewMapper">
+
+    <!-- 리뷰 통계 쿼리 -->
+    <select id="getReviewStatistics" resultType="map" parameterType="int">
+        SELECT
+        COUNT(REVIEW.REVIEW_IDX) AS REVIEW_COUNT,
+        ROUND(AVG(REVIEW.RATING), 1) AS AVG_RATING
+        FROM
+        LODGMENT
+        ,ROOM
+        ,RESERVATION
+        ,REVIEW
+        WHERE
+        LODGMENT.LOD_IDX = ROOM.LOD_IDX
+        AND ROOM.ROOM_IDX = RESERVATION.ROOM_IDX
+        AND RESERVATION.RESERVATION_IDX = REVIEW.RESERVATION_IDX
+        AND LODGMENT.LOD_IDX = 3;
+    </select>
+
+    <!-- 개별 리뷰 목록 쿼리 -->
+    <select id="getReviewList" resultType="kr.co.team4.model.dto.LodReviewDTO" parameterType="int">
+        SELECT
+            USERS.NICK_NAME AS reviewer_nickname,
+            REVIEW.RATING AS reviewer_rating,
+            REVIEW.USER_COMMENT AS reviewer_content,
+            REVIEW.REVIEW_IMG_URL AS reviewer_image,
+            DATE_FORMAT(REVIEW.CREATED, '%Y.%m.%d') AS reviewer_created
+        FROM
+            USERS,
+            REVIEW,
+            RESERVATION,
+            LODGMENT,
+            ROOM
+        WHERE
+            USERS.USER_IDX = REVIEW.USER_IDX
+          AND REVIEW.RESERVATION_IDX = RESERVATION.RESERVATION_IDX
+          AND RESERVATION.ROOM_IDX = ROOM.ROOM_IDX
+          AND ROOM.LOD_IDX = LODGMENT.LOD_IDX
+          AND LODGMENT.LOD_IDX = 3;
+    </select>
+
+</mapper>
