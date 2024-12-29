@@ -26,28 +26,21 @@
         <div class="search_filters">
 
             <!-- 날짜 선택 -->
+            <div class="selection-item" onclick="toggleCalendar()">
             <div class="search-button" id="date-picker">
             <span>
-              <img src="/img/search_icon_calendar.svg" class="calendar_icon" alt="calendar"/>
-              12.12 ~ 12.13, 1박
+                <img src="/img/search_icon_calendar.svg" class="calendar_icon" alt="calendar"/>
+                <span id="checkin-date"></span> ~
+                <span id="checkout-date"></span>
+                <span id="cal-date"></span>
             </span>
             </div>
-
-            <!-- 날짜 및 인원수 선택 -->
-            <div class="selection-container">
-                <!-- 날짜 선택 -->
-                <div class="selection-item" onclick="toggleCalendar()">
-                    <span id="checkin-date"></span>
-                    <span id="checkout-date"> ~ </span>
-                    <img src="<c:url value='/img/search_icon_calendar.svg'/>" alt="달력 아이콘">
-                </div>
-
             </div>
 
             <!-- 캘린더 컨테이너 -->
             <div id="calendar-container">
                 <div id="calendar"></div>
-                <button id="confirm-dates-btn" onclick="confirmDates()">확인</button>
+                <button id="confirm-dates-btn" class="confirm_btn" onclick="confirmDates()">확인</button>
             </div>
 
             <!-- 인원 및 반려동물 수 선택-->
@@ -63,7 +56,7 @@
                     <!-- 인원 조절 -->
                     <div class="counter">
                         <div class="popup-header">인원ㅤㅤ</div>
-                        <button id="minus-guest-btn" class="counter-btn">−</button>
+                        <button id="minus-guest-btn" class="counter-btn">-</button>
                         <span id="guest-counter">2</span>
                         <button id="plus-guest-btn" class="counter-btn">+</button>
                     </div>
@@ -71,7 +64,7 @@
                     <!-- 반려동물 조절 -->
                     <div class="counter">
                         <div class="popup-header">반려동물</div>
-                        <button id="minus-pet-btn" class="counter-btn">−</button>
+                        <button id="minus-pet-btn" class="counter-btn">-</button>
                         <span id="pet-counter">1</span>
                         <button id="plus-pet-btn" class="counter-btn">+</button>
                     </div>
@@ -126,37 +119,81 @@
             </div>
 
         </div>
+
         <div class="tab-container">
-            <a href="#" class="tab active" id="tab-all">전체</a>
-            <a href="#" class="tab inactive" id="tab-seoul">서울</a>
-            <a href="#" class="tab inactive" id="tab-gyeonggi">경기</a>
-            <a href="#" class="tab inactive" id="tab-incheon">인천</a>
+            <div class="tab active" id="tab-all">전체</div>
+            <div class="tab inactive" id="tab-seoul">서울</div>
+            <div class="tab inactive" id="tab-gyeonggi">경기</div>
+            <div class="tab inactive" id="tab-incheon">인천</div>
         </div>
+
         <div class="product-info">
             <div class="product-count">144</div>
             <div class="product-text">개의 상품</div>
         </div>
         <div style="width: 1200px; height: 1px; background-color: #DBD6D6;"></div>
 
+<%--        <div class="result-container">--%>
+<%--            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>--%>
+<%--        </div>--%>
+
         <div class="result-container">
-            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>
+            <c:choose>
+                <c:when test="${empty lodgments}">
+                    <p>검색 결과가 없습니다.</p>
+                </c:when>
+                <c:otherwise>
+                    <c:forEach var="lodgment" items="${lodgments}">
+                        <div class="result-item">
+                            <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}" class="result-img">
+                            <h3>${lodgment.lod_name}</h3>
+                            <p>${lodgment.lod_address}</p>
+                            <p>평점: ${lodgment.avg_rating}</p>
+                        </div>
+                    </c:forEach>
+                </c:otherwise>
+            </c:choose>
         </div>
+
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     </div>
-    <!-- JavaScript -->
+
+    <%--달력 fullcalendar--%>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
     <script>
-        let calendar; // FullCalendar 인스턴스를 저장할 변수
-        let checkinDate = null;
-        let checkoutDate = null;
-        const checkinDateEl = document.getElementById('checkin-date');
-        const checkoutDateEl = document.getElementById('checkout-date');
-        // 캘린더 토글
+        let calendar; // FullCalendar 인스턴스를 저장할 변수 추가
+
+        // 오늘 날짜 및 내일 날짜 계산
+        let today = new Date(); // 오늘 날짜
+        let tomorrow = new Date(); // 내일 날짜 계산용
+
+        tomorrow.setDate(today.getDate() + 1); // 내일 날짜 설정
+
+        // 날짜를 '월 일 요일' 형식으로 변환하는 함수
+        function formatDate(date) {
+            const options = { month: 'long', day: 'numeric', weekday: 'long' }; // "월 일 요일" 형식
+            return date.toLocaleDateString('ko-KR', options); // 한국어 형식
+        }
+
+        // 날짜 변환 및 표시
+        let checkinDate = formatDate(today); // 오늘 날짜
+        let checkoutDate = formatDate(tomorrow); // 내일 날짜
+
+        // HTML 요소에 날짜 삽입
+        document.getElementById('checkin-date').innerText = checkinDate; // 체크인 날짜
+        document.getElementById('checkout-date').innerText += checkoutDate; // 체크아웃 날짜
+        document.getElementById('cal-date').innerText = ", 1박"; // 기본 1박 설정
+
+
+        let checkinDateEl = document.getElementById('checkin-date'); // 체크인 날짜 요소 참조
+        let checkoutDateEl = document.getElementById('checkout-date'); // 체크아웃 날짜 요소 참조
+        let calDateEl = document.getElementById('cal-date'); // 박 수 표시 엘리먼트
+
         function toggleCalendar() {
             const calendarContainer = document.getElementById('calendar-container');
             if (calendarContainer.style.display === 'none' || calendarContainer.style.display === '') {
                 calendarContainer.style.display = 'block';
-                renderCalendar(); // 캘린더 렌더링
+                renderCalendar(); // Render the calendar
             } else {
                 calendarContainer.style.display = 'none';
             }
@@ -164,39 +201,45 @@
 
         function renderCalendar() {
             const calendarEl = document.getElementById('calendar');
-
-            if (calendar) return; // 이미 렌더링된 경우 다시 생성하지 않음
+            if (calendar) return; // Do not recreate if already rendered
 
             const today = new Date();
             today.setHours(0, 0, 0, 0);
 
-            // FullCalendar 초기화
             calendar = new FullCalendar.Calendar(calendarEl, {
                 initialView: 'dayGridMonth',
                 selectable: true,
-                validRange: { start: today.toISOString().split('T')[0] }, // 오늘 이후만 선택 가능
-                selectAllow: (selectInfo) => selectInfo.start >= today, // 과거 날짜 선택 방지
+                validRange: {start: today.toISOString().split('T')[0]},
+                selectAllow: (selectInfo) => selectInfo.start >= today,
                 select(info) {
                     const selectedDate = new Date(info.startStr);
-                    console.log("selectedDate:", selectedDate);
+
                     if (!checkinDate || (checkinDate && checkoutDate)) {
                         checkinDate = info.startStr;
-                        checkinDateEl.textContent = formatDate(selectedDate);
                         checkoutDate = null;
+                        checkinDateEl.textContent = formatDate(selectedDate);
                         checkoutDateEl.textContent = '';
-                        console.log("if1: checkin:", checkinDate);
-                        console.log("if1: checkout:", checkoutDate);
-
+                        calDateEl.textContent = ''; // 박 초기화
                         resetStyles();
                     } else if (checkinDate && !checkoutDate) {
-                        const startDate = new Date(checkinDate);
-                        console.log("if2: startdate:", startDate);
+                        let startDate = new Date(checkinDate);
 
-                        if (selectedDate <= startDate) {
-                            alert('퇴실일은 입실일 이후 날짜여야 합니다.');
-                        } else {
+                        if (selectedDate < startDate) {
+                            checkinDate = info.startStr;
+                            checkinDateEl.textContent = formatDate(selectedDate);
+                            resetStyles();
+                        } else if (selectedDate > startDate) {
                             checkoutDate = info.startStr;
-                            checkoutDateEl.textContent = " ~ " + formatDate(selectedDate);
+                            checkoutDateEl.textContent = formatDate(selectedDate);
+
+                            function calculateNights(startDate, endDate) {
+                                const diffTime = Math.abs(endDate - startDate); // 밀리초 차이 계산
+                                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // 일수 계산
+                                return diffDays; // 박 수 반환
+                            }
+
+                            calDateEl.textContent = ", " + calculateNights(startDate, selectedDate).toString() + "박";
+
                             applyRangeStyles(startDate, selectedDate);
                         }
                     }
@@ -206,28 +249,25 @@
                 handleWindowResize: true,
             });
 
-            calendar.render(); // 캘린더 렌더링
+            calendar.render();
         }
-        //서버에 선택된 날짜 전달
+
         function updateDatesOnServer(checkin, checkout) {
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/updateDates', true); // 서버의 API 엔드포인트 설정
+            xhr.open('POST', '/updateDates', true);
             xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
 
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === XMLHttpRequest.DONE) {
                     if (xhr.status === 200) {
-                        // 서버로부터 받은 결과를 화면에 반영
                         const response = JSON.parse(xhr.responseText);
                         document.getElementById('checkin-date').textContent = response.checkin;
                         document.getElementById('checkout-date').textContent = response.checkout;
-
                     } else {
-                        console.error('서버 통신 오류:', xhr.responseText);
+                        console.error('Server communication error:', xhr.responseText);
                     }
                 }
             };
-
 
             const data = {
                 checkin: checkin,
@@ -237,53 +277,12 @@
             xhr.send(JSON.stringify(data));
         }
 
-        // 날짜 포맷팅 (몇월 몇일 무슨요일 형식)
         function formatDate(dateStr) {
             const date = new Date(dateStr);
-            const options = { month: 'long', day: 'numeric', weekday: 'long' };
+            const options = {month: 'long', day: 'numeric', weekday: 'long'};
             return date.toLocaleDateString('ko-KR', options);
         }
 
-        function applyDates(startDate, endDate) {
-            if (startDate && endDate) {
-                const formattedStart = formatDate(startDate);
-                const formattedEnd = formatDate(endDate);
-
-                // DOM 업데이트
-                const selectedDatesEl = document.getElementById('selected-dates');
-                if (selectedDatesEl) {
-                    selectedDatesEl.innerText = `${formattedStart} ~ ${formattedEnd}`; // 텍스트 템플릿 리터럴로 수정
-                } else {
-                    console.error("Element with ID 'selected-dates' not found.");
-                }
-            } else {
-                console.log("날짜 선택 실패: 시작일 또는 종료일 없음");
-            }
-        }
-
-        // 스타일 초기화
-        function resetStyles() {
-            document.querySelectorAll('.fc-day-in-range').forEach(day => day.classList.remove('fc-day-in-range'));
-        }
-
-        // 날짜 범위 스타일 적용
-        function applyRangeStyles(startDate, endDate) {
-            resetStyles();
-
-            let currentDate = new Date(startDate);
-
-            while (currentDate <= endDate) {
-                const dateStr = currentDate.toISOString().split('T')[0];
-                const dayCell = document.querySelector(`[data-date="${dateStr}"]`); // 셀 요소 가져오기
-
-                if (dayCell) {
-                    dayCell.classList.add('fc-day-in-range'); // 범위 스타일 추가
-                }
-
-                currentDate.setDate(currentDate.getDate() + 1);
-            }
-
-        }
         function confirmDates() {
             if (!checkinDate || !checkoutDate) {
                 alert("입실일과 퇴실일을 모두 선택하세요.");
@@ -296,8 +295,36 @@
             // 캘린더 숨기기
             document.getElementById("calendar-container").style.display = "none";
         }
-    </script>
 
+        function applyRangeStyles(startDate, endDate) {
+            resetStyles(); // 이전에 적용된 스타일 초기화
+
+            let start = new Date(startDate);
+            let end = new Date(endDate);
+            end.setDate(end.getDate() + 1); // 범위의 마지막 날 포함
+
+            while (start < end) {
+                let dateStr = formatDateToString(start);
+                let dayCell = document.querySelector(`[data-date="${dateStr}"]`);
+                if (dayCell) {
+                    dayCell.style.backgroundColor = '#0096FF'; // 선택 범위 파란색으로 표시
+                    dayCell.style.color = '#FFFFFF'; // 글자 색상 흰색으로 변경
+                }
+                start.setDate(start.getDate() + 1);
+            }
+        }
+
+        function formatDateToString(date) {
+            return date.toISOString().split('T')[0]; // 날짜를 YYYY-MM-DD 형식으로 변환
+        }
+
+        function resetStyles() {
+            document.querySelectorAll('[data-date]').forEach(day => {
+                day.style.backgroundColor = ''; // 배경색 초기화
+                day.style.color = ''; // 글자색 초기화
+            });
+        }
+    </script>
 </div>
 </body>
 </html>

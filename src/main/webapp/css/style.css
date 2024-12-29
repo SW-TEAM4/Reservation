@@ -406,7 +406,6 @@ span.guest-label {
     font-size: 18px;
     cursor: pointer;
     text-align: center;
-    line-height: 28px;
 }
 
 .counter-btn:hover {
@@ -625,10 +624,27 @@ p.popup-subtitle {
 
 /* 캘린더 컨테이너 */
 #calendar-container {
-    display: none; /* 기본적으로 숨김 */
-    margin-top: 20px;
-    padding: 20px;
+    position: absolute;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #fff;
+    padding: 20px;
+    color: #564B4B;
+    margin-top: 53px;
+    display: none;
+    width: 591px;
 }
+
+.confirm_btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #564B4B;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+
