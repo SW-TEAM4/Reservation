@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -39,7 +38,8 @@
       margin: 20px;
     }
     .fc .fc-day-in-range {
-      background-color: #f47c7c; !important;
+      background-color: #f47c7c !important;
+      opacity: 0.7;
     }
     .fc .fc-day-selected {
       background-color: #f47c7c !important;
@@ -75,6 +75,9 @@
     const calendar = new FullCalendar.Calendar(calendarEl, {
       initialView: 'dayGridMonth',
       selectable: true,
+      validRange: {
+        start: new Date().toISOString().split('T')[0], // 오늘 날짜 이전은 선택 불가
+      },
       select: function (info) {
         const selectedDate = new Date(info.startStr);
 
