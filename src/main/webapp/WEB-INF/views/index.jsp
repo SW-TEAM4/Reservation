@@ -5,6 +5,10 @@
 </head>
 <body>
 
+<form action="/recent.do" method="get">
+    <button type="submit">Go to Recent</button>
+</form>
+
 <form action="/lodreview.do" method="get">
     <button type="submit">Go to Lod Review</button>
 </form>

@@ -1,21 +1,28 @@
 package kr.co.team4.controller;
 
-import kr.co.team4.model.dto.LodgmentDTO;
-import kr.co.team4.model.dto.RoomDTO;
-import kr.co.team4.model.dto.SellerDTO;
+import kr.co.team4.model.dto.*;
+import kr.co.team4.model.service.LodFacilityService;
 import kr.co.team4.model.service.LodgmentService;
+import kr.co.team4.model.service.LodReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
-
+import java.util.Map;
 
 @Controller
 public class LodgmentController {
+
     @Autowired
     private LodgmentService lodgmentService;
+
+    @Autowired
+    private LodReviewService lodReviewService; // LodReviewService 추가
+
+    @Autowired
+    private LodFacilityService lodFacilityService; // LodFacilityService 추가
 
     @GetMapping("/lodgment.do")
     public String index(Model model) {
@@ -33,9 +40,20 @@ public class LodgmentController {
         SellerDTO sellerInfo = lodgmentService.getSellerInfo(lodgmentDTO.getLod_idx());
         model.addAttribute("sellerInfo", sellerInfo);
 
+        // **리뷰 통계 및 목록 가져오기**
+        Map<String, Object> statistics = lodReviewService.getReviewStatistics(lodgmentDTO.getLod_idx());
+        model.addAttribute("statistics", statistics);
+
+        List<LodReviewDTO> reviewList = lodReviewService.getReviewList(lodgmentDTO.getLod_idx());
+        model.addAttribute("reviewList", reviewList);
+
+        // 시설/서비스 리스트 가져오기
+        List<LodFacilityDTO> facilityList = lodFacilityService.getFacilityList(lodgmentDTO.getLod_idx());
+        System.out.println("시설 리스트: " + facilityList);
+        model.addAttribute("facilityList", facilityList);
+
+
+
         return "lodgment"; // "lodgment" 페이지로 이동
     }
-    }
-
-
-
+}

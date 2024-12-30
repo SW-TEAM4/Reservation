@@ -11,6 +11,64 @@
     .lodgment-container {
       margin: 0 80px; /* 위아래는 0, 좌우는 20px */
     }
+    .lod-review-container {
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      border-color: #8A5642;
+      background-color: #FFFFFF;
+      height: 329px;
+    }
+    .review-container {
+      display: flex;
+      flex-direction: row; /* 세로로 배치 */
+      gap: 20px; /* 각 리뷰 간격 */
+    }
+
+    .review-card {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+    }
+
+    .review-card h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .review-card p {
+      margin: 0;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    .review-card span {
+      font-size: 14px;
+      color: #f39c12;
+      margin-left: 10px;
+    }
+    .review-summary {
+      display: flex;
+      align-items: center; /* 세로 정렬 */
+      justify-content: space-between; /* 좌우로 정렬 */
+      margin-top: 20px;
+    }
+
+    .review-statistics {
+      display: flex;
+      flex-direction: column; /* 텍스트를 세로로 나열 */
+    }
+
+    .review-detail-link {
+      text-decoration: none;
+      color: #8A5642; /* 원하는 텍스트 색상 */
+      font-size: 18px;
+      font-weight: bold;
+    }
     .selection-container {
       display: flex;
       justify-content: space-between;
@@ -156,7 +214,81 @@
       <img src="${lodgment.lodgment.lod_img_url}" alt="${lodgment.lodgment.lod_name}"
            width="1280px" height="800px">
       <p>${lodgment.lodgment.lod_name}</p>
-      <p>평균 평점: ${lodgment.lodgment.avg_rating}</p>
+      <div class="lod-review-container">
+        <!-- 리뷰 통계 -->
+        <section class="review-summary">
+          <div class="review-statistics">
+            <p>리뷰 수: ${statistics['REVIEW_COUNT']}</p>
+            <p><span>
+            <!-- 평균 평점에 따라 별 개수 계산 -->
+            <c:choose>
+              <c:when test="${statistics['AVG_RATING'] >= 0.0 && statistics['AVG_RATING'] < 1.0}">
+                ☆ (평점: ${statistics['AVG_RATING']})
+              </c:when>
+              <c:when test="${statistics['AVG_RATING'] >= 1.0 && statistics['AVG_RATING'] < 2.0}">
+                ⭐ (평점: ${statistics['AVG_RATING']})
+              </c:when>
+              <c:when test="${statistics['AVG_RATING'] >= 2.0 && statistics['AVG_RATING'] < 3.0}">
+                ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+              </c:when>
+              <c:when test="${statistics['AVG_RATING'] >= 3.0 && statistics['AVG_RATING'] < 4.0}">
+                ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+              </c:when>
+              <c:when test="${statistics['AVG_RATING'] >= 4.0 && statistics['AVG_RATING'] < 5.0}">
+                ⭐ ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+              </c:when>
+              <c:when test="${statistics['AVG_RATING'] >= 5.0}">
+                ⭐ ⭐ ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+              </c:when>
+            </c:choose>
+        </span>
+            </p>
+          </div>
+
+          <a href="/lodreview.do" class="review-detail-link">
+            <h2>리뷰 더보개 &gt;</h2>
+          </a>
+        </section>
+        <div class="review-container">
+          <c:forEach var="review" items="${reviewList}" begin="0" end="1">
+            <div class="review-card">
+              <h3>${review.reviewer_nickname}</h3>
+              <p>${review.reviewer_content}</p>
+              <span>
+                <!-- 점수에 따라 별 개수 계산 -->
+                <c:choose>
+                  <c:when test="${review.reviewer_rating >= 0.0 && review.reviewer_rating < 1.0}">
+                    ☆
+                  </c:when>
+                  <c:when test="${review.reviewer_rating >= 1.0 && review.reviewer_rating < 2.0}">
+                    ⭐
+                  </c:when>
+                  <c:when test="${review.reviewer_rating >= 2.0 && review.reviewer_rating < 3.0}">
+                    ⭐ ⭐
+                  </c:when>
+                  <c:when test="${review.reviewer_rating >= 3.0 && review.reviewer_rating < 4.0}">
+                    ⭐ ⭐ ⭐
+                  </c:when>
+                  <c:when test="${review.reviewer_rating >= 4.0 && review.reviewer_rating < 5.0}">
+                    ⭐ ⭐ ⭐ ⭐
+                  </c:when>
+                  <c:when test="${review.reviewer_rating >= 5.0}">
+                    ⭐ ⭐ ⭐ ⭐ ⭐
+                  </c:when>
+                </c:choose>
+            </span>
+            </div>
+          </c:forEach>
+        </div>
+
+
+        <!-- 리뷰 목록이 비어 있는 경우 -->
+            <c:if test="${empty reviewList}">
+              <p>등록된 리뷰가 없습니다.</p>
+            </c:if>
+          </div>
+        </section>
+      </div>
     </c:if>
     <c:if test="${empty lodgment.lodgment}">
       <img src="<c:url value='/img/search_no_result.svg'/>" alt="결과 없음">
@@ -172,12 +304,166 @@
         <img src="<c:url value='/img/search_icon_calendar.svg'/>" alt="달력 아이콘">
       </div>
 
-      <!-- 인원수 선택 -->
+<%--      인원수 선택--%>
       <div class="selection-item" onclick="toggleCounter()">
         <span id="selected-max">성인 2명, 아동 1명</span>
         <img src="<c:url value='/img/search_icon_down.svg'/>" alt="화살표 아이콘">
       </div>
     </div>
+  <!-- 캘린더 컨테이너 -->
+  <div id="calendar-container">
+    <div id="calendar"></div>
+    <button id="confirm-dates-btn" onclick="confirmDates()">확인</button>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script>
+  let calendar; // FullCalendar 인스턴스를 저장할 변수
+  let checkinDate = null;
+  let checkoutDate = null;
+  const checkinDateEl = document.getElementById('checkin-date');
+  const checkoutDateEl = document.getElementById('checkout-date');
+  // 캘린더 토글
+  function toggleCalendar() {
+    const calendarContainer = document.getElementById('calendar-container');
+    if (calendarContainer.style.display === 'none' || calendarContainer.style.display === '') {
+      calendarContainer.style.display = 'block';
+      renderCalendar(); // 캘린더 렌더링
+    } else {
+      calendarContainer.style.display = 'none';
+    }
+  }
+
+  function renderCalendar() {
+    const calendarEl = document.getElementById('calendar');
+
+    if (calendar) return; // 이미 렌더링된 경우 다시 생성하지 않음
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // FullCalendar 초기화
+    calendar = new FullCalendar.Calendar(calendarEl, {
+      initialView: 'dayGridMonth',
+      selectable: true,
+      validRange: { start: today.toISOString().split('T')[0] }, // 오늘 이후만 선택 가능
+      selectAllow: (selectInfo) => selectInfo.start >= today, // 과거 날짜 선택 방지
+      select(info) {
+        const selectedDate = new Date(info.startStr);
+
+        if (!checkinDate || (checkinDate && checkoutDate)) {
+          // 체크인 날짜 설정 및 체크아웃 초기화
+          checkinDate = info.startStr;
+          checkoutDate = null;
+          checkinDateEl.textContent = formatDate(selectedDate);
+          checkoutDateEl.textContent = '';
+          resetStyles();
+        } else if (checkinDate && !checkoutDate) {
+          let startDate = new Date(checkinDate);
+
+          if (selectedDate < startDate) {
+            // 이전 날짜를 선택한 경우 체크인 날짜 변경
+            checkinDate = info.startStr;
+            checkinDateEl.textContent = formatDate(selectedDate);
+            resetStyles();
+          } else if (selectedDate > startDate) {
+            // 이후 날짜를 선택한 경우 체크아웃 날짜 설정 및 범위 스타일 적용
+            checkoutDate = info.startStr;
+            checkoutDateEl.textContent = " ~ " + formatDate(selectedDate);
+            applyRangeStyles(startDate, selectedDate);
+          }
+        }
+      },
+      unselectAuto: false,
+      height: 'auto',
+      handleWindowResize: true,
+    });
+
+    calendar.render(); // 캘린더 렌더링
+  }
+
+  //서버에 선택된 날짜 전달
+
+
+  // 날짜 포맷팅 (몇월 몇일 무슨요일 형식)
+  function formatDate(dateStr) {
+    const date = new Date(dateStr);
+    const options = { month: 'long', day: 'numeric', weekday: 'long' };
+    return date.toLocaleDateString('ko-KR', options);
+  }
+
+  function applyRangeStyles(startDate, endDate) {
+    resetStyles(); // 기존 스타일 초기화
+
+    let currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      const dateStr = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
+      const dayCell = document.querySelector(`[data-date="${dateStr}"]`); // 해당 날짜 셀 선택
+
+      if (dayCell) {
+        dayCell.style.backgroundColor = '#ffddc1'; // 원하는 배경색 적용
+        dayCell.style.color = '#000'; // 글자 색상 설정 (선택 사항)
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1); // 다음 날짜로 이동
+    }
+  }
+
+  // 스타일 초기화
+  function resetStyles() {
+    // 모든 날짜 셀의 스타일 초기화
+    document.querySelectorAll('[data-date]').forEach(day => {
+      day.style.backgroundColor = ''; // 배경색 초기화
+      day.style.color = ''; // 글자 색상 초기화 (선택 사항)
+    });
+  }
+
+
+  // 날짜 범위 스타일 적용
+  function applyRangeStyles(startDate, endDate) {
+    resetStyles();
+
+    let currentDate = new Date(startDate);
+
+    while (currentDate <= endDate) {
+      const dateStr = currentDate.toISOString().split('T')[0];
+      const dayCell = document.querySelector(`[data-date="${dateStr}"]`); // 셀 요소 가져오기
+
+      if (dayCell) {
+        dayCell.classList.add('fc-day-in-range'); // 범위 스타일 추가
+      }
+
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+
+  }
+  function confirmDates() {
+    if (!checkinDate || !checkoutDate) {
+      alert("입실일과 퇴실일을 모두 선택하세요.");
+      return;
+    }
+
+    // 선택된 날짜를 서버로 전송
+
+
+    // 캘린더 숨기기
+    document.getElementById("calendar-container").style.display = "none";
+  }
+  // 팝업 열기
+  function showSellerPopup() {
+    const popup = document.getElementById("seller-popup");
+    popup.classList.remove("hidden");
+  }
+
+  // 팝업 닫기
+  function closeSellerPopup() {
+    const popup = document.getElementById("seller-popup");
+    popup.classList.add("hidden");
+  }
+</script>
     <!-- 객실 리스트 -->
 
     <div class="room-list">
@@ -218,11 +504,18 @@
       <p>${lodgment.lodgment.reservation_notice}</p>
     </div>
 
-    <!-- 시설/서비 -->
-    <div class="lodgment-reservation-notice">
-      <h3>시설/서비스</h3>
-      <p>${lodgment.lodgment.reservation_notice}</p>
-    </div>
+    <h3>시설/서비스</h3>
+    <c:if test="${not empty facilityList}">
+      <c:forEach var="facility" items="${facilityList}">
+        <div class="facility-item">
+          <p>* ${facility.lod_facility_name}</p> <!-- 시설명 -->
+        </div>
+      </c:forEach>
+    </c:if>
+    <c:if test="${empty facilityList}">
+      <p>등록된 시설 정보가 없습니다.</p>
+    </c:if>
+
 
     <div class="seller-info-container">
       <button onclick="showSellerPopup()">판매자 정보 보기</button>
@@ -256,192 +549,6 @@
   <div id="counter-dropdown" class="counter-dropdown hidden">
     <%@ include file="/WEB-INF/views/counter.jsp" %>
   </div>
-
-  <!-- 캘린더 컨테이너 -->
-  <div id="calendar-container">
-    <div id="calendar"></div>
-    <button id="confirm-dates-btn" onclick="confirmDates()">확인</button>
-  </div>
-  </div>
-
-  <!-- JavaScript -->
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-  <script>
-    let calendar; // FullCalendar 인스턴스를 저장할 변수
-    let checkinDate = null;
-    let checkoutDate = null;
-    const checkinDateEl = document.getElementById('checkin-date');
-    const checkoutDateEl = document.getElementById('checkout-date');
-    // 캘린더 토글
-    function toggleCalendar() {
-      const calendarContainer = document.getElementById('calendar-container');
-      if (calendarContainer.style.display === 'none' || calendarContainer.style.display === '') {
-        calendarContainer.style.display = 'block';
-        renderCalendar(); // 캘린더 렌더링
-      } else {
-        calendarContainer.style.display = 'none';
-      }
-    }
-
-    function renderCalendar() {
-      const calendarEl = document.getElementById('calendar');
-
-      if (calendar) return; // 이미 렌더링된 경우 다시 생성하지 않음
-
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      // FullCalendar 초기화
-      calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        selectable: true,
-        validRange: { start: today.toISOString().split('T')[0] }, // 오늘 이후만 선택 가능
-        selectAllow: (selectInfo) => selectInfo.start >= today, // 과거 날짜 선택 방지
-        select(info) {
-          const selectedDate = new Date(info.startStr);
-
-          if (!checkinDate || (checkinDate && checkoutDate)) {
-            // 체크인 날짜 설정 및 체크아웃 초기화
-            checkinDate = info.startStr;
-            checkoutDate = null;
-            checkinDateEl.textContent = formatDate(selectedDate);
-            checkoutDateEl.textContent = '';
-            resetStyles();
-          } else if (checkinDate && !checkoutDate) {
-            let startDate = new Date(checkinDate);
-
-            if (selectedDate < startDate) {
-              // 이전 날짜를 선택한 경우 체크인 날짜 변경
-              checkinDate = info.startStr;
-              checkinDateEl.textContent = formatDate(selectedDate);
-              resetStyles();
-            } else if (selectedDate > startDate) {
-              // 이후 날짜를 선택한 경우 체크아웃 날짜 설정 및 범위 스타일 적용
-              checkoutDate = info.startStr;
-              checkoutDateEl.textContent = " ~ " + formatDate(selectedDate);
-              applyRangeStyles(startDate, selectedDate);
-            }
-          }
-        },
-        unselectAuto: false,
-        height: 'auto',
-        handleWindowResize: true,
-      });
-
-      calendar.render(); // 캘린더 렌더링
-    }
-
-    //서버에 선택된 날짜 전달
-    function updateDatesOnServer(checkin, checkout) {
-      const xhr = new XMLHttpRequest();
-      xhr.open('POST', '/updateDates', true); // 서버의 API 엔드포인트 설정
-      xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-      xhr.onreadystatechange = function () {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-          if (xhr.status === 200) {
-            // 서버로부터 받은 결과를 화면에 반영
-            const response = JSON.parse(xhr.responseText);
-            document.getElementById('checkin-date').textContent = response.checkin;
-            document.getElementById('checkout-date').textContent = response.checkout;
-
-          } else {
-            console.error('서버 통신 오류:', xhr.responseText);
-          }
-        }
-      };
-
-
-      const data = {
-        checkin: checkin,
-        checkout: checkout,
-      };
-
-      xhr.send(JSON.stringify(data));
-    }
-
-    // 날짜 포맷팅 (몇월 몇일 무슨요일 형식)
-    function formatDate(dateStr) {
-      const date = new Date(dateStr);
-      const options = { month: 'long', day: 'numeric', weekday: 'long' };
-      return date.toLocaleDateString('ko-KR', options);
-    }
-
-    function applyRangeStyles(startDate, endDate) {
-      resetStyles(); // 기존 스타일 초기화
-
-      let currentDate = new Date(startDate);
-
-      while (currentDate <= endDate) {
-        const dateStr = currentDate.toISOString().split('T')[0]; // YYYY-MM-DD 형식으로 변환
-        const dayCell = document.querySelector(`[data-date="${dateStr}"]`); // 해당 날짜 셀 선택
-
-        if (dayCell) {
-          dayCell.style.backgroundColor = '#ffddc1'; // 원하는 배경색 적용
-          dayCell.style.color = '#000'; // 글자 색상 설정 (선택 사항)
-        }
-
-        currentDate.setDate(currentDate.getDate() + 1); // 다음 날짜로 이동
-      }
-    }
-
-
-
-    // 스타일 초기화
-    function resetStyles() {
-      // 모든 날짜 셀의 스타일 초기화
-      document.querySelectorAll('[data-date]').forEach(day => {
-        day.style.backgroundColor = ''; // 배경색 초기화
-        day.style.color = ''; // 글자 색상 초기화 (선택 사항)
-      });
-    }
-
-
-    // 날짜 범위 스타일 적용
-    function applyRangeStyles(startDate, endDate) {
-      resetStyles();
-
-      let currentDate = new Date(startDate);
-
-      while (currentDate <= endDate) {
-        const dateStr = currentDate.toISOString().split('T')[0];
-        const dayCell = document.querySelector(`[data-date="${dateStr}"]`); // 셀 요소 가져오기
-
-        if (dayCell) {
-          dayCell.classList.add('fc-day-in-range'); // 범위 스타일 추가
-        }
-
-        currentDate.setDate(currentDate.getDate() + 1);
-      }
-
-    }
-    function confirmDates() {
-      if (!checkinDate || !checkoutDate) {
-        alert("입실일과 퇴실일을 모두 선택하세요.");
-        return;
-      }
-
-      // 선택된 날짜를 서버로 전송
-      updateDatesOnServer(checkinDate, checkoutDate);
-
-      // 캘린더 숨기기
-      document.getElementById("calendar-container").style.display = "none";
-    }
-    // 팝업 열기
-    function showSellerPopup() {
-      const popup = document.getElementById("seller-popup");
-      popup.classList.remove("hidden");
-    }
-
-    // 팝업 닫기
-    function closeSellerPopup() {
-      const popup = document.getElementById("seller-popup");
-      popup.classList.add("hidden");
-    }
-  </script>
-
-
-
 
 
   <%@ include file="/WEB-INF/views/include/footer.jsp" %>

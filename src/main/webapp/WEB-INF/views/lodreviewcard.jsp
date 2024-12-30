@@ -95,7 +95,7 @@
                     <p>${review.reviewer_content}</p>
                     <div class="review-card-footer">
                         <span class="review-date">${review.reviewer_created}</span>
-                        <span class="review-rating">⭐ ${review.reviewer_rating}</span>
+                        <span class="review-rating">${review.reviewer_rating}</span>
                     </div>
                 </div>
             </div>
