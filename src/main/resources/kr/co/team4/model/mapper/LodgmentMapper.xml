@@ -48,8 +48,6 @@
         WHERE LODGMENT.LOD_IDX = 3
         AND SELLER.SELLER_NICK_NAME = '지현';
     </select>
-
-
     <select id="getAvailableRooms" parameterType="map" resultType="kr.co.team4.model.dto.RoomDTO">
 # SELECT
 #     R.room_idx,

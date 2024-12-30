@@ -96,7 +96,33 @@
         <h3 class="room-name">${room.room_name}</h3>
         <div class="check-in-out">체크인 15:00 - 체크아웃 11:00</div>
       </div>
-      <a href="/room/detail?room_idx=${room.room_idx}" class="details-link">상세보기 &gt;</a>
+      <a href="/room/detail?room_idx=${room.room_idx}" class="details-link"
+         onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_url}', '${room.room_price}')">
+        상세보기 &gt;
+      </a>
+
+      <script>
+        // 최근 본 숙소 목록에 추가하는 함수
+        function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
+          // localStorage에서 기존 최근 본 숙소 목록 가져오기
+          const recentRooms = JSON.parse(localStorage.getItem('recentRooms') || '[]');
+
+          // 중복을 방지하기 위해 현재 선택한 객실이 이미 목록에 있으면 제거
+          const updatedRooms = recentRooms.filter(room => room.roomIdx !== roomIdx);
+
+          // 새로운 객실을 목록 맨 앞에 추가
+          updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice });
+
+          // 최근 본 숙소는 최대 5개까지만 저장
+          if (updatedRooms.length > 5) {
+            updatedRooms.pop(); // 가장 오래된 항목 제거
+          }
+
+          // 로컬 스토리지에 저장
+          localStorage.setItem('recentRooms', JSON.stringify(updatedRooms));
+        }
+      </script>
+
     </div>
 
     <!-- 하단 영역 -->

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 
 @Data // @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor 포함
 @NoArgsConstructor // 기본 생성자 자동 생성
@@ -12,7 +11,5 @@ import java.sql.Date;
 public class LodFacilityDTO {
     private int lod_facility_idx;
     private String lod_facility_name;
-    private Date created;
-    private Date updated;
-    private String status;
 }
+
