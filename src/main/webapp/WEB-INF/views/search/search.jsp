@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -27,14 +28,14 @@
 
             <!-- 날짜 선택 -->
             <div class="selection-item" onclick="toggleCalendar()">
-            <div class="search-button" id="date-picker">
+                <div class="search-button" id="date-picker">
             <span>
                 <img src="/img/search_icon_calendar.svg" class="calendar_icon" alt="calendar"/>
                 <span id="checkin-date"></span> ~
                 <span id="checkout-date"></span>
                 <span id="cal-date"></span>
             </span>
-            </div>
+                </div>
             </div>
 
             <!-- 캘린더 컨테이너 -->
@@ -93,9 +94,9 @@
                 <!-- 팝업: 타입 선택 -->
                 <div id="type-popup" class="type-popup hidden">
                     <ul class="type-list">
-                        <li class="type-item" data-value="전체">전체</li>
-                        <li class="type-item" data-value="펜션">펜션</li>
-                        <li class="type-item" data-value="글램핑">글램핑</li>
+                        <li class="type-item" data-value="전체" value="0">전체</li>
+                        <li class="type-item" data-value="펜션" value="1">펜션</li>
+                        <li class="type-item" data-value="글램핑" value="2">글램핑</li>
                     </ul>
                 </div>
             </div>
@@ -111,9 +112,9 @@
                 <!-- 팝업: 몸무게 선택 -->
                 <div id="weight-popup" class="weight-popup hidden">
                     <ul class="weight-list">
-                        <li class="weight-item" data-value="5kg 미만">5kg 미만</li>
-                        <li class="weight-item" data-value="5kg 이상 ~ 10kg 이하">5kg 이상 ~ 10kg 이하</li>
-                        <li class="weight-item" data-value="10kg 초과">10kg 초과</li>
+                        <li class="weight-item" data-value="5kg 미만" value=0>5kg 미만</li>
+                        <li class="weight-item" data-value="5kg 이상 ~ 10kg 이하" value=1>5kg 이상 ~ 10kg 이하</li>
+                        <li class="weight-item" data-value="10kg 초과" value=2>10kg 초과</li>
                     </ul>
                 </div>
             </div>
@@ -133,26 +134,23 @@
         </div>
         <div style="width: 1200px; height: 1px; background-color: #DBD6D6;"></div>
 
-<%--        <div class="result-container">--%>
-<%--            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>--%>
-<%--        </div>--%>
-
-        <div class="result-container">
-            <c:choose>
-                <c:when test="${empty lodgments}">
-                    <p>검색 결과가 없습니다.</p>
-                </c:when>
-                <c:otherwise>
-                    <c:forEach var="lodgment" items="${lodgments}">
-                        <div class="result-item">
-                            <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}" class="result-img">
-                            <h3>${lodgment.lod_name}</h3>
-                            <p>${lodgment.lod_address}</p>
-                            <p>평점: ${lodgment.avg_rating}</p>
-                        </div>
-                    </c:forEach>
-                </c:otherwise>
-            </c:choose>
+        <div class="result-container" id="result-container">
+            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>
+<%--            <c:choose>--%>
+<%--                <c:when test="${empty lodgments}">--%>
+<%--                    <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>--%>
+<%--                </c:when>--%>
+<%--                <c:otherwise>--%>
+<%--                    <c:forEach var="lodgment" items="${lodgments}">--%>
+<%--                        <div class="result-item">--%>
+<%--                            <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}" class="result-img" width="200px" height="200px">--%>
+<%--                            <h3>${lodgment.lod_name}</h3>--%>
+<%--                            <p>${lodgment.lod_address}</p>--%>
+<%--                            <p>평점: ${lodgment.avg_rating}</p>--%>
+<%--                        </div>--%>
+<%--                    </c:forEach>--%>
+<%--                </c:otherwise>--%>
+<%--            </c:choose>--%>
         </div>
 
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
@@ -171,7 +169,7 @@
 
         // 날짜를 '월 일 요일' 형식으로 변환하는 함수
         function formatDate(date) {
-            const options = { month: 'long', day: 'numeric', weekday: 'long' }; // "월 일 요일" 형식
+            const options = {month: 'long', day: 'numeric', weekday: 'long'}; // "월 일 요일" 형식
             return date.toLocaleDateString('ko-KR', options); // 한국어 형식
         }
 
@@ -252,45 +250,11 @@
             calendar.render();
         }
 
-        function updateDatesOnServer(checkin, checkout) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/updateDates', true);
-            xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === XMLHttpRequest.DONE) {
-                    if (xhr.status === 200) {
-                        const response = JSON.parse(xhr.responseText);
-                        document.getElementById('checkin-date').textContent = response.checkin;
-                        document.getElementById('checkout-date').textContent = response.checkout;
-                    } else {
-                        console.error('Server communication error:', xhr.responseText);
-                    }
-                }
-            };
-
-            const data = {
-                checkin: checkin,
-                checkout: checkout,
-            };
-
-            xhr.send(JSON.stringify(data));
-        }
-
-        function formatDate(dateStr) {
-            const date = new Date(dateStr);
-            const options = {month: 'long', day: 'numeric', weekday: 'long'};
-            return date.toLocaleDateString('ko-KR', options);
-        }
-
         function confirmDates() {
             if (!checkinDate || !checkoutDate) {
                 alert("입실일과 퇴실일을 모두 선택하세요.");
                 return;
             }
-
-            // 선택된 날짜를 서버로 전송
-            updateDatesOnServer(checkinDate, checkoutDate);
 
             // 캘린더 숨기기
             document.getElementById("calendar-container").style.display = "none";

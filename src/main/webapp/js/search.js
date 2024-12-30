@@ -2,11 +2,64 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 변수 선언 ===
     let guestCount = 2; // 기본 인원 수
     let petCount = 1;   // 기본 반려동물 수
-    let selectedType = "전체"; // 기본 선택 값
-    let selectedWeight = "5kg 미만"; // 기본 선택 값
+    let selectedType = 0; // 기본 선택 값
+    let selectedWeight = 0; // 기본 선택 값
     let calendar; // FullCalendar 인스턴스 저장 변수
-    let checkinDate = null; // 체크인 날짜
-    let checkoutDate = null; // 체크아웃 날짜
+    let checkinDate = formatDate(new Date()); // 수정
+    let checkoutDate = formatDate(new Date(tomorrow)); // 수정
+    let selectedRegion = 0;
+
+    function sendSearchAjax() {
+        console.log("guestCount:" + guestCount + "petCount: " + petCount + "selectedType: " + selectedType + "selectedWeight: " +
+            selectedWeight + "checkinDate: " + checkinDate + "checkoutDate: " + checkoutDate + "selectedRegion: " + selectedRegion);
+
+        $.ajax({
+            url: "/search/updateUI.do",
+            type: "GET",
+            dataType:'json',
+            data: {
+                checkinDate: checkinDate instanceof Date ? checkinDate.toISOString().split('T')[0] : checkinDate,
+                checkoutDate: checkoutDate instanceof Date ? checkoutDate.toISOString().split('T')[0] : checkoutDate,
+                guestCount: guestCount,
+                petCount: petCount,
+                type: selectedType,
+                weight: selectedWeight,
+                region: selectedRegion
+            },
+            cache: false,
+            success: function (response) {
+                console.log(response);
+                updateResultUI(response);
+            },
+            error: function (error) {
+                console.error("검색 요청 오류:", error);
+            }
+        });
+    }
+
+    function updateResultUI(data){
+        const resultContainer = document.getElementById("result-container");
+        resultContainer.innerHTML = "";
+
+        // 이미지가 null일 때 이미지 처리 추가하기
+        if (data && data.length > 0) {
+            data.forEach(lodgment => {
+                const resultItem = document.createElement('div');
+                resultItem.classList.add('result-item');
+                resultItem.innerHTML = `
+                <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}" class="result-img" width="200px" height="200px">
+                <h3>${lodgment.lod_name}</h3>
+                <p>${lodgment.lod_address}</p>
+                <p>평점: ${lodgment.avg_rating}</p>
+            `;
+                resultContainer.appendChild(resultItem);
+            });
+        } else {
+            resultContainer.innerHTML = `
+            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>
+        `;
+        }
+    }
 
     // === 팝업 요소 가져오기 ===
     const guestPopup = document.getElementById('guest-popup');
@@ -43,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             selectable: true,
-            validRange: { start: today.toISOString().split('T')[0] },
+            validRange: {start: today.toISOString().split('T')[0]},
             select(info) {
                 const selectedDate = new Date(info.startStr);
 
@@ -92,6 +145,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (checkout) {
             const nights = calculateNights(new Date(checkin), new Date(checkout));
             calDateEl.textContent = `, ${nights}박`;
+
+            sendSearchAjax();
         } else {
             calDateEl.textContent = "";
         }
@@ -99,7 +154,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // === 날짜 포맷 ===
     function formatDate(date) {
-        const options = { month: 'long', day: 'numeric', weekday: 'long' };
+        const options = {month: 'long', day: 'numeric', weekday: 'long'};
         return date.toLocaleDateString('ko-KR', options);
     }
 
@@ -126,21 +181,25 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('plus-guest-btn').addEventListener('click', function () {
         if (guestCount < 10) guestCount++;
         updateCounts();
+        sendSearchAjax();
     });
 
     document.getElementById('minus-guest-btn').addEventListener('click', function () {
         if (guestCount > 1) guestCount--;
         updateCounts();
+        sendSearchAjax();
     });
 
     document.getElementById('plus-pet-btn').addEventListener('click', function () {
         if (petCount < 5) petCount++;
         updateCounts();
+        sendSearchAjax();
     });
 
     document.getElementById('minus-pet-btn').addEventListener('click', function () {
         if (petCount > 0) petCount--;
         updateCounts();
+        sendSearchAjax();
     });
 
     document.getElementById('apply-btn').addEventListener('click', function () {
@@ -156,9 +215,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll('.type-item').forEach(item => {
         item.addEventListener('click', function () {
-            selectedType = this.getAttribute('data-value');
-            document.querySelector('.type-label').innerText = selectedType;
+            selectedType = this.getAttribute('value');
+            document.querySelector('.type-label').innerText = this.getAttribute('data-value');
             typePopup.classList.add('hidden');
+            sendSearchAjax();
         });
     });
 
@@ -170,9 +230,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.querySelectorAll('.weight-item').forEach(item => {
         item.addEventListener('click', function () {
-            selectedWeight = this.getAttribute('data-value');
-            document.querySelector('.weight-label').innerText = selectedWeight;
+            selectedWeight = this.getAttribute('value');
+            document.querySelector('.weight-label').innerText = this.getAttribute('data-value');
             weightPopup.classList.add('hidden');
+            sendSearchAjax();
         });
     });
 
@@ -198,27 +259,27 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 초기 렌더링 ===
     initializeCalendar();
     updateCounts();
-});
+    sendSearchAjax();
 
 // === 탭 클릭 이벤트 추가 ===
-const tabs = document.querySelectorAll('.tab'); // 탭 요소 전부 선택
+    document.addEventListener("DOMContentLoaded", function () {
+        // === 탭 선택 기능 ===
+        const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                // 모든 탭에서 active 클래스 제거
+                tabs.forEach(t => t.classList.remove('active'));
+                tabs.forEach(t => t.classList.add('inactive'));
+                // 현재 클릭한 탭에 active 추가
+                tab.classList.remove('inactive'); // 비활성화 클래스 제거
+                tab.classList.add('active');     // 활성화 클래스 추가
+                // 나중에 쿼리 연동을 위한 선택된 지역 정보
+                const selectedRegion = tab.getAttribute('id'); // ID로 지역 구분
+                console.log("선택된 지역:", selectedRegion); // 선택 확인용 (테스트)
 
-document.addEventListener("DOMContentLoaded", function () {
-    // === 탭 선택 기능 ===
-    const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function () {
-            // 모든 탭에서 active 클래스 제거
-            tabs.forEach(t => t.classList.remove('active'));
-            tabs.forEach(t => t.classList.add('inactive'));
-            // 현재 클릭한 탭에 active 추가
-            tab.classList.remove('inactive'); // 비활성화 클래스 제거
-            tab.classList.add('active');     // 활성화 클래스 추가
-            // 나중에 쿼리 연동을 위한 선택된 지역 정보
-            const selectedRegion = tab.getAttribute('id'); // ID로 지역 구분
-            console.log("선택된 지역:", selectedRegion); // 선택 확인용 (테스트)
-            // 나중에 여기에 DB 쿼리 호출 함수 넣으면 됨
-            // fetchFilteredResults(selectedRegion);
+                sendSearchAjax();
+            });
         });
     });
+
 });

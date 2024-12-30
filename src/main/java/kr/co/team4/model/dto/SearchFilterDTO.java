@@ -12,7 +12,7 @@ public class SearchFilterDTO {
     private String checkoutDate;
     private int guestCount;
     private int petCount;
-    private String type;
-    private String weight;
-    private String region;
+    private int type;
+    private int weight;
+    private int region;
 }

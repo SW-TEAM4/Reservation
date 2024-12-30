@@ -607,6 +607,7 @@ p.popup-subtitle {
 /* 기본 설정 */
 .result-container {
     display: flex;            /* Flexbox 사용 */
+    flex-direction: column;
     justify-content: center; /* 가로 중앙 정렬 */
     align-items: center;     /* 세로 중앙 정렬 */
     height: 100vh;           /* 화면 전체 높이를 차지 */
