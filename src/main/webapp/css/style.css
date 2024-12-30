@@ -406,7 +406,6 @@ span.guest-label {
     font-size: 18px;
     cursor: pointer;
     text-align: center;
-    line-height: 28px;
 }
 
 .counter-btn:hover {
@@ -608,6 +607,7 @@ p.popup-subtitle {
 /* 기본 설정 */
 .result-container {
     display: flex;            /* Flexbox 사용 */
+    flex-direction: column;
     justify-content: center; /* 가로 중앙 정렬 */
     align-items: center;     /* 세로 중앙 정렬 */
     height: 100vh;           /* 화면 전체 높이를 차지 */
@@ -622,3 +622,30 @@ p.popup-subtitle {
 .result-container.no-results img {
     display: block; /* 검색 결과 없을 때만 표시 */
 }
+
+/* 캘린더 컨테이너 */
+#calendar-container {
+    position: absolute;
+    background: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    color: #564B4B;
+    margin-top: 53px;
+    display: none;
+    width: 591px;
+}
+
+.confirm_btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #564B4B;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 14px;
+}
+
+
