@@ -43,7 +43,26 @@
 <section>
     <h2>리뷰 통계</h2>
     <p>리뷰 수: ${statistics['REVIEW_COUNT']}</p>
-    <p>평균 평점: ${statistics['AVG_RATING']}</p>
+    <p>평균 평점:   <c:choose>
+        <c:when test="${statistics['AVG_RATING'] >= 0.0 && statistics['AVG_RATING'] < 1.0}">
+            ☆ (평점: ${statistics['AVG_RATING']})
+        </c:when>
+        <c:when test="${statistics['AVG_RATING'] >= 1.0 && statistics['AVG_RATING'] < 2.0}">
+            ⭐ (평점: ${statistics['AVG_RATING']})
+        </c:when>
+        <c:when test="${statistics['AVG_RATING'] >= 2.0 && statistics['AVG_RATING'] < 3.0}">
+            ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+        </c:when>
+        <c:when test="${statistics['AVG_RATING'] >= 3.0 && statistics['AVG_RATING'] < 4.0}">
+            ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+        </c:when>
+        <c:when test="${statistics['AVG_RATING'] >= 4.0 && statistics['AVG_RATING'] < 5.0}">
+            ⭐ ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+        </c:when>
+        <c:when test="${statistics['AVG_RATING'] >= 5.0}">
+            ⭐ ⭐ ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
+        </c:when>
+    </c:choose></p>
 </section>
 
 <!-- 개별 리뷰 목록 -->
@@ -65,7 +84,29 @@
                 <c:forEach var="review" items="${reviewList}">
                     <tr>
                         <td>${review.reviewer_nickname}</td>
-                        <td>${review.reviewer_rating}</td>
+                        <td>
+                <!-- 점수에 따라 별 개수 계산 -->
+                <c:choose>
+                    <c:when test="${review.reviewer_rating >= 0.0 && review.reviewer_rating < 1.0}">
+                        ☆
+                    </c:when>
+                    <c:when test="${review.reviewer_rating >= 1.0 && review.reviewer_rating < 2.0}">
+                        ⭐
+                    </c:when>
+                    <c:when test="${review.reviewer_rating >= 2.0 && review.reviewer_rating < 3.0}">
+                        ⭐ ⭐
+                    </c:when>
+                    <c:when test="${review.reviewer_rating >= 3.0 && review.reviewer_rating < 4.0}">
+                        ⭐ ⭐ ⭐
+                    </c:when>
+                    <c:when test="${review.reviewer_rating >= 4.0 && review.reviewer_rating < 5.0}">
+                        ⭐ ⭐ ⭐ ⭐
+                    </c:when>
+                    <c:when test="${review.reviewer_rating >= 5.0}">
+                        ⭐ ⭐ ⭐ ⭐ ⭐
+                    </c:when>
+                </c:choose>
+            </td>
                         <td>${fn:escapeXml(review.reviewer_content)}</td>
                         <td>
                             <img src="${not empty review.reviewer_image ? review.reviewer_image : '/img/default-review.jpg'}"

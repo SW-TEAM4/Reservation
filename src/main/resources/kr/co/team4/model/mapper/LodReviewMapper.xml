@@ -3,7 +3,7 @@
 <mapper namespace="kr.co.team4.model.mapper.LodReviewMapper">
 
     <!-- 리뷰 통계 쿼리 -->
-    <select id="getReviewStatistics" resultType="map" parameterType="int">
+    <select id="getReviewStatistics" parameterType="int" resultType="map" >
         SELECT
         COUNT(REVIEW.REVIEW_IDX) AS REVIEW_COUNT,
         ROUND(AVG(REVIEW.RATING), 1) AS AVG_RATING
@@ -20,7 +20,7 @@
     </select>
 
     <!-- 개별 리뷰 목록 쿼리 -->
-    <select id="getReviewList" resultType="kr.co.team4.model.dto.LodReviewDTO" parameterType="int">
+    <select id="getReviewList" parameterType="int" resultType="kr.co.team4.model.dto.LodReviewDTO" >
         SELECT
             USERS.NICK_NAME AS reviewer_nickname,
             REVIEW.RATING AS reviewer_rating,
@@ -38,7 +38,8 @@
           AND REVIEW.RESERVATION_IDX = RESERVATION.RESERVATION_IDX
           AND RESERVATION.ROOM_IDX = ROOM.ROOM_IDX
           AND ROOM.LOD_IDX = LODGMENT.LOD_IDX
-          AND LODGMENT.LOD_IDX = 3;
+          AND LODGMENT.LOD_IDX = 3
+        ORDER BY reviewer_created DESC;
     </select>
 
 </mapper>
