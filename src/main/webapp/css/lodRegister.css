@@ -297,4 +297,8 @@ select {
     background-color: #f9f9f9;
     color: #8A5642;
     cursor: pointer;          /* 포인터 커서 */
+    margin-right: 8px;
+}
+#checkoutAmPm{
+    margin-left: 10px;
 }
