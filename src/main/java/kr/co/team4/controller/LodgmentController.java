@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,16 +30,28 @@ public class LodgmentController {
     private LodFacilityService lodFacilityService; // LodFacilityService 추가
 
     @GetMapping("/lodgment.do")
-    public String index(Model model) {
-        LodgmentDTO lodgmentDTO = new LodgmentDTO();
-        lodgmentDTO.setLod_idx(3); // 테스트용
+    public String index(Model model, LodgmentDTO lodgmentDTO,
+                        @RequestParam int lod_idx,
+                        @RequestParam String checkinDate,
+                        @RequestParam String checkoutDate,
+                        @RequestParam int guestCount,
+                        @RequestParam int petCount,
+                        HttpServletRequest request
+                        ) {
+        lodgmentDTO.setLod_idx(lod_idx);
 
         // 숙소 상세 정보 가져오기
         model.addAttribute("lodgment", lodgmentService.lodgmentDetail(lodgmentDTO));
 
         // 숙소에 연결된 객실 리스트 가져오기
-        List<RoomDTO> roomList = lodgmentService.getRoomsByLodgment(lodgmentDTO.getLod_idx());
+        List<RoomDTO> roomList = lodgmentService.getRoomsByLodgment(lodgmentDTO);
+
+
+
         model.addAttribute("roomList", roomList);
+
+        // 객실 사진 리스트를 가져와야해
+
 
         // 판매자 정보 가져오기
         SellerDTO sellerInfo = lodgmentService.getSellerInfo(lodgmentDTO.getLod_idx());
@@ -47,7 +60,6 @@ public class LodgmentController {
         // 리뷰 통계 가져오기
         Map<String, Object> statistics = lodReviewService.getReviewStatistics(lodgmentDTO.getLod_idx());
         model.addAttribute("statistics", statistics);
-
         // 리뷰 목록 가져오기
         List<LodReviewDTO> reviewList = lodReviewService.getReviewList(lodgmentDTO.getLod_idx());
         model.addAttribute("reviewList", reviewList);
@@ -57,16 +69,24 @@ public class LodgmentController {
         System.out.println("시설 리스트: " + facilityList);
         model.addAttribute("facilityList", facilityList);
 
+        // 요청 속성에 추가 데이터 저장 (요청 범위에서만 사용 가능)
+        request.setAttribute("lod_idx", lod_idx);
+        request.setAttribute("checkinDate", checkinDate);
+        request.setAttribute("checkoutDate", checkoutDate);
+        request.setAttribute("guestCount", guestCount);
+        request.setAttribute("petCount", petCount);
         return "lodgment/lodgment"; // "lodgment" 페이지로 이동
     }
 
     @PostMapping("/lodgment/availableRooms.do")
     @ResponseBody
-    public List<RoomDTO> getAvailableRooms(@RequestParam(value = "checkinDate", required = false) String checkinDate,
+    public List<RoomDTO> getAvailableRooms(@RequestParam(value = "log_idx", required = false) int lod_idx,
+                                           @RequestParam(value = "checkinDate", required = false) String checkinDate,
                                            @RequestParam(value = "checkoutDate", required = false) String checkoutDate,
-                                           @RequestParam(value = "guestCount", required = false, defaultValue = "2") int guestCount,
-                                           @RequestParam(value = "petCount", required = false, defaultValue = "1") int petCount) {
+                                           @RequestParam(value = "guestCount", required = false) int guestCount,
+                                           @RequestParam(value = "petCount", required = false) int petCount) {
         Map<String, Object> params = new HashMap<>();
+        params.put("lod_idx", lod_idx);
         params.put("checkinDate", checkinDate);
         params.put("checkoutDate", checkoutDate);
         params.put("guestCount", guestCount);

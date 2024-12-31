@@ -1,19 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
     // === 변수 선언 ===
-    let guestCount = 2; // 기본 인원 수
-    let petCount = 1;   // 기본 반려동물 수
+    let guestCount = document.getElementById("guest-count").textContent; // 기본 인원 수
+    let petCount = document.getElementById("pet-count").textContent;   // 기본 반려동물 수
     let calendar; // FullCalendar 인스턴스 저장 변수
-    let checkinDate = formatDate(new Date()); // 수정
-    let checkoutDate = formatDate(new Date(tomorrow)); // 수정
+    let checkinDate = document.getElementById("checkin-date").textContent.trim();
+    let checkoutDate = document.getElementById("checkout-date").textContent.trim();
 
+    console.log("lodsearchjs check:" +checkinDate + " out: " + checkoutDate + " lod_idx" + lod_idx);
     function sendSearchAjax() {
         console.log("sendSearchAjax");
-        console.log("checkinDate: " + checkinDate + " checkoutDate: " + checkoutDate + "guestCount:" + guestCount + "petCount: " + petCount);
+        console.log("checkinDate: " + checkinDate + " checkoutDate: " + checkoutDate + " guestCount:" + guestCount + " petCount: " + petCount);
+        console.log("lod_idx: " + lod_idx);
         $.ajax({
             url: '/lodgment/availableRooms.do', // 서버 API 엔드포인트
             type: 'POST',
             dataType: 'json', // 응답 데이터 타입
             data: {
+                lod_idx: lod_idx,
                 checkinDate: checkinDate,
                 checkoutDate: checkoutDate,
                 guestCount: guestCount,

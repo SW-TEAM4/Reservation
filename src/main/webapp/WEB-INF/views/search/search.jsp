@@ -171,7 +171,7 @@
 
         // HTML 요소에 날짜 삽입
         document.getElementById('checkin-date').innerText = checkinDate; // 체크인 날짜
-        document.getElementById('checkout-date').innerText += checkoutDate; // 체크아웃 날짜
+        document.getElementById('checkout-date').innerText = checkoutDate; // 체크아웃 날짜
         document.getElementById('cal-date').innerText = ", 1박"; // 기본 1박 설정
 
 

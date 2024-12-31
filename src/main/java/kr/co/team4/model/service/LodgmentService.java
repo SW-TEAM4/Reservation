@@ -10,7 +10,7 @@ import java.util.Map;
 public interface LodgmentService {
     Map<String, Object> lodgmentDetail(LodgmentDTO lodgmentDTO);
 
-    List<RoomDTO> getRoomsByLodgment(int lodIdx);
+    List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO);
 
     SellerDTO getSellerInfo(int lodIdx);
 

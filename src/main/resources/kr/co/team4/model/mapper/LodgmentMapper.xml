@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.team4.model.mapper.LodgmentMapper">
+    <resultMap id="RoomResultMap" type="kr.co.team4.model.dto.RoomDTO">
+        <id property="room_idx" column="room_idx"/>
+        <result property="lod_idx" column="lod_idx"/>
+        <result property="room_name" column="room_name"/>
+        <result property="room_notice" column="room_notice"/>
+        <result property="room_price" column="room_price"/>
+        <result property="max_people_cnt" column="max_people_cnt"/>
+        <result property="max_pet_cnt" column="max_pet_cnt"/>
+        <result property="avg_rating" column="avg_rating"/>
+        <result property="number_of_review" column="number_of_review"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="status" column="status"/>
+
+        <!-- 이미지 URL 리스트 매핑 -->
+        <collection property="room_img_urls" ofType="java.lang.String">
+            <id column="room_photo_url"/>
+            <result column="room_photo_url"/>
+        </collection>
+    </resultMap>
+
     <select id="lodgmentDetail" parameterType="kr.co.team4.model.dto.LodgmentDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
         SELECT lod_img_url,
                lod_name,
@@ -11,26 +32,28 @@
                reservation_notice,
                avg_rating
         FROM LODGMENT L
-        WHERE lod_idx = 3;
+        WHERE lod_idx = #{lod_idx};
     </select>
 
     <!--lod_idx로 객실 리스트 조회 -->
-    <select id="getRoomsByLodgment" parameterType="kr.co.team4.model.dto.RoomDTO" resultType="kr.co.team4.model.dto.RoomDTO">
-        SELECT room_idx,
-               lod_idx,
-               room_name,
-               room_notice,
-               room_price,
-               room_img_url,
-               max_people_cnt,
-               max_pet_cnt,
-               avg_rating,
-               number_of_review,
-               created,
-               updated,
-               status
-        FROM ROOM
-        WHERE lod_idx = 3
+    <select id="getRoomsByLodgment" parameterType="kr.co.team4.model.dto.LodgmentDTO" resultMap="RoomResultMap">
+        SELECT
+            r.room_idx,
+            r.lod_idx,
+            r.room_name,
+            r.room_notice,
+            r.room_price,
+            r.max_people_cnt,
+            r.max_pet_cnt,
+            r.avg_rating,
+            r.number_of_review,
+            r.created,
+            r.updated,
+            r.status,
+            p.ROOM_PHOTO_URL
+        FROM ROOM r
+        LEFT JOIN PHOTO p ON r.room_idx = p.room_idx AND r.lod_idx = p.lod_idx
+        WHERE r.lod_idx = #{lod_idx}
     </select>
 
     <!-- 판매자 정보 조회 -->
@@ -64,7 +87,7 @@
            OR
            (#{checkoutDate} > RES.res_str_date AND RES.res_end_date >= #{checkoutDate})
             )
-        WHERE R.lod_idx = 3
+        WHERE R.lod_idx = #{lod_idx}
         GROUP BY
             R.room_idx,
             R.lod_idx,

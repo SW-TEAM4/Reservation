@@ -25,6 +25,10 @@
     width: 100%; /* 이미지가 부모 요소에 맞게 채워짐 */
     height: auto; /* 비율 유지 */
 }
+#room-img {
+    width: 100%; /* 이미지가 부모 요소에 맞게 채워짐 */
+    height: auto; /* 비율 유지 */
+}
 
 /* 정보 섹션 */
 .room-info {
@@ -88,4 +92,17 @@
 
 .booking-button:hover {
     background-color: #3a2116; /* 호버 시 배경색 변경 */
+}
+
+/* 스와이퍼 스타일 */
+.swiper-visual {
+    width: 300px;
+    height: 300px; /* 슬라이더 높이 */
+}
+
+.swiper-slide img {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    object-fit: cover; /* 이미지 비율 유지 */
 }

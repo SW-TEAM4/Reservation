@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data // @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor 포함
 @NoArgsConstructor // 기본 생성자 자동 생성
 @AllArgsConstructor // 모든 필드를 포함한 생성자 자동 생성
@@ -13,7 +15,6 @@ public class RoomDTO {
     private String room_name;
     private String room_notice;
     private int room_price;
-    private String room_img_url;
     private int max_people_cnt; // 최대 인원 수
     private int max_pet_cnt; // 최대 마리 수
     private double avg_rating;
@@ -21,4 +22,6 @@ public class RoomDTO {
     private java.sql.Date created;
     private java.sql.Date updated;
     private String status;
+
+    private List<String> room_img_urls;
 }

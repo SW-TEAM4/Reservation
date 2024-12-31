@@ -11,7 +11,22 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
     <link rel="stylesheet" href="/css/style.css?after"/>
-    <script src="/js/home.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const swiper = new Swiper('.swiper-visual', {
+                loop: true, // 무한 루프
+                autoplay: false, // 자동 재생 비활성화
+                navigation: {
+                    nextEl: '.swiper-button-next', // 다음 버튼
+                    prevEl: '.swiper-button-prev', // 이전 버튼
+                },
+                pagination: {
+                    el: '.swiper-pagination', // 페이지네이션 활성화
+                    clickable: true, // 페이지네이션 클릭 가능
+                },
+            });
+        });
+    </script>
 </head>
 <body>
 <div class="wrap">
@@ -22,12 +37,6 @@
                 <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_1.svg');"></div>
                 <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_2.svg');"></div>
             </div>
-            <%--            <div class="swiper-button-prev">--%>
-            <%--                <img src="/img/home_foot_left.svg" class="paw-button">--%>
-            <%--            </div>--%>
-            <%--            <div class="swiper-button-next">--%>
-            <%--                <img src="/img/home_foot_right.svg" class="paw-button">--%>
-            <%--            </div>--%>
         </div>
     </div>
     <div class="home_txt">
