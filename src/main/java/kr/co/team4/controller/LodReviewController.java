@@ -31,6 +31,6 @@ public class LodReviewController {
         model.addAttribute("reviewList", reviewList);
 
         // 한 화면에서 표시
-        return "lodreview"; // lodreview.jsp로 이동
+        return "lodgment/lodreview"; // lodreview.jsp로 이동
     }
 }

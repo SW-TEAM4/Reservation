@@ -33,4 +33,9 @@ public class LodgmentServiceImpl implements LodgmentService {
         return lodgmentMapper.getSellerInfo(lodIdx); // Mapper가 정확히 SellerDTO를 반환하는지 확인
     }
 
+    @Override
+    public List<RoomDTO> getAvailableRooms(Map<String, Object> params) {
+        return lodgmentMapper.getAvailableRooms(params);
+    }
+
 }

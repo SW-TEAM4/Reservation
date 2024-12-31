@@ -13,4 +13,5 @@ public interface LodgmentMapper {
     List<LodgmentDTO> lodgmentDetail(LodgmentDTO lodgmentDTO);
     List<RoomDTO> getRoomsByLodgment(int lodIdx);
     SellerDTO getSellerInfo(int lodIdx);
+    List<RoomDTO> getAvailableRooms(Map<String, Object> params);
 }
