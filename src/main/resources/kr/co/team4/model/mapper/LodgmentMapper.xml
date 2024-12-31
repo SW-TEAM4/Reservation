@@ -49,27 +49,34 @@
         AND SELLER.SELLER_NICK_NAME = '지현';
     </select>
     <select id="getAvailableRooms" parameterType="map" resultType="kr.co.team4.model.dto.RoomDTO">
-# SELECT
-#     R.room_idx,
-#     R.lod_idx,
-#     R.room_name,
-#     R.room_price,
-#     R.room_img_url,
-#     R.max_people_cnt,
-#     R.max_pet_cnt
-# FROM ROOM R LEFT JOIN RESERVATION RES
-# ON R.room_idx = RES.room_idx
-<!--AND #{checkinDate}  <= RES.res_end_date-->
-# AND #{checkoutDate}  >= RES.res_str_date
-# WHERE R.lod_idx = #{lodIdx}
-# GROUP BY
-#     R.room_idx,
-#     R.lod_idx,
-#     R.room_name,
-#     R.room_price,
-#     R.room_img_url,
-#     R.max_people_cnt,
-#     R.max_pet_cnt
-# HAVING COUNT(RES.room_idx) = 0;
+        SELECT
+            R.room_idx,
+            R.lod_idx,
+            R.room_name,
+            R.room_price,
+            R.room_img_url,
+            R.max_people_cnt,
+            R.max_pet_cnt
+        FROM ROOM R LEFT JOIN RESERVATION RES
+        ON R.room_idx = RES.room_idx
+        AND(
+           (#{checkinDate} >= RES.res_str_date AND RES.res_end_date > #{checkinDate})
+           OR
+           (#{checkoutDate} > RES.res_str_date AND RES.res_end_date >= #{checkoutDate})
+            )
+        WHERE R.lod_idx = 3
+        GROUP BY
+            R.room_idx,
+            R.lod_idx,
+            R.room_name,
+            R.room_price,
+            R.room_img_url,
+            R.max_people_cnt,
+            R.max_pet_cnt
+        HAVING
+            COUNT(RES.room_idx) = 0 -- 날짜 충돌이 없는 객실만 선택
+           AND MAX(R.max_people_cnt) >= #{guestCount} -- 최대 인원 조건 확인
+           AND MAX(R.max_pet_cnt) >= #{petCount}; -- 최대 반려동물 수 조건 확인
+
     </select>
 </mapper>

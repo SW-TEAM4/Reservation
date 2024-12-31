@@ -8,7 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,10 +44,11 @@ public class LodgmentController {
         SellerDTO sellerInfo = lodgmentService.getSellerInfo(lodgmentDTO.getLod_idx());
         model.addAttribute("sellerInfo", sellerInfo);
 
-        // **리뷰 통계 및 목록 가져오기**
+        // 리뷰 통계 가져오기
         Map<String, Object> statistics = lodReviewService.getReviewStatistics(lodgmentDTO.getLod_idx());
         model.addAttribute("statistics", statistics);
 
+        // 리뷰 목록 가져오기
         List<LodReviewDTO> reviewList = lodReviewService.getReviewList(lodgmentDTO.getLod_idx());
         model.addAttribute("reviewList", reviewList);
 
@@ -52,8 +57,22 @@ public class LodgmentController {
         System.out.println("시설 리스트: " + facilityList);
         model.addAttribute("facilityList", facilityList);
 
+        return "lodgment/lodgment"; // "lodgment" 페이지로 이동
+    }
 
+    @PostMapping("/lodgment/availableRooms.do")
+    @ResponseBody
+    public List<RoomDTO> getAvailableRooms(@RequestParam(value = "checkinDate", required = false) String checkinDate,
+                                           @RequestParam(value = "checkoutDate", required = false) String checkoutDate,
+                                           @RequestParam(value = "guestCount", required = false, defaultValue = "2") int guestCount,
+                                           @RequestParam(value = "petCount", required = false, defaultValue = "1") int petCount) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("checkinDate", checkinDate);
+        params.put("checkoutDate", checkoutDate);
+        params.put("guestCount", guestCount);
+        params.put("petCount", petCount);
 
-        return "lodgment"; // "lodgment" 페이지로 이동
+        // Service를 호출하여 예약 가능한 객실 리스트를 가져옴
+        return lodgmentService.getAvailableRooms(params);
     }
 }

@@ -24,7 +24,7 @@ public class RoomController {
         // 모델에 객실 정보 추가
         model.addAttribute("room", room);
 
-        return "room"; // room.jsp로 이동
+        return "room/room"; // room.jsp로 이동
     }
 
 }
