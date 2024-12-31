@@ -5,16 +5,26 @@
   <link rel="stylesheet" href="/css/roomcard.css"/>
   <link rel="stylesheet" href="/css/button.css"/>
   <script>
-    // 최근 본 숙소 목록에 추가하는 함수
     function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
+      // 기존 데이터 가져오기
       const recentRooms = JSON.parse(localStorage.getItem('recentRooms') || '[]');
+
+      // 중복 제거
       const updatedRooms = recentRooms.filter(room => room.roomIdx !== roomIdx);
+
+      // 새 데이터 추가
       updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice });
+
+      // 최대 5개까지만 저장
       if (updatedRooms.length > 5) {
         updatedRooms.pop();
       }
+
+      // 로컬 스토리지에 저장
       localStorage.setItem('recentRooms', JSON.stringify(updatedRooms));
     }
+
+
   </script>
 </head>
 <body>
