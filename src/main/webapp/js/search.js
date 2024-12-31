@@ -37,17 +37,17 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function updateResultUI(data){
+    function updateResultUI(data) {
         const resultContainer = document.getElementById("result-container");
-        resultContainer.innerHTML = "";
+        resultContainer.innerHTML = ""; // 기존 결과 초기화
 
-        // 이미지가 null일 때 이미지 처리 추가하기
         if (data && data.length > 0) {
             data.forEach(lodgment => {
                 const resultItem = document.createElement('div');
                 resultItem.classList.add('result-item');
+                const imgUrl = lodgment.lod_img_url ? lodgment.lod_img_url : '/img/search_img_no_lodgment_thumbnail.svg';
                 resultItem.innerHTML = `
-                <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}" class="result-img" width="200px" height="200px">
+                <img src="${imgUrl}" alt="${lodgment.lod_name}" class="result-img" width="240px" height="300px">
                 <h3>${lodgment.lod_name}</h3>
                 <p>${lodgment.lod_address}</p>
                 <p>평점: ${lodgment.avg_rating}</p>
