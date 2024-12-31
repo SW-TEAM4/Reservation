@@ -1,11 +1,12 @@
 /*
-    파일명 : detailPage.css
+    파일명 : RoomRegister.css
     생성자 : JDeok
     날 짜  : 2024.12.24
     시 간  : 오전 10:01
     기 능  : 객실 정보 등록 페이지 스타일
     변경사항
      - 2024.12.24 : JDeok(최초작성)
+     - 2024.12.30 : 수정 (입력 필드 크기 조정 및 "객실 기본정보" 추가)
 */
 
 body {
@@ -20,6 +21,7 @@ body {
     display: flex;
     min-height: 100vh;
 }
+
 /* 콘텐츠 영역 스타일 */
 .content {
     flex: 1;
@@ -57,19 +59,35 @@ h1 {
     font-weight: bold;
 }
 
+/* 객실 정보 테이블 텍스트와 숫자 입력 필드 */
 .room-table td input[type="text"],
 .room-table td input[type="number"],
 .room-table td input[type="file"] {
+    width: 70%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fdf7f3;
     color: #8A5642;
-    font-size: 14px;
+    font-size: 12px;
 }
 
+/* 객실 기본정보 textarea */
+.room-table td textarea {
+    width: 90%;
+    height: 50px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fdf7f3;
+    color: #8A5642;
+    font-size: 12px;
+}
+
+
 .room-table td input[type="text"]:focus,
-.room-table td input[type="number"]:focus {
+.room-table td input[type="number"]:focus,
+.room-table td textarea:focus {
     outline: none;
     border: 1px solid #B07960;
     background-color: #fff;
@@ -141,6 +159,7 @@ h1 {
 .menu-link:hover {
     color: #f7d3c5;
 }
+
 .active {
     font-weight: bold; /* 활성화된 메뉴에 bold 스타일 적용 */
     color: #f7d3c5;
@@ -149,4 +168,3 @@ h1 {
 .menu-link:hover {
     color: #f7d3c5;
 }
-

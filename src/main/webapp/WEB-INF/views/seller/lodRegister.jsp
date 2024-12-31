@@ -65,11 +65,13 @@
             <input type="tel" id="contactNumber" name="lod_phone_number" required>
         </div>
 
+
         <%-- 숙소 대표 사진 업로드 --%>
-       <%-- <div class="form-group">
+            <%--[check] 숙소사진 필수처리 --%>
+        <div class="form-group">
             <label for="mainImage">숙소 대표 사진</label>
-            <input type="file" id="mainImage" name="lod_img_url" accept="image/*">
-        </div>--%>
+            <input type="file" id="mainImage" name="lod_img" accept="image/*">
+        </div>
 
         <%-- 지역 유형 선택 (강원/경기/인천) --%>
         <div class="other-group">
@@ -190,6 +192,7 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f60c442b3dcdb9c54d4dc8c7282d7&libraries=services"></script>
 <script>
+    /*우편주소*/
     document.addEventListener('DOMContentLoaded', () => {
         const postcodeButton = document.querySelector('.btn-postcode');
 
@@ -228,6 +231,7 @@
     });
 </script>
 <script>
+    /* 시설/서비스 */
     document.addEventListener('DOMContentLoaded', function () {
         const updateHiddenFields = () => {
             const selectedFacilities = [];
@@ -262,5 +266,31 @@
     });
 
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const contactNumberInput = document.getElementById('contactNumber');
+
+        // 입력 중 하이픈 추가
+        contactNumberInput.addEventListener('input', function () {
+            let value = this.value.replace(/[^0-9]/g, ''); // 숫자만 허용
+            if (value.length <= 3) {
+                this.value = value;
+            } else if (value.length <= 7) {
+                this.value = value.slice(0, 3) + '-' + value.slice(3);
+            } else {
+                this.value = value.slice(0, 3) + '-' + value.slice(3, 7) + '-' + value.slice(7, 11);
+            }
+        });
+
+        // 전송 시 하이픈 제거
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function () {
+            const rawValue = contactNumberInput.value.replace(/-/g, ''); // 하이픈 제거
+            contactNumberInput.value = rawValue;
+        });
+    });
+</script>
+
+
 </body>
 </html>

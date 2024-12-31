@@ -1,0 +1,181 @@
+package kr.co.team4.model.service;
+
+import kr.co.team4.model.dto.LodRegisterDTO;
+import kr.co.team4.model.dto.RoomRegisterDTO;
+import kr.co.team4.model.mapper.SellerPageMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.List;
+
+@Service
+public class SellerPageServiceImpl implements SellerPageService {
+    @Autowired
+    private SellerPageMapper sellerPageMapper;
+    @Autowired
+    private S3Service s3Service;
+    @Autowired
+    private HttpSession session;
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소보유여부 체크
+     * 변경사항
+     *  - 2024.12.30  : JDeok(최초생성)
+     * */
+    @Override
+    public String lodCheck(int seller_idx) {
+        String checkYn = sellerPageMapper.checkLod(seller_idx);
+
+        return checkYn;
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소IDX 가져오기
+     * 변경사항
+     *  - 2024.12.31  : JDeok(최초생성)
+     * */
+    @Override
+    public int getLod(int seller_idx) {
+        int lod_idx = sellerPageMapper.getLod(seller_idx);
+        return lod_idx;
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소등록 
+     * 변경사항
+     *  - 2024.12.26 : JDeok(최초생성)
+     * */
+    @Override
+    @Transactional // 트랜잭션 적용
+    /* 숙소 등록 */
+    public void registerLod(LodRegisterDTO dto) {
+        sellerPageMapper.insertLod(dto);
+
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소대표이미지 S3 Upload 
+     * 변경사항
+     *  - 2024.12.30 : JDeok(최초생성)
+     * */
+    @Override
+    /* 숙소이미지 등록  */
+    public void registerLodImg(LodRegisterDTO dto) throws IOException {
+        String fileName      = dto.getLod_img().getOriginalFilename();                     // 파일명     ex) 001.png
+        String FileExtension = fileName.substring(fileName.indexOf(".") + 1);    //  파일확장자 ex) png
+        String imgKey        = "lodgment/" + dto.getLod_idx() + "." +FileExtension;       // lodgement/IDX.png
+
+        MultipartFile multipartFile = dto.getLod_img();
+        s3Service.uploadFileToS3(imgKey, multipartFile);
+
+        /*update를 통해 lod_img_url 변경 */
+        String lod_img_url = "https://sdgb.s3.ap-northeast-2.amazonaws.com/" + imgKey;
+        dto.setLod_img_url(lod_img_url);
+
+        sellerPageMapper.updateLodImgUrl(dto);
+    }
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 객실등록
+     * 변경사항
+     *  - 2024.12.30 : JDeok(최초생성)
+     * */
+    @Override
+    @Transactional // 트랜잭션 적용
+    public void registerRoom(RoomRegisterDTO roomDto) {
+
+        System.out.println("roomDto : " + roomDto);
+
+        roomDto.setLod_idx((int)session.getAttribute("lod_idx"));
+        /* 객실 정보 insert */
+        sellerPageMapper.insertRoom(roomDto);
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 객실이미지 저장
+     * 변경사항
+     *  - 2024.12.31 : JDeok(최초생성)
+     * */
+    @Override
+    public void registerRoomImg(RoomRegisterDTO roomDto) throws IOException {
+        List<MultipartFile> room_photos = roomDto.getRoom_photos();
+
+        int room_img_cnt = 0;
+        for(MultipartFile room_photo : room_photos){
+            /* 객실 img insert photo table  */
+            String fileName      = room_photo.getOriginalFilename();                          // 파일명     ex) 001.png
+            String FileExtension = fileName.substring(fileName.indexOf(".") + 1);    //  파일확장자 ex) png
+            String imgKey        = "Room/"               +
+                                   roomDto.getLod_idx()  +     // 숙소 IDX
+                                   roomDto.getRoom_idx() +     // 객실 IDX
+                                   room_img_cnt          +     // 객실 이미지 채번
+                                   "." +FileExtension;         // Room/lod_idx + room_idx + 0.png
+
+            s3Service.uploadFileToS3(imgKey, room_photo);
+
+            /*update를 통해 room_img_url 변경 */
+            String room_img_url = "https://sdgb.s3.ap-northeast-2.amazonaws.com/" + imgKey;
+            roomDto.setRoom_img_url(room_img_url);
+
+            sellerPageMapper.insertPhoto(roomDto);
+            room_img_cnt++;
+        }
+
+    }
+
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 시설/서비스 등록
+     * 변경사항
+     *  - 2024.12.26 : JDeok(최초생성)
+     * */
+    @Override
+    @Transactional // 트랜잭션 적용 자동롤백
+    /* 시설/서비스 등록 */
+    public void registerFacility(LodRegisterDTO dto) {
+        /* 시설/서비스 체크 후 insert */
+        List<String> facilities = dto.getLod_facility();
+
+        if(facilities != null && facilities.isEmpty() == false){
+            for(String facility : facilities){
+                try{
+                    String checkYn = sellerPageMapper.checktFacility(facility);
+
+                     /* 시설/서비스  테이블에 같은 시설/서비스 명이 있는 경우            */
+                     /* 1. 숙소매핑서비스테이블(LOGMENT_MAPPING_SERVICE)에 INSERT함  */
+                    if("Y".equals(checkYn)){
+                        int service_idx = sellerPageMapper.serviceIdxSearch(facility);
+                        dto.setLod_facility_idx(service_idx);
+                        sellerPageMapper.insertLodMapSer(dto);
+                    }
+                    /* 시설/서비스 테이블에 같은 시설/서비스 명이 없는 경우             */
+                    /* 1. 시설/서비스테이블에 INSERT 함                            */
+                    /* 2. 숙소매핑서비스테이블(LOGMENT_MAPPING_SERVICE)에 INSERT함  */
+                    else if("N".equals(checkYn)){
+                        sellerPageMapper.insertLodFacility(facility);
+                        int service_idx = sellerPageMapper.serviceIdxSearch(facility);
+                        dto.setLod_facility_idx(service_idx);
+                        sellerPageMapper.insertLodMapSer(dto);
+                    }else{
+                        System.out.println(checkYn);
+                    }
+                }catch (Exception e){
+                    // 예외 처리
+                    System.err.println("시설/서비스 처리 중 오류 발생(lodRegisterServiceImpl.java): " + facility);
+                    e.printStackTrace(); // 상세 예외 출력 (로그 시스템을 활용하는 것을 권장)
+                }
+
+            }
+        }
+    }
+}

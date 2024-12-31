@@ -1,5 +1,5 @@
 <%--
-  파일명 : detailPage.jsp
+  파일명 : sellerSiderbar.jsp
   생성자 : JDeok
   날 짜  : 2024.12.24
   시 간  : 오전 11:43
@@ -11,8 +11,8 @@
 <aside class="sidebar">
     <h2>객실 정보</h2>
     <ul>
-        <li><a href="/lodgment/sellerDetailMain.do" class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 객실 상세</a></li>
-        <li><a href="/lodgment/detailPage.do" class="${pageTitle == 'roomRegister' ? 'active' : ''}"> * 객실 등록</a></li>
+        <li><a href="/lodgment/sellerDetailMain.do" class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 객실 예약정보</a></li>
+        <li><a href="/lodgment/roomRegister.do" class="${pageTitle == 'roomRegister' ? 'active' : ''}"> * 객실 등록</a></li>
     </ul>
 </aside>
 <script>
