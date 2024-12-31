@@ -4,6 +4,10 @@
 <head>
   <link rel="stylesheet" href="/css/roomcard.css"/>
   <link rel="stylesheet" href="/css/button.css"/>
+  <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+  <script src="/js/home.js"></script>
+
   <script>
     function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
       // 기존 데이터 가져오기
@@ -32,7 +36,19 @@
   <div class="room-card">
     <!-- 객실 이미지 -->
     <a href="/room/detail?room_idx=${room.room_idx}" class="room-image-link">
-      <img src="${room.room_img_url}" alt="${room.room_name}" class="room-img">
+<%--      <img src="${room.room_img_urls}" alt="${room.room_name}" class="room-img">--%>
+      <div class="room-img-container">
+        <div class="swiper swiper-visual">
+          <div class="swiper-wrapper">
+            <!-- room.room_img_urls 리스트를 반복 -->
+            <c:forEach var="img_url" items="${room.room_img_urls}">
+              <div class="swiper-slide">
+                <img src="${img_url}" alt="Room Image"/>
+              </div>
+            </c:forEach>
+          </div>
+        </div>
+      </div>
     </a>
     <!-- 객실 정보 -->
     <div class="room-info">
@@ -44,7 +60,7 @@
           <div class="guest-pet-count">사람수: ${room.max_people_cnt} | 반려동물수: ${room.max_pet_cnt}</div>
         </div>
         <a href="/room/detail?room_idx=${room.room_idx}" class="details-link"
-           onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_url}', '${room.room_price}')">
+           onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
           상세보기 &gt;
         </a>
       </div>

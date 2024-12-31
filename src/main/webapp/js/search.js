@@ -41,8 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const resultContainer = document.getElementById("result-container");
         resultContainer.innerHTML = ""; // 기존 결과 초기화
 
-        if (data && data.length > 0) {
-            data.forEach(lodgment => {
+        if (data && data.lodgments && data.lodgments.length > 0) {
+            data.lodgments.forEach(lodgment => {
                 const resultItem = document.createElement('div');
                 resultItem.classList.add('result-item');
                 const imgUrl = lodgment.lod_img_url ? lodgment.lod_img_url : '/img/search_img_no_lodgment_thumbnail.svg';
@@ -52,6 +52,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>${lodgment.lod_address}</p>
                 <p>평점: ${lodgment.avg_rating}</p>
             `;
+             // 클릭 이벤트 추가
+             resultItem.addEventListener('click', () => {
+                window.location.href=`/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}
+                &guestCount=${guestCount}&petCount=${petCount}`;
+             });
                 resultContainer.appendChild(resultItem);
             });
         } else {

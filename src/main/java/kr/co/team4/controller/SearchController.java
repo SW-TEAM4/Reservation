@@ -10,8 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import software.amazon.awssdk.services.s3.endpoints.internal.Value;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SearchController {
@@ -42,7 +45,7 @@ public class SearchController {
 
     @GetMapping("/search/updateUI.do")
     @ResponseBody
-    public List<LodgmentDTO> searchUpdate(@RequestParam(value = "checkinDate", required = false) String checkinDate,
+    public Map<String, Object> searchUpdate(@RequestParam(value = "checkinDate", required = false) String checkinDate,
                                      @RequestParam(value = "checkoutDate", required = false) String checkoutDate,
                                      @RequestParam(value = "guestCount", required = false, defaultValue = "2") int guestCount,
                                      @RequestParam(value = "petCount", required = false, defaultValue = "1") int petCount,
@@ -50,6 +53,8 @@ public class SearchController {
                                      @RequestParam(value = "weight", required = false, defaultValue = "0") int weight,
                                      @RequestParam(value = "region", required = false, defaultValue = "0") int region,
                                      Model model) {
+        Map<String, Object> response = new HashMap<>();
+
 
         // 필터 DTO 생성
         SearchFilterDTO filter = new SearchFilterDTO(checkinDate, checkoutDate, guestCount, petCount, type, weight, region);
@@ -59,6 +64,13 @@ public class SearchController {
 
         // 검색 결과를 모델에 추가
         model.addAttribute("lodgments", lodgments);
-        return lodgments;
+
+        // 응답에 추가
+        response.put("lodgments", lodgments);
+        response.put("checkinDate",checkinDate);
+        response.put("checkoutDate",checkoutDate);
+        response.put("guestCount",guestCount);
+        response.put("petCount",petCount);
+        return response;
     }
 }

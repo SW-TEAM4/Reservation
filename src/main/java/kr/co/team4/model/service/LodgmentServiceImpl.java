@@ -24,8 +24,8 @@ public class LodgmentServiceImpl implements LodgmentService {
         return resultMap;
     }
     @Override
-    public List<RoomDTO> getRoomsByLodgment(int lodIdx) {
-        return lodgmentMapper.getRoomsByLodgment(lodIdx);
+    public List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO) {
+        return lodgmentMapper.getRoomsByLodgment(lodgmentDTO);
     }
 
     @Override

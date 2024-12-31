@@ -25,14 +25,15 @@
 
     <select id="searchLodgments" parameterType="kr.co.team4.model.dto.SearchFilterDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
         SELECT DISTINCT B.*
-        FROM ROOM        A
-           , LODGMENT    B
-           , RESERVATION C
+        FROM ROOM A
+        JOIN LODGMENT B ON A.LOD_IDX = B.LOD_IDX
+        LEFT JOIN RESERVATION C ON A.LOD_IDX = C.LOD_IDX
+            AND (
+                #{checkinDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
+                AND
+                #{checkoutDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
+            )
         WHERE 1=1
-          AND A.LOD_IDX = B.LOD_IDX
-          AND A.LOD_IDX = C.LOD_IDX
-          AND #{checkinDate} NOT BETWEEN  C.RES_STR_DATE AND C.RES_END_DATE
-          AND #{checkoutDate} NOT BETWEEN  C.RES_STR_DATE AND C.RES_END_DATE
           AND A.MAX_PEOPLE_CNT >= #{guestCount}
           AND A.MAX_PET_CNT    >= #{petCount}
           <include refid="searchSql" />

@@ -127,8 +127,8 @@
         <div class="search-button" id="date-picker">
             <span>
                 <img src="/img/search_icon_calendar.svg" class="calendar_icon" alt="calendar"/>
-                <span id="checkin-date"></span> ~
-                <span id="checkout-date"></span>
+                <span id="checkin-date">${requestScope.checkinDate}</span> ~
+                <span id="checkout-date">${requestScope.checkoutDate}</span>
                 <span id="cal-date"></span>
             </span>
         </div>
@@ -259,11 +259,6 @@
     <script>
       let calendar; // FullCalendar 인스턴스를 저장할 변수 추가
 
-      // 오늘 날짜 및 내일 날짜 계산
-      let today = new Date(); // 오늘 날짜
-      let tomorrow = new Date(); // 내일 날짜 계산용
-      tomorrow.setDate(today.getDate() + 1); // 내일 날짜 설정
-
       // 날짜를 '월 일 요일' 형식으로 변환하는 함수
       function formatDate(date) {
         const options = {month: 'long', day: 'numeric', weekday: 'long'}; // "월 일 요일" 형식
@@ -271,14 +266,16 @@
       }
 
       // 날짜 변환 및 표시
-      let checkinDate = formatDate(today); // 오늘 날짜
-      let checkoutDate = formatDate(tomorrow); // 내일 날짜
-
+      <%--let checkinDate = formatDate(new Date(${requestScope.checkinDate})); // 오늘 날짜--%>
+      <%--let checkoutDate = formatDate(new Date(${requestScope.checkoutDate})); // 내일 날짜--%>
+      let checkinDate = new Date(document.getElementById("checkin-date").textContent);
+      let checkoutDate = new Date(document.getElementById("checkout-date").textContent);
       // HTML 요소에 날짜 삽입
-      document.getElementById('checkin-date').innerText = checkinDate; // 체크인 날짜
-      document.getElementById('checkout-date').innerText += checkoutDate; // 체크아웃 날짜
-      document.getElementById('cal-date').innerText = ", 1박"; // 기본 1박 설정
+      document.getElementById('checkin-date').innerText = formatDate(checkinDate); // 체크인 날짜
+      document.getElementById('checkout-date').innerText = formatDate(checkoutDate); // 체크아웃 날짜
+      document.getElementById('cal-date').innerText = calculateNights(checkinDate,checkoutDate); // 기본 1박 설정
 
+      console.log(".jsp: " + checkinDate + " out:" + checkoutDate)
 
       let checkinDateEl = document.getElementById('checkin-date'); // 체크인 날짜 요소 참조
       let checkoutDateEl = document.getElementById('checkout-date'); // 체크아웃 날짜 요소 참조
@@ -327,13 +324,9 @@
                 checkoutDate = info.startStr;
                 checkoutDateEl.textContent = formatDate(selectedDate);
 
-                function calculateNights(startDate, endDate) {
-                  const diffTime = Math.abs(endDate - startDate); // 밀리초 차이 계산
-                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // 일수 계산
-                  return diffDays; // 박 수 반환
-                }
 
-                calDateEl.textContent = ", " + calculateNights(startDate, selectedDate).toString() + "박";
+
+                calDateEl.textContent = calculateNights(startDate, selectedDate);
 
                 applyRangeStyles(startDate, selectedDate);
               }
@@ -345,6 +338,12 @@
         });
 
         calendar.render();
+      }
+
+      function calculateNights(startDate, endDate) {
+        const diffTime = Math.abs(endDate - startDate); // 밀리초 차이 계산
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // 일수 계산
+        return ", " + diffDays.toString() + "박";
       }
 
       function confirmDates() {
