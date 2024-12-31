@@ -75,14 +75,6 @@
                 </div>
             </div>
 
-            <%--            <!-- 최대 인원수 -->--%>
-            <%--            <form class="search-button" id="max-form" action="/maxcnt.do" method="get" onclick="submit()">--%>
-            <%--                <span>성인 ${adultCount}, 반려동물 ${childCount}</span>--%>
-            <%--                <input type="hidden" name="adultCount" value="${adultCount}"/>--%>
-            <%--                <input type="hidden" name="childCount" value="${childCount}"/>--%>
-            <%--                <img src="/img/search_icon_down.svg" class="icon" alt="arrow"/>--%>
-            <%--            </form>--%>
-
             <!-- 타입 선택 -->
             <div class="type-container">
                 <!-- 필터 버튼 -->
@@ -123,7 +115,7 @@
 
         <div class="tab-container">
             <div class="tab active" id="tab-all">전체</div>
-            <div class="tab inactive" id="tab-seoul">서울</div>
+            <div class="tab inactive" id="tab-gangwondo">강원도</div>
             <div class="tab inactive" id="tab-gyeonggi">경기</div>
             <div class="tab inactive" id="tab-incheon">인천</div>
         </div>
