@@ -4,15 +4,55 @@ document.addEventListener("DOMContentLoaded", function () {
     let petCount = 1;   // 기본 반려동물 수
     let selectedType = 0; // 기본 선택 값
     let selectedWeight = 0; // 기본 선택 값
-    let calendar; // FullCalendar 인스턴스 저장 변수
-    let checkinDate = formatDate(new Date()); // 수정
-    let checkoutDate = formatDate(new Date(tomorrow)); // 수정
+    let checkinDate = moment().format('YYYY-MM-DD'); // 오늘 날짜
+    let checkoutDate = moment().add(1, 'days').format('YYYY-MM-DD'); // 내일 날짜
     let selectedRegion = 0;
 
-    function sendSearchAjax() {
-        console.log("guestCount:" + guestCount + "petCount: " + petCount + "selectedType: " + selectedType + "selectedWeight: " +
-            selectedWeight + "checkinDate: " + checkinDate + "checkoutDate: " + checkoutDate + "selectedRegion: " + selectedRegion);
+    // Date Range Picker 초기화
+    $('#date-picker').daterangepicker({
+        locale: {
+            format: 'YYYY-MM-DD',
+            separator: ' ~ ',
+            applyLabel: '확인',
+            cancelLabel: '취소',
+            daysOfWeek: ['일', '월', '화', '수', '목', '금', '토'],
+            monthNames: [
+                '1월', '2월', '3월', '4월', '5월', '6월',
+                '7월', '8월', '9월', '10월', '11월', '12월'
+            ],
+            firstDay: 0
 
+        },
+        autoApply:true,
+        startDate: checkinDate,
+        endDate: checkoutDate,
+        minDate: moment().format('YYYY-MM-DD') // 오늘 이후 날짜만 선택 가능
+    }, function (start, end) {
+        // 선택된 날짜 업데이트
+        checkinDate = start.format('YYYY-MM-DD');
+        checkoutDate = end.format('YYYY-MM-DD');
+
+        // UI 업데이트
+        updateDateUI(start, end);
+
+
+        // UI 업데이트
+        document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
+        document.getElementById('checkout-date').textContent = end.format('YYYY-MM-DD');
+        document.getElementById('cal-date').textContent = `, ${end.diff(start, 'days')}박`;
+
+        // AJAX 요청 전송
+        sendSearchAjax();
+    });
+    // === UI 업데이트 함수 ===
+    function updateDateUI(start, end) {
+        document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
+        document.getElementById('checkout-date').textContent = end.format('YYYY-MM-DD');
+        document.getElementById('cal-date').textContent = `, ${end.diff(start, 'days')}박`;
+    }
+
+
+    function sendSearchAjax() {
         $.ajax({
             url: "/search/updateUI.do",
             type: "GET",
@@ -52,11 +92,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 <p>${lodgment.lod_address}</p>
                 <p>평점: ${lodgment.avg_rating}</p>
             `;
-             // 클릭 이벤트 추가
-             resultItem.addEventListener('click', () => {
-                window.location.href=`/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}
+                // 클릭 이벤트 추가
+                resultItem.addEventListener('click', () => {
+                    window.location.href=`/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}
                 &guestCount=${guestCount}&petCount=${petCount}`;
-             });
+                });
                 resultContainer.appendChild(resultItem);
             });
         } else {
@@ -64,109 +104,26 @@ document.addEventListener("DOMContentLoaded", function () {
             <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>
         `;
         }
+
     }
+
 
     // === 팝업 요소 가져오기 ===
     const guestPopup = document.getElementById('guest-popup');
     const typePopup = document.getElementById('type-popup');
     const weightPopup = document.getElementById('weight-popup');
-    const calendarContainer = document.getElementById('calendar-container');
-    const calendarEl = document.getElementById('calendar');
 
     // === 팝업 닫기 함수 ===
     function closeAllPopups(except = null) {
         if (except !== 'guest') guestPopup.classList.add('hidden');
         if (except !== 'type') typePopup.classList.add('hidden');
         if (except !== 'weight') weightPopup.classList.add('hidden');
-        if (except !== 'calendar') calendarContainer.style.display = 'none';
     }
 
     // === 팝업 토글 함수 ===
     function togglePopup(popup, except) {
         closeAllPopups(except);
         popup.classList.toggle('hidden');
-    }
-
-    // === 캘린더 초기화 및 렌더링 ===
-    function initializeCalendar() {
-        if (calendar) return; // 이미 초기화된 경우 중복 생성 방지
-
-        // 캘린더 보이기 (크기 계산용)
-        calendarContainer.style.display = 'block'; // 팝업 보이기
-        calendarContainer.style.visibility = 'hidden'; // 보이지만 사용자에겐 안 보이게 설정
-
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            selectable: true,
-            validRange: {start: today.toISOString().split('T')[0]},
-            select(info) {
-                const selectedDate = new Date(info.startStr);
-
-                if (!checkinDate || (checkinDate && checkoutDate)) {
-                    checkinDate = info.startStr;
-                    checkoutDate = null;
-                    updateDatesUI(checkinDate, null);
-                } else if (checkinDate && !checkoutDate) {
-                    const startDate = new Date(checkinDate);
-
-                    if (selectedDate > startDate) {
-                        checkoutDate = info.startStr;
-                        updateDatesUI(checkinDate, checkoutDate);
-                    } else {
-                        checkinDate = info.startStr;
-                        checkoutDate = null;
-                        updateDatesUI(checkinDate, null);
-                    }
-                }
-            },
-            unselectAuto: false,
-            height: 'auto',
-            handleWindowResize: true,
-        });
-
-        calendar.render();
-        setTimeout(() => {
-            calendar.updateSize(); // 크기 강제 업데이트
-            calendarContainer.style.visibility = 'visible'; // 팝업 보이기
-            calendarContainer.style.display = 'none'; // 다시 숨기기
-        }, 10);
-    }
-
-    // === 날짜 업데이트 UI ===
-    function updateDatesUI(checkin, checkout) {
-        const checkinEl = document.getElementById('checkin-date');
-        const checkoutEl = document.getElementById('checkout-date');
-        const calDateEl = document.getElementById('cal-date');
-
-        const checkinFormatted = formatDate(new Date(checkin));
-        const checkoutFormatted = checkout ? formatDate(new Date(checkout)) : "";
-
-        checkinEl.textContent = checkinFormatted;
-        checkoutEl.textContent = checkoutFormatted;
-
-        if (checkout) {
-            const nights = calculateNights(new Date(checkin), new Date(checkout));
-            calDateEl.textContent = `, ${nights}박`;
-
-            sendSearchAjax();
-        } else {
-            calDateEl.textContent = "";
-        }
-    }
-
-    // === 날짜 포맷 ===
-    function formatDate(date) {
-        const options = {month: 'long', day: 'numeric', weekday: 'long'};
-        return date.toLocaleDateString('ko-KR', options);
-    }
-
-    // === 박 수 계산 ===
-    function calculateNights(startDate, endDate) {
-        const diffTime = Math.abs(endDate - startDate);
-        return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     }
 
     // === 인원 및 반려동물 수 변경 ===
@@ -242,29 +199,18 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // === 캘린더 팝업 ===
-    document.getElementById('date-picker').addEventListener('click', function (e) {
-        e.stopPropagation();
-        closeAllPopups('calendar');
-        calendarContainer.style.display = 'block';
-        initializeCalendar();
-    });
 
     // === 외부 클릭 처리 ===
     document.addEventListener('click', function (e) {
         const isInsidePopup =
             guestPopup.contains(e.target) ||
             typePopup.contains(e.target) ||
-            weightPopup.contains(e.target) ||
-            calendarContainer.contains(e.target);
+            weightPopup.contains(e.target)
 
         if (!isInsidePopup) closeAllPopups();
     });
 
-    // === 초기 렌더링 ===
-    initializeCalendar();
-    updateCounts();
-    sendSearchAjax();
+
 
 // === 탭 클릭 이벤트 추가 ===
     document.addEventListener("DOMContentLoaded", function () {
@@ -285,6 +231,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 sendSearchAjax();
             });
         });
+
     });
 
+    // === 초기 UI 렌더링 ===
+    updateDateUI(moment(checkinDate), moment(checkoutDate)); // 기본값으로 오늘과 내일 표시
+    sendSearchAjax();
 });
+
