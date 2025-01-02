@@ -1,0 +1,59 @@
+.room-detail {
+    margin-left: 80px;
+    margin-right: 80px;
+}
+.lod-tool-bar {
+    margin: 0 80px;
+}
+ .custom-slider {
+     position: relative;
+     width: 100%;
+     max-width: 1280px;
+     margin: 0 auto;
+     overflow: hidden;
+ }
+
+.slider-wrapper {
+    display: flex;
+    transition: transform 0.3s ease-in-out;
+}
+
+.slider-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.slider-slide img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.slider-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px; /* 버튼 크기 */
+    height: 40px;
+    cursor: pointer;
+}
+
+.prev-button {
+    left: 10px; /* 왼쪽 위치 */
+}
+
+.next-button {
+    right: 10px; /* 오른쪽 위치 */
+}
+.slider-counter {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+
+

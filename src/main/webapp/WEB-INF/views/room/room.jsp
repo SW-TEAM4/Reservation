@@ -4,23 +4,17 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8">
-    <title>같이가개</title>
+    <title>객실상세</title>
     <META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/css/roomcard.css"/>
+    <link rel="stylesheet" href="/css/room.css"/>
     <script src="/js/home.js"></script>
+    <script src="/js/room.js"></script>
     <style>
-        .room-detail {
-            margin-left: 80px;
-            margin-right: 80px;
-        }
-        .lod-tool-bar {
-            margin: 0 80px;
-        }
+
 
     </style>
 </head>
@@ -31,14 +25,37 @@
     <img src="<c:url value='/img/lod_toolbar.svg'/>" alt="객실 상세" class="lod-tool-bar">
     <c:if test="${not empty room}">
         <div class="room-detail">
-            <img src="${room.room_img_url}" alt="${room.room_name}" class="detail-img"
-            width="1280px" height="800px">
 
+            <!-- 객실 이미지 -->
+            <c:if test="${not empty room.room_img_urls}">
+                <div class="custom-slider">
+                    <div class="slider-wrapper">
+                        <!-- 이미지 리스트 -->
+                        <c:forEach var="imgUrl" items="${room.room_img_urls}">
+                            <div class="slider-slide">
+                                <img src="${imgUrl}" alt="${room.room_name}" class="detail-img" style="width: 100%; height: auto;">
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <!-- 네비게이션 버튼 -->
+                    <img src="/img/room_img_left_swipe.svg" alt="이전" class="slider-button prev-button">
+                    <img src="/img/room_img_right_swipe.svg" alt="다음" class="slider-button next-button">
+
+                    <!-- 현재 이미지 번호 -->
+                    <div class="slider-counter">
+                        <span id="current-slide">1</span> / <span id="total-slides">${(room.room_img_urls)}</span>
+                    </div>
+                </div>
+            </c:if>
+
+
+            <!-- 객실 정보 -->
             <div class="detail-info">
                 <p><strong>숙소 이름:</strong> ${room.room_name}</p>
                 <p><strong>가격:</strong> ${room.room_price}원</p>
-                <p><strong>최대 인원:</strong> ${room.max_people_cnt}명</p>
-                <p><strong>최대 반려동물 수:</strong> ${room.max_pet_cnt}마리</p>
+                <p><strong>숙박 일정:</strong> ${checkinDate} ~ ${checkoutDate}</p>
+                <p><strong>인원:</strong> ${guestCount}명</p>
+                <p><strong>반려동물 수:</strong> ${petCount}마리</p>
             </div>
 
             <!-- 예약 공지 -->
@@ -52,6 +69,7 @@
                 예약하기
             </button>
         </div>
+
     </c:if>
 
     <c:if test="${empty room}">

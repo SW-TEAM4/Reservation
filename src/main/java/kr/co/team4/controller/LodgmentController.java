@@ -45,13 +45,7 @@ public class LodgmentController {
 
         // 숙소에 연결된 객실 리스트 가져오기
         List<RoomDTO> roomList = lodgmentService.getRoomsByLodgment(lodgmentDTO);
-
-
-
         model.addAttribute("roomList", roomList);
-
-        // 객실 사진 리스트를 가져와야해
-
 
         // 판매자 정보 가져오기
         SellerDTO sellerInfo = lodgmentService.getSellerInfo(lodgmentDTO.getLod_idx());
@@ -85,6 +79,8 @@ public class LodgmentController {
                                            @RequestParam(value = "checkoutDate", required = false) String checkoutDate,
                                            @RequestParam(value = "guestCount", required = false) int guestCount,
                                            @RequestParam(value = "petCount", required = false) int petCount) {
+
+
         Map<String, Object> params = new HashMap<>();
         params.put("lod_idx", lod_idx);
         params.put("checkinDate", checkinDate);

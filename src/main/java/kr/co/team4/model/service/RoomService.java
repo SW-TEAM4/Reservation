@@ -5,7 +5,7 @@ import kr.co.team4.model.dto.RoomDTO;
 public interface RoomService {
 
     // room_idx로 객실 상세 정보 가져오기
-    RoomDTO getRoomDetail(int roomIdx);
+    RoomDTO getRoomDetail(int room_idx);
 }
 
 

@@ -59,57 +59,50 @@
     font-size: 18px;
     font-weight: bold;
 }
-.selection-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 30px;
-}
-.selection-container .selection-item {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 48%; /* 두 항목을 나란히 배치 */
-}
-.selection-container .selection-item img {
-    margin-left: auto; /* 아이콘을 오른쪽 끝으로 배치 */
-}
-.selection-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-}
 
-.selection-item {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px;
-    border: 1px solid #ddd;
+/* 팝업 스타일 */
+.guest-popup {
+    position: absolute;
+    background-color: white;
+    padding: 20px;
     border-radius: 8px;
-    cursor: pointer;
-}
-
-.selection-item img {
-    width: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .hidden {
-    display: none; /* 숨김 */
+    display: none; /* 숨김 처리 */
 }
 
-/* 캘린더 컨테이너 */
-#calendar-container {
-    display: none; /* 기본적으로 숨김 */
-    margin-top: 20px;
-    padding: 20px;
-    border: 1px solid #ddd;
+/* 팝업 컨테이너 스타일 */
+#calendar-container,
+#guest-popup {
+    position: absolute; /* 부모 요소 기준으로 위치 설정 */
+    z-index: 1000; /* 리스트보다 높은 값을 설정 */
+    background-color: white; /* 팝업 배경색 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
     border-radius: 8px;
-    background-color: #fff;
 }
+
+/* 부모 요소에 position 설정 */
+.container {
+    position: relative; /* 팝업의 기준이 될 부모 요소 */
+}
+
+/* 객실 리스트 이미지 */
+.room-list img {
+    z-index: 1; /* 팝업보다 낮은 z-index 값 설정 */
+}
+
+.popup-header {
+    font-weight: bold;
+}
+
+/* 버튼 스타일 */
+.counter-btn {
+    width: 30px;
+    height: 30px;
+}
+
 
 .lodgment-address {
     display: flex;
@@ -119,23 +112,6 @@
 .address-icon {
     width: 20px; /* 아이콘 크기 조정 (필요시) */
     height: auto;
-}
-/* 팝업 배경 */
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.popup.hidden {
-    display: none; /* 숨김 */
 }
 
 /* 팝업 내용 */

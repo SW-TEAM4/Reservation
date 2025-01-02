@@ -11,7 +11,7 @@ public class RoomServiceImpl implements RoomService {
     private RoomMapper roomMapper;
 
     @Override
-    public RoomDTO getRoomDetail(int roomIdx) {
-        return roomMapper.getRoomDetail(roomIdx); // Mapper 호출
+    public RoomDTO getRoomDetail(int room_idx) {
+        return roomMapper.getRoomDetail(room_idx); // Mapper 호출
     }
 }
