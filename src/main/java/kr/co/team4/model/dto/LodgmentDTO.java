@@ -30,4 +30,10 @@ public class LodgmentDTO {
     private Date created;
     private Date updated;
     private String status;
+
+    // 숙소 최소 가격
+    private int min_room_price;
+
+    // 리뷰 수
+    private int count_reviews;
 }

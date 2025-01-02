@@ -53,6 +53,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function sendSearchAjax() {
+        console.log("guestCount:" + guestCount + "petCount: " + petCount + "selectedType: " + selectedType + "selectedWeight: " +
+            selectedWeight + "checkinDate: " + checkinDate + "checkoutDate: " + checkoutDate + "selectedRegion: " + selectedRegion);
+
         $.ajax({
             url: "/search/updateUI.do",
             type: "GET",
@@ -81,27 +84,58 @@ document.addEventListener("DOMContentLoaded", function () {
         const resultContainer = document.getElementById("result-container");
         resultContainer.innerHTML = ""; // 기존 결과 초기화
 
+        // 상품 개수 표시 업데이트
+        const productCountContainer = document.querySelector(".product-info .product-count");
+        if (productCountContainer) {
+            productCountContainer.textContent = data.lodgments.length; // 필터된 상품 개수 표시
+        }
+
+        // 체크인 시간 'HH:MM' 형식으로 자르기
+        function formatTime(time) {
+            return time ? time.substring(0, 5) : "";
+        }
+
         if (data && data.lodgments && data.lodgments.length > 0) {
             data.lodgments.forEach(lodgment => {
                 const resultItem = document.createElement('div');
                 resultItem.classList.add('result-item');
                 const imgUrl = lodgment.lod_img_url ? lodgment.lod_img_url : '/img/search_img_no_lodgment_thumbnail.svg';
+                const lodCategory = lodgment.lod_category_idx === 1 ? '펜션' : (lodgment.lod_category_idx === 2 ? '글램핑' : '기타');
+                const checkIn = formatTime(lodgment.lod_check_in);
+                const minPrice = lodgment.min_room_price ? lodgment.min_room_price.toLocaleString() + '원' : '가격 정보 없음'; // 최소 가격 추가
+                console.log(lodgment);
+
                 resultItem.innerHTML = `
-                <img src="${imgUrl}" alt="${lodgment.lod_name}" class="result-img" width="240px" height="300px">
-                <h3>${lodgment.lod_name}</h3>
-                <p>${lodgment.lod_address}</p>
-                <p>평점: ${lodgment.avg_rating}</p>
+                
+                <div class="result-item-container">
+                    <div class="result-item-right-container">
+                        <img src="${imgUrl}" alt="${lodgment.lod_name}" class="result-img" width="240px" height="300px">
+                    </div>
+                    <div class="result-item-left-container">
+                        <p style="color: #352018; font-size: 20px; font-weight: bold">${lodgment.lod_name}</p>
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <img src="/img/search_icon_star.svg" class="star-icon" style="width: 16px; height: 16px;"/>
+                            <div style="font-weight: bold">${lodgment.avg_rating}</div>
+                            (${lodgment.count_reviews})
+                        </div>                
+                        <p style="color: gray; font-size: 14px; font-weight: bold">${lodCategory}</p>
+                        <div style="position: absolute; right: 20px; bottom: 20px; text-align: right;">
+                            <p style="color: gray; font-size: 14px; font-weight: bold">숙박 ${checkIn} ~ </p>
+                            <p style="color: #352018; font-size: 20px; font-weight: bold">${minPrice} ~ </p>
+                        </div>                
+                    </div>
+                </div>
             `;
                 // 클릭 이벤트 추가
                 resultItem.addEventListener('click', () => {
                     window.location.href=`/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}
-                &guestCount=${guestCount}&petCount=${petCount}`;
+                 &guestCount=${guestCount}&petCount=${petCount}`;
                 });
                 resultContainer.appendChild(resultItem);
             });
         } else {
             resultContainer.innerHTML = `
-            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px;" alt="default_img"/>
+            <img src="/img/search_img_no_search.svg" style="width: 384px; height: 339px; margin: 300px auto; width: 384px; height: 339px" alt="default_img"/>
         `;
         }
 
@@ -124,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function togglePopup(popup, except) {
         closeAllPopups(except);
         popup.classList.toggle('hidden');
+        popup.style.zIndex = 2;
     }
 
     // === 인원 및 반려동물 수 변경 ===
@@ -213,23 +248,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 // === 탭 클릭 이벤트 추가 ===
-    document.addEventListener("DOMContentLoaded", function () {
-        // === 탭 선택 기능 ===
-        const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
-        tabs.forEach(tab => {
-            tab.addEventListener('click', function () {
-                // 모든 탭에서 active 클래스 제거
-                tabs.forEach(t => t.classList.remove('active'));
-                tabs.forEach(t => t.classList.add('inactive'));
-                // 현재 클릭한 탭에 active 추가
-                tab.classList.remove('inactive'); // 비활성화 클래스 제거
-                tab.classList.add('active');     // 활성화 클래스 추가
-                // 나중에 쿼리 연동을 위한 선택된 지역 정보
-                const selectedRegion = tab.getAttribute('id'); // ID로 지역 구분
-                console.log("선택된 지역:", selectedRegion); // 선택 확인용 (테스트)
+    const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            // 모든 탭 비활성화
+            tabs.forEach(t => t.classList.remove('active'));
+            tabs.forEach(t => t.classList.add('inactive'));
 
-                sendSearchAjax();
-            });
+            // 클릭한 탭 활성화
+            tab.classList.remove('inactive');
+            tab.classList.add('active');
+
+            // 클릭한 지역에 따라 selectedRegion 변경
+            const tabId = tab.getAttribute('id'); // 탭 ID로 구분
+            switch (tabId) {
+                case 'tab-all':
+                    selectedRegion = 0; // 전체
+                    break;
+                case 'tab-gangwondo':
+                    selectedRegion = 1; // 강원도
+                    break;
+                case 'tab-gyeonggi':
+                    selectedRegion = 2; // 경기
+                    break;
+                case 'tab-incheon':
+                    selectedRegion = 3; // 인천
+                    break;
+                default:
+                    selectedRegion = 0; // 기본값
+            }
+
+            // AJAX 요청 다시 보내기
+            sendSearchAjax();
         });
 
     });

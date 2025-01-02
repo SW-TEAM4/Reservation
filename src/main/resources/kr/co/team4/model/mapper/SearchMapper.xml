@@ -24,7 +24,9 @@
 
 
     <select id="searchLodgments" parameterType="kr.co.team4.model.dto.SearchFilterDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
-        SELECT DISTINCT B.*
+        SELECT DISTINCT B.*,
+        MIN(A.ROOM_PRICE) AS MIN_ROOM_PRICE,
+        NUMBER_OF_REVIEW AS COUNT_REVIEWS
         FROM ROOM A
         JOIN LODGMENT B ON A.LOD_IDX = B.LOD_IDX
         LEFT JOIN RESERVATION C ON A.LOD_IDX = C.LOD_IDX
