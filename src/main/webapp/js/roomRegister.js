@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 <textarea name="rooms[${rowIndex}].room_notice" placeholder="객실 기본정보를 입력하세요" class="textarea-input"></textarea>
             </td>
             <td>
-                <label><input type="checkbox" name="rooms[${rowIndex}].max_pet_weight" value="3"> 10kg 초과</label>
-                <label><input type="checkbox" name="rooms[${rowIndex}].max_pet_weight" value="2"> 5kg 이상 ~ 10kg 이하</label>
-                <label><input type="checkbox" name="rooms[${rowIndex}].max_pet_weight" value="1"> 5kg 미만</label>
+                <label><input type="checkbox" name="rooms[${rowIndex}].max_pet_weight" value="2"> 10kg 초과</label>
+                <label><input type="checkbox" name="rooms[${rowIndex}].max_pet_weight" value="1"> 5kg 이상 ~ 10kg 이하</label>
+                <label><input type="checkbox" name="rooms[${rowIndex}].max_pet_weight" value="0"> 5kg 미만</label>
             </td>
             <td>
                 <input type="file" name="rooms[${rowIndex}].room_photos" class="input-file" accept="image/*" multiple>

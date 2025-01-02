@@ -40,7 +40,7 @@
     src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'), url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');
 }
 
-body, h1, h2, h3, h4, h5, h6, input, textarea, select, button {
+body, h1, h2, h3, h4, h5, h6, input, textarea, select, button, .result-container {
     font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -427,7 +427,7 @@ p.popup-subtitle {
 }
 
 /*지역 선택 : 전체 - 강원도 - 경기 - 인천*/
-.tab-container{
+.tab-container {
     width: 100%;
     display: flex;
     align-items: center;
@@ -476,7 +476,7 @@ p.popup-subtitle {
     align-items: center;
     width: 100%;
     max-width: 1200px;
-
+    margin-left: 3px;
 }
 
 .product-count {
@@ -595,34 +595,6 @@ p.popup-subtitle {
     display: none;
 }
 
-/*필터 적용된 숙소 검색 결과*/
-/*.result-container{*/
-/*    width: 100%;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    max-width: 1200px;*/
-/*    margin-bottom: 14px;*/
-/*}*/
-
-/* 기본 설정 */
-.result-container {
-    display: flex;            /* Flexbox 사용 */
-    flex-direction: column;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center;     /* 세로 중앙 정렬 */
-    height: 100vh;           /* 화면 전체 높이를 차지 */
-}
-
-/* 이미지 숨김 기본값 */
-/*.result-container img {*/
-/*    display: none; !* 기본적으로 숨김 처리 *!*/
-/*}*/
-
-/* 검색 결과 없을 때만 이미지 표시 */
-.result-container.no-results img {
-    display: block; /* 검색 결과 없을 때만 표시 */
-}
-
 /* 캘린더 컨테이너 */
 #calendar-container {
     position: absolute;
@@ -648,4 +620,62 @@ p.popup-subtitle {
     margin-top: 14px;
 }
 
+.result-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    max-width: 1200px;
+    width: 100%;
+}
 
+.result-item-container {
+    cursor: pointer;
+    display: flex;
+    flex-direction: row; /* 가로 정렬 */
+    width: 585px; /* 전체 너비 */
+    height: 300px; /* 고정 높이 */
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    background-color: #fff;
+    position: relative;
+}
+
+.result-item-right-container img {
+    width: 240px;
+    height: 300px;
+    object-fit: cover; /* 이미지 비율 유지 */
+}
+
+.result-item-left-container {
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* 요소 간 간격 */
+    width: calc(100% - 240px); /* 이미지 제외 영역 */
+}
+
+.result-item-left-container h3 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.result-item-left-container p {
+    margin: 0;
+    font-size: 14px;
+    color: #555;
+}
+
+.review-container {
+    display: flex;
+    align-items: center;
+}
+
+.star-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 3px;
+}
