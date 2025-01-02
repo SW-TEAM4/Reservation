@@ -2,6 +2,7 @@ package kr.co.team4.model.mapper;
 
 import kr.co.team4.model.dto.LodRegisterDTO;
 import kr.co.team4.model.dto.RoomRegisterDTO;
+import kr.co.team4.model.dto.SavePeakPriceDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
@@ -13,7 +14,7 @@ public interface SellerPageMapper {
 
    //숙소등록
    void   insertLod(LodRegisterDTO dto);                  // 숙소테이블  저장
-   String checktFacility(String Facitlity);               // 시설/서비스 존재여부 체크
+   String checktFacility(String Facitlity);               // 시설/서비스 보유여부 체크
    void   insertLodMapSer(LodRegisterDTO dto);            // 숙소매핑서비스테이블 저장
    void   insertLodFacility(String facility );            // 시설/서비스테이블 저장
    int    serviceIdxSearch(String Facitlity );            // 시설/서비스IDX 조회
@@ -22,4 +23,9 @@ public interface SellerPageMapper {
    // 방 등록
    void   insertRoom(RoomRegisterDTO dto);                // 방테이블 저장
    void   insertPhoto(RoomRegisterDTO dto);               // 포토테이블 저장
+
+   String checkPeak(SavePeakPriceDTO dto);               // 성수기일정관리 테이블 보유여부 체크
+   void   updatePeak(SavePeakPriceDTO dto);              // 성수기일정관리 테이블 Update
+   void   insertPeak(SavePeakPriceDTO dto);              // 성수기일정관리 테이블 Insert
+   SavePeakPriceDTO getPeakDate(int lod_idx);                      // 성수기일정관리 테이블 조회
 }
