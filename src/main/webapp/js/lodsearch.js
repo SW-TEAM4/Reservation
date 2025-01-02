@@ -55,8 +55,8 @@ document.addEventListener("DOMContentLoaded", function () {
             dataType: 'json',
             data: {
                 lod_idx: lod_idx,
-                checkinDate: encodedCheckoutDate,
-                checkoutDate: encodedCheckinDate,
+                checkinDate: encodedCheckinDate,
+                checkoutDate: encodedCheckoutDate,
                 guestCount: guestCount,
                 petCount: petCount
             },

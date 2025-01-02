@@ -91,16 +91,14 @@
         LEFT JOIN PHOTO p ON r.room_idx = p.room_idx AND r.lod_idx = p.lod_idx
         LEFT JOIN RESERVATION res ON res.room_idx = r.room_idx AND res.lod_idx = r.lod_idx
         WHERE r.lod_idx = #{lod_idx}
-        AND(
-            res.room_idx IS NULL
-            OR
-            NOT EXISTS (
+        AND NOT(
+            EXISTS (
                 SELECT 1
                 FROM RESERVATION res2
                 WHERE res2.room_idx = r.room_idx
                 AND res2.lod_idx = r.lod_idx
                 AND (
-                    (#{checkinDate} >= res2.res_end_date OR res2.res_str_date >= #{checkoutDate})
+                    ( res2.res_end_date >#{checkinDate} AND #{checkoutDate} > res2.res_str_date)
                 )
             )
         )
