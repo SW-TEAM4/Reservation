@@ -16,7 +16,7 @@
         LODGMENT.LOD_IDX = ROOM.LOD_IDX
         AND ROOM.ROOM_IDX = RESERVATION.ROOM_IDX
         AND RESERVATION.RESERVATION_IDX = REVIEW.RESERVATION_IDX
-        AND LODGMENT.LOD_IDX = 3;
+        AND LODGMENT.LOD_IDX = #{lod_idx};
     </select>
 
     <!-- 개별 리뷰 목록 쿼리 -->
@@ -38,7 +38,7 @@
           AND REVIEW.RESERVATION_IDX = RESERVATION.RESERVATION_IDX
           AND RESERVATION.ROOM_IDX = ROOM.ROOM_IDX
           AND ROOM.LOD_IDX = LODGMENT.LOD_IDX
-          AND LODGMENT.LOD_IDX = 3
+          AND LODGMENT.LOD_IDX = #{lod_idx}
         ORDER BY reviewer_created DESC;
     </select>
 

@@ -21,7 +21,7 @@ public class LodReviewController {
     public String index(Model model) {
 
         LodReviewDTO lodReviewDTO = new LodReviewDTO();
-        lodReviewDTO.setLod_idx(3); // 테스트용
+        lodReviewDTO.setLod_idx(90); // 테스트용
         // 통계 데이터 가져오기
         Map<String, Object> statistics = lodReviewService.getReviewStatistics(lodReviewDTO.getLod_idx());
         model.addAttribute("statistics", statistics);
