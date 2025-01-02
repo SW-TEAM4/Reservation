@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
+    <script src="/js/home.js"></script>
     <link rel="stylesheet" href="/css/style.css?after"/>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -47,23 +48,31 @@
             <img src="/img/home_txt_sub.svg">
         </div>
     </div>
-<div class="container">
+    <div class="container">
+        <script>
+            function setRegion(region) {
+                localStorage.setItem('selectedRegion', region); // 선택된 지역 저장
+            }
+        </script>
         <div class="size">
             <div class="section">
-                <a href=""><img src="/img/home_thumbnail_gangwon.png"></a>
-                <a href=""><img src="/img/home_btn_gangwon.svg" style="width: 128px; height: 50px;"></a>
+                <!-- 강원도 -->
+                <a href="/search/search.do?region=1"><img src="/img/home_thumbnail_gangwon.png"></a>
+                <a href="/search/search.do?region=1"><img src="/img/home_btn_gangwon.svg" style="width: 128px; height: 50px;"></a>
             </div>
             <div class="section">
-                <a href=""><img src="/img/home_thumbnail_gyeonggi.svg"></a>
-                <a href=""><img src="/img/home_btn_gyeonggi.svg" style="width: 128px; height: 50px;"></a>
+                <!-- 경기도 -->
+                <a href="/search/search.do?region=2"><img src="/img/home_thumbnail_gyeonggi.svg"></a>
+                <a href="/search/search.do?region=2"><img src="/img/home_btn_gyeonggi.svg" style="width: 128px; height: 50px;"></a>
             </div>
             <div class="section">
-                <a href=""><img src="/img/home_thumbnail_incheon.svg"></a>
-                <a href=""><img src="/img/home_btn_incheon.svg" style="width: 128px; height: 50px;"></a>
+                <!-- 인천 -->
+                <a href="/search/search.do?region=3"><img src="/img/home_thumbnail_incheon.svg"></a>
+                <a href="/search/search.do?region=3"><img src="/img/home_btn_incheon.svg" style="width: 128px; height: 50px;"></a>
             </div>
         </div>
         <div class="home_plus_btn">
-            <a href="/search/search.do"><img src="/img/home_btn_plus.svg" width="200px" height="65px">
+            <a href="/search/search.do?region=0"><img src="/img/home_btn_plus.svg" width="200px" height="65px">
             </a>
         </div>
         <div style="width: 1200px; height: 1px; background-color: #DBD6D6; margin: 60px auto;"></div>

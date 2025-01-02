@@ -113,10 +113,10 @@
         </div>
 
         <div class="tab-container">
-            <div class="tab active" id="tab-all">전체</div>
-            <div class="tab inactive" id="tab-gangwondo">강원도</div>
-            <div class="tab inactive" id="tab-gyeonggi">경기</div>
-            <div class="tab inactive" id="tab-incheon">인천</div>
+            <div class="tab active" id="tab-all" data-region="0">전체</div>
+            <div class="tab inactive" id="tab-gangwondo" data-region="1">강원도</div>
+            <div class="tab inactive" id="tab-gyeonggi" data-region="2">경기</div>
+            <div class="tab inactive" id="tab-incheon" data-region="3">인천</div>
         </div>
 
         <div class="product-info">

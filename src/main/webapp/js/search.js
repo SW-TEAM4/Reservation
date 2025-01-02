@@ -245,9 +245,43 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!isInsidePopup) closeAllPopups();
     });
 
+    // === URL 파라미터에서 지역 값 가져오기 ===
+    const urlParams = new URLSearchParams(window.location.search);
+    const regionParam = urlParams.get('region'); // URL에서 지역 값 읽기
 
+    if (regionParam) {
+        selectedRegion = parseInt(regionParam, 10); // URL 파라미터 값 적용
+        localStorage.setItem('selectedRegion', selectedRegion); // 로컬스토리지에 저장
+    } else {
+        // 지역 값이 없으면 로컬스토리지에서 불러오기
+        const storedRegion = localStorage.getItem('selectedRegion');
+        if (storedRegion !== null) {
+            selectedRegion = parseInt(storedRegion, 10); // 저장된 값 적용
+        }
+    }
 
-// === 탭 클릭 이벤트 추가 ===
+    // === 탭 UI 활성화 처리 ===
+    document.querySelectorAll('.tab').forEach(tab => {
+        const tabRegion = parseInt(tab.getAttribute('data-region'), 10); // 각 탭의 지역 값
+
+        // 선택된 지역과 일치하면 활성화
+        if (tabRegion === selectedRegion) {
+            tab.classList.add('active'); // 선택된 탭 활성화
+            tab.classList.remove('inactive'); // 비활성화 제거
+        } else {
+            tab.classList.remove('active'); // 선택 해제
+            tab.classList.add('inactive'); // 비활성화 적용
+        }
+
+        // === 탭 클릭 이벤트 추가 ===
+        tab.addEventListener('click', function () {
+            const newRegion = parseInt(this.getAttribute('data-region'), 10); // 클릭한 탭의 지역 값
+            localStorage.setItem('selectedRegion', newRegion); // 선택 지역 로컬스토리지에 저장
+            window.location.href = `/search/search.do?region=${newRegion}`; // 새 지역으로 페이지 이동
+        });
+    });
+
+    // === 탭 클릭 이벤트 추가 ===
     const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
     tabs.forEach(tab => {
         tab.addEventListener('click', function () {
