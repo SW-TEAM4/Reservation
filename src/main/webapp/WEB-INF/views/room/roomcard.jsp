@@ -9,6 +9,7 @@
   <script src="/js/home.js"></script>
 
   <script>
+
     function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
       // 기존 데이터 가져오기
       const recentRooms = JSON.parse(localStorage.getItem('recentRooms') || '[]');
@@ -35,8 +36,6 @@
   <!-- 객실 카드 -->
   <div class="room-card">
     <!-- 객실 이미지 -->
-    <a href="/room/detail?room_idx=${room.room_idx}" class="room-image-link">
-<%--      <img src="${room.room_img_urls}" alt="${room.room_name}" class="room-img">--%>
       <div class="room-img-container">
         <div class="swiper swiper-visual">
           <div class="swiper-wrapper">

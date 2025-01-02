@@ -13,10 +13,6 @@
     <link rel="stylesheet" href="/css/room.css"/>
     <script src="/js/home.js"></script>
     <script src="/js/room.js"></script>
-    <style>
-
-
-    </style>
 </head>
 <body>
 <div class="wrap">
@@ -65,7 +61,7 @@
             </div>
 
             <!-- 예약 버튼 -->
-            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">
+            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}&res_str_date=${checkinDate}&res_end_date=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
                 예약하기
             </button>
         </div>

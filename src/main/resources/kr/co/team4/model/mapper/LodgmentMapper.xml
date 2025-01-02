@@ -74,24 +74,38 @@
 
     <select id="getAvailableRooms" parameterType="map" resultMap="RoomResultMap">
         SELECT
-            R.room_idx,
-            R.lod_idx,
-            R.room_name,
-            R.room_price,
-            R.room_img_url,
-            R.max_people_cnt,
-            R.max_pet_cnt
-        FROM ROOM R LEFT JOIN RESERVATION RES
-        ON R.room_idx = RES.room_idx
+            r.room_idx,
+            r.lod_idx,
+            r.room_name,
+            r.room_notice,
+            r.room_price,
+            r.max_people_cnt,
+            r.max_pet_cnt,
+            r.avg_rating,
+            r.number_of_review,
+            r.created,
+            r.updated,
+            r.status,
+            p.ROOM_PHOTO_URL
+        FROM ROOM r
+        LEFT JOIN PHOTO p ON r.room_idx = p.room_idx AND r.lod_idx = p.lod_idx
+        LEFT JOIN RESERVATION res ON res.room_idx = r.room_idx AND res.lod_idx = r.lod_idx
+        WHERE r.lod_idx = #{lod_idx}
         AND(
-           (#{checkinDate} >= RES.res_str_date AND RES.res_end_date > #{checkinDate})
-           OR
-           (#{checkoutDate} > RES.res_str_date AND RES.res_end_date >= #{checkoutDate})
+            res.room_idx IS NULL
+            OR
+            NOT EXISTS (
+                SELECT 1
+                FROM RESERVATION res2
+                WHERE res2.room_idx = r.room_idx
+                AND res2.lod_idx = r.lod_idx
+                AND (
+                    (#{checkinDate} >= res2.res_end_date OR res2.res_str_date >= #{checkoutDate})
+                )
             )
-        WHERE R.lod_idx = #{lod_idx}
-          AND RES.room_idx IS NULL -- 예약이 없는 객실만 선택
-          AND R.max_people_cnt >= #{guestCount}
-          AND R.max_pet_cnt >= #{petCount}
-        ORDER BY R.room_price ASC;
+        )
+        AND r.max_people_cnt >= #{guestCount}
+        AND r.max_pet_cnt >= #{petCount}
+        ORDER BY r.room_price ASC;
     </select>
 </mapper>
