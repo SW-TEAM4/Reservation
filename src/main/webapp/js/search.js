@@ -128,8 +128,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
                 // 클릭 이벤트 추가
                 resultItem.addEventListener('click', () => {
-                    window.location.href=`/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}
-                 &guestCount=${guestCount}&petCount=${petCount}`;
+                    window.location.href= `/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}`;
                 });
                 resultContainer.appendChild(resultItem);
             });
