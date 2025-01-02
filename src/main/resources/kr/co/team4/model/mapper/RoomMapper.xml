@@ -40,4 +40,15 @@
         WHERE r.room_idx = #{room_idx}
     </select>
 
+    <select id="getRoomLodDetail" parameterType="int" resultType="kr.co.team4.model.dto.LodgmentDTO">
+        SELECT
+        lod_idx,
+        lod_name,
+        lod_address,
+        lod_check_in,
+        lod_check_out
+        FROM LODGMENT
+        WHERE lod_idx = #{lod_idx}
+    </select>
 </mapper>
+

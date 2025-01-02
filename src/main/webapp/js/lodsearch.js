@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let petCount = parseInt(document.getElementById("pet-count").textContent);
     let checkinDate = moment().format('YYYY-MM-DD'); // 오늘 날짜
     let checkoutDate = moment().add(1, 'days').format('YYYY-MM-DD'); // 내일 날짜
+    let lod_idx = document.getElementById("lod_idx").value;
+
+
+    checkinDate = checkinDate.trim();
+    checkoutDate = checkoutDate.trim();
 
     // Date Range Picker 초기화
     $('#date-picker').daterangepicker({
@@ -26,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
         // 선택된 날짜 업데이트
         checkinDate = start.format('YYYY-MM-DD');
         checkoutDate = end.format('YYYY-MM-DD');
-
+        checkinDate = checkinDate.trim();
+        checkoutDate = checkoutDate.trim();
         // UI 업데이트
         document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
         document.getElementById('checkout-date').textContent = end.format('YYYY-MM-DD');
@@ -38,17 +44,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 서버로 검색 요청 전송
     function sendSearchAjax() {
+        var encodedCheckoutDate = encodeURIComponent(checkoutDate.trim());
+        var encodedCheckinDate = encodeURIComponent(checkinDate.trim());
+
+        var url = "/lodgment.do?lod_idx=" + lod_idx + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate + "&guestCount=" + guestCount + "&petCount=" + petCount;
+        console.log(url);
         $.ajax({
             url: '/lodgment/availableRooms.do',
-            type: 'POST',
+            type: 'GET',
             dataType: 'json',
             data: {
-                checkinDate: checkinDate,
-                checkoutDate: checkoutDate,
+                lod_idx: lod_idx,
+                checkinDate: encodedCheckoutDate,
+                checkoutDate: encodedCheckinDate,
                 guestCount: guestCount,
                 petCount: petCount
             },
             success: function (response) {
+                console.log("availableRoom -> updateRoomList 호출")
                 updateRoomList(response); // 결과 업데이트 함수 호출
             },
             error: function (xhr, status, error) {
@@ -63,18 +76,50 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (roomList && roomList.length > 0) {
             roomList.forEach(room => {
+                // HTML 구조 생성
                 const roomCard = `
-                    <div class="room-card">
-                        <img src="${room.room_img_url}" alt="${room.room_name}" class="room-img">
-                        <div class="room-info">
-                            <h3>${room.room_name}</h3>
-                            <p>가격: ${Number(room.room_price).toLocaleString()}원</p>
-                            <p>최대 인원: ${room.max_people_cnt}명</p>
-                            <p>최대 반려동물 수: ${room.max_pet_cnt}마리</p>
+                <div class="room-card">
+                    <!-- 객실 이미지 -->
+                    <div class="room-img-container">
+                        <div class="swiper swiper-visual">
+                            <div class="swiper-wrapper">
+                                 <div class="swiper-slide">
+                                    <img src="${room.room_img_urls[0]}" alt="Room Image"/>
+                                </div>
+                            </div>
                         </div>
-                    </div>`;
+                    </div>
+                    <!-- 객실 정보 -->
+                    <div class="room-info">
+                        <!-- 상단 영역 -->
+                        <div class="room-header">
+                            <div>
+                                <h3 class="room-name">${room.room_name}</h3>
+                                <div class="check-in-out">체크인 15:00 - 체크아웃 11:00</div>
+                                <div class="guest-pet-count">사람수: ${room.max_people_cnt} | 반려동물수: ${room.max_pet_cnt}</div>
+                            </div>
+                            <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
+                               class="details-link"
+                               onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
+                                상세보기 &gt;
+                            </a>
+                        </div>
+                        <!-- 하단 영역 -->
+                        <div class="room-footer">
+                            <p class="room-price">${room.room_price}원</p>
+                            <!-- 예약 버튼 -->
+                            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">
+                                예약하기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+                // roomListContainer에 roomCard 삽입
                 roomListContainer.insertAdjacentHTML('beforeend', roomCard);
             });
+
         } else {
             roomListContainer.innerHTML = '<p>조건에 맞는 객실이 없습니다.</p>';
         }

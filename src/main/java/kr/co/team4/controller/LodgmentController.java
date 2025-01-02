@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -40,11 +39,19 @@ public class LodgmentController {
                         ) {
         lodgmentDTO.setLod_idx(lod_idx);
 
+        Map<String, Object> params = new HashMap<>();
+
+        params.put("lod_idx", lod_idx);
+        params.put("checkinDate", checkinDate);
+        params.put("checkoutDate", checkoutDate);
+        params.put("guestCount", guestCount);
+        params.put("petCount", petCount);
+
         // 숙소 상세 정보 가져오기
         model.addAttribute("lodgment", lodgmentService.lodgmentDetail(lodgmentDTO));
 
         // 숙소에 연결된 객실 리스트 가져오기
-        List<RoomDTO> roomList = lodgmentService.getRoomsByLodgment(lodgmentDTO);
+        List<RoomDTO> roomList =lodgmentService.getAvailableRooms(params);
         model.addAttribute("roomList", roomList);
 
         // 판매자 정보 가져오기
@@ -72,13 +79,13 @@ public class LodgmentController {
         return "lodgment/lodgment"; // "lodgment" 페이지로 이동
     }
 
-    @PostMapping("/lodgment/availableRooms.do")
+    @GetMapping("/lodgment/availableRooms.do")
     @ResponseBody
-    public List<RoomDTO> getAvailableRooms(@RequestParam(value = "log_idx", required = false) int lod_idx,
-                                           @RequestParam(value = "checkinDate", required = false) String checkinDate,
-                                           @RequestParam(value = "checkoutDate", required = false) String checkoutDate,
-                                           @RequestParam(value = "guestCount", required = false) int guestCount,
-                                           @RequestParam(value = "petCount", required = false) int petCount) {
+    public List<RoomDTO> getAvailableRooms(@RequestParam int lod_idx,
+                                           @RequestParam String checkinDate,
+                                           @RequestParam String checkoutDate,
+                                           @RequestParam int guestCount,
+                                           @RequestParam int petCount) {
 
 
         Map<String, Object> params = new HashMap<>();
