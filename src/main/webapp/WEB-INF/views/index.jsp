@@ -9,14 +9,6 @@
     <button type="submit">Go to Recent</button>
 </form>
 
-<form action="/lodreview.do" method="get">
-    <button type="submit">Go to Lod Review</button>
-</form>
-
-<form action="/lodgment.do" method="get">
-    <button type="submit">Go to Lodgment</button>
-</form>
-
 <form action="/home.do" method="get">
     <button type="submit">Go to Home Index</button>
 </form>

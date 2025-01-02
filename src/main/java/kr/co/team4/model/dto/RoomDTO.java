@@ -16,12 +16,16 @@ public class RoomDTO {
     private String room_notice;
     private int room_price;
     private int max_people_cnt; // 최대 인원 수
-    private int max_pet_cnt; // 최대 마리 수
+    private int max_pet_cnt; // 최대 반려동물 수
     private double avg_rating;
     private int number_of_review;
     private java.sql.Date created;
     private java.sql.Date updated;
     private String status;
 
+    // 이미지 URL 리스트
     private List<String> room_img_urls;
+
+    // Getters and Setters
 }
+

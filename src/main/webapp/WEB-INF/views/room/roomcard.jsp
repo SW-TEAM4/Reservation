@@ -41,7 +41,7 @@
         <div class="swiper swiper-visual">
           <div class="swiper-wrapper">
             <!-- room.room_img_urls 리스트를 반복 -->
-            <c:forEach var="img_url" items="${room.room_img_urls}">
+            <c:forEach var="img_url" items="${room.room_img_urls[0]}">
               <div class="swiper-slide">
                 <img src="${img_url}" alt="Room Image"/>
               </div>
@@ -59,7 +59,8 @@
           <div class="check-in-out">체크인 15:00 - 체크아웃 11:00</div>
           <div class="guest-pet-count">사람수: ${room.max_people_cnt} | 반려동물수: ${room.max_pet_cnt}</div>
         </div>
-        <a href="/room/detail?room_idx=${room.room_idx}" class="details-link"
+        <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
+           class="details-link"
            onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
           상세보기 &gt;
         </a>
