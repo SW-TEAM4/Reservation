@@ -2,9 +2,9 @@ package kr.co.team4.model.service;
 
 import kr.co.team4.model.dto.LodRegisterDTO;
 import kr.co.team4.model.dto.RoomRegisterDTO;
+import kr.co.team4.model.dto.SavePeakPriceDTO;
 
 import java.io.IOException;
-import java.util.List;
 
 public interface SellerPageService {
 
@@ -20,4 +20,7 @@ public interface SellerPageService {
     /* 객실 등록 */
     void   registerRoom(RoomRegisterDTO roomDto);                            // 객실등록
     void   registerRoomImg(RoomRegisterDTO dto) throws IOException;          // 객실 이미지 등록
+
+    void   savePeekPrice(SavePeakPriceDTO dto);                              // 성수기 일정등록
+    SavePeakPriceDTO getPeakDate(int lodIdx);
 }

@@ -2,6 +2,7 @@ package kr.co.team4.model.service;
 
 import kr.co.team4.model.dto.LodRegisterDTO;
 import kr.co.team4.model.dto.RoomRegisterDTO;
+import kr.co.team4.model.dto.SavePeakPriceDTO;
 import kr.co.team4.model.mapper.SellerPageMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -131,8 +132,6 @@ public class SellerPageServiceImpl implements SellerPageService {
         }
 
     }
-
-
     /**
      * 생성자   : JDeok
      * 기 능   : 시설/서비스 등록
@@ -177,5 +176,38 @@ public class SellerPageServiceImpl implements SellerPageService {
 
             }
         }
+    }
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 시설/서비스 등록
+     * 변경사항
+     *  - 2024.12.26 : JDeok(최초생성)
+     * */
+    @Transactional // 트랜잭션 적용 자동롤백
+    @Override
+    public void savePeekPrice(SavePeakPriceDTO dto) {
+        String checkYn = sellerPageMapper.checkPeak(dto);
+
+        if("Y".equals(checkYn)){
+            /* 보유 중이라면 일자 UPDATE*/
+            sellerPageMapper.updatePeak(dto);
+        }else if("N".equals(checkYn)){
+            /* 보유 중이 아니라면 새로 INSERT*/
+            sellerPageMapper.insertPeak(dto);
+        }
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   :  성수기 일자 조회
+     * 변경사항
+     * - 2025.01.02 : JDeok(최초생성)
+     *
+     * @return
+     */
+    @Override
+    public SavePeakPriceDTO getPeakDate(int lodIdx) {
+
+        return sellerPageMapper.getPeakDate(lodIdx);
     }
 }
