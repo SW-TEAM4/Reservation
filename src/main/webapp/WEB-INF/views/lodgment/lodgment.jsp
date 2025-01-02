@@ -78,8 +78,8 @@
               </span>
                             </p>
                         </div>
-                        <a href="/lodreview.do" class="review-detail-link">
-                            <h2>리뷰 더보개 &gt;</h2>
+                        <a href="/lodreview.do?lod_idx=${lod_idx}" class="review-detail-link">
+                        <h2>리뷰 더보개 &gt;</h2>
                         </a>
                         <div class="review-container">
                             <c:choose>
