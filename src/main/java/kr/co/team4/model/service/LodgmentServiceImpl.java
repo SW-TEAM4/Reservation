@@ -17,11 +17,9 @@ public class LodgmentServiceImpl implements LodgmentService {
     private LodgmentMapper lodgmentMapper;
 
     @Override
-    public Map<String, Object> lodgmentDetail(LodgmentDTO lodgmentDTO) {
-        Map<String, Object> resultMap = new HashMap<>();
-        LodgmentDTO lodgmentDetail = lodgmentMapper.lodgmentDetail(lodgmentDTO).get(0); // 한 개의 데이터 반환
-        resultMap.put("lodgment", lodgmentDetail);  // 숙소 정보 담기
-        return resultMap;
+    public LodgmentDTO lodgmentDetail(LodgmentDTO lodgmentDTO) {
+        // 한 개의 데이터 반환
+        return lodgmentMapper.lodgmentDetail(lodgmentDTO);
     }
     @Override
     public List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO) {

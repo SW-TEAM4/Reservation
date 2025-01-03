@@ -23,15 +23,9 @@
     </resultMap>
 
     <select id="lodgmentDetail" parameterType="kr.co.team4.model.dto.LodgmentDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
-        SELECT lod_img_url,
-               lod_name,
-               x,
-               y,
-               lod_address,
-               seller_notice,
-               reservation_notice,
-               avg_rating
-        FROM LODGMENT L
+        SELECT
+           *
+        FROM LODGMENT
         WHERE lod_idx = #{lod_idx};
     </select>
 
@@ -59,16 +53,16 @@
     <!-- 판매자 정보 조회 -->
     <select id="getSellerInfo" parameterType="int" resultType="kr.co.team4.model.dto.SellerDTO">
         SELECT
-            SELLER.SELLER_IDX,
-            SELLER.SELLER_ID,
-            SELLER.SELLER_PWD,
-            SELLER.SELLER_NAME,
-            SELLER.SELLER_NICK_NAME,
-            SELLER.SELLER_EMAIL,
-            SELLER.SELLER_PHONE_NUMBER
-        FROM SELLER, LODGMENT
-        WHERE SELLER.SELLER_IDX = LODGMENT.SELLER_IDX
-        AND LODGMENT.LOD_IDX = #{lod_idx};
+            s.SELLER_IDX,
+            s.SELLER_ID,
+            s.SELLER_PWD,
+            s.SELLER_NAME,
+            s.SELLER_NICK_NAME,
+            s.SELLER_EMAIL,
+            s.SELLER_PHONE_NUMBER
+        FROM SELLER s, LODGMENT l
+        WHERE s.SELLER_IDX = l.SELLER_IDX
+        AND l.LOD_IDX = #{lod_idx};
     </select>
 
     <select id="getAvailableRooms" parameterType="map" resultMap="RoomResultMap">
