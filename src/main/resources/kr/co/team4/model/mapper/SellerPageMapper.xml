@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.SellerPageMapper">
+
+    <insert id="insertLod" parameterType="kr.co.team4.model.dto.LodRegisterDTO" useGeneratedKeys="true" keyProperty="lod_idx">
+       /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.26
+        *  시 간  : 오전 12:26
+        *  기 능  : 숙소테이블 등록
+        *  변경사항
+        *     - 2024.12.26 : JDeok(최초작성)
+        ************************************************************* */
+        INSERT INTO LODGMENT                            -- 숙소
+                    (
+                       SELLER_IDX                       -- 사장님 IDX
+                     , REGION_IDX                       -- 지역 IDX(1: 강원도 2: 경기 3: 인천)
+                     , LOD_CATEGORY_IDX                 -- 숙소종류 IDX(1: 펜션 2: 글램핑)
+                     , LOD_NAME                         -- 숙소이름
+                     , BIZ_EMAIL                        -- 사업주 이메일
+                     , BIZ_NUM                          -- 사업자번호
+                     , LOD_PHONE_NUMBER                 -- 사업자전화번호
+                     , LOD_IMG_URL                      -- 숙소 대표 사진URL
+                     , LOD_ADDRESS                      -- 숙소주소
+                     , SELLER_NOTICE                    -- 사장님알려주개
+                     , RESERVATION_NOTICE               -- 예약공지
+                     , LOD_CHECK_IN                     -- 체크인 시간
+                     , LOD_CHECK_OUT                    -- 체크아웃 시간
+                     , AVG_RATING                       -- 평균평점
+                     , X                                -- 위도
+                     , Y                                -- 경도
+                    )
+            VALUES (
+                     #{seller_idx}                       -- 사장님 IDX
+                   , #{region_idx}                       -- 지역 IDX(1: 강원도 2: 경기 3: 인천)
+                   , #{lod_category_idx}                 -- 숙소종류 IDX(1: 펜션 2: 글램핑)
+                   , #{lod_name}                         -- 숙소이름
+                   , #{biz_email}                        -- 사업주 이메일
+                   , #{biz_num}                          -- 사업자번호
+                   , #{lod_phone_number}                 -- 사업자전화번호
+                   , #{lod_img_url}                      -- 숙소 대표 사진URL
+                   , #{lod_address}                      -- 숙소주소
+                   , #{seller_notice}                    -- 사장님알려주개
+                   , #{reservation_notice}               -- 예약공지
+                   , #{lod_check_in}                     -- 체크인 시간
+                   , #{lod_check_out}                    -- 체크아웃 시간
+                   , 0                                   -- 평균평점
+                   , #{x}                                -- 위도
+                   , #{y}                                -- 경도
+                   )
+    </insert>
+    <select id="checktFacility" parameterType="java.lang.String" resultType="java.lang.String">
+    /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.27
+        *  시 간  : 오전 09:43
+        *  기 능  : 시설/서비스 존재여부 체크
+        *  변경사항
+        *     - 2024.12.27 : JDeok(최초작성)
+        ************************************************************* */
+            SELECT IF(COUNT(LOD_FACILITY_NAME) > 0, 'Y', 'N') AS CHECK_FACILITY
+            FROM LOD_FACILITY
+            WHERE 1=1
+              AND LOD_FACILITY_NAME =  #{facility}                       -- 시설/서비스 명
+    </select>
+    <insert id="insertLodMapSer" parameterType="kr.co.team4.model.dto.LodRegisterDTO">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.27
+        *  시 간  : 오전 11:35
+        *  기 능  : 숙소매핑서비스 테이블 등록
+        *  변경사항
+        *     - 2024.12.27 : JDeok(최초작성)
+        ************************************************************* */
+                  INSERT INTO LODGMENT_MAPPING_SERVICE    -- 숙소매핑서비스
+                  (
+                    LOD_IDX                         -- 숙소 idx
+                  , LOD_FACILITY_IDX                -- 시설/서비스 IDX
+                  )
+          VALUES (
+                   #{lod_idx}                       -- 숙소 IDX
+                 , #{lod_facility_idx}              -- 시설/서비스 IDX
+                 )
+
+    </insert>
+    <insert id="insertLodFacility" parameterType="java.lang.String">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.27
+        *  시 간  : 오후 04:14
+        *  기 능  : 시설/서비스 테이블 등록
+        *  변경사항
+        *     - 2024.12.27 : JDeok(최초작성)
+        ************************************************************* */
+        INSERT INTO LOD_FACILITY    -- 시설/서비스
+        (
+            LOD_FACILITY_NAME       -- 시설/서비스 이름
+        )
+        VALUES (
+             #{facility}            -- 시설/서비스 이름
+        )
+    </insert>
+    <select id="serviceIdxSearch" parameterType="java.lang.String" resultType="int">
+       /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.30
+        *  시 간  : 오전 09:33
+        *  기 능  : 시설/서비스테이블 idx 조회
+        *  변경사항
+        *     - 2024.12.30 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT LOD_FACILITY_IDX
+        FROM LOD_FACILITY
+        WHERE 1=1
+          AND LOD_FACILITY_NAME = #{facility}
+    </select>
+    <update id="updateLodImgUrl" parameterType="kr.co.team4.model.dto.LodRegisterDTO">
+     /* ************************************************************
+      *  생성자 : JDeok
+      *  날 짜  : 2024.12.30
+      *  시 간  : 오후 12:44
+      *  기 능  : 숙소테이블-숙소이미지URL 업데이트
+      *  변경사항
+      *     - 2024.12.30 : JDeok(최초작성)
+      ************************************************************* */
+     UPDATE LODGMENT
+     SET LOD_IMG_URL = #{lod_img_url}
+     WHERE 1=1
+       AND LOD_IDX = #{lod_idx}
+    </update>
+    <select id="checkLod" parameterType="int" resultType="java.lang.String">
+     /* ************************************************************
+      *  생성자 : JDeok
+      *  날 짜  : 2024.12.30
+      *  시 간  : 오후 05:36
+      *  기 능  : 숙소 보유여부 체크
+      *  변경사항
+      *     - 2024.12.27 : JDeok(최초작성)
+      ************************************************************* */
+          SELECT IF(COUNT(A.LOD_IDX) > 0, 'Y', 'N') AS CHECK_LOD
+          FROM LODGMENT A
+             , SELLER   B
+          WHERE 1=1
+            AND A.SELLER_IDX = B.SELLER_IDX
+            AND A.SELLER_IDX =  #{seller_idx}
+    </select>
+    <insert id="insertRoom" parameterType="kr.co.team4.model.dto.RoomRegisterDTO" useGeneratedKeys="true" keyProperty="room_idx">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.31
+        *  시 간  : 오전 09:13
+        *  기 능  : 객실테이블 등록
+        *  변경사항
+        *     - 2024.12.31 : JDeok(최초작성)
+        ************************************************************* */
+        INSERT INTO ROOM                        -- 객실
+        (
+          LOD_IDX                               -- 숙소 IDX
+        , ROOM_NAME                             -- 객실 명
+        , ROOM_NOTICE                           -- 객실 기본정보
+        , ROOM_PRICE                            -- 객실 가격
+        , MAX_PEOPLE_CNT                        -- 최대인원수
+        , MAX_PET_CNT                           -- 최대마릿수
+        , MAX_PETS_WEIGHT                       -- 반려동물 사이즈
+        , AVG_RATING                            -- 평균평점
+        , NUMBER_OF_REVIEW                      -- 평가한 사람 수
+
+        )
+        VALUES (
+                 #{lod_idx}                               -- 숙소 IDX
+               , #{room_name}                             -- 객실 명
+               , #{room_notice}                           -- 객실 기본정보
+               , #{room_price}                            -- 객실 가격
+               , #{max_people_cnt}                        -- 최대인원수
+               , #{max_pet_cnt}                           -- 최대마릿수
+               , #{max_pets_weight}                       -- 반려동물 사이즈
+               , 0                                        -- 평균평점
+               , 0                                        -- 평가한 사람 수
+               )
+    </insert>
+    <select id="getLod" parameterType="int" resultType="int">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2024.12.31
+        *  시 간  : 오전 10:51
+        *  기 능  : 숙소IDX 가져오기
+        *  변경사항
+        *     - 2024.12.31 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT A.LOD_IDX
+        FROM LODGMENT A
+           , SELLER   B
+        WHERE 1=1
+          AND A.SELLER_IDX = B.SELLER_IDX
+          AND A.SELLER_IDX =  #{seller_idx}
+    </select>
+    <insert id="insertPhoto" parameterType="kr.co.team4.model.dto.RoomRegisterDTO" >
+        /* ************************************************************
+         *  생성자 : JDeok
+         *  날 짜  : 2024.12.31
+         *  시 간  : 오후  12:05
+         *  기 능  : 객실이미지 등록
+         *  변경사항
+         *     - 2024.12.31 : JDeok(최초작성)
+         ************************************************************* */
+                 INSERT INTO PHOTO                        -- 사진
+                 (
+                   LOD_IDX                                -- 숙소 IDX
+                 , ROOM_IDX                               -- 객실 IDX
+                 , ROOM_PHOTO_URL                         -- 객실이미지URL
+                 )
+                 VALUES (
+                          #{lod_idx}                       -- 숙소 IDX
+                        , #{room_idx}                      -- 객실 IDX
+                        , #{room_img_url}                  -- 객실이미지URL
+                        )
+    </insert>
+    <select id="checkPeak" parameterType="int" resultType="java.lang.String">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2025.01.02
+        *  시 간  : 오후 12:48
+        *  기 능  : 성수기일정관리 보유여부 체크
+        *  변경사항
+        *     - 2025.01.02 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT IF(COUNT(LOD_IDX) > 0, 'Y', 'N') AS CHECK_LOD
+        FROM PRICE
+        WHERE 1=1
+          AND LOD_IDX = #{lod_idx}
+    </select>
+    <update id="updatePeak" parameterType="kr.co.team4.model.dto.SavePeakPriceDTO">
+        /* ************************************************************
+         *  생성자 : JDeok
+         *  날 짜  : 2025.01.02
+         *  시 간  : 오후 02:17
+         *  기 능  : 성수기일정관리  변경
+         *  변경사항
+         *     - 2025.01.02 : JDeok(최초작성)
+         ************************************************************* */
+        UPDATE PRICE
+        SET PEAK_STR_DT  = #{peak_str_dt}
+          , PEAK_END_DT  = #{peak_end_dt}
+          , HPEAK_STR_DT = #{hpeak_str_dt}
+          , HPEAK_END_DT = #{hpeak_end_dt}
+        WHERE 1=1
+          AND LOD_IDX = #{lod_idx}
+
+    </update>
+    <insert id="insertPeak" parameterType="kr.co.team4.model.dto.SavePeakPriceDTO" >
+        /* ************************************************************
+         *  생성자 : JDeok
+         *  날 짜  : 2025.01.02
+         *  시 간  : 오후  02:24
+         *  기 능  : 성수기일정관리 테이블 등록
+         *  변경사항
+         *     - 2025.01.02 : JDeok(최초작성)
+         ************************************************************* */
+        INSERT INTO PRICE                                  -- 성수기 일정관리
+        (
+          LOD_IDX                                          -- 숙소 IDX
+        , PEAK_STR_DT                                      -- 성수기 시작 일자
+        , PEAK_END_DT                                      -- 성수기 종료 일자
+        , HPEAK_STR_DT                                     -- 극성수기 시작 일자
+        , HPEAK_END_DT                                     -- 극성수기 종료 일자
+        )
+        VALUES (
+                 #{lod_idx}                                -- 숙소 IDX
+               , #{peak_str_dt}                            -- 성수기 시작 일자
+               , #{peak_end_dt}                            -- 성수기 종료 일자
+               , #{hpeak_str_dt}                           -- 극성수기 시작 일자
+               , #{hpeak_end_dt}                           -- 극성수기 종료 일자
+               )
+    </insert>
+    <select id="getPeakDate" parameterType="int" resultType="kr.co.team4.model.dto.SavePeakPriceDTO">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2025.01.02
+        *  시 간  : 오후 03:42
+        *  기 능  : 성수기일정관리 조회
+        *  변경사항
+        *     - 2025.01.02 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT peak_str_dt              -- 성수기 시작 일자
+             , peak_end_dt              -- 성수기 종료 일자
+             , hpeak_str_dt             -- 극성수기 시작 일자
+             , hpeak_end_dt             -- 극성수기 종료 일자
+        FROM PRICE
+        WHERE 1=1
+          AND LOD_IDX = #{lod_idx}
+    </select>
+</mapper>
