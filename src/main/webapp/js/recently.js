@@ -1,9 +1,9 @@
 window.onload = function () {
-    const recentRooms = JSON.parse(localStorage.getItem('recentRooms') || '[]');
-    const recentContainer = document.getElementById('recent-rooms-container');
+    const recentlyRooms = JSON.parse(localStorage.getItem('recentlyRooms') || '[]');
+    const recentlyContainer = document.getElementById('recently-rooms-container');
 
-    if (recentRooms.length > 0) {
-        recentRooms.forEach(room => {
+    if (recentlyRooms.length > 0) {
+        recentlyRooms.forEach(room => {
             if (!room || !room.roomIdx || !room.roomName || !room.roomImgUrl || !room.roomPrice) return;
 
             const roomElement = document.createElement('div');
@@ -25,11 +25,11 @@ window.onload = function () {
         </div>
       `;
 
-            recentContainer.appendChild(roomElement);
+            recentlyContainer.appendChild(roomElement);
         });
     } else {
         // 최근 본 숙소가 없으면 안내 메시지 표시
-        recentContainer.innerHTML = '<p class="no-recent-rooms">최근 본 숙소가 없습니다.</p>';
+        recentlyContainer.innerHTML = '<p class="no-recently-rooms">최근 본 숙소가 없습니다.</p>';
     }
 };
 

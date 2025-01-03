@@ -21,10 +21,6 @@ public class LodgmentServiceImpl implements LodgmentService {
         // 한 개의 데이터 반환
         return lodgmentMapper.lodgmentDetail(lodgmentDTO);
     }
-    @Override
-    public List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO) {
-        return lodgmentMapper.getRoomsByLodgment(lodgmentDTO);
-    }
 
     @Override
     public SellerDTO getSellerInfo(int lod_idx) {

@@ -29,27 +29,6 @@
         WHERE lod_idx = #{lod_idx};
     </select>
 
-    <!--lod_idx로 객실 리스트 조회 -->
-    <select id="getRoomsByLodgment" parameterType="kr.co.team4.model.dto.LodgmentDTO" resultMap="RoomResultMap">
-        SELECT
-            r.room_idx,
-            r.lod_idx,
-            r.room_name,
-            r.room_notice,
-            r.room_price,
-            r.max_people_cnt,
-            r.max_pet_cnt,
-            r.avg_rating,
-            r.number_of_review,
-            r.created,
-            r.updated,
-            r.status,
-            p.ROOM_PHOTO_URL
-        FROM ROOM r
-        LEFT JOIN PHOTO p ON r.room_idx = p.room_idx AND r.lod_idx = p.lod_idx
-        WHERE r.lod_idx = #{lod_idx}
-    </select>
-
     <!-- 판매자 정보 조회 -->
     <select id="getSellerInfo" parameterType="int" resultType="kr.co.team4.model.dto.SellerDTO">
         SELECT
