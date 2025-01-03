@@ -2,13 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 변수 선언 ===
     let guestCount = parseInt(document.getElementById("guest-count").textContent);
     let petCount = parseInt(document.getElementById("pet-count").textContent);
-    let checkinDate = moment().format('YYYY-MM-DD'); // 오늘 날짜
-    let checkoutDate = moment().add(1, 'days').format('YYYY-MM-DD'); // 내일 날짜
+    let checkinDate = document.getElementById("checkin-date").textContent;
+    let checkoutDate =  document.getElementById("checkout-date").textContent;
     let lod_idx = document.getElementById("lod_idx").value;
 
-
-    checkinDate = checkinDate.trim();
-    checkoutDate = checkoutDate.trim();
+    console.log(checkinDate, checkoutDate);
 
     // Date Range Picker 초기화
     $('#date-picker').daterangepicker({
@@ -44,8 +42,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 서버로 검색 요청 전송
     function sendSearchAjax() {
-        var encodedCheckoutDate = encodeURIComponent(checkoutDate.trim());
-        var encodedCheckinDate = encodeURIComponent(checkinDate.trim());
 
         var url = "/lodgment.do?lod_idx=" + lod_idx + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate + "&guestCount=" + guestCount + "&petCount=" + petCount;
         console.log(url);
@@ -55,8 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
             dataType: 'json',
             data: {
                 lod_idx: lod_idx,
-                checkinDate: encodedCheckinDate,
-                checkoutDate: encodedCheckoutDate,
+                checkinDate: checkinDate,
+                checkoutDate: checkoutDate,
                 guestCount: guestCount,
                 petCount: petCount
             },
@@ -108,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="room-footer">
                             <p class="room-price">${room.room_price}원</p>
                             <!-- 예약 버튼 -->
-                            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">
+                            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
                                 예약하기
                             </button>
                         </div>
