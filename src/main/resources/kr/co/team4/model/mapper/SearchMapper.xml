@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.SearchMapper">
+    <sql id="searchSql">
+        <if test="type != 0">
+            AND LOD_CATEGORY_IDX = #{type}
+        </if>
+        <if test="weight != 0">
+            AND (
+            <choose>
+                <when test="weight == 1">
+                    MAX_PETS_WEIGHT = 1 OR MAX_PETS_WEIGHT = 2
+                </when>
+                <when test="weight == 2">
+                    MAX_PETS_WEIGHT = 2
+                </when>
+            </choose>
+            )
+        </if>
+        <if test="region != 0">
+            AND REGION_IDX = #{region}
+        </if>
+    </sql>
+
+
+    <select id="searchLodgments" parameterType="kr.co.team4.model.dto.SearchFilterDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
+        SELECT DISTINCT B.*,
+        MIN(A.ROOM_PRICE) AS MIN_ROOM_PRICE,
+        NUMBER_OF_REVIEW AS COUNT_REVIEWS
+        FROM ROOM A
+        JOIN LODGMENT B ON A.LOD_IDX = B.LOD_IDX
+        LEFT JOIN RESERVATION C ON A.LOD_IDX = C.LOD_IDX
+            AND (
+                #{checkinDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
+                AND
+                #{checkoutDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
+            )
+        WHERE 1=1
+          AND A.MAX_PEOPLE_CNT >= #{guestCount}
+          AND A.MAX_PET_CNT    >= #{petCount}
+          <include refid="searchSql" />
+        GROUP BY B.LOD_IDX
+    </select>
+</mapper>
+

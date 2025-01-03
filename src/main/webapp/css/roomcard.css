@@ -1,0 +1,85 @@
+/* 전체 컨테이너 스타일 */
+.room-card-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+/* 카드 스타일 */
+.room-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 800px; /* 카드 전체 크기 */
+}
+
+/* 이미지 섹션 */
+.room-image-link {
+    flex: 1; /* 이미지와 정보 섹션 비율 동일 */
+}
+
+.room-img {
+    width: 100%; /* 이미지가 부모 요소에 맞게 채워짐 */
+    height: auto; /* 비율 유지 */
+}
+#room-img {
+    width: 100%; /* 이미지가 부모 요소에 맞게 채워짐 */
+    height: auto; /* 비율 유지 */
+}
+
+/* 정보 섹션 */
+.room-info {
+    flex: 1; /* 이미지와 동일한 비율 */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* 상단과 하단 영역 간격 조정 */
+}
+
+.room-header {
+    display: flex;
+    justify-content: space-between; /* 제목과 상세보기 링크 정렬 */
+}
+
+.room-name {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.check-in-out {
+    font-size: 0.9em;
+    color: #555; /* 회색 텍스트 */
+}
+
+.details-link {
+    font-size: 0.9em;
+    color: #007BFF; /* 파란색 링크 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+/* 하단 영역 스타일 */
+.room-footer {
+    display: flex;
+    justify-content: space-between; /* 가격과 버튼 간격 조정 */
+}
+
+.room-price {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+/* 스와이퍼 스타일 */
+.swiper-visual {
+    width: 300px;
+    height: 300px; /* 슬라이더 높이 */
+}
+
+.swiper-slide img {
+    width: 250px;
+    height: 250px;
+    border-radius: 20px;
+    object-fit: cover; /* 이미지 비율 유지 */
+}

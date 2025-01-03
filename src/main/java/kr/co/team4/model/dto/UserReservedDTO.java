@@ -20,7 +20,6 @@ public class UserReservedDTO {
     private String lod_img_url;
     private String room_name;
     private String room_price;
-    private String room_img_url;
     private String res_merchant_id;
     private String res_name;
     private String res_phone_number;

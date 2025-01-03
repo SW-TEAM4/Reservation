@@ -2,6 +2,7 @@ package kr.co.team4.model.service;
 
 import kr.co.team4.model.dto.LodgmentDTO;
 import kr.co.team4.model.dto.RoomDTO;
+import kr.co.team4.model.dto.SellerDTO;
 import kr.co.team4.model.mapper.LodgmentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,11 +24,18 @@ public class LodgmentServiceImpl implements LodgmentService {
         return resultMap;
     }
     @Override
-    public List<RoomDTO> getRoomsByLodgment(int lodIdx) {
-        return lodgmentMapper.getRoomsByLodgment(lodIdx);
+    public List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO) {
+        return lodgmentMapper.getRoomsByLodgment(lodgmentDTO);
     }
 
+    @Override
+    public SellerDTO getSellerInfo(int lod_idx) {
+        return lodgmentMapper.getSellerInfo(lod_idx); // Mapper가 정확히 SellerDTO를 반환하는지 확인
+    }
 
-
+    @Override
+    public List<RoomDTO> getAvailableRooms(Map<String, Object> params) {
+        return lodgmentMapper.getAvailableRooms(params);
+    }
 
 }

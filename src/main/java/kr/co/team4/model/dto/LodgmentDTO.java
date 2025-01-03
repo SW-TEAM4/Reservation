@@ -30,4 +30,24 @@ public class LodgmentDTO {
     private Date created;
     private Date updated;
     private String status;
+
+    // 숙소 최소 가격
+    private int min_room_price;
+
+    // 리뷰 수
+    private int count_reviews;
+
+    public String getFormattedLodCheckIn(){
+        if(lod_check_in != null && lod_check_in.length() >= 8){
+            return lod_check_in.substring(0,5); // 15:00:00 -> 15:00 반환
+        }
+        return getFormattedLodCheckIn();
+    }
+    public String getFormattedLodCheckOut(){
+        if(lod_check_out != null && lod_check_out.length() >= 8){
+            return lod_check_out.substring(0,5); // 15:00:00 -> 15:00 반환
+        }
+        return getFormattedLodCheckIn();
+    }
+
 }
