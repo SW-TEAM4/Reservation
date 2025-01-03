@@ -15,7 +15,7 @@
   var centerY = ${lodgment.lodgment.y}; // 숙소의 경도 값
 </script>
 
-<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=71180ffc5bc9d9a75e44c3840f393ad2&autoload=false&libraries=clusterer,services"></script>
+<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=1d380a4ab6f52b94fa5c601a140044ca&autoload=false&libraries=clusterer,services"></script>
 <script type="text/javascript">
   // Kakao Maps API 초기화
   kakao.maps.load(function() {

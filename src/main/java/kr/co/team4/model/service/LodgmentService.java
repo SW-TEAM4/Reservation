@@ -12,7 +12,7 @@ public interface LodgmentService {
 
     List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO);
 
-    SellerDTO getSellerInfo(int lodIdx);
+    SellerDTO getSellerInfo(int lod_idx);
 
     List<RoomDTO> getAvailableRooms(Map<String, Object> params);
 }

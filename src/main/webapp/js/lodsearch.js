@@ -2,13 +2,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 변수 선언 ===
     let guestCount = parseInt(document.getElementById("guest-count").textContent);
     let petCount = parseInt(document.getElementById("pet-count").textContent);
-    let checkinDate = moment().format('YYYY-MM-DD'); // 오늘 날짜
-    let checkoutDate = moment().add(1, 'days').format('YYYY-MM-DD'); // 내일 날짜
+    let checkinDate = document.getElementById("checkin-date").textContent;
+    let checkoutDate = document.getElementById("checkout-date").textContent;
+    console.log(checkinDate, checkoutDate);
     let lod_idx = document.getElementById("lod_idx").value;
 
-
-    checkinDate = checkinDate.trim();
-    checkoutDate = checkoutDate.trim();
 
     // Date Range Picker 초기화
     $('#date-picker').daterangepicker({
@@ -29,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
         minDate: moment().format('YYYY-MM-DD') // 오늘 이후 날짜만 선택 가능
     }, function (start, end) {
         // 선택된 날짜 업데이트
+        console.log("start:" + start + "end" + end);
         checkinDate = start.format('YYYY-MM-DD');
         checkoutDate = end.format('YYYY-MM-DD');
         checkinDate = checkinDate.trim();
@@ -44,8 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 서버로 검색 요청 전송
     function sendSearchAjax() {
-        var encodedCheckoutDate = encodeURIComponent(checkoutDate.trim());
-        var encodedCheckinDate = encodeURIComponent(checkinDate.trim());
 
         var url = "/lodgment.do?lod_idx=" + lod_idx + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate + "&guestCount=" + guestCount + "&petCount=" + petCount;
         console.log(url);
@@ -55,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
             dataType: 'json',
             data: {
                 lod_idx: lod_idx,
-                checkinDate: encodedCheckinDate,
-                checkoutDate: encodedCheckoutDate,
+                checkinDate: checkinDate,
+                checkoutDate: checkoutDate,
                 guestCount: guestCount,
                 petCount: petCount
             },

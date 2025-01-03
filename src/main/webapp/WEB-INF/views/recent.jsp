@@ -7,7 +7,7 @@
   <title>최근 본 숙소</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/roomcard.css"/>
-  <link rel="stylesheet" href="/css/button.css"/>
+  <link rel="stylesheet" href="/css/bookingbutton.css"/>
   <script src="/js/recent.js"></script>
 </head>
 <body>

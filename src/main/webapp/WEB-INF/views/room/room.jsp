@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,7 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="/css/style.css"/>
-    <link rel="stylesheet" href="/css/roomcard.css"/>
+    <link rel="stylesheet" href="/css/bookingbutton.css"/>
     <link rel="stylesheet" href="/css/room.css"/>
     <script src="/js/home.js"></script>
     <script src="/js/room.js"></script>
@@ -37,13 +38,11 @@
                     <img src="/img/room_img_left_swipe.svg" alt="이전" class="slider-button prev-button">
                     <img src="/img/room_img_right_swipe.svg" alt="다음" class="slider-button next-button">
 
-                    <!-- 현재 이미지 번호 -->
                     <div class="slider-counter">
-                        <span id="current-slide">1</span> / <span id="total-slides">${(room.room_img_urls)}</span>
+                        <span id="current-slide">1</span> / <span id="total-slides">${fn:length(room.room_img_urls)}</span>
                     </div>
                 </div>
             </c:if>
-
 
             <!-- 객실 정보 -->
             <div class="detail-info">
