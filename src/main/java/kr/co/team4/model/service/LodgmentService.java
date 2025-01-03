@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface LodgmentService {
-    Map<String, Object> lodgmentDetail(LodgmentDTO lodgmentDTO);
+    LodgmentDTO lodgmentDetail(LodgmentDTO lodgmentDTO);
 
     List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO);
 
