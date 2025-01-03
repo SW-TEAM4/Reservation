@@ -17,6 +17,8 @@ public interface ReservationMapper {
     void reserveRemove(ReservationDTO dto);
     int isAlreadyReserved(ReservationDTO dto);
     UserDTO getUserInform(ReservationDTO dto);
+
+    List<ReseravtionDTO> list(ReseravtionDTO dto);
     ReservationDTO getReservationInform(ReservationDTO dto);
     List<UserReservedDTO> getUserReservations(UserReservedDTO dto);
 
@@ -26,3 +28,4 @@ public interface ReservationMapper {
     PaymentDTO getPaymentInform(String res_merchant_id);
     void updatePayment(PaymentDTO dto);
 }
+
