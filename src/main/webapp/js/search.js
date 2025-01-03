@@ -35,12 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // UI 업데이트
         updateDateUI(start, end);
 
-
-        // UI 업데이트
-        document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
-        document.getElementById('checkout-date').textContent = end.format('YYYY-MM-DD');
-        document.getElementById('cal-date').textContent = `, ${end.diff(start, 'days')}박`;
-
+        console.log("searchJS에서 ajax요청 전의 날짜" + checkinDate +" and " + checkoutDate);
         // AJAX 요청 전송
         sendSearchAjax();
     });

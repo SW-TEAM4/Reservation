@@ -3,10 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let guestCount = parseInt(document.getElementById("guest-count").textContent);
     let petCount = parseInt(document.getElementById("pet-count").textContent);
     let checkinDate = document.getElementById("checkin-date").textContent;
-    let checkoutDate =  document.getElementById("checkout-date").textContent;
-    let lod_idx = document.getElementById("lod_idx").value;
 
-    console.log(checkinDate, checkoutDate);
+    let checkoutDate = document.getElementById("checkout-date").textContent;
+    let lod_idx = document.getElementById("lod_idx").value;
 
     // Date Range Picker 초기화
     $('#date-picker').daterangepicker({
@@ -27,6 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
         minDate: moment().format('YYYY-MM-DD') // 오늘 이후 날짜만 선택 가능
     }, function (start, end) {
         // 선택된 날짜 업데이트
+        console.log("start:" + start + "end" + end);
         checkinDate = start.format('YYYY-MM-DD');
         checkoutDate = end.format('YYYY-MM-DD');
         checkinDate = checkinDate.trim();

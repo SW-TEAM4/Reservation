@@ -29,8 +29,8 @@ public class LodgmentServiceImpl implements LodgmentService {
     }
 
     @Override
-    public SellerDTO getSellerInfo(int lodIdx) {
-        return lodgmentMapper.getSellerInfo(lodIdx); // Mapper가 정확히 SellerDTO를 반환하는지 확인
+    public SellerDTO getSellerInfo(int lod_idx) {
+        return lodgmentMapper.getSellerInfo(lod_idx); // Mapper가 정확히 SellerDTO를 반환하는지 확인
     }
 
     @Override

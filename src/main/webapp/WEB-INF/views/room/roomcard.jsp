@@ -3,7 +3,7 @@
 <html lang="ko">
 <head>
   <link rel="stylesheet" href="/css/roomcard.css"/>
-  <link rel="stylesheet" href="/css/button.css"/>
+  <link rel="stylesheet" href="/css/bookingbutton.css"/>
   <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"/>
   <script src="/js/home.js"></script>

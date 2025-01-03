@@ -26,15 +26,15 @@
             REVIEW.RATING AS reviewer_rating,
             REVIEW.USER_COMMENT AS reviewer_content,
             REVIEW.REVIEW_IMG_URL AS reviewer_image,
-            DATE_FORMAT(REVIEW.CREATED, '%Y.%m.%d') AS reviewer_created
+            DATE_FORMAT(REVIEW.CREATED, '%Y.%m.%d') AS reviewer_created,
+            REVIEW.LOD_COMMENT AS manager_reply
         FROM
             USERS,
             REVIEW,
             RESERVATION,
             LODGMENT,
             ROOM
-        WHERE
-            USERS.USER_IDX = REVIEW.USER_IDX
+        WHERE USERS.USER_IDX = REVIEW.USER_IDX
           AND REVIEW.RESERVATION_IDX = RESERVATION.RESERVATION_IDX
           AND RESERVATION.ROOM_IDX = ROOM.ROOM_IDX
           AND ROOM.LOD_IDX = LODGMENT.LOD_IDX

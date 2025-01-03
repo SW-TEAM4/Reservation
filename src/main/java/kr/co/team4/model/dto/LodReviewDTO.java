@@ -14,5 +14,6 @@ public class LodReviewDTO {
     private double reviewer_rating;
     private String reviewer_image;
     private String reviewer_created;
+    private String manager_reply;
 }
 

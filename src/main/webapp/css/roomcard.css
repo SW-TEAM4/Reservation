@@ -71,29 +71,6 @@
     font-weight: bold;
 }
 
-/* 예약 버튼 스타일 */
-.booking-button {
-    justify-content: center;
-    text-align: center;
-    background-image: url('../img/button_foot.svg'); /* 버튼 배경 이미지 */
-    background-repeat: no-repeat;
-    background-position-x: 30px; /* 이미지 위치 조정 */
-    background-size: 24px; /* 이미지 크기 조정 */
-    width: 212px; /* 버튼 크기 설정 */
-    height: 77px;
-    border-radius: 10px; /* 둥근 모서리 */
-    background-color: #352018; /* 배경 색상 */
-    color: white; /* 텍스트 색상 */
-    font-size: 24px; /* 글씨 크기 설정 */
-    font-weight: bold; /* 글씨 굵게 설정 */
-    cursor: pointer; /* 클릭 시 포인터 표시 */
-    border: none; /* 테두리 제거 */
-}
-
-.booking-button:hover {
-    background-color: #3a2116; /* 호버 시 배경색 변경 */
-}
-
 /* 스와이퍼 스타일 */
 .swiper-visual {
     width: 300px;

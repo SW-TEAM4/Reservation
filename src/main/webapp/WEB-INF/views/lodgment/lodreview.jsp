@@ -76,6 +76,7 @@
             <th>리뷰 내용</th>
             <th>이미지</th>
             <th>작성일</th>
+            <th>사장님 답글</th>
         </tr>
         </thead>
         <tbody>
@@ -113,6 +114,7 @@
                                  alt="리뷰 이미지" width="100">
                         </td>
                         <td>${review.reviewer_created}</td>
+                        <td>${review.manager_reply}</td>
                     </tr>
                 </c:forEach>
             </c:when>
