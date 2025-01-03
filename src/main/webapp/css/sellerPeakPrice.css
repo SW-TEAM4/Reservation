@@ -1,0 +1,147 @@
+/*
+    파일명 : sellerPeakPrice.css
+    생성자 : JDeok
+    날 짜  : 2025.01.02
+    시 간  : 오후 02:00
+    기 능  : 사장님 성수기관리 페이지 스타일
+    변경사항
+        - 2025.01.02 : JDeok(최초작성)
+*/
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fdf7f3;
+    color: #8A5642;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding: 40px;
+    background-color: #ffffff;
+}
+
+/* 페이지 제목 */
+h1 {
+    font-size: 28px;
+    color: #8A5642;
+    margin-bottom: 20px;
+}
+
+/* 중요 정보 섹션 */
+.important-info {
+    background-color: #fff6e6;
+    padding: 20px;
+    border: 1px solid #ffcf91;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.important-info h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.important-info ul {
+    margin: 10px 0 0 20px;
+    padding: 0;
+    list-style-type: disc;
+}
+
+.important-info li {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+/* 테이블 스타일 */
+/* 테이블을 가운데로 정렬 */
+.table {
+    margin: 0 auto; /* 테이블을 수평 중앙 정렬 */
+    width: 80%; /* 테이블 너비 */
+    text-align: center;
+}
+
+.table th,
+.table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #f7d3c5;
+    font-weight: bold;
+    color: #8A5642;
+}
+
+/* 삭제 버튼 */
+.delete-btn {
+    background-color: #ff6b6b;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: #fa5252;
+}
+
+/* 액션 버튼 */
+.actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+}
+
+.btn {
+    background-color: #8A5642;
+    color: #ffffff;
+    padding: 12px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #B07960;
+}
+.date-input {
+    width: 40%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #fdf7f3;
+    color: #8A5642;
+    font-size: 14px;
+}
+
+.calendar-btn {
+    background-color: #8A5642;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 10px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.calendar-btn:hover {
+    background-color: #B07960;
+}
+
+
+

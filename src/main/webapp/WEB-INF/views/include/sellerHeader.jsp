@@ -1,0 +1,29 @@
+<%--
+  파일명 : sellerHeader.jsp
+  생성자 : JDeok
+  날 짜  : 2024.12.23
+  시 간  : 오후 12:19
+  기 능  : 사장님 header 페이지
+  변경사항
+     - 2024.12.23 : JDeok(최초작성)
+
+--%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<header class="header">
+    <h1 class="logo">같이가개</h1>
+    <img src="/img/seller_header.svg" alt="로고" class="logo-image">
+
+    <%-- 페이지 식별 변수로 조건 처리 --%>
+    <%
+        String pageName = (String) request.getAttribute("currentPage");
+        if (pageName != null && "lodRegister".equals(pageName)) {
+    %>
+    <span class="header-extra">숙소 등록</span>
+    <%
+        }
+    %>
+</header>
+
+
+

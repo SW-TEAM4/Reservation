@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.ReservationMapper">
+
+    <select id="list" parameterType="kr.co.team4.model.dto.UserReservedDTO" resultType="kr.co.team4.model.dto.UserReservedDTO">
+        SELECT
+            R.RESERVATION_IDX,
+            R.LOD_IDX,
+            R.ROOM_IDX,
+            R.USER_IDX,
+            L.LOD_IMG_URL,
+            R.RES_STR_DATE,
+            R.RES_END_DATE,
+            L.LOD_NAME,
+            R.STATUS
+        FROM
+            RESERVATION R
+                JOIN
+            LODGMENT L ON R.LOD_IDX = L.LOD_IDX
+                JOIN
+            PAYMENT P ON R.RESERVATION_IDX = P.RESERVATION_IDX
+        WHERE
+            R.USER_IDX = #{user_idx}
+          AND P.STATUS = 'paid'
+    </select>
+
+
+    <select id="getResDetail" parameterType="kr.co.team4.model.dto.GetResDetailResDTO" resultType="kr.co.team4.model.dto.GetResDetailResDTO">
+        SELECT
+            L.lod_idx,
+            Ro.room_idx,
+            Res.reservation_idx,
+            P.payment_idx,
+            Res.created,
+            L.lod_name,
+            Ro.room_name,
+            MIN(Ph.room_photo_url) AS room_photo_url, -- 가장 첫 번째 사진만 가져옴
+            L.lod_check_in,
+            L.lod_check_out,
+            Res.res_str_date,
+            Res.res_end_date,
+            DATEDIFF(Res.res_end_date, Res.res_str_date) AS total_res_day, -- 숙박일 수 계산
+            Res.res_people_cnt,
+            Res.res_pets_cnt,
+            P.paid_money,
+            Res.request
+        FROM
+            LODGMENT L
+                JOIN ROOM Ro ON L.lod_idx = Ro.lod_idx
+                JOIN RESERVATION Res ON Ro.room_idx = Res.room_idx
+                LEFT JOIN PAYMENT P ON Res.reservation_idx = P.reservation_idx
+                LEFT JOIN PHOTO Ph ON Ro.room_idx = Ph.room_idx
+        WHERE
+            Res.user_idx = #{user_idx}
+          AND Res.reservation_idx = #{reservation_idx}
+        GROUP BY
+            Res.user_idx, Res.reservation_idx, L.lod_idx, Ro.room_idx, P.payment_idx, Res.created,
+            L.lod_name, L.lod_check_in, L.lod_check_out, Res.res_str_date,
+            Res.res_end_date, Res.res_people_cnt, Res.res_pets_cnt, P.paid_money, Res.request;
+    </select>
+
+    <insert id="reserveAdd" parameterType="kr.co.team4.model.dto.ReservationDTO" useGeneratedKeys="true" keyProperty="reservation_idx">
+        insert into RESERVATION (
+            lod_idx,room_idx, user_idx, res_merchant_id, res_name, res_phone_number,
+            res_str_date, res_end_date, res_people_cnt, res_pets_cnt,
+            request, status
+        ) values (
+            #{lod_idx}, #{room_idx}, #{user_idx}, #{res_merchant_id} ,#{res_name}, #{res_phone_number},
+            #{res_str_date}, #{res_end_date}, #{res_people_cnt}, #{res_pets_cnt},
+            #{request},#{status}
+        )
+    </insert>
+
+    <delete id="reserveRemove" parameterType="kr.co.team4.model.dto.ReservationDTO">
+        delete from RESERVATION
+        where res_merchant_id = #{res_merchant_id}
+    </delete>
+
+    <select id="getUserInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.UserDTO">
+        select user_name, user_email, user_phone_number
+        from USERS
+        where user_idx = #{user_idx}
+    </select>
+
+    <select id="isAlreadyReserved" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="int">
+        SELECT
+            count(*)
+        FROM ROOM r
+                 LEFT JOIN RESERVATION res ON res.room_idx = r.room_idx AND res.lod_idx = r.lod_idx
+        WHERE r.lod_idx = #{lod_idx} and r.room_idx = #{room_idx}
+          AND NOT(
+            EXISTS (
+                SELECT 1
+                FROM RESERVATION res2
+                WHERE res2.room_idx = r.room_idx
+                AND res2.lod_idx = r.lod_idx
+                AND (
+                        ( res2.res_end_date >#{res_str_date} AND #{res_end_date} > res2.res_str_date)
+                    )
+                )
+            )
+    </select>
+
+    <select id="getReservationInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.ReservationDTO">
+        select *
+        from RESERVATION
+        where res_merchant_id = #{res_merchant_id}
+    </select>
+
+    <select id="getUserReservations" parameterType="kr.co.team4.model.dto.UserReservedDTO" resultType="kr.co.team4.model.dto.UserReservedDTO">
+        select  r.user_idx, r.reservation_idx, r.lod_idx, r.room_idx,
+                l.lod_name, lc.lod_category_name,
+                rm.room_name, rm.room_price,
+                r.res_merchant_id, r.res_name, r.res_phone_number, r.res_str_date,
+                r.res_end_date, r.res_people_cnt, r.res_pets_cnt, r.request, l.status
+        from RESERVATION r, LODGMENT l, LOD_CATEGORY lc, ROOM rmd
+        where r.user_idx = #{user_idx}
+          and r.lod_idx = l.lod_idx
+          and r.room_idx = rm.room_idx
+          and l.lod_category_idx = lc.lod_category_idx
+    </select>
+
+    <insert id="paymentAdd" parameterType="kr.co.team4.model.dto.PaymentDTO" useGeneratedKeys="true" keyProperty="payment_idx">
+        insert into PAYMENT (
+            reservation_idx, paid_money, status
+        ) values (
+            #{reservation_idx}, #{paid_money}, #{status}
+        )
+    </insert>
+
+    <delete id="paymentRemove" parameterType="kr.co.team4.model.dto.PaymentDTO">
+        delete from PAYMENT
+        where reservation_idx = #{reservation_idx}
+    </delete>
+
+    <select id="getPaymentInform" parameterType="String" resultType="kr.co.team4.model.dto.PaymentDTO">
+        select *
+        from PAYMENT
+        where reservation_idx = (
+            select reservation_idx
+            from RESERVATION
+            where res_merchant_id = #{merchant_id}
+        )
+    </select>
+
+    <update id="updatePayment" parameterType="kr.co.team4.model.dto.PaymentDTO">
+        update PAYMENT
+        set status = #{status}
+        where payment_idx = #{payment_idx}
+    </update>
+</mapper>

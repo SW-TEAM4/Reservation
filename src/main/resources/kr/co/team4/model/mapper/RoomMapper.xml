@@ -1,22 +1,54 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.team4.model.mapper.RoomMapper">
-    <select id="availableRooms" parameterType="kr.co.team4.model.dto.RoomDTO" resultType="kr.co.team4.model.dto.RoomDTO">
-    SELECT R.room_img_url, R.room_name, L.lod_name,
-           L.lod_check_in, L.lod_check_out,
-           R.max_people_cnt, R.max_pet_cnt, R.room_price, R.room_notice,
-           DATEDIFF(#{res.RES_END_DATE}, #{res.RES_STR_DATE})  AS stay_nights -- 숙박 일수 계산
-    FROM ROOM R INNER JOIN LODGMENT L
-    ON R.lod_idx = L.lod_idx
-    WHERE R.lod_idx = #{lod_idx}
-        AND R.max_people_cnt >= COALESCE(#{people_count}, 2)  -- 사람 수 필터링, 기본값 2
-        AND R.max_pet_cnt >= COALESCE(#{dog_count}, 1)      -- 마리 수 필터링, 기본값 1
-        AND NOT EXISTS (
-                        SELECT 1
-                        FROM RESERVATION RES
-                        WHERE RES.room_idx = R.room_idx
-                        AND (#{RES.RES_STR_DATE} BETWEEN RES.res_str_date AND RES.res_end_date
-                        OR #{RES.RES_END_DATE} BETWEEN RES.res_str_date AND RES.res_end_date)
-        );
+
+    <!-- RoomDetailMap 정의 -->
+    <resultMap id="RoomDetailMap" type="kr.co.team4.model.dto.RoomDTO">
+        <id property="room_idx" column="room_idx"/>
+        <result property="lod_idx" column="lod_idx"/>
+        <result property="room_name" column="room_name"/>
+        <result property="room_notice" column="room_notice"/>
+        <result property="room_price" column="room_price"/>
+        <result property="max_people_cnt" column="max_people_cnt"/>
+        <result property="max_pet_cnt" column="max_pet_cnt"/>
+        <result property="created" column="created"/>
+        <result property="updated" column="updated"/>
+        <result property="status" column="status"/>
+
+        <!-- 이미지 URL 리스트 매핑 -->
+        <collection property="room_img_urls" ofType="java.lang.String">
+            <result column="room_photo_url"/>
+        </collection>
+    </resultMap>
+
+    <!-- room_idx로 객실 상세 정보 조회 -->
+    <select id="getRoomDetail" parameterType="int" resultMap="RoomDetailMap">
+        SELECT
+            r.room_idx,
+            r.lod_idx,
+            r.room_name,
+            r.room_notice,
+            r.room_price,
+            r.max_people_cnt,
+            r.max_pet_cnt,
+            r.created,
+            r.updated,
+            r.status,
+            p.room_photo_url
+        FROM ROOM r LEFT JOIN PHOTO p
+        ON r.room_idx = p.room_idx
+        WHERE r.room_idx = #{room_idx}
+    </select>
+
+    <select id="getRoomLodDetail" parameterType="int" resultType="kr.co.team4.model.dto.LodgmentDTO">
+        SELECT
+        lod_idx,
+        lod_name,
+        lod_address,
+        lod_check_in,
+        lod_check_out
+        FROM LODGMENT
+        WHERE lod_idx = #{lod_idx}
     </select>
 </mapper>
+

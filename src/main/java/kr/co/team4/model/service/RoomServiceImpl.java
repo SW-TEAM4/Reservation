@@ -1,12 +1,12 @@
 package kr.co.team4.model.service;
 
+import kr.co.team4.model.dto.LodgmentDTO;
 import kr.co.team4.model.dto.RoomDTO;
 import kr.co.team4.model.mapper.RoomMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.math.BigInteger;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -14,7 +14,12 @@ public class RoomServiceImpl implements RoomService {
     private RoomMapper roomMapper;
 
     @Override
-    public List<RoomDTO> availableRooms(Map<String, Object> params) {
-        return roomMapper.availableRooms(params);
+    public RoomDTO getRoomDetail(int room_idx) {
+        return roomMapper.getRoomDetail(room_idx); // Mapper 호출
+    }
+
+    @Override
+    public LodgmentDTO getRoomLodDetail(int lodIdx) {
+        return roomMapper.getRoomLodDetail(lodIdx);
     }
 }

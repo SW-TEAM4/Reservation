@@ -1,0 +1,99 @@
+/*
+    파일명 : sellerDetailMain.css
+    생성자 : JDeok
+    날 짜  : 2024.12.23
+    시 간  : 오전 11:52
+    기 능  : 사장님 숙소등록페이지(css)
+    변경사항
+     - 2024.12.23 : JDeok(최초작성)
+*/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+/* 전체 레이아웃 */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    min-height: 100vh;
+    background-color: #f9f9f9;
+}
+
+/* 메인 콘텐츠 */
+.content {
+    flex: 1;
+    margin-left: 10%; /* 사이드바의 너비만큼 왼쪽 여백을 추가 */
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+
+/* 타이틀 스타일 */
+.content h1 {
+    font-size: 24px; /* 동일한 폰트 크기 */
+    font-weight: bold;
+    color: #8A5642;
+    text-align: center; /* 가운데 정렬 */
+    margin-bottom: 10px;
+}
+
+/* 서브타이틀 스타일 */
+.content p {
+    font-size: 16px;
+    color: #666;
+    text-align: center; /* 가운데 정렬 */
+    margin-bottom: 20px;
+}
+
+
+/* 캘린더 컨테이너 */
+.calendar-container {
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    width: 90%; /* 너비를 90%로 확대 */
+    max-width: 1000px; /* 최대 너비를 1000px로 설정 */
+    height: auto;
+}
+
+#calendar {
+    width: 100%;
+    height: 600px; /* 캘린더 높이를 600px로 확대 */
+}
+
+/* 버튼 스타일 */
+button {
+    background-color: #8A5642;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #7a4d36;
+}
+
+button.delete-photo {
+    background-color: #ff6b6b;
+    color: #fff;
+}
+
+button.delete-photo:hover {
+    background-color: #e53935;
+}
+
+/* 유틸리티 클래스 */
+.hidden {
+    display: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #8A5642;
+}
+
+
