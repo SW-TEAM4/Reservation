@@ -23,7 +23,22 @@
 <div class="menu">
     <ul class="depth">
         <li><a href="/home.do" class="${currentURI.endsWith('/WEB-INF/views/home.jsp') ? 'active' : ''}">홈</a></li>
-        <li><a href="/search/search.do" class="${currentURI.endsWith('/WEB-INF/views/search/search.jsp') ? 'active' : ''}">구경하개</a></li>
+        <li>
+            <a href="/search/search.do"
+                class="<c:choose>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/search/search.jsp")}'>
+                        active
+                    </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/reserve/reservation.jsp")}'>
+                        active
+                    </c:when>
+                    <c:otherwise>
+                        ''
+                    </c:otherwise>
+                </c:choose>">
+                구경하개
+            </a>
+        </li>
         <li><a href="/gather.do" class="${currentURI.endsWith('/gather.do') ? 'active' : ''}">모여보개</a></li>
         <li><a href="/fun.do" class="${currentURI.endsWith('/fun.do') ? 'active' : ''}">재미나개</a></li>
     </ul>

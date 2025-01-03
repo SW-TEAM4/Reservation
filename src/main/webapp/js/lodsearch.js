@@ -3,10 +3,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let guestCount = parseInt(document.getElementById("guest-count").textContent);
     let petCount = parseInt(document.getElementById("pet-count").textContent);
     let checkinDate = document.getElementById("checkin-date").textContent;
-    let checkoutDate = document.getElementById("checkout-date").textContent;
-    console.log(checkinDate, checkoutDate);
-    let lod_idx = document.getElementById("lod_idx").value;
 
+    let checkoutDate = document.getElementById("checkout-date").textContent;
+    let lod_idx = document.getElementById("lod_idx").value;
 
     // Date Range Picker 초기화
     $('#date-picker').daterangepicker({
@@ -105,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="room-footer">
                             <p class="room-price">${room.room_price}원</p>
                             <!-- 예약 버튼 -->
-                            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}'">
+                            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
                                 예약하기
                             </button>
                         </div>

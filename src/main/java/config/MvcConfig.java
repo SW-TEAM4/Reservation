@@ -16,6 +16,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -110,13 +111,6 @@ public class MvcConfig implements WebMvcConfigurer {
         return s3Client;
     }
 
-//    // 트랜잭션매니저 빈 등록
-//    @Bean
-//    public TransactionManager tm() {
-//        DataSourceTransactionManager dtm =
-//                new DataSourceTransactionManager(dataSource());
-//        return dtm;
-//    }
 
     // properties 설정
     @Bean
@@ -124,7 +118,8 @@ public class MvcConfig implements WebMvcConfigurer {
         PropertyPlaceholderConfigurer config = new PropertyPlaceholderConfigurer();
         config.setLocations(
                 new ClassPathResource("db.properties"),
-                new ClassPathResource("bucket.properties")
+                new ClassPathResource("bucket.properties"),
+                new ClassPathResource("imp.properties")
         );
         return config;
     }
