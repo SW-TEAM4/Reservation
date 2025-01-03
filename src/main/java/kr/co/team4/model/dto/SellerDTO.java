@@ -7,11 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigInteger;
-
-@Data // @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor 포함
-@NoArgsConstructor // 기본 생성자 자동 생성
-@AllArgsConstructor // 모든 필드를 포함한 생성자 자동 생성
 import java.sql.Timestamp;
+
 
 @Data
 public class SellerDTO {
@@ -26,7 +23,4 @@ public class SellerDTO {
     private Timestamp CREATED;
     private Timestamp UPDATED;
     private String STATUS;
-
-
-
 }
