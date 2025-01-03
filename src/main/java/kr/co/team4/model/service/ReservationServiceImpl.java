@@ -41,7 +41,7 @@ public class ReservationServiceImpl implements ReservationService {
      */
     @Override
     public Map<String, Object> list(UserReservedDTO dto) {
-        List<UserReservedDTO> list = reservationMapper.list(dto);
+//        List<UserReservedDTO> list = reservationMapper.list(dto);
 
         // 날짜 변환을 위한 포맷터 설정
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");

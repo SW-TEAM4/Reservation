@@ -24,5 +24,4 @@ public class SellerDTO {
     private Timestamp CREATED;
     private Timestamp UPDATED;
     private String STATUS;
-
 }
