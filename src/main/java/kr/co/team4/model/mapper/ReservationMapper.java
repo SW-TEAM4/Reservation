@@ -1,9 +1,6 @@
 package kr.co.team4.model.mapper;
 
-import kr.co.team4.model.dto.PaymentDTO;
-import kr.co.team4.model.dto.ReservationDTO;
-import kr.co.team4.model.dto.UserDTO;
-import kr.co.team4.model.dto.UserReservedDTO;
+import kr.co.team4.model.dto.*;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -18,7 +15,8 @@ public interface ReservationMapper {
     int isAlreadyReserved(ReservationDTO dto);
     UserDTO getUserInform(ReservationDTO dto);
 
-    List<ReseravtionDTO> list(ReseravtionDTO dto);
+    List<UserReservedDTO> list(UserReservedDTO dto);
+    List<GetResDetailResDTO> getResDetail(GetResDetailResDTO dto);
     ReservationDTO getReservationInform(ReservationDTO dto);
     List<UserReservedDTO> getUserReservations(UserReservedDTO dto);
 
