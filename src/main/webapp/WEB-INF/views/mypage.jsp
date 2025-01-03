@@ -2,31 +2,145 @@
   Created by IntelliJ IDEA.
   User: 이윤채
   Date: 2024-12-24
-  Time: 오전 10:02
+  Time: 오후 3:30
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-        <!DOCTYPE html>
-        <html lang="ko">
-        <head>
-            <meta charset="utf-8">
-            <title>같이가개</title>
-            <META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-            <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-            <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
-            <link rel="stylesheet" href="/css/mypageStyle.css"/>
-        </head>
-        <body>
-        <div class="wrap">
-            <%@ include file="/WEB-INF/views/include/header.jsp" %>
-            <div class="profilImg" style="background-image: url('/img/mypage_user_profil.svg');"></div>
-            <div class="mypageBox">
-                <%@ include file="/WEB-INF/views/include/mypageMenu.jsp" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <title>같이가개 - 마이페이지</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/mypageStyle.css"/>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .background {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background-color: #FFFFFF;
+            width: 1200px;
+        }
+
+        .profile {
+            width: 200px;
+            height: 110px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 100px auto 100px;
+        }
+
+        .profile img {
+            width: 120px;
+            height: 120px;
+        }
+
+        .profileId {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            cursor: pointer;
+            margin-top: -80px;
+            margin-left: 10px;
+        }
+
+        .userId {
+            font-size: 20px;
+            color: black;
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0 8px 0 0;
+        }
+
+        .listWrapper {
+            background-color: #8A5642;
+            width: 600px;
+            height: 352px;
+            border-radius: 30px 30px 30px 30px;
+            padding-top: 30px;
+            margin: 90px auto;
+            position: relative;
+            margin-bottom: 300px;
+        }
+
+        .list {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .listItem {
+            display: flex;
+            align-items: center;
+            padding: 50px 20px;
+        }
+
+        .listItem img:first-child {
+            margin-right: 20px;
+        }
+
+        .listItem:last-child {
+            border-bottom: none;
+        }
+
+        .listItem span {
+            font-size: 20px;
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #FFFFFF;
+            margin-left: 20px;
+            flex-grow: 1;
+        }
+
+    </style>
+</head>
+<body>
+<div class="background">
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+
+    <div class="container">
+        <div class="profile">
+            <img src="/img/mypage_user_profil.svg" alt="프로필 이미지">
+        </div>
+        <div class="profileId" onclick="location.href='/modifyMyInfo'">
+            <span class="userId">${userReservedDTO.user_name}님</span>
+        </div>
+    </div>
+
+    <div class="listWrapper">
+        <div class="list">
+            <div class="listItem" onclick="location.href='/reservation/list'">
+                <img src="/img/bone.svg" alt="예약내역 아이콘">
+                <span>예약내역</span>
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
             </div>
-            <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+            <div class="listItem" onclick="location.href='/review/list'">
+                <img src="/img/mypage_icon_1.svg" alt="리뷰내역 아이콘">
+                <span>리뷰내역</span>
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
+            </div>
+        </div>
+    </div>
+
+    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
 </body>
 </html>

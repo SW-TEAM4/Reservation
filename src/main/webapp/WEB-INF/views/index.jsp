@@ -25,7 +25,7 @@
     <button type="submit">Go to Test Index</button>
 </form>
 
-<form action="/reserve/reserve.do" method="get">
+<form action="/reserve/reservationtest.do" method="get">
     <button type="submit">Go to Reserve Index</button>
 </form>
 
@@ -33,6 +33,9 @@
     <button type="submit">Go to s3 test Index</button>
 </form>
 
+<form action="/mypage.do" method="get">
+    <button type="submit">Go to MyPage</button>
+</form>
 
 </body>
 </html>

@@ -3,9 +3,68 @@
 <mapper namespace="kr.co.team4.model.mapper.ReviewMapper">
 
     <insert id="insertReview" parameterType="kr.co.team4.model.dto.ReviewDTO">
-        INSERT INTO REVIEW (user_idx, reservation_idx, room_idx,review_img_url, user_comment, rating)
-        VALUES (#{user_idx}, #{reservation_idx}, #{room_idx}, #{review_img_url},#{user_comment}, #{rating})
+        INSERT INTO REVIEW (user_idx, reservation_idx, room_idx, user_comment, rating,review_img_url)
+        VALUES (#{user_idx}, #{reservation_idx}, #{room_idx},#{user_comment}, #{rating},#{review_img_url})
     </insert>
+
+    <update id="updateReservationStatus" parameterType="kr.co.team4.model.dto.UserReservedDTO">
+        UPDATE RESERVATION
+        SET status = 'N'
+        WHERE user_idx = #{userIdx}
+          AND reservation_idx = #{reservationIdx}
+          AND room_idx = #{roomIdx}
+    </update>
+
+    <select id="getRoomAndLodgmentName" parameterType="kr.co.team4.model.dto.UserReservedDTO" resultType="kr.co.team4.model.dto.UserReservedDTO">
+        SELECT
+            l.LOD_NAME AS lod_name,
+            r.room_name AS room_name
+        FROM
+            ROOM r
+                JOIN LODGMENT l ON r.LOD_IDX = l.LOD_IDX
+        WHERE
+            r.room_idx = #{room_Idx}
+    </select>
+
+    <select id="getUserName" parameterType="kr.co.team4.model.dto.UserReservedDTO" resultType="kr.co.team4.model.dto.UserReservedDTO">
+        select USER_NAME
+        from USERS where USER_IDX=#{user_Idx}
+    </select>
+
+    <select id="getReviewList" parameterType="kr.co.team4.model.dto.ReviewDTO" resultType="kr.co.team4.model.dto.ReviewDTO">
+        SELECT
+            r.user_idx,
+            r.reservation_idx,
+            ro.ROOM_NAME,
+            l.LOD_NAME,
+            r.ROOM_IDX,
+            r.RATING,
+            r.REVIEW_IMG_URL,
+            r.USER_COMMENT,
+            r.LOD_COMMENT,
+            r.created
+        FROM
+            REVIEW r
+                INNER JOIN
+            ROOM ro ON r.ROOM_IDX = ro.ROOM_IDX
+                INNER JOIN
+            LODGMENT l ON ro.LOD_IDX = l.LOD_IDX
+                INNER JOIN
+            PAYMENT p ON r.reservation_idx = p.reservation_idx
+        WHERE
+            r.USER_IDX = #{user_idx}
+          AND p.STATUS = 'paid'
+
+    </select>
+
+    <select id="getReviewCount" parameterType="kr.co.team4.model.dto.ReviewDTO" resultType="int">
+        SELECT COUNT(*) count
+        FROM REVIEW
+        WHERE USER_IDX = #{user_idx}
+            </select>
+
+
+
 
 
 

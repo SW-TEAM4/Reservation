@@ -135,7 +135,7 @@ html, body {
     background-color: #fff; /* 기본 배경색 */
     color: #352018;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .menu > ul > li > a.active {
