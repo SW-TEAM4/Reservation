@@ -12,12 +12,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.sql.DataSource;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan(basePackages = {"kr.co"})
@@ -77,7 +81,8 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public static PropertyPlaceholderConfigurer propreties() {
         PropertyPlaceholderConfigurer config = new PropertyPlaceholderConfigurer();
-        config.setLocations(new ClassPathResource("db.properties"));
+        config.setLocations(new ClassPathResource("db.properties"), new ClassPathResource("smtp.properties"));
+
         return config;
     }
 
@@ -92,5 +97,34 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/js/**")
                 .addResourceLocations("/js/");
     }
+
+    @Value("${smtp.host}")
+    private String smtpHost;
+    @Value("${smtp.username}")
+    private String smtpUsername;
+    @Value("${smtp.password}")
+    private String smtpPassword;
+    @Value("${smtp.port}")
+    private int smtpPort;
+    // 이메일 전송
+    @Bean
+    public JavaMailSender javaMailService() {
+        JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+
+        javaMailSender.setHost(smtpHost);
+        javaMailSender.setUsername(smtpUsername);
+        javaMailSender.setPassword(smtpPassword);
+        javaMailSender.setPort(smtpPort);
+
+        Properties props = javaMailSender.getJavaMailProperties();
+        props.put("mail.smtp.auth", "true"); // 인증 활성화
+        props.put("mail.smtp.ssl.enable", "true"); // SSL 활성화
+        props.put("mail.smtp.ssl.protocols", "TLSv1.2");  // TLS 1.2 명시적 사용
+        props.put("mail.debug", "true"); // 디버그 모드 활성화
+
+        return javaMailSender;
+    }
+
+
 
 }
