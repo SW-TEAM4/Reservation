@@ -12,10 +12,10 @@
 
     function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
       // 기존 데이터 가져오기
-      const recentRooms = JSON.parse(localStorage.getItem('recentRooms') || '[]');
+      const recentlyRooms = JSON.parse(localStorage.getItem('recentlyRooms') || '[]');
 
       // 중복 제거
-      const updatedRooms = recentRooms.filter(room => room.roomIdx !== roomIdx);
+      const updatedRooms = recentlyRooms.filter(room => room.roomIdx !== roomIdx);
 
       // 새 데이터 추가
       updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice });
@@ -26,7 +26,7 @@
       }
 
       // 로컬 스토리지에 저장
-      localStorage.setItem('recentRooms', JSON.stringify(updatedRooms));
+      localStorage.setItem('recentlyRooms', JSON.stringify(updatedRooms));
     }
 
 
