@@ -423,9 +423,9 @@
                 merchant_uid: reservationDTO.res_merchant_id, // 서버에서 받은 주문번호
                 name:  `결제 테스트 ${lodDTO.lod_name} ${roomDTO.room_name}`,
                 amount: paymentDTO.paid_money, // 결제 금액
-                buyer_email: userDTO.user_email,
-                buyer_name:  userDTO.user_name,
-                buyer_tel: userDTO.user_phone_number,
+                buyer_email: userDTO.USER_EMAIL,
+                buyer_name:  userDTO.USER_NAME,
+                buyer_tel: userDTO.USER_PHONE_NUMBER,
             },
             async function(response) {
                 // 결제 과정에서 error 발생시 생성했던 reservation, payment 정보 삭제
