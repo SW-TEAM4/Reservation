@@ -18,7 +18,9 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/mypageStyle.css"/>
+    <script src="/js/home.js"></script>
+    <link rel="stylesheet" href="/css/style.css?after"/>
+<%--    <link rel="stylesheet" href="/css/mypageStyle.css"/>--%>
     <style>
         body {
             font-family: 'Noto Sans KR', sans-serif !important;
@@ -51,6 +53,10 @@
             cursor: pointer;
         }
 
+        .back-button img {
+            width: 24px;
+            height: 24px;
+        }
         .header-title {
             font-size: 20px;
             color: #352018;
@@ -74,7 +80,7 @@
             margin-bottom: 30px;
         }
 
-        .container {
+        .container2 {
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -105,18 +111,28 @@
         }
 
         .card-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             font-size: 24px;
             font-weight: bold;
             color: #352018;
         }
 
+
         .right-back-button {
             background: none;
             border: none;
-            font-size: 24px;
-            color: #352018;
             cursor: pointer;
+            padding: 0;
+            margin: 0;
         }
+
+        .right-back-button img {
+            width: 35px; /* 이미지 크기 */
+            height: 35px; /* 이미지 크기 */
+        }
+
 
         .card-room-name {
             font-size: 18px;
@@ -183,12 +199,14 @@
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
 <div class="header-bar">
-    <button class="back-button" onclick="history.back();">&lt;</button>
+    <button class="back-button" onclick="history.back();">
+        <img src="/img/arrow-left.svg" alt="Back" />
+    </button>
     <span class="header-title">리뷰내역</span>
 </div>
 <span class="review-count">내가 쓴 총 리뷰 수 ${count}</span>
 
-<div class="container">
+<div class="container2">
     <c:forEach var="dto" items="${map.getReviewList}">
         <div class="card">
             <img class="card-image" src="${empty dto.review_img_url ? '/img/review_defalt_img.svg' : dto.review_img_url}" alt="숙소 이미지">
@@ -199,7 +217,10 @@
                             ${dto.lod_name}
                             <span style="color: #777777; font-size: 16px; margin-left: 10px;">${dto.formattedDate}</span>
                     </div>
-                    <button class="right-back-button" onclick="window.location.href='/reservation/detailInfo?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}';">&gt;</button>
+<%--                    <button class="right-back-button" onclick="window.location.href='/reservation/detailInfo?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}';">&gt;</button>--%>
+                    <button class="right-back-button"onclick="window.location.href='/reservation/detailInfo?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}';">
+                        <img src="/img/arrow-right.svg" alt="Go" />
+                    </button>
                 </div>
                 <div class="card-room-name">${dto.room_name}</div>
 
