@@ -17,27 +17,25 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/mypageStyle.css"/>
+    <script src="/js/home.js"></script>
+    <link rel="stylesheet" href="/css/style.css?after"/>
+<%--    <link rel="stylesheet" href="/css/mypageStyle.css"/>--%>
     <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
 
         .background {
-            display: flex;
+            /*display: flex;*/
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
         .container {
-            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             height: 100%;
             background-color: #FFFFFF;
-            width: 1200px;
+            /*width: 1200px;*/
         }
 
         .profile {
@@ -68,17 +66,17 @@
         .userId {
             font-size: 20px;
             color: black;
-            font-family: 'Noto Sans KR', sans-serif;
             margin: 0 8px 0 0;
+            font-weight: bold;
         }
 
         .listWrapper {
             background-color: #8A5642;
-            width: 600px;
-            height: 352px;
+            width: 590px;
+            height: 450px;
             border-radius: 30px 30px 30px 30px;
             padding-top: 30px;
-            margin: 90px auto;
+            margin: 50px auto;
             position: relative;
             margin-bottom: 300px;
         }
@@ -106,7 +104,7 @@
             font-size: 20px;
             font-family: 'Noto Sans KR', sans-serif;
             color: #FFFFFF;
-            margin-left: 20px;
+            margin-left: 10px;
             flex-grow: 1;
         }
 
@@ -135,6 +133,12 @@
             <div class="listItem" onclick="location.href='/review/list'">
                 <img src="/img/mypage_icon_1.svg" alt="리뷰내역 아이콘">
                 <span>리뷰내역</span>
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
+            </div>
+            <%--            최근 본 숙소로 연결 해주세용--%>
+            <div class="listItem" onclick="location.href='/review/list'">
+                <img src="/img/mypage_icon_3.svg" alt="최근 본 숙소">
+                <span>최근 본 숙소</span>
                 <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
             </div>
         </div>

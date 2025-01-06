@@ -86,8 +86,12 @@ public class LoginController {
         }
 
         session.setAttribute("usersession", user); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
+        session.setAttribute("user_idx", user.getUSER_IDX()); // 세션에 USER_IDX 저장
 
-        return "login/main";
+        // 서버 콘솔에 user_idx 출력
+        System.out.println("로그인 성공: user_idx = " + user.getUSER_IDX());
+
+        return "redirect:/home.do";
     }
 
     @PostMapping("/sellerlogin")
@@ -101,6 +105,7 @@ public class LoginController {
             rttr.addFlashAttribute("result", result);
             return "redirect:/sellerlogin";
         }
+
 
         session.setAttribute("sellersession", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
 

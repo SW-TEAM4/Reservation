@@ -14,9 +14,11 @@
     <title>리뷰 작성</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="/css/mypageStyle.css"/>
-    <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
+<%--    <script src="/js/home.js"></script>--%>
+    <link rel="stylesheet" href="/css/style.css?after"/>
+<%--    <link rel="stylesheet" href="/css/mypageStyle.css"/>--%>
+    <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
 
 
     <script>
@@ -174,7 +176,6 @@
             border-top: 1px solid #00000070;
             border-bottom: 1px solid #00000070;
             padding: 20px 0;
-            font-family: 'Noto Sans', sans-serif;
             margin-top: 50px;
             margin-bottom: 30px;
         }
@@ -264,7 +265,6 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             color: #6b432f;
             text-align: center;
-            font-family: 'Noto Sans', sans-serif;
         }
 
         .custom-file-label:hover {
@@ -291,16 +291,7 @@
             max-height: 100%;
             object-fit: cover;
         }
-        /*.content {*/
-        /*    display: flex;*/
-        /*    flex-direction: column;*/
-        /*    align-items: center;*/
-        /*    justify-content: center;*/
-        /*    text-align: center;*/
-        /*    margin: 50px auto;*/
-        /*    max-width: 600px;*/
 
-        /*}*/
         #user_comment {
             margin-top: 20px;
             padding: 10px;
@@ -360,7 +351,7 @@
 <%-------------------------------------------------------------------------------------------------------------------------------%>
 <div class="header-bar">
     <button class="back-button" onclick="history.back();">&lt;</button>
-    <span class="header-title">리뷰 쓰기</span>
+    <span class="header-title">리뷰쓰기</span>
 </div>
 
 <div class="content">
