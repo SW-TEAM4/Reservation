@@ -19,9 +19,9 @@
 /* 메인 콘텐츠 */
 .content {
     flex: 1;
-    margin-left: 10%; /* 사이드바의 너비만큼 왼쪽 여백을 추가 */
-    padding: 20px;
-    background-color: #f9f9f9;
+    padding: 20px; /* 통일된 패딩 값 */
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* 타이틀 스타일 */

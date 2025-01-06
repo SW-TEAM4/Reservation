@@ -1,9 +1,8 @@
 package kr.co.team4.model.service;
 
-import kr.co.team4.model.dto.LodRegisterDTO;
-import kr.co.team4.model.dto.RoomRegisterDTO;
-import kr.co.team4.model.dto.SavePeakPriceDTO;
+import kr.co.team4.model.dto.*;
 import kr.co.team4.model.mapper.SellerPageMapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +10,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SellerPageServiceImpl implements SellerPageService {
@@ -210,4 +213,89 @@ public class SellerPageServiceImpl implements SellerPageService {
 
         return sellerPageMapper.getPeakDate(lodIdx);
     }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   :  예약현황 조회
+     * 변경사항
+     * - 2025.01.03 : JDeok(최초생성)
+     *
+     */
+    @Override
+    public List<LodReservationDTO> sellerGetReservation(Map<String, Object> paramMap) {
+        return sellerPageMapper.sellerGetReservation(paramMap);
+    }
+    
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 리뷰 평점 
+     * 변경사항
+     * - 2025.01.03 : JDeok(최초생성)
+     *
+     */
+    @Override
+    public Map<String, Object> getrating(int lod_idx) {
+
+        return sellerPageMapper.getrating(lod_idx);
+    }
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 리뷰 데이터
+     * 변경사항
+     * - 2025.01.03 : JDeok(최초생성)
+     *
+     */
+    @Override
+    public List<SellerGetReviewDTO> getReview(int lod_idx) {
+        return sellerPageMapper.sellerGetReview(lod_idx);
+    }
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 리뷰 사장님 답글 업데이트
+     * 변경사항
+     * - 2025.01.03 : JDeok(최초생성)
+     *
+     */
+    @Override
+    public void updateReview(Map<String, Object> reviewMap) {
+        sellerPageMapper.updateReview(reviewMap);
+    }
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 매출관리
+     * 변경사항
+     * - 2025.01.03 : JDeok(최초생성)
+     *
+     */
+    @Override
+    public Map<String, Object> getSales(int lodIdx) {
+
+        Map<String, Object> salesData = sellerPageMapper.getSales(lodIdx);
+
+        List<String> month_date = new ArrayList<>(Arrays.asList(
+                (String) salesData.get("min6_month_date"),          // 6개월 전 달
+                (String) salesData.get("min5_month_date"),          // 5개월 전 달
+                (String) salesData.get("min4_month_date"),          // 4개월 전 달
+                (String) salesData.get("min3_month_date"),          // 3개월 전 달
+                (String) salesData.get("min2_month_date"),          // 2개월 전 달
+                (String) salesData.get("min1_month_date"),          // 1개월 전 달
+                (String) salesData.get("current_month")             // 이번달
+        ));
+
+        ArrayList<BigDecimal> total_money = new ArrayList<>(Arrays.asList(
+                (BigDecimal) salesData.get("min6_month_money"),        // 6개월 전 합산금액
+                (BigDecimal) salesData.get("min5_month_money"),        // 5개월 전 합산금액
+                (BigDecimal) salesData.get("min4_month_money"),        // 4개월 전 합산금액
+                (BigDecimal) salesData.get("min3_month_money"),        // 3개월 전 합산금액
+                (BigDecimal) salesData.get("min2_month_money"),        // 2개월 전 합산금액
+                (BigDecimal) salesData.get("min1_month_money"),        // 1개월 전 합산금액
+                (BigDecimal) salesData.get("month_money")              // 이번 달 합산금액
+        ));
+
+        salesData.put("month_date" , month_date );
+        salesData.put("total_money", total_money);
+
+        return salesData;
+    }
+
 }

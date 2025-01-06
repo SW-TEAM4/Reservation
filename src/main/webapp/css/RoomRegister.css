@@ -22,11 +22,11 @@ body {
     min-height: 100vh;
 }
 
-/* 콘텐츠 영역 스타일 */
 .content {
     flex: 1;
-    padding: 40px;
-    background-color: #fff;
+    padding: 20px; /* 통일된 패딩 값 */
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 h1 {

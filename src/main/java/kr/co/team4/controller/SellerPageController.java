@@ -3,16 +3,15 @@ package kr.co.team4.controller;
 import kr.co.team4.model.dto.*;
 import kr.co.team4.model.service.SellerPageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 @RequestMapping("/lodgment")
@@ -100,9 +99,9 @@ public class SellerPageController {
      */
     @GetMapping("/lodRegister.do")
     public String lodRegister(HttpSession session) {
-        session.setAttribute("seller_idx", 10);
+        session.setAttribute("seller_idx", 1);
         int seller_idx = (int) session.getAttribute("seller_idx");
-        /*[check] 여기서 숙소테이블에 존재 여부 확인 후 if else로 나눠서 없으면 숙소등록 아니면 바로 숙소메인페이지 */
+        /* 여기서 숙소테이블에 존재 여부 확인 후 if else로 나눠서 없으면 숙소등록 아니면 바로 숙소메인페이지 */
         String checkYn = sellerPageService.lodCheck(seller_idx);
 
         if ("Y".equals(checkYn)) {
@@ -193,7 +192,7 @@ public class SellerPageController {
 
     /**
      * 생성자   : JDeok
-     * 기 능   : 사장님 상세페이지 조회
+     * 기 능   : 사장님 성수기기간 조회
      * 변경사항
      * - 2024.12.24 : JDeok(최초생성)
      */
@@ -208,17 +207,128 @@ public class SellerPageController {
 
     /**
      * 생성자   : JDeok
-     * 기 능   : 사장님 상세페이지 조회
+     * 기능    : 예약현황 조회
+     */
+    @GetMapping("/sellerGetReservation")
+    public String sellerGetReservation(
+            @RequestParam(value = "dateRange", required = false) String dateRange,
+            @RequestParam(value = "ajax", required = false, defaultValue = "false") boolean ajax,
+            HttpSession session, Model model) {
+        Integer lod_idx = (int) session.getAttribute("lod_idx");
+
+        // 날짜 범위를 파싱
+        String[] dates   = dateRange != null ? dateRange.split(" ~ ") : new String[0];
+        String startDate = dates.length > 0 ? dates[0] : null;
+        String endDate   = dates.length > 1 ? dates[1] : null;
+
+        // 파라미터를 Map으로 생성
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("lod_idx"   , lod_idx);
+        paramMap.put("startDate", startDate);
+        paramMap.put("endDate"  , endDate);
+
+        List<LodReservationDTO> reservations = sellerPageService.sellerGetReservation(paramMap);
+
+        // 날짜 형식 변환
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 a hh시 mm분");
+        SimpleDateFormat periodFormat = new SimpleDateFormat("yyyy년 MM월 dd일(E)");
+
+        for (LodReservationDTO reservation : reservations) {
+            try {
+                // 예약 일자 변환
+                if (reservation.getCreated() != null) {
+                    Date createdDate;
+                    if (reservation.getCreated().length() > 10) {
+                        createdDate = dateTimeFormat.parse(reservation.getCreated());
+                    } else {
+                        createdDate = dateFormat.parse(reservation.getCreated());
+                    }
+                    reservation.setCreated(outputFormat.format(createdDate));
+                }
+
+                // 예약 기간 변환
+                if (reservation.getRes_str_date() != null && reservation.getRes_end_date() != null) {
+                    Date startPeriod = dateFormat.parse(reservation.getRes_str_date());
+                    Date endPeriod = dateFormat.parse(reservation.getRes_end_date());
+                    String startFormatted = periodFormat.format(startPeriod);
+                    String endFormatted = periodFormat.format(endPeriod);
+                    reservation.setRes_str_date(startFormatted);
+                    reservation.setRes_end_date(endFormatted);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        // 응답 데이터 생성
+        model.addAttribute("reservations", reservations);
+
+        if (ajax) {
+            return "seller/sellerReservationList";
+        }
+        return "seller/sellerShowReservation";
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 리뷰 조회
      * 변경사항
      * - 2024.12.24 : JDeok(최초생성)
      */
-    @GetMapping("/sellerGetReservation")
-    public String sellerGetReservation(HttpSession session, Model model) {
+    @GetMapping("/sellerGetReview")
+    public String sellerGetReview(HttpSession session, Model model) {
 
-        SavePeakPriceDTO dto = sellerPageService.getPeakDate((int) session.getAttribute("lod_idx"));
-        model.addAttribute("dto", dto);
+        int lod_idx = (int) session.getAttribute("lod_idx");
 
-        return "seller/sellerShowReservation";
+        Map<String, Object> review = sellerPageService.getrating(lod_idx);
+
+        model.addAttribute("review", review);
+
+        List<SellerGetReviewDTO> dto = sellerPageService.getReview(lod_idx);
+        model.addAttribute("reviews", dto);
+        return "seller/sellerShowReview";
     }
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 리뷰 조회
+     * 변경사항
+     * - 2024.12.24 : JDeok(최초생성)
+     */
+    @PostMapping("/sellerReviewList")
+    public String addReply(@RequestBody Map<String, Object> requestBody, HttpSession session, Model model) {
+
+        int lod_idx = (int) session.getAttribute("lod_idx");
+
+        Map<String, Object> reviewMap = new HashMap<>();
+        reviewMap.put("review_idx", (int)requestBody.get("review_idx"));
+        reviewMap.put("replycontent", (String)requestBody.get("replycontent"));
+        sellerPageService.updateReview(reviewMap);
+
+        List<SellerGetReviewDTO> dto = sellerPageService.getReview(lod_idx);
+        model.addAttribute("reviews", dto);
+
+        return "seller/sellerReviewList";
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 사장님 매출관리
+     * 변경사항
+     * - 2024.12.24 : JDeok(최초생성)
+     */
+    @GetMapping("/sellerGetSales")
+    public String getSalesManagement(Model model, HttpSession session) {
+        int lod_idx = (int) session.getAttribute("lod_idx");
+
+        Map<String, Object> salesMap = sellerPageService.getSales(lod_idx);
+
+        model.addAttribute("month_date" , salesMap.get("month_date" ));   // 월 날짜
+        model.addAttribute("total_money", salesMap.get("total_money"));   // 매출 금액
+
+        return "seller/sellerSales";
+    }
+
 }
+
 

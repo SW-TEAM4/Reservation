@@ -24,7 +24,9 @@
 <form action="/common/gos3.do" method="get">
     <button type="submit">Go to s3 test Index</button>
 </form>
-
+<form action="/lodgment/sellerMain.do" method="get">
+    <button type="submit">사장님 페이지</button>
+</form>
 <form action="/mypage.do" method="get">
     <button type="submit">Go to MyPage</button>
 </form>
