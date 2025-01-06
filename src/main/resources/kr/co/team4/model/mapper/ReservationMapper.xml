@@ -113,7 +113,7 @@
                 rm.room_name, rm.room_price,
                 r.res_merchant_id, r.res_name, r.res_phone_number, r.res_str_date,
                 r.res_end_date, r.res_people_cnt, r.res_pets_cnt, r.request, l.status
-        from RESERVATION r, LODGMENT l, LOD_CATEGORY lc, ROOM rmd
+        from RESERVATION r, LODGMENT l, LOD_CATEGORY lc, ROOM rm
         where r.user_idx = #{user_idx}
           and r.lod_idx = l.lod_idx
           and r.room_idx = rm.room_idx

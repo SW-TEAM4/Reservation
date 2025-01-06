@@ -127,8 +127,8 @@ public class ReservationController {
 
     /**
      * 예약 상세 정보 페이지
-     * @param session 세션에서 user_idx와 reservation_idx를 가져옴
-     * @param model 모델 객체에 데이터를 추가
+     * @paramsession 세션에서 user_idx와 reservation_idx를 가져옴
+     * @parammodel 모델 객체에 데이터를 추가
      * @return GetReservationDetail 페이지
      */
     @GetMapping("/reservation/detailInfo")

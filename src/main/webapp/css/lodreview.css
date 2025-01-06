@@ -1,0 +1,60 @@
+.lod-review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.lod-review-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.lod-review-card {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.lod-review-card-content {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lod-review-card-image {
+    width: 240px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+.lod-review-card-description {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #352018;
+    font-weight: 700;
+}
+
+.lod-manager-wrapper {
+    margin-top: 30px;
+    padding: 20px 0px 20px 20px;
+    background-color: #d9d9d985;
+    border-radius: 5px;
+}
+
+.lod-manager-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #352018;
+    margin-bottom: 10px;
+}
+
+.lod-manager-reply {
+    font-size: 14px;
+    color: #352018;
+    line-height: 1.6;
+}
