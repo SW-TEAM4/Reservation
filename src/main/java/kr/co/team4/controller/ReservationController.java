@@ -288,7 +288,7 @@ public class ReservationController {
     }
 
     // 결제 정보 db와 실제 결제한 사이트의 결제 정보와 비교
-    @CrossOrigin(origins = "http://localhost:8090")
+    @CrossOrigin(origins = {"http://localhost:8090", "https://shinhan.me"})
     @PostMapping("/payment/complete")
     public ResponseEntity<Map<String, Object>> completePayment(@RequestBody Map<String, String> portonePayload){
         Map<String, Object> response = new HashMap<>();
