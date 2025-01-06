@@ -60,7 +60,7 @@
             </div>
 
             <!-- 예약 버튼 -->
-            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}&res_str_date=${checkinDate}&res_end_date=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
+            <button class="booking-button" onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
                 예약하기
             </button>
         </div>

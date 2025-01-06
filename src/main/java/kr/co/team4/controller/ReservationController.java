@@ -180,8 +180,8 @@ public class ReservationController {
     }
 
     // room_idx를 이용해 방정보를 가져오고 이를 이용한 예약 화면 화면 출력
-    @GetMapping("/reserve/reservation.do")
-    public String goReservtion(Model model,
+    @GetMapping("/reservation/reservation.do")
+    public String goReservtion(Model model, HttpSession session,
                                @RequestParam int room_idx,
                                @RequestParam String checkinDate,
                                @RequestParam String checkoutDate,
@@ -203,12 +203,16 @@ public class ReservationController {
             reservationDTO.setRes_pets_cnt(res_pets_cnt);
 
             RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
+
             // 세션에 저장되어 있는 유저 idx 정보를 통해 유저 정보 가져오기
-            // reservationDTO.setUser_idx(BigInteger.valueOf(1));
+            UserDTO userSession = (UserDTO) session.getAttribute("usersession");
+            if(userSession == null){
+                return "redirect:/userlogin";
+            }
+            reservationDTO.setUser_idx(userSession.getUSER_IDX());
 
             LodgmentDTO lodDTO = roomService.getRoomLodDetail(roomDTO.getLod_idx());
             UserDTO userDTO = reservationService.getUserInform(reservationDTO);
-
 
             model.addAttribute("formattedCheckinTime", lodDTO.getFormattedLodCheckIn());
             model.addAttribute("formattedCheckoutTime", lodDTO.getFormattedLodCheckOut());

@@ -258,11 +258,11 @@
                 <div style="font-size: 26px; color: #352018;">예약자 정보<span class="star">*</span></div>
                 <div class="line-input">
                     <div style="font-size: 20px; color: #564B4B;">성명<span class="star">*</span></div>
-                    <input type="text" id="res_name" name="reservationDTO.res_name" placeholder="예약자의 성명을 입력해 주세요." value="${userDTO.user_name}">
+                    <input type="text" id="res_name" name="reservationDTO.res_name" placeholder="예약자의 성명을 입력해 주세요." value="${userDTO.USER_NAME}">
                     <div id="nameError" class="error-message"></div> <!-- 이름 오류 메시지 -->
 
                     <div style="font-size: 20px; color: #564B4B;">휴대폰 번호<span class="star">*</span></div>
-                    <input type="text" id="res_phone_number" name="reservationDTO.res_phone_number" placeholder="예약자의 휴대폰 번호를 입력해 주세요." value="${userDTO.user_phone_number}"><p/>
+                    <input type="text" id="res_phone_number" name="reservationDTO.res_phone_number" placeholder="예약자의 휴대폰 번호를 입력해 주세요." value="${userDTO.USER_PHONE_NUMBER}"><p/>
                     <div id="phoneError" class="error-message"></div> <!-- 전화번호 오류 메시지 -->
                 </div>
             </div>
