@@ -85,7 +85,7 @@ public class LoginController {
             return "redirect:/userlogin";
         }
 
-        session.setAttribute("dto", user); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
+        session.setAttribute("usersession", user); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
 
         return "login/main";
     }
@@ -102,7 +102,7 @@ public class LoginController {
             return "redirect:/sellerlogin";
         }
 
-        session.setAttribute("dto", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
+        session.setAttribute("sellersession", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
 
         return "login/main";
     }
