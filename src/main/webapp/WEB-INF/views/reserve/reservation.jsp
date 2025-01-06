@@ -448,7 +448,7 @@
                     return alert("결제에 실패하였습니다 : " + response.error_msg);
                 }else{
                     try{
-                        const notified = await fetch(`https://3e7b-58-122-202-29.ngrok-free.app/payment/complete`,{
+                        const notified = await fetch(`https://shinhan.me/payment/complete`,{
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({
