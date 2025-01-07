@@ -39,15 +39,18 @@ public class LoginController {
     }
 
     @PostMapping("/userregister")
-    public String UserRegister(UserDTO dto) throws Exception {
+    public String UserRegister(UserDTO dto, Model model) throws Exception {
         logger.info("사용자 회원가입 진입");
+        try {
+            // 회원가입 서비스 실행
+            service.userregister(dto);
+            logger.info("register Service 성공");
 
-        // 회원가입 서비스 실행
-        service.userregister(dto);
-
-        logger.info("register Service 성공");
-
-        return "login/userlogin";
+            // 회원가입 성공 후 로그인 페이지로 리다이렉트
+            return "login/userlogin";
+        } catch (Exception e) {
+            throw new Exception("비밀번호 암호화에 실패하였습니다."+ e.getMessage()); // 에러 메시지 전달
+        }
     }
 
     @PostMapping("/sellerregister")
