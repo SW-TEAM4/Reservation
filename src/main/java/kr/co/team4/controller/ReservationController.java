@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
@@ -95,11 +96,17 @@ public class ReservationController {
         UserReservedDTO dto = new UserReservedDTO();
         dto.setUser_idx(user_Idx); // 세션에서 가져온 user_Idx 값 설정
 
+        // 현재 시간 가져오기
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String currentTime = LocalDateTime.now().format(formatter);
+
         // 예약 목록 가져오기 (Map을 반환받음)
         Map<String, Object> resultMap = reservationService.list(dto);
 
         // 결과에서 List<UserReservedDTO>를 추출
         List<UserReservedDTO> userReservedDTOList = (List<UserReservedDTO>) resultMap.get("list");  // "list"는 Map의 키값에 맞게 수정
+
+        model.addAttribute("currentTime", currentTime); // 현재 시간 전달
 
         // S3에서 숙소 이미지 URL을 추가하는 로직
         try {
@@ -173,8 +180,8 @@ public class ReservationController {
     }
 
     // room_idx를 이용해 방정보를 가져오고 이를 이용한 예약 화면 화면 출력
-    @GetMapping("/reserve/reservation.do")
-    public String goReservtion(Model model,
+    @GetMapping("/reservation/reservation.do")
+    public String goReservtion(Model model, HttpSession session,
                                @RequestParam int room_idx,
                                @RequestParam String checkinDate,
                                @RequestParam String checkoutDate,
@@ -196,12 +203,16 @@ public class ReservationController {
             reservationDTO.setRes_pets_cnt(res_pets_cnt);
 
             RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
+
             // 세션에 저장되어 있는 유저 idx 정보를 통해 유저 정보 가져오기
-            // reservationDTO.setUser_idx(BigInteger.valueOf(1));
+            UserDTO userSession = (UserDTO) session.getAttribute("usersession");
+            if(userSession == null){
+                return "redirect:/userlogin";
+            }
+            reservationDTO.setUser_idx(userSession.getUSER_IDX());
 
             LodgmentDTO lodDTO = roomService.getRoomLodDetail(roomDTO.getLod_idx());
             UserDTO userDTO = reservationService.getUserInform(reservationDTO);
-
 
             model.addAttribute("formattedCheckinTime", lodDTO.getFormattedLodCheckIn());
             model.addAttribute("formattedCheckoutTime", lodDTO.getFormattedLodCheckOut());
@@ -288,7 +299,7 @@ public class ReservationController {
     }
 
     // 결제 정보 db와 실제 결제한 사이트의 결제 정보와 비교
-    @CrossOrigin(origins = "http://localhost:8090")
+    @CrossOrigin(origins = {"http://localhost:8090", "https://shinhan.me"})
     @PostMapping("/payment/complete")
     public ResponseEntity<Map<String, Object>> completePayment(@RequestBody Map<String, String> portonePayload){
         Map<String, Object> response = new HashMap<>();

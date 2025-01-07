@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <div class="room-footer">
                             <p class="room-price">${room.room_price}원</p>
                             <!-- 예약 버튼 -->
-                            <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
+                            <button class="booking-button" onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
                                 <img src="../img/button_foot.svg" alt="icon" class="button-icon">
                                 <span class="button-text">예약하기</span>
                             </button>

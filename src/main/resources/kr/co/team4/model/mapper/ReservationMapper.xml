@@ -77,9 +77,9 @@
     </delete>
 
     <select id="getUserInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.UserDTO">
-        select user_name, user_email, user_phone_number
+        select USER_IDX, USER_NAME, USER_EMAIL, USER_PHONE_NUMBER
         from USERS
-        where user_idx = #{user_idx}
+        where USER_IDX = #{user_idx}
     </select>
 
     <select id="isAlreadyReserved" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="int">

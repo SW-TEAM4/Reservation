@@ -11,8 +11,8 @@
 
 <!-- JSP에서 동적 데이터 전달 -->
 <script type="text/javascript">
-  var centerX = ${lodgmentDTO.x != null ? lodgmentDTO.x : 0};
-  var centerY = ${lodgmentDTO.y != null ? lodgmentDTO.y : 0};
+  var centerX = ${lodgmentDTO.x};
+  var centerY = ${lodgmentDTO.y};
 </script>
 
 <script type="text/javascript"
