@@ -116,7 +116,7 @@ body, h1, h2, h3, h4, h5, h6, input, textarea, select, button, .result-container
     display: flex;
     flex-direction: column;
     gap: 18px;
-    width: 397px;
+    width: 392.5px;
     height: 236px;
     background: #F7F7F7;
     margin-top: 5px;
@@ -288,4 +288,11 @@ th, td {
 
 th {
     background-color: #f4f4f4;
+}
+
+#seller-popup {
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    margin-bottom: 50px;
 }

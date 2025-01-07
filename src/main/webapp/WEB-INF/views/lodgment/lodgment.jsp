@@ -25,18 +25,6 @@
     <script src="/js/lodsearch.js"></script>
     <%-- 판매자 팝업 --%>
     <script>
-        // 팝업 열기
-        function showSellerPopup() {
-            const popup = document.getElementById("seller-popup");
-            popup.classList.remove("hidden");
-        }
-
-        // 팝업 닫기
-        function closeSellerPopup() {
-            const popup = document.getElementById("seller-popup");
-            popup.classList.add("hidden");
-        }
-
         document.addEventListener("DOMContentLoaded", function () {
             // back 화살표 클릭 동작 이벤트 추가
             const arrowIcon = document.getElementById("left-arrow");
@@ -51,7 +39,6 @@
             }
         });
     </script>
-
 
 </head>
 <body>
