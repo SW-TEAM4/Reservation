@@ -258,11 +258,11 @@
                 <div style="font-size: 26px; color: #352018;">예약자 정보<span class="star">*</span></div>
                 <div class="line-input">
                     <div style="font-size: 20px; color: #564B4B;">성명<span class="star">*</span></div>
-                    <input type="text" id="res_name" name="reservationDTO.res_name" placeholder="예약자의 성명을 입력해 주세요." value="${userDTO.user_name}">
+                    <input type="text" id="res_name" name="reservationDTO.res_name" placeholder="예약자의 성명을 입력해 주세요." value="${userDTO.USER_NAME}">
                     <div id="nameError" class="error-message"></div> <!-- 이름 오류 메시지 -->
 
                     <div style="font-size: 20px; color: #564B4B;">휴대폰 번호<span class="star">*</span></div>
-                    <input type="text" id="res_phone_number" name="reservationDTO.res_phone_number" placeholder="예약자의 휴대폰 번호를 입력해 주세요." value="${userDTO.user_phone_number}"><p/>
+                    <input type="text" id="res_phone_number" name="reservationDTO.res_phone_number" placeholder="예약자의 휴대폰 번호를 입력해 주세요." value="${userDTO.USER_PHONE_NUMBER}"><p/>
                     <div id="phoneError" class="error-message"></div> <!-- 전화번호 오류 메시지 -->
                 </div>
             </div>
@@ -423,9 +423,9 @@
                 merchant_uid: reservationDTO.res_merchant_id, // 서버에서 받은 주문번호
                 name:  `결제 테스트 ${lodDTO.lod_name} ${roomDTO.room_name}`,
                 amount: paymentDTO.paid_money, // 결제 금액
-                buyer_email: userDTO.user_email,
-                buyer_name:  userDTO.user_name,
-                buyer_tel: userDTO.user_phone_number,
+                buyer_email: userDTO.USER_EMAIL,
+                buyer_name:  userDTO.USER_NAME,
+                buyer_tel: userDTO.USER_PHONE_NUMBER,
             },
             async function(response) {
                 // 결제 과정에서 error 발생시 생성했던 reservation, payment 정보 삭제
@@ -448,7 +448,7 @@
                     return alert("결제에 실패하였습니다 : " + response.error_msg);
                 }else{
                     try{
-                        const notified = await fetch(`https://3e7b-58-122-202-29.ngrok-free.app/payment/complete`,{
+                        const notified = await fetch(`https://shinhan.me/payment/complete`,{
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({

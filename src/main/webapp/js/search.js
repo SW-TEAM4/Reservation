@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
             firstDay: 0
 
         },
-        autoApply:true,
+        autoApply: true,
         startDate: checkinDate,
         endDate: checkoutDate,
         minDate: moment().format('YYYY-MM-DD') // 오늘 이후 날짜만 선택 가능
@@ -35,10 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
         // UI 업데이트
         updateDateUI(start, end);
 
-        console.log("searchJS에서 ajax요청 전의 날짜" + checkinDate +" and " + checkoutDate);
+        console.log("searchJS에서 ajax요청 전의 날짜" + checkinDate + " and " + checkoutDate);
         // AJAX 요청 전송
         sendSearchAjax();
     });
+
     // === UI 업데이트 함수 ===
     function updateDateUI(start, end) {
         document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
@@ -54,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $.ajax({
             url: "/search/updateUI.do",
             type: "GET",
-            dataType:'json',
+            dataType: 'json',
             data: {
                 checkinDate: checkinDate instanceof Date ? checkinDate.toISOString().split('T')[0] : checkinDate,
                 checkoutDate: checkoutDate instanceof Date ? checkoutDate.toISOString().split('T')[0] : checkoutDate,
@@ -62,7 +63,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 petCount: petCount,
                 type: selectedType,
                 weight: selectedWeight,
-                region: selectedRegion
+                region: selectedRegion,
             },
             cache: false,
             success: function (response) {
@@ -107,11 +108,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="${imgUrl}" alt="${lodgment.lod_name}" class="result-img" width="240px" height="300px">
                     </div>
                     <div class="result-item-left-container">
-                        <p style="color: #352018; font-size: 20px; font-weight: bold">${lodgment.lod_name}</p>
+                        <p style="color: #352018; font-size: 18px; font-weight: bold">${lodgment.lod_name}</p>
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <img src="/img/search_icon_star.svg" class="star-icon" style="width: 16px; height: 16px;"/>
-                            <div style="font-weight: bold">${lodgment.avg_rating}</div>
-                            (${lodgment.count_reviews})
+                            <p style="color: #352018; font-size: 14px; font-weight: bold; margin-top: 0.5px;">${lodgment.avgRating}</p>
+                            <p style="color: #352018; font-size: 14px; margin-top: 0.7px;">(${lodgment.reviewCount})</p>
                         </div>                
                         <p style="color: gray; font-size: 14px; font-weight: bold">${lodCategory}</p>
                         <div style="position: absolute; right: 20px; bottom: 20px; text-align: right;">
@@ -123,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
                 // 클릭 이벤트 추가
                 resultItem.addEventListener('click', () => {
-                    window.location.href= `/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}`;
+                    window.location.href = `/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}`;
                 });
                 resultContainer.appendChild(resultItem);
             });

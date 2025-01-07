@@ -1,0 +1,31 @@
+name: Deploy to EC2 Tomcat
+
+on:
+  push:
+    branches:
+      - develop  # develop 브랜치에 push 또는 merge될 때 실행
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest  # GitHub Action이 실행될 환경
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2  # 코드 체크아웃
+
+      # sshpass 설치
+      - name: Install sshpass
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y sshpass
+
+      # EC2에 ssh 접속 및 배포
+      - name: Deploy to EC2
+        run: |
+          sshpass -p "close_DBMS_4" ssh -o StrictHostKeyChecking=no ubuntu@3.34.192.234 << 'EOF'
+            cd /home/ubuntu/project/Reservation 
+            git pull origin develop  
+            ./mvnw clean install     
+            mv target/team4.war /opt/tomcat/webapps/ROOT.war 
+            sudo systemctl restart tomcat 
+          EOF

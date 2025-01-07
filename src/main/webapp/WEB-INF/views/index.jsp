@@ -1,31 +1,36 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>인원 선택 결과</title>
+    <title>함께가개</title>
 </head>
 <body>
-
-<form action="/recent.do" method="get">
-    <button type="submit">Go to Recent</button>
+<form action="recently/recently.do" method="get">
+    <button type="submit">Go to Recently</button>
 </form>
 
 <form action="/home.do" method="get">
     <button type="submit">Go to Home Index</button>
 </form>
 
-<form action="/test/index.do" method="get">
-    <button type="submit">Go to Test Index</button>
+<form action="/userregister" method="get">
+    <button type="submit">Go to User Register</button>
 </form>
 
-<form action="/reserve/reserve.do" method="get">
-    <button type="submit">Go to Reserve Index</button>
+<form action="/userlogin" method="get">
+    <button type="submit">Go to User Login</button>
 </form>
 
-<form action="/common/gos3.do" method="get">
-    <button type="submit">Go to s3 test Index</button>
+<form action="/sellerregister" method="get">
+    <button type="submit">Go to Seller Register</button>
 </form>
 
+<form action="/sellerlogin" method="get">
+    <button type="submit">Go to Seller Login</button>
+</form>
 
+<form action="/mypage.do" method="get">
+    <button type="submit">Go to MyPage</button>
+</form>
 
 </body>
 </html>

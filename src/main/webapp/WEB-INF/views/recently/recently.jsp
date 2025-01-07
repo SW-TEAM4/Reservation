@@ -8,10 +8,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/roomcard.css"/>
   <link rel="stylesheet" href="/css/bookingbutton.css"/>
-  <script src="/js/recent.js"></script>
+  <script src="/js/recently.js"></script>
 </head>
 <body>
 <h1>최근 본 숙소</h1>
-<div class="room-list" id="recent-rooms-container"></div>
+<div class="recently-room-list" id="recently-rooms-container"></div>
 </body>
 </html>

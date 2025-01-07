@@ -6,12 +6,13 @@
     <div class="size">
         <div class="logo"><a href="/home.do"><img src="/img/logo.svg" width="1398px" height="216.33px"></a></div>
         <div class="login">
-            <c:if test="${empty login }">
-                <a href="/member/login.do">로그인</a>  |
-                <a href="/member/regist.do">회원가입</a>
+            <c:if test="${empty usersession }">
+                <a href="/userlogin">로그인</a>  |
+                <a href="/userregister">회원가입</a>
             </c:if>
-            <c:if test="${!empty login }">
-                <a href="/member/edit.do">마이페이지</a>
+            <c:if test="${!empty usersession }">
+                <a href="/mypage.do">마이페이지</a>  |
+                <a href="/mypage.do">로그아웃</a>
             </c:if>
         </div>
     </div>
@@ -30,6 +31,9 @@
                         active
                     </c:when>
                     <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/reserve/reservation.jsp")}'>
+                        active
+                    </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/lodgment/lodgment.jsp")}'>
                         active
                     </c:when>
                     <c:otherwise>
