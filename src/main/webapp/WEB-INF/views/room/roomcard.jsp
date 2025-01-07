@@ -66,7 +66,7 @@
       </div>
       <!-- 하단 영역 -->
       <div class="room-footer">
-        <p class="room-price">${room.room_price}원</p>
+        <p class="room-price">${room.total_room_price}원</p>
         <!-- 예약 버튼 -->
         <button class="booking-button" onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
           예약하기
