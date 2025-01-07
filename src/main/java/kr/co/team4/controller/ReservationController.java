@@ -190,15 +190,11 @@ public class ReservationController {
 
         ReservationDTO reservationDTO = new ReservationDTO();
 
-        // String으로 들어온 날짜를 Date 타입으로 변환
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         try{
-            Date res_str_date = sdf.parse(checkinDate);
-            Date res_end_date = sdf.parse(checkoutDate);
 
             reservationDTO.setRoom_idx(BigInteger.valueOf(room_idx));
-            reservationDTO.setRes_str_date(res_str_date);
-            reservationDTO.setRes_end_date(res_end_date);
+            reservationDTO.setRes_str_date(checkinDate);
+            reservationDTO.setRes_end_date(checkoutDate);
             reservationDTO.setRes_people_cnt(res_people_cnt);
             reservationDTO.setRes_pets_cnt(res_pets_cnt);
 
@@ -216,8 +212,6 @@ public class ReservationController {
 
             model.addAttribute("formattedCheckinTime", lodDTO.getFormattedLodCheckIn());
             model.addAttribute("formattedCheckoutTime", lodDTO.getFormattedLodCheckOut());
-            model.addAttribute("formattedCheckinDate", reservationDTO.getFormattedCheckinDate());
-            model.addAttribute("formattedCheckoutDate", reservationDTO.getFormattedCheckoutDate());
             model.addAttribute("formattedRoomPrice", roomDTO.getFormattedRoomPrice());
             model.addAttribute("dayDifference", reservationDTO.getDateDifferenceDays());
             model.addAttribute("reservationDTO", reservationDTO);
