@@ -225,16 +225,6 @@
             calendar.render();
         }
 
-        function confirmDates() {
-            if (!checkinDate || !checkoutDate) {
-                alert("입실일과 퇴실일을 모두 선택하세요.");
-                return;
-            }
-
-            // 캘린더 숨기기
-            document.getElementById("calendar-container").style.display = "none";
-        }
-
         function applyRangeStyles(startDate, endDate) {
             resetStyles(); // 이전에 적용된 스타일 초기화
 

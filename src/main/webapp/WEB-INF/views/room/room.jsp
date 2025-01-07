@@ -47,7 +47,7 @@
             <!-- 객실 정보 -->
             <div class="detail-info">
                 <p><strong>숙소 이름:</strong> ${room.room_name}</p>
-                <p><strong>가격:</strong> ${room.room_price}원</p>
+                <p><strong>가격:</strong> ${room.total_room_price}원</p>
                 <p><strong>숙박 일정:</strong> ${checkinDate} ~ ${checkoutDate}</p>
                 <p><strong>인원:</strong> ${guestCount}명</p>
                 <p><strong>반려동물 수:</strong> ${petCount}마리</p>
