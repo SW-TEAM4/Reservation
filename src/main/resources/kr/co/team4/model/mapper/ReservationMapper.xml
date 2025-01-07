@@ -95,7 +95,7 @@
                 WHERE res2.room_idx = r.room_idx
                 AND res2.lod_idx = r.lod_idx
                 AND (
-                        ( res2.res_end_date >#{res_str_date} AND #{res_end_date} > res2.res_str_date)
+                        ( res2.res_end_date > DATE(#{res_str_date}) AND Date(#{res_end_date}) > res2.res_str_date)
                     )
                 )
             )
