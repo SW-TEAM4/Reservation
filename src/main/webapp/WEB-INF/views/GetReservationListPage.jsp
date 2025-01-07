@@ -147,6 +147,16 @@
         .review-button:hover {
             background-color: #6b432f;
         }
+
+        #reservationEmpty {
+            display: block;
+            margin: 50px auto;
+            width: 500px;
+            height: auto; /* 비율 유지 */
+            margin-bottom: 200px;
+            margin-top:100px;
+
+        }
     </style>
 </head>
 <body>
@@ -159,11 +169,13 @@
 </div>
 
 <div class="mypagecontainer">
-    <c:forEach var="dto" items="${map.list}">
-        <div class="card">
+    <c:choose>
+        <c:when test="${not empty map.list}">
+            <c:forEach var="dto" items="${map.list}">
+                 <div class="card">
 
-            <img src="${dto.lod_img_url}" alt="숙소 이미지">
-            <div class="card-content">
+                    <img src="${dto.lod_img_url}" alt="숙소 이미지">
+                    <div class="card-content">
                 <div class="card-date">${dto.res_str_date} ~ ${dto.res_end_date}</div>
 
 
@@ -190,10 +202,17 @@
                         </c:otherwise>
                     </c:choose>
                 </c:if>
-
             </div>
         </div>
     </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <div class="no-reservation">
+                <img id="reservationEmpty" src="/img/reservation_empty_img.svg" alt="예약 내역 없음">
+<%--                <p class="no-reservation-text">현재 예약된 내역이 없습니다.</p>--%>
+            </div>
+        </c:otherwise>
+    </c:choose>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
 </body>

@@ -192,6 +192,15 @@
             color: #352018;
             line-height: 1.6; /* 줄 간격 조정 */
         }
+        #reviewEmpty {
+            display: block;
+            margin: 50px auto;
+            width: 500px;
+            height: auto; /* 비율 유지 */
+            margin-bottom: 200px;
+            margin-top:100px;
+
+        }
 
     </style>
 </head>
@@ -204,9 +213,13 @@
     </button>
     <span class="header-title">리뷰내역</span>
 </div>
+<c:if test="${not empty map.getReviewList}">
 <span class="review-count">내가 쓴 총 리뷰 수 ${count}</span>
-
+</c:if>
 <div class="container2">
+<c:choose>
+
+    <c:when test="${not empty map.getReviewList}">
     <c:forEach var="dto" items="${map.getReviewList}">
         <div class="card">
             <img class="card-image" src="${empty dto.review_img_url ? '/img/review_defalt_img.svg' : dto.review_img_url}" alt="숙소 이미지">
@@ -232,7 +245,7 @@
                     <span class="star <c:if test="${dto.rating >= 5}">filled</c:if>">&#9733;</span>
                 </div>
 
-                <!-- 사용자 댓글 -->
+
                 <div class="card-description">${dto.user_comment}</div>
 
                 <c:if test="${dto.lod_comment != null}">
@@ -244,6 +257,13 @@
             </div>
         </div>
     </c:forEach>
+    </c:when>
+    <c:otherwise>
+        <div class="no-reservation">
+            <img id="reviewEmpty" src="/img/review_empty_img.svg" alt="리뷰 내역 없음">
+        </div>
+    </c:otherwise>
+</c:choose>
 
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>

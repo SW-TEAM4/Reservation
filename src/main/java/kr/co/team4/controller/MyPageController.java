@@ -24,15 +24,6 @@ public class MyPageController {
      * Get /reservation/list
      * @return reservationListPage
      */
-//    @GetMapping("/mypage.do")
-//    public String index(HttpSession session, Model model) {
-//        BigInteger user_Idx = new BigInteger("1"); // 예시로 1로 설정
-//        session.setAttribute("user_Idx", user_Idx); // 세션에 user_Idx 저장
-//        model.addAttribute("user_Idx", user_Idx.toString());
-//        UserReservedDTO userReservedDTO = reviewService.getUserName(user_Idx.intValue());
-//        model.addAttribute("userReservedDTO", userReservedDTO);
-//        return "mypage";
-//    }
     @GetMapping("/mypage.do")
     public String index(HttpSession session, Model model) {
         // 세션에서 usersession 가져오기
@@ -56,6 +47,5 @@ public class MyPageController {
 
         return "mypage";
     }
-
 
 }
