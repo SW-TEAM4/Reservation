@@ -9,6 +9,8 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
     <link rel="stylesheet" href="/css/style.css?after"/>
     <link rel="stylesheet" href="/css/lodgment.css"/>
     <link rel="stylesheet" href="/css/roomcard.css"/>
@@ -34,6 +36,20 @@
             const popup = document.getElementById("seller-popup");
             popup.classList.add("hidden");
         }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // back 화살표 클릭 동작 이벤트 추가
+            const arrowIcon = document.getElementById("left-arrow");
+            if (arrowIcon) {
+                arrowIcon.addEventListener("click", function () {
+                    if (document.referrer) { // 이전 페이지가 있으면
+                        window.history.back(); // 이전 페이지로 이동
+                    } else { // 이전 페이지가 없으면
+                        window.location.href = '/home.do'; // 홈페이지로 이동
+                    }
+                });
+            }
+        });
     </script>
 
 
@@ -41,62 +57,47 @@
 <body>
 <div class="wrap">
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-        <div class="container">
-            <!-- 숙소 정보 -->
-            <div class="lodgment-container">
-                <img src="<c:url value='/img/lod_toolbar.svg'/>" alt="객실 상세">
+    <div class="container">
+        <!-- 숙소 정보 -->
+        <div class="lodgment-container">
+            <div class="top-container">
+                <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
+                <div class="header-text">숙소 상세</div>
+            </div>
+            <div class="reserve-info">
                 <c:if test="${not empty lodgmentDTO}">
                     <img src="${lodgmentDTO.lod_img_url}" alt="${lodgmentDTO.lod_name}"
-                         width="1280px" height="800px">
-                    <p>${lodgmentDTO.lod_name}</p>
+                         style="margin-top: 30px; width: 1280px; height: 800px">
+                    <p style="font-size: 24px; font-weight: bold">${lodgmentDTO.lod_name}</p>
                 </c:if>
                 <c:if test="${empty lodgmentDTO}">
                     <img src="<c:url value='/img/search_no_result.svg'/>" alt="결과 없음">
                 </c:if>
             </div>
-            <!-- 리뷰 더보개 -->
-            <div class="lod-review-container">
-                    <!-- 리뷰 통계 영역 -->
-                    <section class="review-summary">
-                        <div class="review-header">
-                            <div class="review-statistics">
-                                <p>리뷰 수: ${statistics['REVIEW_COUNT']}</p>
-                                <p>
-                                    <span>
-                            <c:choose>
-                                <c:when test="${statistics['AVG_RATING'] >= 0.0 && statistics['AVG_RATING'] < 1.0}">
-                                    ☆ (평점: ${statistics['AVG_RATING']})
-                                </c:when>
-                                <c:when test="${statistics['AVG_RATING'] >= 1.0 && statistics['AVG_RATING'] < 2.0}">
-                                    ⭐ (평점: ${statistics['AVG_RATING']})
-                                </c:when>
-                                <c:when test="${statistics['AVG_RATING'] >= 2.0 && statistics['AVG_RATING'] < 3.0}">
-                                    ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
-                                </c:when>
-                                <c:when test="${statistics['AVG_RATING'] >= 3.0 && statistics['AVG_RATING'] < 4.0}">
-                                    ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
-                                </c:when>
-                                <c:when test="${statistics['AVG_RATING'] >= 4.0 && statistics['AVG_RATING'] < 5.0}">
-                                    ⭐ ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
-                                </c:when>
-                                <c:otherwise>
-                                    ⭐ ⭐ ⭐ ⭐ ⭐ (평점: ${statistics['AVG_RATING']})
-                                </c:otherwise>
-                            </c:choose>
-                        </span>
-                                </p>
-                            </div>
-                            <a href="/lodreview.do?lod_idx=${lod_idx}" class="review-detail-link">
-                                리뷰 더보기 &gt;
-                            </a>
+        </div>
+        <!-- 리뷰 더보개 -->
+        <div class="lod-review-container">
+            <!-- 리뷰 통계 영역 -->
+            <section class="review-summary">
+                <div class="review-header">
+                    <div class="review-statistics">
+                        <div style="display: flex; align-items: center; gap: 5px;">
+                            <img src="/img/search_icon_star.svg" class="star-icon" style="width: 16px; height: 16px;"/>
+                            <p style="color: #352018; font-size: 14px; font-weight: bold;">${statistics['AVG_RATING']}</p>
+                            <p style="color: #352018; font-size: 14px;">(${statistics['REVIEW_COUNT']})</p>
                         </div>
-                    </section>
-                    <div class="review-container">
-                        <c:if test="${not empty reviewList}">
-                            <c:forEach var="review" items="${reviewList}" begin="0" end="2">
-                                <div class="review-card">
-                                    <!-- 상단: 별점과 작성 날짜 -->
-                                    <div class="review-header">
+                    </div>
+                    <a href="/lodreview.do?lod_idx=${lod_idx}" class="review-detail-link">
+                        리뷰 더보기
+                    </a>
+                </div>
+            </section>
+            <div class="review-container">
+                <c:if test="${not empty reviewList}">
+                    <c:forEach var="review" items="${reviewList}" begin="0" end="2">
+                        <div class="review-card">
+                            <!-- 상단: 별점과 작성 날짜 -->
+                            <div class="review-header">
                         <span class="review-rating">
                             <c:choose>
                                 <c:when test="${review.reviewer_rating >= 0.0 && review.reviewer_rating < 1.0}">
@@ -120,125 +121,126 @@
                             </c:choose>
                             (${review.reviewer_rating})
                         </span>
-                                        <span class="review-date">${review.reviewer_created}</span>
-                                    </div>
+                                <span class="review-date">${review.reviewer_created}</span>
+                            </div>
 
-                                    <!-- 하단: 리뷰 내용과 이미지 -->
-                                    <div class="review-body">
-                                        <p class="review-content">${review.reviewer_content}</p>
-                                        <div class="review-image-container">
-                                            <c:if test="${not empty review.reviewer_image}">
-                                                <img src="${review.reviewer_image}" alt="리뷰 이미지" class="review-image">
-                                            </c:if>
-                                            <c:if test="${empty review.reviewer_image}">
-                                                <img src="/img/search_img_no_search.svg" alt="기본 이미지" class="review-image">
-                                            </c:if>
-                                        </div>
-                                    </div>
+                            <!-- 하단: 리뷰 내용과 이미지 -->
+                            <div class="review-body">
+                                <div class="review-content">${review.reviewer_content}</div>
+                                <div class="review-image-container">
+                                    <c:if test="${not empty review.reviewer_image}">
+                                        <img src="${review.reviewer_image}" alt="리뷰 이미지" class="review-image">
+                                    </c:if>
+                                    <c:if test="${empty review.reviewer_image}">
+                                        <img src="/img/lodgment_img_no_review.svg" alt="기본 이미지" class="review-image">
+                                    </c:if>
                                 </div>
-                            </c:forEach>
-                        </c:if>
+                            </div>
+                        </div>
+                    </c:forEach>
+                </c:if>
 
-                        <!-- 리뷰가 없을 경우 -->
-                        <c:if test="${empty reviewList}">
-                            <p>등록된 리뷰가 없습니다.</p>
-                        </c:if>
-                    </div>
-                </div>
+                <!-- 리뷰가 없을 경우 -->
+                <c:if test="${empty reviewList}">
+                    <p>등록된 리뷰가 없습니다.</p>
+                </c:if>
+            </div>
+        </div>
 
-            <h3>객실 선택</h3>
-            <div class="search_filters">
-                <!-- 날짜 선택 -->
-                <div class="selection-item">
-                    <div class="search-button" id="date-picker">
+        <h3 style="display: flex; justify-content: flex-start; width: 100%; max-width: 1280px; font-size: 22px;">객실 선택</h3>
+        <div class="lod-search_filters">
+            <!-- 날짜 선택 -->
+            <div class="selection-item">
+                <div class="search-button" id="date-picker">
                         <span>
                             <img src="/img/search_icon_calendar.svg" class="calendar_icon" alt="calendar"/>
                             <span id="checkin-date">${checkinDate}</span> ~
                             <span id="checkout-date">${checkoutDate}</span>
                             <span id="cal-date"></span>
                         </span>
-                    </div>
                 </div>
-                <!-- 인원 및 반려동물 수 선택-->
-                <div class="count-container">
-                    <!-- 인원 및 반려동물 수 선택 버튼 -->
-                    <button id="guest-button" class="count-selector">
+            </div>
+            <!-- 인원 및 반려동물 수 선택-->
+            <div class="count-container">
+                <!-- 인원 및 반려동물 수 선택 버튼 -->
+                <button id="guest-button" class="count-selector">
                         <span class="guest-label">
                            인원 <span id="guest-count">${guestCount}</span>,
                            반려동물 <span id="pet-count">${petCount}</span>
                         </span>
-                    </button>
-                    <!-- 팝업 !-->
-                    <div id="guest-popup" class="guest-popup hidden">
-                        <!-- 인원 조절 !-->
-                        <div class="counter">
-                            <div class="popup-header">인원</div>
-                            <button id="minus-guest-btn" class="counter-btn">-</button>
-                            <span id="guest-counter">${guestCount}</span>
-                            <button id="plus-guest-btn" class="counter-btn">+</button>
-                        </div>
-
-                        <!-- 반려동물 조절 !-->
-                        <div class="counter">
-                            <div class="popup-header">반려동물</div>
-                            <button id="minus-pet-btn" class="counter-btn">-</button>
-                            <span id="pet-counter">${petCount}</span>
-                            <button id="plus-pet-btn" class="counter-btn">+</button>
-                        </div>
-
-                        <!-- 완료 버튼 !-->
-                        <p class="popup-subtitle">유아 및 아동도 인원수에 포함해주세요.</p>
-                        <button id="apply-btn" class="apply-btn">완료</button>
+                </button>
+                <!-- 팝업 !-->
+                <div id="guest-popup" class="guest-popup hidden">
+                    <!-- 인원 조절 !-->
+                    <div class="counter">
+                        <div class="popup-header">인원ㅤㅤ</div>
+                        <button id="minus-guest-btn" class="counter-btn">-</button>
+                        <span id="guest-counter">${guestCount}</span>
+                        <button id="plus-guest-btn" class="counter-btn">+</button>
                     </div>
+
+                    <!-- 반려동물 조절 !-->
+                    <div class="counter">
+                        <div class="popup-header">반려동물</div>
+                        <button id="minus-pet-btn" class="counter-btn">-</button>
+                        <span id="pet-counter">${petCount}</span>
+                        <button id="plus-pet-btn" class="counter-btn">+</button>
+                    </div>
+
+                    <!-- 완료 버튼 !-->
+                    <p class="popup-subtitle">유아 및 아동도 인원수에 포함해주세요.</p>
+                    <button id="apply-btn" class="apply-btn">완료</button>
                 </div>
             </div>
-            <!-- 객실 리스트 !-->
-            <div class="room-list" id="room-list">
-                <input type="hidden" id="lod_idx" value="${lod_idx}">
-                    <c:if test="${not empty roomList}">
-                        <c:forEach var="room" items="${roomList}">
-                            <%@ include file="/WEB-INF/views/room/roomcard.jsp" %>
-                        </c:forEach>
-                    </c:if>
-                    <c:if test="${empty roomList}">
-                        <p>예약 가능한 방이 없습니다!</p>
-                    </c:if>
-            </div>
-            <!-- 지도 -->
-            <div class="lodgment-map">
-                <h3>위치/교통</h3>
-                <c:set var="centerX" value="${lodgmentDTO.x != null ? lodgmentDTO.x : 0}"/>
-                <c:set var="centerY" value="${lodgmentDTO.y != null ? lodgmentDTO.y : 0}"/>
-                <c:set var="zoomLevel" value="3"/>
-                <c:set var="markerX" value="${lodgmentDTO.x}"/>
-                <c:set var="markerY" value="${lodgmentDTO.y}"/>
-                <c:set var="markerImage" value="/img/lod_map_marker.png"/>
-                <c:set var="mapWidth" value="1305px"/>
-                <c:set var="mapHeight" value="661px"/>
+        </div>
+        <!-- 객실 리스트 !-->
+        <div class="room-list" id="room-list">
+            <input type="hidden" id="lod_idx" value="${lod_idx}">
+            <c:if test="${not empty roomList}">
+                <c:forEach var="room" items="${roomList}">
+                    <%@ include file="/WEB-INF/views/room/roomcard.jsp" %>
+                </c:forEach>
+            </c:if>
+            <c:if test="${empty roomList}">
+                <p>예약 가능한 방이 없습니다!</p>
+            </c:if>
+        </div>
 
-                <%@ include file="/WEB-INF/views/lodgment/map.jsp" %>
-            </div>
+        <!-- 지도 -->
+        <div class="lodgment-map">
+            <div style="margin-bottom: 15px;">위치/교통</div>
+            <c:set var="centerX" value="${lodgmentDTO.x != null ? lodgmentDTO.x : 0}"/>
+            <c:set var="centerY" value="${lodgmentDTO.y != null ? lodgmentDTO.y : 0}"/>
+            <c:set var="zoomLevel" value="3"/>
+            <c:set var="markerX" value="${lodgmentDTO.x}"/>
+            <c:set var="markerY" value="${lodgmentDTO.y}"/>
+            <c:set var="markerImage" value="/img/lod_map_marker.png"/>
+            <c:set var="mapWidth" value="1305px"/>
+            <c:set var="mapHeight" value="661px"/>
 
-            <!-- 숙소 주소 -->
-            <div class="lodgment-address">
-                <img src="/img/lod_map_location.svg" alt="숙소 주소 아이콘" class="address-icon">
-                <span>${lodgmentDTO.lod_address}</span>
-            </div>
+            <%@ include file="/WEB-INF/views/lodgment/map.jsp" %>
+        </div>
 
-            <!-- 사장님이 알려주개 -->
-            <div class="lodgment-seller-notice">
-                <h3>사장님이 알려주개</h3>
-                <p>${lodgmentDTO.seller_notice}</p>
-            </div>
+        <!-- 숙소 주소 -->
+        <div class="lodgment-address">
+            <img src="/img/lod_map_location.svg" alt="숙소 주소 아이콘" class="address-icon">
+            <span>${lodgmentDTO.lod_address}</span>
+        </div>
 
-            <!-- 예약 공지 -->
-            <div class="lodgment-reservation-notice">
-                <h3>예약 공지</h3>
-                <p>${lodgmentDTO.reservation_notice}</p>
-            </div>
+        <!-- 사장님이 알려주개 -->
+        <div class="lodgment-seller-notice">
+            <h3>사장님이 알려주개</h3>
+            <p>${lodgmentDTO.seller_notice}</p>
+        </div>
 
-            <div class="facility-item">
-                <h3>시설/서비스</h3>
+        <!-- 예약 공지 -->
+        <div class="lodgment-reservation-notice">
+            <h3>예약 공지</h3>
+            <p>${lodgmentDTO.reservation_notice}</p>
+        </div>
+
+        <div class="facility-item">
+            <h3>시설/서비스</h3>
             <c:if test="${not empty facilityList}">
                 <c:forEach var="facility" items="${facilityList}">
                     <p>* ${facility.lod_facility_name}</p>
@@ -247,31 +249,27 @@
             <c:if test="${empty facilityList}">
                 <p>등록된 시설 정보가 없습니다.</p>
             </c:if>
+        </div>
+        <%-- 판매자 정보 --%>
+        <div id="seller-popup">
+            <div class="popup-content">
+                <h3>판매자 정보</h3>
+                <table>
+                    <tr>
+                        <th>이름</th>
+                        <td>${sellerInfo.SELLER_NAME}</td>
+                    </tr>
+                    <tr>
+                        <th>이메일</th>
+                        <td>${sellerInfo.SELLER_EMAIL}</td>
+                    </tr>
+                    <tr>
+                        <th>전화번호</th>
+                        <td>${sellerInfo.SELLER_PHONE_NUMBER}</td>
+                    </tr>
+                </table>
             </div>
-            <%-- 판매자 정보 --%>
-            <div class="seller-info-container">
-                <button onclick="showSellerPopup()">판매자 정보 보기</button>
-            </div>
-            <div id="seller-popup" class="popup hidden">
-                <div class="popup-content">
-                    <button class="close-popup" onclick="closeSellerPopup()">X</button>
-                    <h3>판매자 정보</h3>
-                    <table>
-                        <tr>
-                            <th>이름</th>
-                            <td>${sellerInfo.SELLER_NAME}</td>
-                        </tr>
-                        <tr>
-                            <th>이메일</th>
-                            <td>${sellerInfo.SELLER_EMAIL}</td>
-                        </tr>
-                        <tr>
-                            <th>전화번호</th>
-                            <td>${sellerInfo.SELLER_PHONE_NUMBER}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+        </div>
     </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>

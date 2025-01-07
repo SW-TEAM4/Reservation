@@ -135,8 +135,7 @@
                 <span>리뷰내역</span>
                 <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
             </div>
-            <%--            최근 본 숙소로 연결 해주세용--%>
-            <div class="listItem" onclick="location.href='/review/list'">
+            <div class="listItem" onclick="location.href='recently/recently.do'">
                 <img src="/img/mypage_icon_3.svg" alt="최근 본 숙소">
                 <span>최근 본 숙소</span>
                 <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />

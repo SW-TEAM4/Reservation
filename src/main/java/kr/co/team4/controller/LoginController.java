@@ -58,7 +58,7 @@ public class LoginController {
 
         logger.info("register Service 성공");
 
-        return "sellersuccess";
+        return "login/sellersuccess";
     }
 
     @GetMapping("/userlogin")
@@ -92,6 +92,7 @@ public class LoginController {
         System.out.println("로그인 성공: user_idx = " + user.getUSER_IDX());
 
         return "redirect:/home.do";
+
     }
 
     @PostMapping("/sellerlogin")
@@ -109,7 +110,7 @@ public class LoginController {
 
         session.setAttribute("sellersession", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
 
-        return "login/main";
+        return "home";
     }
 
     @GetMapping("/main")
@@ -121,14 +122,6 @@ public class LoginController {
         model.addAttribute("dto", dto);
         return "login/main";
     }
-
-//    @GetMapping("/dupUSER_ID")
-//    public ResponseEntity<Map<String, Boolean>> dupUSER_ID(@RequestParam String USER_ID) {
-//        boolean exists = service.dupUSER_ID(USER_ID);
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("exists", exists);
-//        return ResponseEntity.ok(response);
-//    }
 
     @PostMapping("/ID_CHECK")
     @ResponseBody
@@ -239,34 +232,5 @@ public class LoginController {
         return checkNum;
 
     }
-
-//    @GetMapping("/EMAIL_CHECK")
-//    @ResponseBody
-//    public void emailCheck(String USER_EMAIL) throws Exception{
-//
-//        // 인증번호 난수 생성
-//        Random random = new Random();
-//        int checkNum = random.nextInt(888888) + 111111;
-//
-//        // 이메일 전송
-//        String setFrom = "hjm8565@naver.com";
-//        String toMail = USER_EMAIL;
-//        String title = "같이가개 회원가입 인증 이메일입니다.";
-//        String content = "인증 번호는 " + checkNum + "입니다." + "<br>" + "해당 인증 번호를 인증 번호 입력란에 입력해주세요.";
-//
-//        try {
-//            MimeMessage msg = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(msg, true, "utf-8");
-//            helper.setFrom(setFrom);
-//            helper.setTo(toMail);
-//            helper.setSubject(title);
-//            helper.setText(content, true);
-//            mailSender.send(msg);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
 }

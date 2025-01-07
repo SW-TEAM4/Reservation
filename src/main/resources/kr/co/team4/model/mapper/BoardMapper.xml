@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.team4.model.mapper.BoardMapper">
+
+    <!-- 게시글 작성 -->
+    <insert id="write" parameterType="kr.co.team4.model.dto.BoardDTO">
+        INSERT INTO BOARD (BOARD_TITLE, BOARD_CONTENT, USER_IDX)
+        VALUES (#{BOARD_TITLE}, #{BOARD_CONTENT}, #{USER_IDX})
+    </insert>
+    
+    <!-- 게시글 조회 -->
+    <select id="getBoardList" resultType="kr.co.team4.model.dto.BoardDTO">
+        SELECT B.BOARD_IDX, B.BOARD_TITLE, U.USER_ID AS WRITER_NAME, B.CREATED
+        FROM BOARD B
+        JOIN USERS U ON B.USER_IDX = U.USER_IDX
+        ORDER BY B.BOARD_IDX DESC
+    </select>
+
+    <!-- 상세 -->
+    <select id="detail" parameterType="int" resultType="kr.co.team4.model.dto.BoardDTO">
+        SELECT B.BOARD_IDX, U.USER_ID AS WRITER_NAME, B.BOARD_TITLE, B.BOARD_CONTENT
+        FROM BOARD B
+        JOIN USERS U
+        ON B.USER_IDX = U.USER_IDX
+        WHERE BOARD_IDX = #{BOARD_IDX}
+    </select>
+
+</mapper>

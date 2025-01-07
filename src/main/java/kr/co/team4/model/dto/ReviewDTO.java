@@ -25,6 +25,4 @@ public class ReviewDTO {
     private String room_name;
     private String lod_name;
     private String formattedDate; // 변환된 날짜 포맷
-
-
 }
