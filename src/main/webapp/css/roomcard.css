@@ -13,7 +13,14 @@
     border-radius: 10px;
     overflow: hidden;
     margin-bottom: 20px;
-    width: 800px; /* 카드 전체 크기 */
+    width: 1280px; /* 카드 전체 크기 */
+    height: 368px;
+}
+
+/* 체크인 사람 수 스타일 */
+.checkin-people {
+    font-size: 16px;
+    color: #564B4B;
 }
 
 /* 이미지 섹션 */
@@ -33,7 +40,7 @@
 /* 정보 섹션 */
 .room-info {
     flex: 1; /* 이미지와 동일한 비율 */
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* 상단과 하단 영역 간격 조정 */
@@ -45,30 +52,32 @@
 }
 
 .room-name {
-    font-size: 1.5em;
+    font-size: 20px;
     font-weight: bold;
 }
 
 .check-in-out {
-    font-size: 0.9em;
-    color: #555; /* 회색 텍스트 */
+    color: #564B4B;
+    font-weight: 450;
 }
 
 .details-link {
     font-size: 0.9em;
-    color: #007BFF; /* 파란색 링크 */
-    text-decoration: none; /* 밑줄 제거 */
+    color: #352018;
+    font-weight: 600;
 }
 
 /* 하단 영역 스타일 */
 .room-footer {
     display: flex;
-    justify-content: space-between; /* 가격과 버튼 간격 조정 */
+    align-items: flex-end;
+    justify-content: space-between;
 }
 
 .room-price {
-    font-size: 1.2em;
+    font-size: 26px;
     font-weight: bold;
+    margin: 0;
 }
 
 /* 스와이퍼 스타일 */
@@ -79,7 +88,6 @@
 
 .swiper-slide img {
     width: 250px;
-    height: 250px;
-    border-radius: 20px;
+    height: 337px;
     object-fit: cover; /* 이미지 비율 유지 */
 }
