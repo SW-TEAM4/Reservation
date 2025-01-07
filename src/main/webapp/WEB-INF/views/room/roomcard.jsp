@@ -36,32 +36,21 @@
   <!-- 객실 카드 -->
   <div class="room-card">
     <!-- 객실 이미지 -->
-      <div class="room-img-container">
-        <div class="swiper swiper-visual">
-          <div class="swiper-wrapper">
-            <!-- room.room_img_urls 리스트를 반복 -->
-            <c:forEach var="img_url" items="${room.room_img_urls[0]}">
-              <div class="swiper-slide">
-                <img src="${img_url}" alt="Room Image"/>
-              </div>
-            </c:forEach>
-          </div>
-        </div>
-      </div>
-    </a>
+    <div class="room-img-container">
+      <img src="${room.room_img_urls[0]}" alt="Room Image"/>
+    </div>
     <!-- 객실 정보 -->
     <div class="room-info">
       <!-- 상단 영역 -->
       <div class="room-header">
         <div>
-          <h3 class="room-name">${room.room_name}</h3>
+          <div class="room-name" style="margin-bottom: 5px;">숙박</div>
           <div class="check-in-out">체크인 15:00 - 체크아웃 11:00</div>
-          <div class="guest-pet-count">사람수: ${room.max_people_cnt} | 반려동물수: ${room.max_pet_cnt}</div>
         </div>
         <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
            class="details-link"
            onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
-          상세보기 &gt;
+          상세보기
         </a>
       </div>
       <!-- 하단 영역 -->
@@ -69,11 +58,17 @@
         <p class="room-price">${room.room_price}원</p>
         <!-- 예약 버튼 -->
         <button class="booking-button" onclick="location.href='/reserve/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
-          예약하기
+          <img src="../img/button_foot.svg" alt="icon" class="button-icon">
+          <span class="button-text">예약하기</span>
         </button>
       </div>
     </div>
   </div>
-<img src="<c:url value='/img/lod_divide_line.svg'/>" alt="구분선" width="800px">
+  <h3 class="room-name" style="margin-left: 5px;">${room.room_name}</h3>
+  <p class="checkin-people" style="margin-left: 5px;">
+    <img src="/img/ResDetail_user_img.svg" alt="아이콘" style="width: 16px !important; height: 16px !important; vertical-align: -1.0627px"> 성인 ${room.max_people_cnt}명 /
+    반려동물: ${room.max_pet_cnt}마리
+  </p>
+  <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
 </body>
 </html>

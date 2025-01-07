@@ -108,10 +108,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="${imgUrl}" alt="${lodgment.lod_name}" class="result-img" width="240px" height="300px">
                     </div>
                     <div class="result-item-left-container">
-                        <p style="color: #352018; font-size: 20px; font-weight: bold">${lodgment.lod_name}</p>
+                        <p style="color: #352018; font-size: 18px; font-weight: bold">${lodgment.lod_name}</p>
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <img src="/img/search_icon_star.svg" class="star-icon" style="width: 16px; height: 16px;"/>
-                            <p style="color: #352018; font-size: 14px; font-weight: bold; margin-top: 1px;">${lodgment.avgRating}</p>
+                            <p style="color: #352018; font-size: 14px; font-weight: bold; margin-top: 0.5px;">${lodgment.avgRating}</p>
                             <p style="color: #352018; font-size: 14px; margin-top: 0.7px;">(${lodgment.reviewCount})</p>
                         </div>                
                         <p style="color: gray; font-size: 14px; font-weight: bold">${lodCategory}</p>
