@@ -95,9 +95,10 @@
             <div class="review-container">
                 <c:if test="${not empty reviewList}">
                     <c:forEach var="review" items="${reviewList}" begin="0" end="2">
-                        <div class="review-card">
-                            <!-- 상단: 별점과 작성 날짜 -->
-                            <div class="review-header">
+                        <a href="/lodreview.do?lod_idx=${lod_idx}" class="review-detail-link">
+                            <div class="review-card">
+                                <!-- 상단: 별점과 작성 날짜 -->
+                                <div class="review-header">
                         <span class="review-rating">
                             <c:choose>
                                 <c:when test="${review.reviewer_rating >= 0.0 && review.reviewer_rating < 1.0}">
@@ -121,22 +122,24 @@
                             </c:choose>
                             (${review.reviewer_rating})
                         </span>
-                                <span class="review-date">${review.reviewer_created}</span>
-                            </div>
+                                    <span class="review-date">${review.reviewer_created}</span>
+                                </div>
 
-                            <!-- 하단: 리뷰 내용과 이미지 -->
-                            <div class="review-body">
-                                <div class="review-content">${review.reviewer_content}</div>
-                                <div class="review-image-container">
-                                    <c:if test="${not empty review.reviewer_image}">
-                                        <img src="${review.reviewer_image}" alt="리뷰 이미지" class="review-image">
-                                    </c:if>
-                                    <c:if test="${empty review.reviewer_image}">
-                                        <img src="/img/lodgment_img_no_review.svg" alt="기본 이미지" class="review-image">
-                                    </c:if>
+                                <!-- 하단: 리뷰 내용과 이미지 -->
+                                <div class="review-body">
+                                    <div class="review-content">${review.reviewer_content}</div>
+                                    <div class="review-image-container">
+                                        <c:if test="${not empty review.reviewer_image}">
+                                            <img src="${review.reviewer_image}" alt="리뷰 이미지" class="review-image">
+                                        </c:if>
+                                        <c:if test="${empty review.reviewer_image}">
+                                            <img src="/img/lodgment_img_no_review.svg" alt="기본 이미지"
+                                                 class="review-image">
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </c:forEach>
                 </c:if>
 
@@ -147,7 +150,8 @@
             </div>
         </div>
 
-        <h3 style="display: flex; justify-content: flex-start; width: 100%; max-width: 1280px; font-size: 22px;">객실 선택</h3>
+        <h3 style="display: flex; justify-content: flex-start; width: 100%; max-width: 1280px; font-size: 22px;">객실
+            선택</h3>
         <div class="lod-search_filters">
             <!-- 날짜 선택 -->
             <div class="selection-item">
@@ -215,7 +219,7 @@
             <c:set var="markerX" value="${lodgmentDTO.x}"/>
             <c:set var="markerY" value="${lodgmentDTO.y}"/>
             <c:set var="markerImage" value="/img/lod_map_marker.png"/>
-            <c:set var="mapWidth" value="1305px"/>
+            <c:set var="mapWidth" value="1280px"/>
             <c:set var="mapHeight" value="661px"/>
 
             <%@ include file="/WEB-INF/views/lodgment/map.jsp" %>
