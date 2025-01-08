@@ -185,9 +185,7 @@ public class ReservationController {
         try{
             // 세션에 저장되어 있는 유저 idx 정보를 통해 유저 정보 가져오기
             UserDTO userSession = (UserDTO) session.getAttribute("usersession");
-            if(userSession == null){
-                return "redirect:/userlogin";
-            }
+
             // 방 정보 가져오기
             RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
             // 숙소 정보 가져오기
