@@ -38,12 +38,6 @@
 
         .login_box {
             width: 486px;
-            /*margin: 0 auto;*/
-            /*padding: 30px;*/
-            /*border: 1px solid #fff;*/
-            /*border-radius: 5px;*/
-            /*background-color: #fff;*/
-            /*text-align: center;*/
         }
 
         .login_box input {
@@ -76,10 +70,6 @@
             margin-top: 60px;
             height: 55px;
         }
-
-        /*button:hover {*/
-        /*    background-color: #734235;*/
-        /*}*/
 
         .login_warn {
             color: red;

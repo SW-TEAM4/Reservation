@@ -18,99 +18,21 @@
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
-        /** {*/
-        /*    box-sizing: border-box;*/
-        /*    margin: 0;*/
-        /*    padding: 0;*/
-        /*    font-family: "Noto Sans KR";*/
-        /*}*/
 
-        /*a {*/
-        /*    text-decoration: none;*/
-        /*}*/
+        a {
+            color: black;
+            text-decoration: none;
+        }
 
-
-        /*.header {*/
-        /*    width: 100%; !* 전체 너비 사용 *!*/
-        /*    height: 260px; !* 높이 조정 *!*/
-        /*    display: flex; !* Flex 사용 *!*/
-        /*    flex-direction: column; !* 아이템을 세로로 배치 *!*/
-        /*    justify-content: flex-end; !* 아이템을 하단으로 정렬 *!*/
-        /*    align-items: center; !* 아이템을 가로 중앙으로 정렬 *!*/
-        /*    padding: 10px 0;*/
-        /*    background-color: #8A5642; !* 배경색 설정 *!*/
-        /*}*/
-
-        /*.login {*/
-        /*    position: absolute;*/
-        /*    right: 36px; !* 오른쪽 정렬 *!*/
-        /*    top: 24px; !* 상단 고정 *!*/
-        /*}*/
-
-        /*.login > a {*/
-        /*    color: #352018;*/
-        /*    font-size: 16px;*/
-        /*}*/
-
-        /*.size {*/
-        /*    width: auto; !* 자동 너비 설정 *!*/
-        /*    display: flex; !* Flex 사용 *!*/
-        /*    justify-content: center; !* 가로 중앙 정렬 *!*/
-        /*    align-items: center; !* 세로 중앙 정렬 *!*/
-        /*    height: 100%; !* 헤더 높이에 맞춤 *!*/
-        /*}*/
-
-        /*.size a img {*/
-        /*    transform: translateY(67px); !* Y축으로 -100px 이동 *!*/
-        /*    margin-bottom: 45px;*/
-        /*}*/
-
+        a:visited {
+            color: black;
+        }
 
         .main {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
-
-        /*.menu {*/
-        /*    width: 1200px;*/
-        /*    margin: 20px auto 0; !* 상단에 간격 추가 *!*/
-        /*    height: 40px;*/
-        /*}*/
-
-        /*.menu > ul {*/
-        /*    margin: 0;*/
-        /*    padding: 0;*/
-        /*    list-style: none;*/
-        /*}*/
-
-        /*.menu > ul > li {*/
-        /*    float: left; !* 메뉴 항목을 가로로 배열 *!*/
-        /*    width: 25%; !* 메뉴 너비 설정 *!*/
-        /*}*/
-
-        /*.menu > ul > li > a {*/
-        /*    display: flex;*/
-        /*    justify-content: center;*/
-        /*    align-items: center;*/
-        /*    text-align: center;*/
-        /*    padding: 14px 23px; !* 상하 14px, 좌우 23px 패딩 *!*/
-        /*    border-radius: 20px;*/
-        /*    transition: background-color 0.3s;*/
-        /*    background-color: #fff; !* 기본 배경색 *!*/
-        /*    color: #352018;*/
-        /*    font-weight: bold;*/
-        /*    font-size: 20px;*/
-        /*}*/
-
-        /*.menu > ul > li > a.active {*/
-        /*    background-color: #352018;*/
-        /*    color: white;*/
-        /*}*/
-
-        /*.menu > ul > li {*/
-        /*    list-style: none;*/
-        /*}*/
 
         .main h2 {
             font-weight: bold;
@@ -128,19 +50,14 @@
 
         .card_container1 {
             display: flex;
-            /*flex-wrap: wrap;*/
-            /*gap: 20px;*/
             flex-direction: row;
             border-top: 2px solid #929292;
             padding-bottom: 10px;
         }
 
         .card1 {
-            /*background-color: #fff;*/
-            /*border: 1px solid #ddd;*/
             border-radius: 5px;
             flex: 1;
-            /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
             width: 461px;
             height: 300px;
             overflow: hidden;
@@ -156,10 +73,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            /*padding: 15px;*/
             margin-top: 50px;
-            /*width: 65%;*/
-            /*flex-direction: row;*/
         }
 
         .notice1 {
@@ -181,8 +95,6 @@
 
         .card_container2 {
             display: flex;
-            /*flex-wrap: wrap;*/
-            /*gap: 20px;*/
             flex-direction: row;
             border-top: 2px solid #929292;
             margin-bottom: 20px;
@@ -190,11 +102,8 @@
         }
 
         .card2 {
-            /*background-color: #fff;*/
-            /*border: 1px solid #ddd;*/
             border-radius: 5px;
             flex: 1;
-            /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
             width: 461px;
             height: 300px;
             overflow: hidden;
@@ -210,10 +119,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            /*padding: 15px;*/
             margin-top: 50px;
-            /*width: 65%;*/
-            /*flex-direction: row;*/
         }
 
         .notice2 {
@@ -235,8 +141,6 @@
 
         .card_container3 {
             display: flex;
-            /*flex-wrap: wrap;*/
-            /*gap: 20px;*/
             flex-direction: row;
             border-top: 2px solid #929292;
             margin-bottom: 20px;
@@ -244,11 +148,8 @@
         }
 
         .card3 {
-            /*background-color: #fff;*/
-            /*border: 1px solid #ddd;*/
             border-radius: 5px;
             flex: 1;
-            /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
             width: 461px;
             height: 300px;
             overflow: hidden;
@@ -286,28 +187,6 @@
             font-size: 14px;
             color: #352018;
         }
-
-
-        /*.footer {*/
-        /*    width: 100%; !* 푸터의 너비를 전체로 설정 *!*/
-        /*    text-align: center;*/
-        /*    padding: 10px 0; !* 푸터 내부 패딩 *!*/
-        /*    border-top: 1px solid #929292; !* 상단 테두리 설정: 너비, 스타일, 색상 *!*/
-        /*    justify-content: center;*/
-        /*    align-items: center;*/
-        /*}*/
-
-        /*.footer > .size {*/
-        /*    width: 1200px;*/
-        /*    height: 156px;*/
-        /*    margin: 0 auto;*/
-        /*}*/
-
-        /*.footer > .size > .info > p {*/
-        /*    line-height: 20px;*/
-        /*    color: gray;*/
-        /*    font-weight: bold;*/
-        /*}*/
 
     </style>
 </head>

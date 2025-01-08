@@ -103,10 +103,6 @@
             height: 55px;
         }
 
-        /*button:hover {*/
-        /*    background-color: #734235;*/
-        /*}*/
-
         .login_warn {
             color: red;
             margin-top: 20px;
@@ -140,16 +136,6 @@
         <h1>로그인</h1>
         <form id="login" method="post" onsubmit="return loginCheck();">
             <div class="login_wrap">
-<%--                <<div class="id_wrap">--%>
-<%--                    <div class="id_input_box">--%>
-<%--                        <input type="text" class="id_input" name="USER_ID" placeholder="아이디" required>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="pwd_wrap">--%>
-<%--                    <div class="pwd_input_box">--%>
-<%--                        <input type="password" class="pwd_input" name="USER_PWD" placeholder="비밀번호" required>--%>
-<%--                    </div>--%>
-<%--                </div>>--%>
                 <div class="login_box">
                     <input type="text" id="SELLER_ID" name="SELLER_ID" placeholder="아이디" required>
                     <input type="password" id="SELLER_PWD" name="SELLER_PWD" placeholder="비밀번호" required>
