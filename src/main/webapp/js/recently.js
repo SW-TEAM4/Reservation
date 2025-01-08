@@ -7,7 +7,7 @@ window.onload = function () {
             if (!room || !room.roomIdx || !room.roomName || !room.roomImgUrl || !room.roomPrice) return;
 
             const roomElement = document.createElement('div');
-            roomElement.classList.add('room-card'); // roomcard.jsp의 스타일을 재사용
+            roomElement.classList.add('room-card');
 
             // HTML 구조 생성
             roomElement.innerHTML = `

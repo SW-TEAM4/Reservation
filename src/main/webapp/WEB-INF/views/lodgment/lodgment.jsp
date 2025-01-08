@@ -52,25 +52,20 @@
         %>
         <input type="hidden" id="user-id" value="<%= userIdx != null ? userIdx : "" %>">
 
-
-
-    <%-- 숙소 정보 --%>
         <div class="lodgment-container">
             <div class="top-container">
                 <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
                 <div class="header-text">숙소 상세</div>
             </div>
 
-            <%-- 찜 하트 아이콘 --%>
             <div class="reserve-info">
-                <c:if test="${not empty lodgmentDTO}">
+                    <img src="${lodgmentDTO.lod_img_url}" width="1280px" height="800px">
                     <p style="font-size: 24px; font-weight: bold">
                             ${lodgmentDTO.lod_name}
                     </p>
                     <span class="heart-icon ${lodLikeDTO.like_idx != null ? 'active' : ''}" data-lod-idx="${lodgmentDTO.lod_idx}">
                             ${lodLikeDTO.like_idx != null ? "❤️" : "🤍"}
                     </span>
-                </c:if>
             </div>
         </div>
 
@@ -197,19 +192,18 @@
             </div>
         </div>
         <!-- 객실 리스트 !-->
-        <div class="room-list" id="room-list">
-            <input type="hidden" id="lod_idx" value="${lod_idx}">
-            <c:if test="${not empty roomList}">
-                <c:forEach var="room" items="${roomList}">
-                    <%@ include file="/WEB-INF/views/room/roomcard.jsp" %>
-                </c:forEach>
-            </c:if>
-            <c:if test="${empty roomList}">
-                <p>예약 가능한 방이 없습니다!</p>
-            </c:if>
-        </div>
+            <div class="room-list" id="room-list">
+                <!-- lod_idx 값은 JavaScript에서 사용할 수 있도록 hidden input으로 유지 -->
+                <input type="hidden" id="lod_idx" value="${lod_idx}">
+                <!-- 체크인/체크아웃 시간 표시 영역 -->
+                <div id="check-in-out-info">
+                    <p>체크인: <span id="check-in-time"></span></p>
+                    <p>체크아웃: <span id="check-out-time"></span></p>
+                </div>
+            </div>
 
-        <!-- 지도 -->
+
+            <!-- 지도 -->
         <div class="lodgment-map">
             <div style="margin-bottom: 15px;">위치/교통</div>
             <c:set var="centerX" value="${lodgmentDTO.x != null ? lodgmentDTO.x : 0}"/>
