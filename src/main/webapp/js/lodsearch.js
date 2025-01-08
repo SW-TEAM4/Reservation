@@ -7,6 +7,16 @@ document.addEventListener("DOMContentLoaded", function () {
     let checkoutDate = document.getElementById("checkout-date").textContent;
     let lod_idx = document.getElementById("lod_idx").value;
 
+    // === saveToRecent 함수 ===
+    function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
+        const recentlyRooms = JSON.parse(localStorage.getItem('recentlyRooms') || '[]');
+        const updatedRooms = recentlyRooms.filter(room => room.roomIdx !== roomIdx);
+        updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice });
+        if (updatedRooms.length > 5) updatedRooms.pop();
+        localStorage.setItem('recentlyRooms', JSON.stringify(updatedRooms));
+    }
+
+
     // Date Range Picker 초기화
     $('#date-picker').daterangepicker({
         locale: {
@@ -40,9 +50,72 @@ document.addEventListener("DOMContentLoaded", function () {
         sendSearchAjax();
     });
 
+    // === 객실 카드 템플릿 함수 ===
+    function createRoomCard(room, checkinTime, checkoutTime) {
+        const roomPrice = room.room_price.toLocaleString() + '원';
+        return `
+            <div class="room-card">
+                <!-- 객실 이미지 -->
+                <div class="room-img-container">
+                    <img src="${room.room_img_urls[0]}" alt="Room Image"/>
+                </div>
+                <!-- 객실 정보 -->
+                <div class="room-info">
+                    <!-- 상단 영역 -->
+                    <div class="room-header">
+                        <div>
+                            <div class="room-name" style="margin-bottom: 5px;">${room.room_name}</div>
+                            <div class="check-in-out">체크인 ${checkinTime}  ~ 체크아웃 ${checkoutTime}</div>
+                        </div>
+                        <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
+                           class="details-link"
+                           onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
+                            상세보기
+                        </a>
+                    </div>
+                    <!-- 하단 영역 -->
+                    <div class="room-footer">
+                        <p class="room-price">${roomPrice}</p>
+                        <!-- 예약 버튼 -->
+                        <button class="booking-button" onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
+                            <img src="../img/button_foot.svg" alt="icon" class="button-icon">
+                            <span class="button-text">예약하기</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <h3 class="room-name" style="margin-left: 5px;">${room.room_name}</h3>
+            <p class="checkin-people" style="margin-left: 5px;">
+                <img src="/img/ResDetail_user_img.svg" alt="아이콘" style="width: 16px !important; height: 16px !important; vertical-align: -1.0627px"> 성인 ${room.max_people_cnt}명 /
+                반려동물: ${room.max_pet_cnt}마리
+            </p>
+            <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
+        `;
+    }
+
+    // === UI 업데이트 함수 ===
+    function updateRoomList(response) {
+        const roomListContainer = document.getElementById("room-list");
+        roomListContainer.innerHTML = ''; // 기존 리스트 초기화
+
+        const roomList =  response.roomList;
+        const checkinTime = response.checkinTime;
+        const checkoutTime = response.checkoutTime;
+        if (roomList && roomList.length > 0) {
+            roomList.forEach(room => {
+                const roomCard = createRoomCard(room, checkinTime, checkoutTime);
+                roomListContainer.insertAdjacentHTML('beforeend', roomCard);
+            });
+        } else {
+            roomListContainer.innerHTML = `
+                <p>예약 가능한 방이 없습니다!</p>
+                <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 20px auto;"></div>
+            `;
+        }
+    }
+
     // 서버로 검색 요청 전송
     function sendSearchAjax() {
-
         var url = "/lodgment.do?lod_idx=" + lod_idx + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate + "&guestCount=" + guestCount + "&petCount=" + petCount;
         console.log(url);
         $.ajax({
@@ -57,72 +130,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 petCount: petCount
             },
             success: function (response) {
-                console.log("availableRoom -> updateRoomList 호출")
                 updateRoomList(response); // 결과 업데이트 함수 호출
             },
             error: function (xhr, status, error) {
                 alert('객실 정보를 가져오는 데 실패했습니다.');
             }
         });
-    }
-
-    // UI 업데이트 함수
-    function updateRoomList(roomList) {
-        const roomListContainer = document.getElementById("room-list");
-        roomListContainer.innerHTML = ''; // 기존 리스트 초기화
-
-        if (roomList && roomList.length > 0) {
-
-            roomList.forEach(room => {
-                // HTML 구조 생성
-                const roomPrice = room.room_price.toLocaleString() + '원'
-                const roomCard = `
-                <div class="room-card">
-                    <!-- 객실 이미지 -->
-                    <div class="room-img-container">
-                        <img src="${room.room_img_urls[0]}" alt="Room Image"/>
-                    </div>
-                    <!-- 객실 정보 -->
-                    <div class="room-info">
-                        <!-- 상단 영역 -->
-                        <div class="room-header">
-                            <div>
-                              <div class="room-name" style="margin-bottom: 5px;">숙박</div>
-                              <div class="check-in-out">체크인 15:00 - 체크아웃 11:00</div>
-                            </div>
-                            <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
-                               class="details-link"
-                               onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
-                                상세보기
-                            </a>
-                        </div>
-                        <!-- 하단 영역 -->
-                        <div class="room-footer">
-                            <p class="room-price">${roomPrice}</p>
-                            <!-- 예약 버튼 -->
-                            <button class="booking-button" onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
-                                <img src="../img/button_foot.svg" alt="icon" class="button-icon">
-                                <span class="button-text">예약하기</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <h3 class="room-name" style="margin-left: 5px;">${room.room_name}</h3>
-                  <p class="checkin-people" style="margin-left: 5px;">
-                    <img src="/img/ResDetail_user_img.svg" alt="아이콘" style="width: 16px !important; height: 16px !important; vertical-align: -1.0627px"> 성인 ${room.max_people_cnt}명 /
-                    반려동물: ${room.max_pet_cnt}마리
-                  </p>
-                 <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
-            `;
-
-                // roomListContainer에 roomCard 삽입
-                roomListContainer.insertAdjacentHTML('beforeend', roomCard);
-            });
-
-        } else {
-            roomListContainer.innerHTML = '<p>조건에 맞는 객실이 없습니다.</p>' +
-                '            <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 20px auto;"></div>\n';
-        }
     }
 
     // === 팝업 요소 가져오기 ===

@@ -13,6 +13,18 @@
     gap: 20px; /* 항목 간 간격 */
 }
 
+.star {
+    font-size: 18px;
+    color: gray;
+    margin-right: 5px;
+}
+
+.star-filled{
+    font-size: 18px;
+    color: #FFDF86;
+    margin-right: 5px;
+}
+
 .lod-review-card {
     display: flex;
     background-color: #ffffff;

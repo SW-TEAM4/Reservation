@@ -1,10 +1,7 @@
 package kr.co.team4.controller;
 
 import kr.co.team4.model.dto.*;
-import kr.co.team4.model.service.LodFacilityService;
-import kr.co.team4.model.service.LodLikeService;
-import kr.co.team4.model.service.LodgmentService;
-import kr.co.team4.model.service.LodReviewService;
+import kr.co.team4.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +20,9 @@ public class LodgmentController {
 
     @Autowired
     private LodgmentService lodgmentService;
+
+    @Autowired
+    private RoomService roomService;
 
     @Autowired
     private LodReviewService lodReviewService; // LodReviewService 추가
@@ -99,13 +99,13 @@ public class LodgmentController {
 
     @GetMapping("/lodgment/availableRooms.do")
     @ResponseBody
-    public List<RoomDTO> getAvailableRooms(@RequestParam int lod_idx,
+    public Map<String, Object> getAvailableRooms(@RequestParam int lod_idx,
                                            @RequestParam String checkinDate,
                                            @RequestParam String checkoutDate,
                                            @RequestParam int guestCount,
                                            @RequestParam int petCount) {
 
-
+        Map<String, Object> rooms = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         params.put("lod_idx", lod_idx);
         params.put("checkinDate", checkinDate);
@@ -113,7 +113,14 @@ public class LodgmentController {
         params.put("guestCount", guestCount);
         params.put("petCount", petCount);
 
+        LodgmentDTO lodgmentDTO = roomService.getRoomLodDetail(lod_idx);
+        List<RoomDTO> roomList = lodgmentService.getAvailableRooms(params);
+
+        rooms.put("roomList", roomList);
+        rooms.put("checkinTime", lodgmentDTO.getFormattedLodCheckIn());
+        rooms.put("checkoutTime", lodgmentDTO.getFormattedLodCheckOut());
+
         // Service를 호출하여 예약 가능한 객실 리스트를 가져옴
-        return lodgmentService.getAvailableRooms(params);
+        return rooms;
     }
 }
