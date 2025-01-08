@@ -1,8 +1,17 @@
+/*
+    파일명 : roomRegister.js
+    생성자 : JDeok
+    날 짜  : 2024.12.24
+    시 간  : 오전 10:01
+    기 능  : 사장님 상세 페이지
+    변경사항
+    - 2024.12.24 : JDeok(최초작성)
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const roomTableBody = document.getElementById('roomTableBody');
     const addRoomButton = document.getElementById('addRoomButton');
     const form = document.querySelector('form');
-
+A
     // 페이지 로드 시 초기 필드에 포맷터 연결
     document.querySelectorAll('.room-price-input').forEach(input => attachPriceFormatter(input));
 
@@ -102,3 +111,4 @@ document.addEventListener('DOMContentLoaded', function () {
     // 기존 행들에 포맷터 연결
     document.querySelectorAll('.room-price-input').forEach(input => attachPriceFormatter(input));
 });
+
