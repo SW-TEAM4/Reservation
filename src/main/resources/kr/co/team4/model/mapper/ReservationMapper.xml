@@ -77,9 +77,9 @@
     </delete>
 
     <select id="getUserInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.UserDTO">
-        select user_name, user_email, user_phone_number
+        select USER_IDX, USER_NAME, USER_EMAIL, USER_PHONE_NUMBER
         from USERS
-        where user_idx = #{user_idx}
+        where USER_IDX = #{user_idx}
     </select>
 
     <select id="isAlreadyReserved" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="int">
@@ -95,7 +95,7 @@
                 WHERE res2.room_idx = r.room_idx
                 AND res2.lod_idx = r.lod_idx
                 AND (
-                        ( res2.res_end_date >#{res_str_date} AND #{res_end_date} > res2.res_str_date)
+                        ( res2.res_end_date > DATE(#{res_str_date}) AND Date(#{res_end_date}) > res2.res_str_date)
                     )
                 )
             )
@@ -113,7 +113,7 @@
                 rm.room_name, rm.room_price,
                 r.res_merchant_id, r.res_name, r.res_phone_number, r.res_str_date,
                 r.res_end_date, r.res_people_cnt, r.res_pets_cnt, r.request, l.status
-        from RESERVATION r, LODGMENT l, LOD_CATEGORY lc, ROOM rmd
+        from RESERVATION r, LODGMENT l, LOD_CATEGORY lc, ROOM rm
         where r.user_idx = #{user_idx}
           and r.lod_idx = l.lod_idx
           and r.room_idx = rm.room_idx

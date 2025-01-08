@@ -2,12 +2,10 @@ package kr.co.team4.model.service.review;
 
 
 import kr.co.team4.model.dto.ReviewDTO;
-import kr.co.team4.model.dto.TestDTO;
 import kr.co.team4.model.dto.UserReservedDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.math.BigInteger;
-import java.util.List;
 import java.util.Map;
 /*
 예약내역 있는지 체크

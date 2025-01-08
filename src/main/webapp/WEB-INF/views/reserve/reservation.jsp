@@ -65,6 +65,7 @@
         }
         .star{
             display: inline-block;
+            position: absolute;
             font-size: 14px;
             color: #FF3B3E;
             top: 0;
@@ -74,11 +75,17 @@
              font-size: 12px; /* 작은 크기로 표시 */
              margin-top: 5px; /* 입력 필드와 오류 메시지 간격 */
          }
+        .line-input{
+            margin-top:25px
+        }
         .line-input input[type="text"] {
+            margin-top: 20px;
             border: none; /* 박스 테두리 제거 */
             border-bottom: 2px solid #ccc; /* 밑줄만 보이도록 설정 */
             padding: 5px 0; /* 위 아래 여백만 설정 */
             font-size: 20px; /* 글자 크기 */
+            font-family: "Noto Sans KR", serif;
+            font-weight: bold;
             outline: none; /* 기본 포커스 외곽선 제거 */
             width: 500px;
             box-sizing: border-box; /* 패딩과 테두리를 포함한 크기 */
@@ -121,6 +128,7 @@
             width: 100%;
             padding: 20px 0;
             box-sizing: border-box;
+            font-weight: bold;
         }
         .lod-info div{
             margin-bottom: 10px;
@@ -148,6 +156,8 @@
 
         }
         .time-info * .date{
+            font-family: "Noto Sans KR", sans-serif;
+            font-weight: bold;
             font-size: 26px;
             color: #352018;
             border: none; /* 테두리 제거 */
@@ -179,6 +189,8 @@
             text-align: center; /* 숫자 가운데 정렬 */
             pointer-events: none; /* 사용자가 수정 불가 (readonly 보조) */
             font-size: 15px; /* 텍스트 크기 */
+            font-family: "Noto Sans KR", sans-serif;
+            font-weight: bold;
             color: #564B4B; /* 텍스트 색상 */
         }
         .amount-info{
@@ -192,6 +204,8 @@
             align-items: center; /* 세로 정렬 */
         }
         .payment-info input[type="number"] {
+            font-family: "Noto Sans KR", sans-serif;
+            font-weight: bold;
             font-size: 20px;
             color: #FF3B3E;
             text-align: right; /* 가격 입력칸의 숫자 오른쪽 정렬 */
@@ -222,7 +236,7 @@
                 <div class="time-info">
                     <div class="checkin">
                         <div style="color: #352018; font-size: 20px">체크인</div>
-                        <input class="date" type="text" id="res_str_date" name="reservationDTO.res_str_date" value="${formattedCheckinDate}" readonly>
+                        <input class="date" type="text" id="res_str_date" name="reservationDTO.res_str_date" value="${reservationDTO.res_str_date}" readonly>
                         <div class="check-time" id="lod_check_in">${formattedCheckinTime}</div>
                         <div class="guest-info">
                             <img src="/img/reservation_icon_user.svg" alt="reservation_user_icon">
@@ -232,14 +246,14 @@
                         </div>
                     </div>
                     <div class="checkout">
-                        <div style="color: #352018; font-size: 20px">체크아웃</div>
-                        <input class="date" type="text" id="res_end_date" name="reservationDTO.res_end_date" value="${formattedCheckoutDate}" readonly>
+                        <div style="color: #352018; font-size: 20px;">체크아웃</div>
+                        <input class="date" type="text" id="res_end_date" name="reservationDTO.res_end_date" value="${reservationDTO.res_end_date}" readonly>
                         <div class="check-time" id="lod_check_out">${formattedCheckoutTime}</div>
                     </div>
                 </div>
                 <div class="amount-info">
-                    <span style="font-size: 14px; color: #564B4B;">숙박 / ${dayDifference} </span>
-                    <span style="font-size: 20px; color: #FF3B3E;">${formattedRoomPrice}원</span>
+                    <span style="font-size: 14px; color: #564B4B;">숙박 / ${dayDifference}</span>
+                    <span style="font-size: 20px; font-weight:bold; color: #FF3B3E; margin-left: 5px">${formattedRoomPrice}원</span>
                 </div>
 
                 <%-- TODO 유저 정보 로그인 구현 되면 수정 필요 --%>
@@ -255,21 +269,21 @@
             </div>
 
             <div class="reserver-info">
-                <div style="font-size: 26px; color: #352018;">예약자 정보<span class="star">*</span></div>
+                <div style="display: inline-block; margin-top:25px; position: relative; font-size: 26px; font-weight: bold; color: #352018;">예약자 정보<span class="star">*</span></div>
                 <div class="line-input">
-                    <div style="font-size: 20px; color: #564B4B;">성명<span class="star">*</span></div>
-                    <input type="text" id="res_name" name="reservationDTO.res_name" placeholder="예약자의 성명을 입력해 주세요." value="${userDTO.user_name}">
+                    <div style="position: relative; font-size: 20px; color: #564B4B;">성명<span class="star">*</span></div>
+                    <input type="text" id="res_name" name="reservationDTO.res_name" placeholder="예약자의 성명을 입력해 주세요." value="${userDTO.USER_NAME}">
                     <div id="nameError" class="error-message"></div> <!-- 이름 오류 메시지 -->
 
-                    <div style="font-size: 20px; color: #564B4B;">휴대폰 번호<span class="star">*</span></div>
-                    <input type="text" id="res_phone_number" name="reservationDTO.res_phone_number" placeholder="예약자의 휴대폰 번호를 입력해 주세요." value="${userDTO.user_phone_number}"><p/>
+                    <div style="position: relative; margin-top:25px; font-size: 20px; color: #564B4B;">휴대폰 번호<span class="star">*</span></div>
+                    <input type="text" id="res_phone_number" name="reservationDTO.res_phone_number" placeholder="예약자의 휴대폰 번호를 입력해 주세요." value="${userDTO.USER_PHONE_NUMBER}"><p/>
                     <div id="phoneError" class="error-message"></div> <!-- 전화번호 오류 메시지 -->
                 </div>
             </div>
 
             <div class="payment-info">
                 <div class="payment-left">
-                    <span style="font-size: 26px; color: #352018;">총 결제 금액</span>
+                    <span style="font-weight: bold; font-size: 26px; color: #352018;">총 결제 금액</span>
                     <span style="font-size: 20px; color: #564B4B">(세금 및 봉사료 포함)</span>
                 </div>
                 <div class="payment-right">
@@ -279,7 +293,7 @@
 
             <button class="payment-button" id="port_type_card" name="card" onclick="showPaymentMethods('card')">
                 <img src="/img/button_foot.svg" alt="payment_foot_icon">
-                    결제하기
+                결제하기
             </button>
         </form>
     </div>
@@ -423,9 +437,9 @@
                 merchant_uid: reservationDTO.res_merchant_id, // 서버에서 받은 주문번호
                 name:  `결제 테스트 ${lodDTO.lod_name} ${roomDTO.room_name}`,
                 amount: paymentDTO.paid_money, // 결제 금액
-                buyer_email: userDTO.user_email,
-                buyer_name:  userDTO.user_name,
-                buyer_tel: userDTO.user_phone_number,
+                buyer_email: userDTO.USER_EMAIL,
+                buyer_name:  userDTO.USER_NAME,
+                buyer_tel: userDTO.USER_PHONE_NUMBER,
             },
             async function(response) {
                 // 결제 과정에서 error 발생시 생성했던 reservation, payment 정보 삭제
@@ -448,7 +462,7 @@
                     return alert("결제에 실패하였습니다 : " + response.error_msg);
                 }else{
                     try{
-                        const notified = await fetch(`https://3e7b-58-122-202-29.ngrok-free.app/payment/complete`,{
+                        const notified = await fetch(`https://shinhan.me/payment/complete`,{
                             method: "POST",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({

@@ -10,8 +10,7 @@ import java.util.Map;
 
 @Mapper
 public interface LodgmentMapper {
-    List<LodgmentDTO> lodgmentDetail(LodgmentDTO lodgmentDTO);
-    List<RoomDTO> getRoomsByLodgment(LodgmentDTO lodgmentDTO);
+    LodgmentDTO lodgmentDetail(LodgmentDTO lodgmentDTO);
     SellerDTO getSellerInfo(int lod_idx);
     List<RoomDTO> getAvailableRooms(Map<String, Object> params);
 }

@@ -1,7 +1,6 @@
 package kr.co.team4.model.mapper;
 
 import kr.co.team4.model.dto.ReviewDTO;
-import kr.co.team4.model.dto.TestDTO;
 import kr.co.team4.model.dto.UserReservedDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

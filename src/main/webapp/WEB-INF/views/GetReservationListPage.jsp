@@ -19,10 +19,10 @@
     <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
-    <link rel="stylesheet" href="/css/mypageStyle.css"/>
+    <script src="/js/home.js"></script>
+    <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
         body {
-            /*font-family: 'Noto Sans', sans-serif;*/
             margin: 0;
             padding: 0;
             background-color: #ffffff;
@@ -54,13 +54,18 @@
             cursor: pointer;
         }
 
+        .back-button img {
+            width: 24px;
+            height: 24px;
+        }
+
         .header-title {
             font-size: 20px;
             color: #352018;
             font-weight: bold;
         }
 
-        .container {
+        .mypagecontainer {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
@@ -93,7 +98,6 @@
         .card-title-wrapper {
             display: flex; /* 플렉스 박스를 사용하여 나란히 정렬 */
             align-items: center; /* 세로 가운데 정렬 */
-            justify-content: space-between; /* 요소 사이에 공간 배분 */
             margin-bottom: 10px; /* 하단 간격 */
         }
 
@@ -101,18 +105,20 @@
             font-size: 32px;
             font-weight: bold;
             color: #352018;
-            flex: 1;
+            margin-right: 10px; /* 텍스트와 화살표 이미지 간 간격 */
         }
 
         .right-back-button {
             background: none;
             border: none;
-            font-size: 35px;
-            color: #352018;
             cursor: pointer;
-            margin-left: 10px;
-            margin-right: 50px;
-            /*margin-right: 535px;*/
+            padding: 0;
+            margin: 0;
+        }
+
+        .right-back-button img {
+            width: 35px; /* 이미지 크기 */
+            height: 35px; /* 이미지 크기 */
         }
 
 
@@ -141,45 +147,72 @@
         .review-button:hover {
             background-color: #6b432f;
         }
+
+        #reservationEmpty {
+            display: block;
+            margin: 50px auto;
+            width: 500px;
+            height: auto; /* 비율 유지 */
+            margin-bottom: 200px;
+            margin-top:100px;
+
+        }
     </style>
 </head>
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <div class="header-bar">
-    <button class="back-button" onclick="history.back();">&lt;</button>
+    <button class="back-button" onclick="history.back();">
+        <img src="/img/arrow-left.svg" alt="Back" />
+    </button>
     <span class="header-title">예약내역</span>
 </div>
 
-<div class="container">
-    <c:forEach var="dto" items="${map.list}">
-        <div class="card">
-                <%--            <img src="/img/reservationListPage_img.svg" alt="숙소 이미지">--%>
-            <img src="${dto.lod_img_url}" alt="숙소 이미지">
-            <div class="card-content">
-                <div class="card-date">${dto.res_str_date} ~ ${dto.res_end_date}</div>
-                    <%--                <div class="card-title">${dto.lod_name}</div>--%>
+<div class="mypagecontainer">
+    <c:choose>
+        <c:when test="${not empty map.list}">
+            <c:forEach var="dto" items="${map.list}">
+                 <div class="card">
 
-                    <%--                <div class="card-title-wrapper" onclick="window.location.href='/reservation/detailInfo';" style="cursor: pointer;">--%>
-                    <%--                    <div class="card-title">${dto.lod_name}</div>--%>
-                    <%--                    <button class="right-back-button" onclick="window.location.href='/reservation/detailInfo';">&gt;</button>--%>
-                    <%--                </div>--%>
+                    <img src="${dto.lod_img_url}" alt="숙소 이미지">
+                    <div class="card-content">
+                <div class="card-date">${dto.res_str_date} ~ ${dto.res_end_date}</div>
+
 
                 <div class="card-title-wrapper" onclick="window.location.href='/reservation/detailInfo?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}';" style="cursor: pointer;">
                     <div class="card-title">${dto.lod_name}</div>
-                    <button class="right-back-button" onclick="window.location.href='/reservation/detailInfo?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}';">&gt;</button>
+                    <button class="right-back-button">
+                        <img src="/img/arrow-right.svg" alt="Go" />
+                    </button>
                 </div>
 
-
-
                 <c:if test="${dto.status == 'A'}">
-                    <a href="/review?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}&room_idx=${dto.room_idx}" class="review-button">
-                        <img src="/img/dog_footprint.svg" alt="발자국" style="width: 40px; height: 40px; vertical-align: middle; margin-right: -5px;">
-                        리뷰쓰기
-                    </a>
+                    <c:choose>
+                        <c:when test="${dto.res_end_date <= currentTime}">
+                            <a href="/review?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}&room_idx=${dto.room_idx}" class="review-button">
+                                <img src="/img/dog_footprint.svg" alt="발자국" style="width: 40px; height: 40px; vertical-align: middle; margin-right: -5px;">
+                                리뷰쓰기
+                            </a>
+                        </c:when>
+                        <c:otherwise>
+                            <a href="javascript:void(0);" class="review-button" onclick="alert('아직 예약기간이 끝나지 않았습니다. \n예약 기간이 끝난 후 리뷰를 써주세요.');">
+                                <img src="/img/dog_footprint.svg" alt="발자국" style="width: 40px; height: 40px; vertical-align: middle; margin-right: -5px;">
+                                리뷰쓰기
+                            </a>
+                        </c:otherwise>
+                    </c:choose>
                 </c:if>
             </div>
         </div>
     </c:forEach>
+        </c:when>
+        <c:otherwise>
+            <div class="no-reservation">
+                <img id="reservationEmpty" src="/img/reservation_empty_img.svg" alt="예약 내역 없음">
+<%--                <p class="no-reservation-text">현재 예약된 내역이 없습니다.</p>--%>
+            </div>
+        </c:otherwise>
+    </c:choose>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
 </body>

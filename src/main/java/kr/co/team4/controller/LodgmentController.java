@@ -34,8 +34,7 @@ public class LodgmentController {
                         @RequestParam String checkinDate,
                         @RequestParam String checkoutDate,
                         @RequestParam int guestCount,
-                        @RequestParam int petCount,
-                        HttpServletRequest request
+                        @RequestParam int petCount
                         ) {
         lodgmentDTO.setLod_idx(lod_idx);
 
@@ -48,7 +47,7 @@ public class LodgmentController {
         params.put("petCount", petCount);
 
         // 숙소 상세 정보 가져오기
-        model.addAttribute("lodgment", lodgmentService.lodgmentDetail(lodgmentDTO));
+        model.addAttribute("lodgmentDTO", lodgmentService.lodgmentDetail(lodgmentDTO));
 
         // 숙소에 연결된 객실 리스트 가져오기
         List<RoomDTO> roomList =lodgmentService.getAvailableRooms(params);
@@ -71,11 +70,12 @@ public class LodgmentController {
         model.addAttribute("facilityList", facilityList);
 
         // 요청 속성에 추가 데이터 저장 (요청 범위에서만 사용 가능)
-        request.setAttribute("lod_idx", lod_idx);
-        request.setAttribute("checkinDate", checkinDate);
-        request.setAttribute("checkoutDate", checkoutDate);
-        request.setAttribute("guestCount", guestCount);
-        request.setAttribute("petCount", petCount);
+        model.addAttribute("lod_idx", lod_idx);
+        model.addAttribute("checkinDate", checkinDate);
+        model.addAttribute("checkoutDate", checkoutDate);
+        model.addAttribute("guestCount", guestCount);
+        model.addAttribute("petCount", petCount);
+
         return "lodgment/lodgment"; // "lodgment" 페이지로 이동
     }
 
