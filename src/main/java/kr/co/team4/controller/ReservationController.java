@@ -191,25 +191,24 @@ public class ReservationController {
         ReservationDTO reservationDTO = new ReservationDTO();
 
         try{
-
-            reservationDTO.setRoom_idx(BigInteger.valueOf(room_idx));
-            reservationDTO.setRes_str_date(checkinDate);
-            reservationDTO.setRes_end_date(checkoutDate);
-            reservationDTO.setRes_people_cnt(res_people_cnt);
-            reservationDTO.setRes_pets_cnt(res_pets_cnt);
-
-            RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
-
             // 세션에 저장되어 있는 유저 idx 정보를 통해 유저 정보 가져오기
             UserDTO userSession = (UserDTO) session.getAttribute("usersession");
             if(userSession == null){
                 return "redirect:/userlogin";
             }
             reservationDTO.setUser_idx(userSession.getUSER_IDX());
+            reservationDTO.setRoom_idx(BigInteger.valueOf(room_idx));
+            reservationDTO.setRes_str_date(checkinDate);
+            reservationDTO.setRes_end_date(checkoutDate);
+            reservationDTO.setRes_people_cnt(res_people_cnt);
+            reservationDTO.setRes_pets_cnt(res_pets_cnt);
+
+            // 숙빅 기간에 따른 총 가격 세팅한 roomDTO
+            RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
+            roomDTO.setTotal_room_price(reservationService.getReservationPayment(reservationDTO));
 
             LodgmentDTO lodDTO = roomService.getRoomLodDetail(roomDTO.getLod_idx());
             UserDTO userDTO = reservationService.getUserInform(reservationDTO);
-
             model.addAttribute("formattedCheckinTime", lodDTO.getFormattedLodCheckIn());
             model.addAttribute("formattedCheckoutTime", lodDTO.getFormattedLodCheckOut());
             model.addAttribute("formattedRoomPrice", roomDTO.getFormattedRoomPrice());

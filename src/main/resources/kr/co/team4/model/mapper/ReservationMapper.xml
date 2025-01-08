@@ -24,7 +24,6 @@
           AND P.STATUS = 'paid'
     </select>
 
-
     <select id="getResDetail" parameterType="kr.co.team4.model.dto.GetResDetailResDTO" resultType="kr.co.team4.model.dto.GetResDetailResDTO">
         SELECT
             L.lod_idx,
@@ -118,6 +117,40 @@
           and r.lod_idx = l.lod_idx
           and r.room_idx = rm.room_idx
           and l.lod_category_idx = lc.lod_category_idx
+    </select>
+
+    <select id="calcReservePayment" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="int" >
+        WITH RECURSIVE DateSeries AS (
+            SELECT #{res_str_date} AS stay_date
+            UNION ALL
+            SELECT DATE_ADD(stay_date, INTERVAL 1 DAY)
+            FROM DateSeries
+            WHERE #{res_end_date} > stay_date
+        )
+        SELECT
+            FLOOR(
+                SUM(
+                    CASE
+                        WHEN DAYOFWEEK(d.stay_date) IN (6, 7, 1) THEN
+                            CASE
+                                WHEN d.stay_date BETWEEN p.hpeak_str_dt AND p.hpeak_end_dt THEN r.room_price * 1.50
+                                WHEN d.stay_date BETWEEN p.peak_str_dt AND p.peak_end_dt THEN r.room_price * 1.30
+                                ELSE r.room_price * 1.10
+                                END
+                        ELSE
+                            CASE
+                                WHEN d.stay_date BETWEEN p.hpeak_str_dt AND p.hpeak_end_dt THEN r.room_price * 1.40
+                                WHEN d.stay_date BETWEEN p.peak_str_dt AND p.peak_end_dt THEN r.room_price * 1.20
+                                ELSE r.room_price * 1.00
+                                END
+                        END
+                )
+            ) AS sum_room_price
+        FROM ROOM r LEFT JOIN PRICE p
+            ON p.lod_idx = #{lod_idx} JOIN DateSeries d
+            ON d.stay_date >= #{res_str_date} AND #{res_end_date} > d.stay_date
+        WHERE
+            r.room_idx = #{room_idx}
     </select>
 
     <insert id="paymentAdd" parameterType="kr.co.team4.model.dto.PaymentDTO" useGeneratedKeys="true" keyProperty="payment_idx">
