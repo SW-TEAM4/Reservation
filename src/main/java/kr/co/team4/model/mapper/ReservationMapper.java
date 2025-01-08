@@ -21,6 +21,7 @@ public interface ReservationMapper {
     List<UserReservedDTO> getUserReservations(UserReservedDTO dto);
 
     // 결제 관련
+    int calcReservePayment(ReservationDTO dto);
     void paymentAdd(PaymentDTO dto);
     void paymentRemove(PaymentDTO dto);
     PaymentDTO getPaymentInform(String res_merchant_id);

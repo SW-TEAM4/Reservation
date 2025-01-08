@@ -1,0 +1,220 @@
+/*
+    파일명 : sellerShowReview.css
+    생성자 : JDeok
+    날짜 : 2025.01.03
+    기능 : 리뷰 조회 스타일
+    변경사항
+        - 2025.01.03 : JDeok(최초작성)
+*/
+body {
+    font-family: 'Noto Sans KR', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 스타일 */
+h1 {
+    font-size: 24px;
+    color: #5C4033;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* 리뷰 요약 섹션 */
+.review-summary {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.average-rating {
+    font-size: 36px;
+    font-weight: bold;
+    color: #5C4033;
+}
+
+.star-icon {
+    color: #FFDF86;
+    font-size: 30px;
+}
+
+.review-count {
+    font-size: 23px;
+    color: #5C4033;
+    font-weight: bold;
+}
+
+/* 리뷰 카드 컨테이너 */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    display: flex;
+    background-color: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* 카드 이미지 */
+.card-image {
+    width: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+/* 카드 본문 */
+.card-content {
+    flex: 1;
+    padding: 20px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.card-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5C4033;
+}
+
+.card-room-name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #5C4033;
+}
+.card-user-name{
+    font-size: 15px;
+    font-weight: bold;
+    color: #5C4033;
+    margin-top: 5px;
+}
+
+/* 별점 */
+.star-container {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.star {
+    font-size: 18px;
+    color: gray;
+    margin-right: 5px;
+}
+
+.star.filled {
+    color: #FFDF86;
+}
+
+/* 사용자 댓글 */
+.card-description {
+    margin-top: 15px;
+    font-size: 16px;
+    color: #5C4033;
+    font-weight: 700;
+}
+
+/* 사장님 댓글 */
+.lod-comment-wrapper {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f5f5f5;
+    border-left: 4px solid #6b432f;
+    border-radius: 5px;
+}
+
+.lod-comment-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #5C4033;
+    margin-bottom: 5px;
+}
+
+.lod-comment {
+    font-size: 14px;
+    color: #555555;
+    line-height: 1.6;
+}
+/* 사장님 답글 박스 */
+.lod-comment-wrapper {
+    margin-top: 30px;
+    padding: 20px 0px 20px 20px;
+    background-color: #d9d9d985;
+    border-left: 4px solid #6b432f;
+    border-radius: 5px;
+}
+
+/* 사장님 댓글 래퍼 */
+.lod-comment-wrapper {
+    margin-top: 20px; /* lod-comment-wrapper와 이전 요소 간 간격 */
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-left: 4px solid #6b432f;
+    border-radius: 5px;
+}
+
+/* 댓글 작성 컨테이너 */
+.reply-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 댓글 입력창 */
+.reply-textarea {
+    width: 100%;
+    height: 80px;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    margin-bottom: 10px; /* lod-comment-wrapper와 여백 추가 */
+}
+
+/* 버튼 컨테이너 */
+.reply-button-container {
+    display: flex;
+    justify-content: flex-end; /* 버튼을 오른쪽 아래로 배치 */
+    margin-top: 10px; /* lod-comment-wrapper와 여백 추가 */
+}
+
+/* 답글 달기 버튼 */
+.reply-button {
+    background-color: #6b432f;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.reply-button:hover {
+    background-color: #4e2e22;
+}
+
+

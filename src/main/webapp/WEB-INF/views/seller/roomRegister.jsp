@@ -54,6 +54,7 @@
                                 placeholder="가격"
                                 required
                                 class="small-input room-price-input"
+                                id="roomPrice"
                         >
                     </td>
 
@@ -64,9 +65,9 @@
                         <textarea name="rooms[0].room_notice" placeholder="객실 기본정보를 입력하세요" class="textarea-input"></textarea>
                     </td>
                     <td>
-                        <label><input type="checkbox" name="rooms[0].max_pets_weight" value="2"> 10kg 초과</label>
-                        <label><input type="checkbox" name="rooms[0].max_pets_weight" value="1"> 5kg 이상 ~ 10kg 이하</label>
-                        <label><input type="checkbox" name="rooms[0].max_pets_weight" value="0"> 5kg 미만</label>
+                        <label><input type="radio" name="rooms[0].max_pets_weight" value="2"> 10kg 초과</label>
+                        <label><input type="radio" name="rooms[0].max_pets_weight" value="1"> 5kg 이상 ~ 10kg 이하</label>
+                        <label><input type="radio" name="rooms[0].max_pets_weight" value="0"> 5kg 미만</label>
                     </td>
                     <td>
                         <input type="file" name="rooms[0].room_photos" class="input-file" accept="image/*" multiple>

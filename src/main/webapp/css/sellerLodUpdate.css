@@ -1,0 +1,198 @@
+/*
+    파일명 : sellerLodUpdate.css
+    생성자 : JDeok
+    날짜 : 2025.01.06
+    기능 : 사장님 숙소 수정 페이지 CSS
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap');
+
+body {
+   /* font-family: 'Noto Sans', sans-serif;*/
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #8A5642;
+}
+
+.layout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+}
+
+.container {
+    width: 60%;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px 40px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 메인 콘텐츠 스타일 */
+.content {
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #8A5642;
+    margin-bottom: 20px;
+}
+
+#updateHR {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin-bottom: 30px;
+}
+
+/* 폼 스타일 */
+.form-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.form-group label, label {
+    font-weight: bold;
+    color: #8A5642;
+    margin-right: 20px;
+    text-align: right;
+}
+
+.form-group input,
+.form-group textarea {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+}
+
+textarea {
+    resize: none;
+    height: 100px;
+}
+
+/* 시간 선택 */
+.time-selection {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;      /* 아래 간격 조정 */
+}
+select {
+    width: 80px;              /* 선택 박스 너비 (줄임) */
+    padding: 6px;             /* 내부 여백 (줄임) */
+    font-size: 12px;          /* 텍스트 크기 (줄임) */
+    border: 1px solid #ccc;   /* 테두리 */
+    border-radius: 4px;       /* 모서리 둥글게 */
+    background-color: #f9f9f9;
+    color: #8A5642;
+    cursor: pointer;          /* 포인터 커서 */
+    margin-right: 8px;
+}
+#checkoutAmPm{
+    margin-left: 10px;
+}
+
+/* 시설/서비스 스타일 */
+.facility-container {
+    margin-bottom: 40px;
+}
+
+.facility-input {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.facility-input input {
+    width: 60%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+}
+
+.facility-input button {
+    padding: 10px 20px;
+    background-color: #8A5642;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.facility-input button:hover {
+    background-color: #a0522d;
+}
+
+.selected-facilities {
+    margin-top: 10px;          /* 위 입력창과 간격 추가 */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;       /* 세로축 중앙 정렬 */
+    justify-content: flex-start; /* 텍스트박스 기준 왼쪽 정렬 */
+    width: fit-content;        /* 컨텐츠 크기에 맞게 조정 */
+    margin-left: 115px;            /* 텍스트박스와 동일한 시작 위치 */
+    padding: 0;                /* 불필요한 여백 제거 */
+}
+
+
+.facility-tag {
+    display: flex;
+    align-items: center;
+    background-color: #d7b4a3;
+    color: #5a382a;
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.facility-tag button {
+    background: none;
+    border: none;
+    color: #5a382a;
+    font-size: 16px;
+    margin-left: 8px;
+    cursor: pointer;
+}
+
+.facility-tag button:hover {
+    color: #8A5642;
+}
+
+/* 버튼 스타일 */
+.submit-button {
+    display: block;
+    width: 50%;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #8A5642;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #a0522d;
+}

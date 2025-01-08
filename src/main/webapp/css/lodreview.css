@@ -1,13 +1,16 @@
-.lod-review-header {
+.review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    padding: 0px 5px;
 }
 
-.lod-review-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.review-statistics {
+    font-size: 14px;
+    display: flex; /* Flexbox 활성화 */
+    align-items: flex-start;
+    justify-content: space-between; /* 좌우로 공간 배분 */
+    gap: 20px; /* 항목 간 간격 */
 }
 
 .lod-review-card {
@@ -19,17 +22,25 @@
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .lod-review-card-content {
     flex: 1;
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
 }
 
+.lod-review-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 .lod-review-card-image {
     width: 240px;
+    height: 300px;
     object-fit: cover;
-    border-radius: 5px;
 }
 
 .lod-review-card-description {
@@ -37,13 +48,15 @@
     font-size: 16px;
     color: #352018;
     font-weight: 700;
+    margin-left: 3px;
 }
 
 .lod-manager-wrapper {
-    margin-top: 30px;
+    margin-top: 50px;
     padding: 20px 0px 20px 20px;
     background-color: #d9d9d985;
     border-radius: 5px;
+    margin-left: 3px;
 }
 
 .lod-manager-title {
@@ -57,4 +70,35 @@
     font-size: 14px;
     color: #352018;
     line-height: 1.6;
+}
+
+.top-container {
+    height: 70px;
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc; /* 위쪽 선 */
+    padding: 10px 20px; /* 컨테이너 내부 여백 */
+}
+
+.top-container .arrow-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.top-container .header-text {
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.reserve-info {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #ccc;
+    max-width: 1280px;
+    padding: 20px;
 }

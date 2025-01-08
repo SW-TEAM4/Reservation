@@ -27,4 +27,5 @@ public interface ReservationService {
     List<UserReservedDTO> getUserReservations(UserReservedDTO dto);
     ReservationDTO getReservationInform(ReservationDTO dto);
     UserDTO getUserInform(ReservationDTO dto);
+    int getReservationPayment(ReservationDTO dto);
 }

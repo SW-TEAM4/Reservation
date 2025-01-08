@@ -1,3 +1,4 @@
+<%@ page import="java.math.BigInteger" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,20 +24,9 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
     <script src="/js/lodsearch.js"></script>
+    <script src="/js/lodlike.js"></script>
     <%-- 판매자 팝업 --%>
     <script>
-        // 팝업 열기
-        function showSellerPopup() {
-            const popup = document.getElementById("seller-popup");
-            popup.classList.remove("hidden");
-        }
-
-        // 팝업 닫기
-        function closeSellerPopup() {
-            const popup = document.getElementById("seller-popup");
-            popup.classList.add("hidden");
-        }
-
         document.addEventListener("DOMContentLoaded", function () {
             // back 화살표 클릭 동작 이벤트 추가
             const arrowIcon = document.getElementById("left-arrow");
@@ -51,30 +41,39 @@
             }
         });
     </script>
-
-
 </head>
 <body>
 <div class="wrap">
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <div class="container">
-        <!-- 숙소 정보 -->
+        <%-- 세션에서 user_idx 가져오기 --%>
+        <%
+            BigInteger userIdx = (BigInteger) session.getAttribute("user_idx");
+        %>
+        <input type="hidden" id="user-id" value="<%= userIdx != null ? userIdx : "" %>">
+
+
+
+    <%-- 숙소 정보 --%>
         <div class="lodgment-container">
             <div class="top-container">
                 <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
                 <div class="header-text">숙소 상세</div>
             </div>
+
+            <%-- 찜 하트 아이콘 --%>
             <div class="reserve-info">
                 <c:if test="${not empty lodgmentDTO}">
-                    <img src="${lodgmentDTO.lod_img_url}" alt="${lodgmentDTO.lod_name}"
-                         style="margin-top: 30px; width: 1280px; height: 800px">
-                    <p style="font-size: 24px; font-weight: bold">${lodgmentDTO.lod_name}</p>
-                </c:if>
-                <c:if test="${empty lodgmentDTO}">
-                    <img src="<c:url value='/img/search_no_result.svg'/>" alt="결과 없음">
+                    <p style="font-size: 24px; font-weight: bold">
+                            ${lodgmentDTO.lod_name}
+                    </p>
+                    <span class="heart-icon ${lodLikeDTO.like_idx != null ? 'active' : ''}" data-lod-idx="${lodgmentDTO.lod_idx}">
+                            ${lodLikeDTO.like_idx != null ? "❤️" : "🤍"}
+                    </span>
                 </c:if>
             </div>
         </div>
+
         <!-- 리뷰 더보개 -->
         <div class="lod-review-container">
             <!-- 리뷰 통계 영역 -->
@@ -95,9 +94,10 @@
             <div class="review-container">
                 <c:if test="${not empty reviewList}">
                     <c:forEach var="review" items="${reviewList}" begin="0" end="2">
-                        <div class="review-card">
-                            <!-- 상단: 별점과 작성 날짜 -->
-                            <div class="review-header">
+                        <a href="/lodreview.do?lod_idx=${lod_idx}" class="review-detail-link">
+                            <div class="review-card">
+                                <!-- 상단: 별점과 작성 날짜 -->
+                                <div class="review-header">
                         <span class="review-rating">
                             <c:choose>
                                 <c:when test="${review.reviewer_rating >= 0.0 && review.reviewer_rating < 1.0}">
@@ -121,22 +121,24 @@
                             </c:choose>
                             (${review.reviewer_rating})
                         </span>
-                                <span class="review-date">${review.reviewer_created}</span>
-                            </div>
+                                    <span class="review-date">${review.reviewer_created}</span>
+                                </div>
 
-                            <!-- 하단: 리뷰 내용과 이미지 -->
-                            <div class="review-body">
-                                <div class="review-content">${review.reviewer_content}</div>
-                                <div class="review-image-container">
-                                    <c:if test="${not empty review.reviewer_image}">
-                                        <img src="${review.reviewer_image}" alt="리뷰 이미지" class="review-image">
-                                    </c:if>
-                                    <c:if test="${empty review.reviewer_image}">
-                                        <img src="/img/lodgment_img_no_review.svg" alt="기본 이미지" class="review-image">
-                                    </c:if>
+                                <!-- 하단: 리뷰 내용과 이미지 -->
+                                <div class="review-body">
+                                    <div class="review-content">${review.reviewer_content}</div>
+                                    <div class="review-image-container">
+                                        <c:if test="${not empty review.reviewer_image}">
+                                            <img src="${review.reviewer_image}" alt="리뷰 이미지" class="review-image">
+                                        </c:if>
+                                        <c:if test="${empty review.reviewer_image}">
+                                            <img src="/img/lodgment_img_no_review.svg" alt="기본 이미지"
+                                                 class="review-image">
+                                        </c:if>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </c:forEach>
                 </c:if>
 
@@ -147,7 +149,8 @@
             </div>
         </div>
 
-        <h3 style="display: flex; justify-content: flex-start; width: 100%; max-width: 1280px; font-size: 22px;">객실 선택</h3>
+        <h3 style="display: flex; justify-content: flex-start; width: 100%; max-width: 1280px; font-size: 22px;">객실
+            선택</h3>
         <div class="lod-search_filters">
             <!-- 날짜 선택 -->
             <div class="selection-item">
@@ -215,7 +218,7 @@
             <c:set var="markerX" value="${lodgmentDTO.x}"/>
             <c:set var="markerY" value="${lodgmentDTO.y}"/>
             <c:set var="markerImage" value="/img/lod_map_marker.png"/>
-            <c:set var="mapWidth" value="1305px"/>
+            <c:set var="mapWidth" value="1280px"/>
             <c:set var="mapHeight" value="661px"/>
 
             <%@ include file="/WEB-INF/views/lodgment/map.jsp" %>

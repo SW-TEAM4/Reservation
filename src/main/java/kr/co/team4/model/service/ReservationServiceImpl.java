@@ -128,6 +128,11 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    public int getReservationPayment(ReservationDTO dto) {
+        return reservationMapper.calcReservePayment(dto);
+    }
+
+    @Override
     @Transactional
     public boolean saveReservationPayment(PaymentDTO paymentDTO, ReservationDTO reservationDTO) {
 
