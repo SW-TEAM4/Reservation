@@ -27,11 +27,9 @@ $(document).ready(function () {
                 if (response.status === "added") { // 찜 추가 성공
                     likeIcon.addClass("active");
                     likeIcon.text("❤️"); // 빨간 하트로 변경
-                    alert("찜 목록에 추가되었습니다.");
                 } else if (response.status === "removed") { // 찜 제거 성공
                     likeIcon.removeClass("active");
                     likeIcon.text("🤍"); // 빈 하트로 변경
-                    alert("찜 목록에서 제거되었습니다.");
                 }
             },
             error: function () {
