@@ -107,9 +107,8 @@
 
             <!-- 예약 공지 -->
             <div class="room-notice" style="margin-bottom: 50px;">
-                <div style="font-size: 20px; font-weight: bold;">예약 공지
-                </div>
-                <p>${room.room_notice}</p>
+                <div style="font-size: 20px; font-weight: bold;">예약 공지</div>
+                <p><c:out value="${room.room_notice}" escapeXml="false" /></p>
             </div>
         </div>
 
