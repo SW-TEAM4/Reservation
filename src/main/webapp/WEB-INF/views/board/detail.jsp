@@ -59,7 +59,7 @@
             line-height: 1.8;
             color: #333;
             background-color: #f5f5f5;
-            padding: 60px;
+            padding: 30px;
             border-radius: 4px;
             border: 1px solid #ddd;
             height: 300px;
@@ -247,12 +247,12 @@
 </div>
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 <script>
-    function checkLoginAndSubmit(event){
-        var isLogIn = sessionStorage.getItem("isLogIn");
-        if(!isLogIn){
+    function checkLoginAndSubmit(event) {
+        var usersession = '<c:out value="${sessionScope.usersession}" />';
+        if (!usersession || usersession === 'null') {
             event.preventDefault();
-            alert("로그인 하지 않으면 답글을 작성 할 수 없습니다");
-            window.location.href="/userlogin";
+            alert("로그인 하지 않으면 답글을 작성할 수 없습니다.");
+            window.location.href = "/detail?BOARD_IDX=" + '${detail.BOARD_IDX}';
         }
     }
 </script>
