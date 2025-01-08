@@ -94,26 +94,11 @@
                                 <!-- 상단: 별점과 작성 날짜 -->
                                 <div class="review-header">
                         <span class="review-rating">
-                            <c:choose>
-                                <c:when test="${review.reviewer_rating >= 0.0 && review.reviewer_rating < 1.0}">
-                                    ☆
-                                </c:when>
-                                <c:when test="${review.reviewer_rating >= 1.0 && review.reviewer_rating < 2.0}">
-                                    ⭐
-                                </c:when>
-                                <c:when test="${review.reviewer_rating >= 2.0 && review.reviewer_rating < 3.0}">
-                                    ⭐ ⭐
-                                </c:when>
-                                <c:when test="${review.reviewer_rating >= 3.0 && review.reviewer_rating < 4.0}">
-                                    ⭐ ⭐ ⭐
-                                </c:when>
-                                <c:when test="${review.reviewer_rating >= 4.0 && review.reviewer_rating < 5.0}">
-                                    ⭐ ⭐ ⭐ ⭐
-                                </c:when>
-                                <c:otherwise>
-                                    ⭐ ⭐ ⭐ ⭐ ⭐
-                                </c:otherwise>
-                            </c:choose>
+                            <span class="star<c:if test='${review.reviewer_rating >= 1}'>-filled</c:if>">&#9733;</span>
+                            <span class="star<c:if test='${review.reviewer_rating >= 2}'>-filled</c:if>">&#9733;</span>
+                            <span class="star<c:if test='${review.reviewer_rating >= 3}'>-filled</c:if>">&#9733;</span>
+                            <span class="star<c:if test='${review.reviewer_rating >= 4}'>-filled</c:if>">&#9733;</span>
+                            <span class="star<c:if test='${review.reviewer_rating >= 5}'>-filled</c:if>">&#9733;</span>
                             (${review.reviewer_rating})
                         </span>
                                     <span class="review-date">${review.reviewer_created}</span>
