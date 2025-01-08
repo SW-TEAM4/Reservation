@@ -5,7 +5,7 @@
   Time: 오후 4:53
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +20,16 @@
         * {
             margin-bottom: 2px;
         }
+
+        a {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: black;
+        }
+
         .boardname {
             position: relative;
             width: 100%;
@@ -50,9 +60,9 @@
 
         .boardname button.write-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            margin: 0;
+            top: 10px; /* 부모의 상단에 위치 */
+            right: 10px; /* 부모의 오른쪽에 위치 */
+            margin: 0 78px 0 0; /* 버튼 기본 마진 제거 */
             background-color: #352018;
             color: #fff;
             border: none;
@@ -62,10 +72,6 @@
             font-size: 14px;
             width: 150px;
             height: 55px;
-            display: flex;
-            align-items: center; /* 수직 정렬 */
-            justify-content: center; /* 가로 정렬 */
-            line-height: normal; /* 라인 높이 초기화 */
         }
 
         .boardname button.write-btn a {
@@ -76,8 +82,7 @@
         .boardname button.write-btn img {
             width: 80px;
             height: auto;
-            vertical-align: middle; /* 텍스트 기준 중앙 정렬 */
-            display: inline-block; /* 이미지 블록 요소 */
+            vertical-align: middle;
         }
 
         .board {
@@ -95,14 +100,15 @@
             border-collapse: collapse;
         }
         th, td {
-            border: 1px solid #ccc;
+            border-right: none;
+            border-left: none;
             padding: 8px;
             text-align: center;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: #8A5642;
+            color: white;
         }
-
     </style>
     <script>
         function checkSession() {
@@ -117,47 +123,47 @@
     </script>
 </head>
 <body>
-<%@ include file="/WEB-INF/views/include/header.jsp" %>
-    <div class="boardname">
-    <h2>모여보개</h2><br>
-    <p>자유롭게 반려동물 이야기를 나눠보개</p>
-    <button type="button" class="write-btn" onclick="checkSession()">
-        <img src="/img/write.svg" alt="write">
-    </button>
-</div>
-    <div class="board">
-        <table border="1" width="1000px">
-            <colgroup>
-                <col style="width: 5%">
-                <col style="width: auto">
-                <col style="width: 15%">
-                <col style="width: 10%">
-            </colgroup>
-            <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>제목</th>
-                    <th>글쓴이</th>
-                    <th>작성일자</th>
-                </tr>
-            </thead>
-            <tbody>
-                    <c:if test="${empty list }">
-                        <tr>
-                            <td colspan="5" align="center">게시글이 없습니다.</td>
-                        </tr>
-                    </c:if>
-                    <c:forEach var="row" items="${list }">
-                        <tr>
-                            <td>${row.BOARD_IDX}</td>
-                            <td><a href="/detail?BOARD_IDX=${row.BOARD_IDX}"> ${row.BOARD_TITLE}</a></td>
-                            <td>${row.WRITER_NAME}</td>
-                            <td><fmt:formatDate value="${row.CREATED}" pattern="yyyy-MM-dd"/></td>
-                        </tr>
-                    </c:forEach>
-            </tbody>
-        </table>
-    </div>
-<%@ include file="/WEB-INF/views/include/footer.jsp" %>
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+        <div class="boardname">
+            <h2>모여보개</h2><br>
+            <p>자유롭게 반려동물 이야기를 나눠보개</p>
+                <button type="button" class="write-btn" onclick="checkSession()">
+                        <img src="/img/write.svg" alt="write">
+                </button>
+        </div>
+        <div class="board">
+            <table border="1" width="1000px">
+                <colgroup>
+                    <col style="width: 5%">
+                    <col style="width: auto">
+                    <col style="width: 15%">
+                    <col style="width: 10%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>번호</th>
+                        <th>제목</th>
+                        <th>글쓴이</th>
+                        <th>작성일자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <c:if test="${empty list }">
+                            <tr>
+                                <td colspan="5" align="center">게시글이 없습니다.</td>
+                            </tr>
+                        </c:if>
+                        <c:forEach var="row" items="${list }">
+                            <tr>
+                                <td>${row.BOARD_IDX}</td>
+                                <td style="text-align: left"><a href="/detail?BOARD_IDX=${row.BOARD_IDX}"> ${row.BOARD_TITLE}</a></td>
+                                <td>${row.WRITER_NAME}</td>
+                                <td><fmt:formatDate value="${row.CREATED}" pattern="yyyy-MM-dd"/></td>
+                            </tr>
+                        </c:forEach>
+                </tbody>
+            </table>
+        </div>
+    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

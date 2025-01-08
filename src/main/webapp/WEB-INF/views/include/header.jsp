@@ -49,8 +49,8 @@
                 구경하개
             </a>
         </li>
-        <li><a href="/gather.do" class="${currentURI.endsWith('/gather.do') ? 'active' : ''}">모여보개</a></li>
-        <li><a href="/fun.do" class="${currentURI.endsWith('/fun.do') ? 'active' : ''}">재미나개</a></li>
+        <li><a href="/gather" class="${currentURI.endsWith('/WEB-INF/views/board/gather.jsp') ? 'active' : ''}">모여보개</a></li>
+        <li><a href="/fun.do" class="${currentURI.endsWith('/WEB-INF/views/fun/fun.jsp') ? 'active' : ''}">재미나개</a></li>
     </ul>
 </div>
 

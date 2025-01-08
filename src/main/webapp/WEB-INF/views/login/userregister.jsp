@@ -322,13 +322,49 @@
             });
         });
 
+        // 아이디 공백 입력 방지
+        $('.user_id_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 비밀번호 입력 필드에서 공백 입력 방지
+        $('.user_pw_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 이름 공백 입력 방지
+        $('.name_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 닉네임 공백 입력 방지
+        $('.nick_name_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 이메일 공백 입력 방지
+        $('.email_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+
         // 아이디 중복검사
         $('.user_id_input').on("propertychange change keyup paste input", function() {
 
             var USER_ID = $('.user_id_input').val();
             var data = {USER_ID : USER_ID}
 
-            $.ajax({
+            if (USER_ID === "") {
+                // 입력 필드가 비어 있을 경우
+                $('.id_input_re_1').css("display", "none"); // "사용 가능한 아이디입니다." 숨김
+                $('.id_input_re_2').css("display", "none"); // 경고 메시지 표시 x
+            } else {
+                $.ajax({
                 type : "POST",
                 url : "/ID_CHECK",
                 data : data,
@@ -342,8 +378,8 @@
                         $('.id_input_re_1').css("display", "none");
                     }
                 } // success 종료
-            }); // ajax 종료
-
+                });
+            }// ajax 종료
         }); // function 종료
 
         // 비밀번호 유효성 검사
@@ -358,17 +394,19 @@
                 passwordWarning.style.display = 'inline'; // 비밀번호가 유효한 경우 경고 메시지 숨김
                 passwordWarning.textContent = "사용 가능한 비밀번호입니다.";
                 passwordWarning.style.color = 'green';
+                return true;
             } else {
                 passwordWarning.style.display = 'inline'; // 비밀번호가 유효하지 않으면 경고 메시지 표시
                 passwordWarning.textContent = "사용할 수 없는 비밀번호입니다.";
                 passwordWarning.style.color = 'red';
+                return false;
             }
         }
         // 비밀번호 입력 시 유효성 검사
         document.getElementById('USER_PWD').addEventListener('input', validatePassword);
 
         // 빈 입력칸 alert문
-        function  registerCheck() {
+        function registerCheck() {
             if ($(".name_input").val() == '') {
                 alert("이름을 입력해 주세요");
                 $(".name_input").focus();
@@ -391,6 +429,11 @@
             }
             if ($("#USER_PWD").val() == '') {
                 alert("비밀번호를 입력해 주세요");
+                $("#USER_PWD").focus();
+                return false;
+            }
+            if (!validatePassword()){
+                alert("조건을 만족하는 비밀번호를 입력해 주세요")
                 $("#USER_PWD").focus();
                 return false;
             }
@@ -516,6 +559,7 @@
             $("#timerDisplay").text("남은 시간: " + initialMinutes + ":0" + initialSeconds);
         });
 
+        // 비밀번호 비교 함수
         function passConfirm() {
             var USER_PWD = document.getElementById('USER_PWD');
             var USER_PWD2 = document.getElementById('USER_PWD2');
@@ -523,7 +567,10 @@
             var correctColor = "#008000FF"
             var wrongColor = "#FF0000FF"
 
-            if(USER_PWD.value === USER_PWD2.value) {
+            if ( USER_PWD.value == "" || USER_PWD2.value == ""){
+                confirmMsg.style.color = wrongColor;
+                confirmMsg.innerHTML = "비밀번호를 입력해주세요.";
+            } else if( USER_PWD.value === USER_PWD2.value) {
                 confirmMsg.style.color = correctColor;
                 confirmMsg.innerHTML = "비밀번호가 일치합니다.";
             } else {

@@ -40,13 +40,7 @@
             text-align: center;
             position: absolute;
             top: 0;
-        }USERS
-
-        /*.header img {*/
-        /*    height: 44px;*/
-        /*    width: 150.91px;*/
-        /*    margin-right: 1500px;*/
-        /*}*/
+        }
 
         .header .logo {
             height: 44px;
@@ -70,13 +64,6 @@
             padding: 20px;
             align-items: center;
         }
-
-        /*.container h1 {*/
-        /*    text-align: center;*/
-        /*    color: #8A5642;*/
-        /*    font-family: "Noto Sans KR";*/
-        /*    margin-bottom: 50px;*/
-        /*}*/
 
         .name_wrap {
             width: 486px;
@@ -287,37 +274,6 @@
             cursor: pointer;
         }
 
-        /*.form-group {*/
-        /*    margin-bottom: 15px;*/
-        /*}*/
-
-        /*label {*/
-        /*    display: block;*/
-        /*    margin-bottom: 5px;*/
-        /*    color: #5C2E1F;*/
-        /*}*/
-
-        /*input {*/
-        /*    width: 100%;*/
-        /*    padding: 10px;*/
-        /*    border: 1px solid #ddd;*/
-        /*    border-radius: 5px;*/
-        /*    border-color: #8B5C4E;*/
-        /*}*/
-
-        /*button {*/
-        /*    background-color: #8B5C4E;*/
-        /*    color: white;*/
-        /*    padding: 10px;*/
-        /*    border: none;*/
-        /*    border-radius: 5px;*/
-        /*    cursor: pointer;*/
-        /*}*/
-
-        /*button:hover {*/
-        /*    background-color: #734235;*/
-        /*}*/
-
         /* 아이디가 존재하지 않을 경우 */
         .id_input_re_1 {
             color: green;
@@ -384,6 +340,7 @@
                 <div class="SELLER_PWD">비밀번호</div>
                 <div class="pwd_input_box">
                     <input type="password" class="pwd_input" id="SELLER_PWD" name="SELLER_PWD" placeholder="영문+숫자+특수기호 8자 이상" required>
+                    <span id="passwordWarning" style="color: red; display: none;">사용할 수 없는 비밀번호입니다.</span>
                 </div>
             </div>
             <div class="pwck_wrap">
@@ -399,26 +356,10 @@
                     <input type="email" class="email_input" name="SELLER_EMAIL" id="SELLER_EMAIL" placeholder="이메일 주소" required>
                     <input type="button" value="인증번호 전송" class="email_send_button" id="email_auth">
                     <div class="timerDisplay" id="timerDisplay"></div>
-<%--                    <div style="display: block; text-align: right">--%>
-<%--                    </div>--%>
                     <input type="text" class="email_check_input" placeholder="인증번호 6자리를 입력해주세요." maxlength="6" name="authCode" id="authCode">
                     <span id="emailAuthWarn"></span>
                </div>
-<%--                <div class="email_check_wrap">--%>
-<%--                    <div class="email_check_input_box" id="email_check_input_box_false">--%>
-<%--                        <input type="email" class="email_check_input" placeholder="인증번호 6자리를 입력해주세요." maxlength="6" disabled="disabled" name="authCode" id="authCode" required autofocus>--%>
-<%--                    </div>--%>
-<%--                    <div class="email_check_button">--%>
-<%--                        <span>인증번호 전송</span>--%>
-<%--                    </div>--%>
-<%--                    <div class="clearfix"></div>--%>
-<%--                </div>--%>
             </div>
-<%--            <div class="form-group">--%>
-<%--                <label for="email_check">인증번호 입력</label>--%>
-<%--                <input type="text" id="email_check" name="email_check" placeholder="인증번호 입력" required>--%>
-<%--                <input type="button" class="email_check"><span>인증번호 확인</span>--%>
-<%--            </div>--%>
             <div>
                 <input type="submit" value="가입하기" class="register_button" id="register_button" disabled="disabled">
             </div>
@@ -436,6 +377,36 @@
                 $("#register_form").attr("action", "/sellerregister");
                 $("#register_form").submit();
             });
+        });
+
+        // 아이디 공백 입력 방지
+        $('.seller_id_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 비밀번호 입력 필드에서 공백 입력 방지
+        $('.pwd_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 이름 공백 입력 방지
+        $('.name_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 닉네임 공백 입력 방지
+        $('.nick_name_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
+        });
+
+        // 이메일 공백 입력 방지
+        $('.email_input').on("input", function() {
+            var value = $(this).val();
+            $(this).val(value.replace(/\s/g, "")); // 공백 제거
         });
 
         // 아이디 중복검사
@@ -461,6 +432,29 @@
             }); // ajax 종료
 
         }); // function 종료
+
+        // 비밀번호 유효성 검사
+        function validatePassword() {
+            var SELLER_PWD = document.getElementById('SELLER_PWD');
+            var passwordWarning = document.getElementById('passwordWarning');
+
+            // 정규식: 영문 대소문자, 숫자, 특수문자 포함 8자 이상
+            var passwordRegex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/;
+
+            if (passwordRegex.test(SELLER_PWD.value)) {
+                passwordWarning.style.display = 'inline'; // 비밀번호가 유효한 경우 경고 메시지 숨김
+                passwordWarning.textContent = "사용 가능한 비밀번호입니다.";
+                passwordWarning.style.color = 'green';
+                return true;
+            } else {
+                passwordWarning.style.display = 'inline'; // 비밀번호가 유효하지 않으면 경고 메시지 표시
+                passwordWarning.textContent = "사용할 수 없는 비밀번호입니다.";
+                passwordWarning.style.color = 'red';
+                return false;
+            }
+        }
+        // 비밀번호 입력 시 유효성 검사
+        document.getElementById('USER_PWD').addEventListener('input', validatePassword);
 
         // 빈 입력칸 alert문
         function registerCheck() {
@@ -489,6 +483,11 @@
                 $("#SELLER_PWD").focus();
                 return false;
             }
+            if (!validatePassword()){
+                alert("조건을 만족하는 비밀번호를 입력해 주세요")
+                $("#USER_PWD").focus();
+                return false;
+            }
             if ($("#SELLER_PWD2").val() == '') {
                 alert("비밀번호를 재입력해 주세요");
                 $("#SELLER_PWD2").focus();
@@ -505,6 +504,23 @@
                 return false;
             }
         }
+
+        // 전화번호 입력 시 자동으로 "-" 추가
+        document.getElementById("SELLER_PHONE_NUMBER").addEventListener("input", function(e) {
+            let input = e.target.value;
+
+            // 숫자만 남기기
+            input = input.replace(/\D/g, "");
+
+            // 포맷팅 (010-1234-5678 형식)
+            if (input.length <= 3) {
+                e.target.value = input;
+            } else if (input.length <= 7) {
+                e.target.value = input.slice(0, 3) + "-" + input.slice(3);
+            } else {
+                e.target.value = input.slice(0, 3) + "-" + input.slice(3, 7) + "-" + input.slice(7, 11);
+            }
+        });
 
         // 인증번호 타이머 함수
         $(document).ready(function() {
@@ -588,63 +604,7 @@
             $("#timerDisplay").text("남은 시간: " + initialMinutes + ":0" + initialSeconds);
         });
 
-        // 인증번호 이메일 전송
-        // let code;
-        //
-        // $("#email_auth").click(function() {
-        //     const USER_EMAIL = $("#USER_EMAIL").val(); // 사용자가 입력한 이메일 값 얻어오기
-        //
-        //     // Ajax로 전송
-        //     $.ajax({
-        //         url : "./email_auth",
-        //         data : {
-        //             USER_EMAIL : USER_EMAIL
-        //         },
-        //         type : "POST",
-        //         dataType : "json",
-        //         success : function(result) {
-        //             // console.log("result : " + result);
-        //             $("authCode").attr("disabled", false); // 인증번호 입력 활성화
-        //             $("#email_auth").attr("disabled", true); // 인증번호 전송 버튼 비활성화
-        //             code = result;
-        //             alert("인증 번호가 입력하신 이메일로 전송 되었습니다.");
-        //
-        //         } // success 종료
-        //     }); // ajax 종료
-        // });
-
-        // 인증 코드 비교
-        // $("#authCode").on("focusout", function() {
-        //     const inputCode = $("#authCode").val(); // 인증번호 입력 칸에 작성한 내용 가져오기
-        //
-        //     // console.log("입력 번호 : " + inputCode);
-        //     // console.log("인증 번호 : " + code);
-        //
-        //     if(Number(inputCode) === code) {
-        //         $("#emailAuthWarn").html('인증번호가 일치합니다.');
-        //         $("#emailAuthWarn").css('color', 'green');
-        //         $("#email_auth").attr('disabled', true);
-        //         $("#USER_EMAIL").attr('readonly', true);
-        //         $("#register_button").attr('disabled', false);
-        //     } else {
-        //         $("#emailAuthWarn").html('인증번호가 불일치합니다. 다시 확인해주세요!');
-        //         $("#emailAuthWarn").css('color', 'red');
-        //         $("#register_button").attr('disabled', true);
-        //     }
-        // });
-
-        // $(".email_check_button").click(function() {
-        //
-        //     var email = $(".email_input").val(); // 입력한 이메일
-        //
-        //     $.ajax({
-        //
-        //         type: "GET",
-        //         url: "EMAIL_CHECK?USER_EMAIL= " + email
-        //
-        //     });
-        // });
-
+        // 비밀번호 비교 함수
         function passConfirm() {
             var SELLER_PWD = document.getElementById('SELLER_PWD');
             var SELLER_PWD2 = document.getElementById('SELLER_PWD2');
