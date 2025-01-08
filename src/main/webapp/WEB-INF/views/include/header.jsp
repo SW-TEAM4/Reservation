@@ -39,6 +39,9 @@
                     <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/payment/payment.jsp")}'>
                         active
                     </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/lodgment/lodreview.jsp")}'>
+                        active
+                    </c:when>
                     <c:otherwise>
                         ''
                     </c:otherwise>

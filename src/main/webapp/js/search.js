@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const imgUrl = lodgment.lod_img_url ? lodgment.lod_img_url : '/img/search_img_no_lodgment_thumbnail.svg';
                 const lodCategory = lodgment.lod_category_idx === 1 ? '펜션' : (lodgment.lod_category_idx === 2 ? '글램핑' : '기타');
                 const checkIn = formatTime(lodgment.lod_check_in);
-                const minPrice = lodgment.min_room_price ? lodgment.min_room_price.toLocaleString() + '원' : '가격 정보 없음'; // 최소 가격 추가
+                const minPrice = lodgment.min_room_price ? lodgment.min_room_price.toLocaleString() + '원 ~' : '예약 마감'; // 최소 가격 추가
                 console.log(lodgment);
 
                 resultItem.innerHTML = `
@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         <p style="color: gray; font-size: 14px; font-weight: bold">${lodCategory}</p>
                         <div style="position: absolute; right: 20px; bottom: 20px; text-align: right;">
                             <p style="color: gray; font-size: 14px; font-weight: bold">숙박 ${checkIn} ~ </p>
-                            <p style="color: #352018; font-size: 20px; font-weight: bold">${minPrice} ~ </p>
+                            <p style="color: #352018; font-size: 20px; font-weight: bold">${minPrice}</p>
                         </div>                
                     </div>
                 </div>
