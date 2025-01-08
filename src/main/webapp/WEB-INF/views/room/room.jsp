@@ -100,6 +100,9 @@
                     </div>
                 </div>
             </div>
+
+            <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
+
             <!-- 예약 공지 -->
             <div class="room-notice" style="margin-bottom: 50px;">
                 <div style="font-size: 20px; font-weight: bold;">예약 공지

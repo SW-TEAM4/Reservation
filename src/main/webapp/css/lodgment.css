@@ -162,7 +162,7 @@ body, h1, h2, h3, h4, h5, h6, input, textarea, select, button, .result-container
     width: 120px;
     height: 150px;
     border-radius: 8px;
-    object-fit: fill;
+    object-fit: cover;
 }
 
 .lod-search_filters{
