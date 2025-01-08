@@ -298,7 +298,7 @@
           </p>
           <p class="checkin-people">
             <img src="/img/reservation_icon_user.svg" alt="아이콘" class="usericon"> 성인 ${reservation.res_people_cnt}명 /
-            반려동물: ${reservation.res_pets_cnt}마리
+            반려동물 ${reservation.res_pets_cnt}마리
           </p>
         </div>
       </div>

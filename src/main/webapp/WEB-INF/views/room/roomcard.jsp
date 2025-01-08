@@ -67,7 +67,7 @@
   <h3 class="room-name" style="margin-left: 5px;">${room.room_name}</h3>
   <p class="checkin-people" style="margin-left: 5px;">
     <img src="/img/ResDetail_user_img.svg" alt="아이콘" style="width: 16px !important; height: 16px !important; vertical-align: -1.0627px"> 성인 ${room.max_people_cnt}명 /
-    반려동물: ${room.max_pet_cnt}마리
+    반려동물 ${room.max_pet_cnt}마리
   </p>
   <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
 </body>
