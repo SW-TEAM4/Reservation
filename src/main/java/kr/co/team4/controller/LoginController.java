@@ -151,7 +151,7 @@ public class LoginController {
 
         session.setAttribute("sellersession", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
 
-        return "home";
+        return "redirect:/lodgment/lodRegister.do";
     }
 
     @GetMapping("/main")

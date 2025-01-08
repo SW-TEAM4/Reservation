@@ -99,8 +99,11 @@ public class SellerPageController {
      */
     @GetMapping("/lodRegister.do")
     public String lodRegister(HttpSession session) {
-        session.setAttribute("seller_idx", 2);
-        int seller_idx = (int) session.getAttribute("seller_idx");
+
+        /*session.setAttribute("seller_idx", 2);*/
+        SellerDTO seller = (SellerDTO) session.getAttribute("sellersession");
+        int seller_idx = seller.getSELLER_IDX().intValue();
+        session.setAttribute("seller_idx", seller_idx);
         /* 여기서 숙소테이블에 존재 여부 확인 후 if else로 나눠서 없으면 숙소등록 아니면 바로 숙소메인페이지 */
         String checkYn = sellerPageService.lodCheck(seller_idx);
 

@@ -179,5 +179,17 @@
         }
     });
 </script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+
+        form.addEventListener('submit', () => {
+            // 모든 가격 필드에서 쉼표 제거
+            document.querySelectorAll('.room-price-input').forEach(input => {
+                input.value = input.value.replace(/,/g, '');
+            });
+        });
+    });
+</script>
 </body>
 </html>

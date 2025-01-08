@@ -125,6 +125,7 @@
       ************************************************************* */
      UPDATE LODGMENT
      SET LOD_IMG_URL = #{lod_img_url}
+       , UPDATED = NOW()
      WHERE 1=1
        AND LOD_IDX = #{lod_idx}
     </update>
@@ -243,6 +244,7 @@
           , PEAK_END_DT  = #{peak_end_dt}
           , HPEAK_STR_DT = #{hpeak_str_dt}
           , HPEAK_END_DT = #{hpeak_end_dt}
+          , UPDATED = NOW()
         WHERE 1=1
           AND LOD_IDX = #{lod_idx}
 
@@ -313,6 +315,7 @@
         WHERE 1=1
           AND A.RESERVATION_IDX = B.RESERVATION_IDX
           AND A.LOD_IDX         = C.LOD_IDX
+          AND A.ROOM_IDX        = C.ROOM_IDX
           AND A.LOD_IDX         = #{lod_idx}
           AND B.STATUS          = 'paid'
         <if test="startDate != null and endDate != null">
@@ -389,6 +392,7 @@
          ************************************************************* */
         UPDATE REVIEW
         SET LOD_COMMENT = #{replycontent}
+          , UPDATED = NOW()
         WHERE 1=1
           AND REVIEW_IDX = #{review_idx}
     </update>
@@ -515,6 +519,7 @@
           , RESERVATION_NOTICE = #{reservation_notice}       -- 예약공지
           , LOD_CHECK_IN       = #{lod_check_in}             -- 체크인시간
           , LOD_CHECK_OUT      = #{lod_check_out}            -- 체크아웃시간
+          , UPDATED = NOW()
         WHERE 1=1
           AND LOD_IDX = #{lod_idx}
     </update>
@@ -569,6 +574,7 @@
              , MAX_PET_CNT = #{max_pet_cnt}
              , ROOM_NOTICE = #{room_notice}
              , MAX_PETS_WEIGHT = #{max_pets_weight}
+             , UPDATED = NOW()
            WHERE 1=1
              AND ROOM_IDX = #{room_idx}
     </update>

@@ -93,6 +93,31 @@
     </main>
 </div>
 <script>
+    // 두 기간이 겹치는지 확인하는 함수
+    function isOverlapping(start1, end1, start2, end2) {
+        if (!start1 || !end1 || !start2 || !end2) {
+            return false; // 하나라도 값이 비어 있으면 겹치지 않음
+        }
+        return !(moment(end1).isBefore(moment(start2)) || moment(start1).isAfter(moment(end2)));
+    }
+
+    // 기간 겹침을 확인하고 초기화
+    function checkOverlapAndReset() {
+        const peakStart = $('#peakStartDate').val();
+        const peakEnd = $('#peakEndDate').val();
+        const highPeakStart = $('#highPeakStartDate').val();
+        const highPeakEnd = $('#highPeakEndDate').val();
+
+        if (isOverlapping(peakStart, peakEnd, highPeakStart, highPeakEnd)) {
+            alert('성수기와 극성수기 기간이 겹칩니다. 다시 설정해주세요.');
+            // 겹치는 필드 초기화
+            $('#peakStartDate').val('');
+            $('#peakEndDate').val('');
+            $('#highPeakStartDate').val('');
+            $('#highPeakEndDate').val('');
+        }
+    }
+
     // Date Range Picker를 열어 필드를 채우는 함수
     function openDateRangePicker(startField, endField) {
         $(startField).daterangepicker({
@@ -108,7 +133,12 @@
             opens: 'right', // 달력 위치
             singleDatePicker: false // 범위 선택
         }, function(start, end) {
-            // 이곳은 기본 콜백이며, 여기서 아무 동작도 수행하지 않음
+            // 선택된 날짜 설정
+            $(startField).val(start.format('YYYY-MM-DD'));
+            $(endField).val(end.format('YYYY-MM-DD'));
+
+            // 날짜 변경 시 겹침 확인
+            checkOverlapAndReset();
         });
 
         // Apply 이벤트 커스터마이징
