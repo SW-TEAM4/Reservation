@@ -1,6 +1,8 @@
 package kr.co.team4.model.service;
 
 import kr.co.team4.model.dto.BoardDTO;
+import kr.co.team4.model.dto.CommentDTO;
+import kr.co.team4.model.dto.CommentResDTO;
 
 import java.util.List;
 import java.util.Map;
@@ -16,4 +18,9 @@ public interface BoardService {
 
     // 특정글 조회
     BoardDTO detail(int BOARD_IDX) throws Exception;
+
+    void insertComment(CommentResDTO commentResDTO) throws Exception;
+
+    List<CommentResDTO> selectComment(int BOARD_IDX) throws Exception;
 }
+

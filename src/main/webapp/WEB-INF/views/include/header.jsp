@@ -11,8 +11,8 @@
                 <a href="/userregister">회원가입</a>
             </c:if>
             <c:if test="${!empty usersession }">
-                <a href="/mypage.do">마이페이지</a>  |
-                <a href="/mypage.do">로그아웃</a>
+                <a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a> |
+                <a href="/mypage.do">마이페이지</a>
             </c:if>
         </div>
     </div>
@@ -54,3 +54,10 @@
     </ul>
 </div>
 
+<script type="text/javascript">
+    function confirmLogout() {
+        if (confirm("로그아웃 하시겠습니까?")) {
+            window.location.href = '/userlogout';
+        }
+    }
+</script>

@@ -13,8 +13,6 @@ public class BoardDTO {
     private Timestamp CREATED;
     private Timestamp UPDATED;
     private String STATUS;
-
     private String WRITER_NAME;
-
     private BigInteger USER_IDX;
 }

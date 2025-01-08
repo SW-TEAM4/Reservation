@@ -323,7 +323,8 @@
       <p class="left2">
         <span  style="font-size: 14px; color: #564B4B;">숙박 / ${reservation.total_res_day} 박</span>
         <span  style="font-size: 26px; color: #352018;font-weight: bold;">총</span>
-        <span  style="font-size: 26px; color: #352018; font-weight: bold;">${reservation.paid_money}원</span>
+        <span id="formattedMoney" style="font-size: 26px; color: #352018; font-weight: bold;">${reservation.paid_money}원</span>
+
       </p>
     </div>
   </div>
@@ -340,6 +341,10 @@
 </div>
 
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
-
+<script>
+  let paidMoney = document.getElementById("formattedMoney").textContent;
+  paidMoney = paidMoney.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  document.getElementById("formattedMoney").textContent = paidMoney;
+</script>
 </body>
 </html>
