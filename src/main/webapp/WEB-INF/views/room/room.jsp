@@ -8,6 +8,8 @@
     <title>객실상세</title>
     <META name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/css/bookingbutton.css"/>
@@ -47,7 +49,7 @@
             <!-- 객실 정보 -->
             <div class="detail-info">
                 <p><strong>숙소 이름:</strong> ${room.room_name}</p>
-                <p><strong>가격:</strong> ${room.total_room_price}원</p>
+                <p><strong>가격:</strong> ${room.room_price}원</p>
                 <p><strong>숙박 일정:</strong> ${checkinDate} ~ ${checkoutDate}</p>
                 <p><strong>인원:</strong> ${guestCount}명</p>
                 <p><strong>반려동물 수:</strong> ${petCount}마리</p>
