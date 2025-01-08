@@ -153,7 +153,6 @@
             <input type="hidden" id="checkoutTime" name="lod_check_out">
 
         <%-- 시설/서비스 추가 --%>
-        <%-- [check] 시설/서비스 테이블 추가 --%>
         <div class="facility-container">
             <div class="box"></div>
             <label class="other-label">시설/서비스</label>

@@ -11,20 +11,20 @@
 <aside class="sidebar">
     <h2>객실 정보</h2>
     <ul>
-        <li><a href="/lodgment/sellerDetailMain.do"  class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 객실 정보</a></li>
-        <li><a href="/lodgment/roomRegister.do"      class="${pageTitle == 'roomRegister' ? 'active' : ''}"> * 객실 등록</a></li>
+        <li><a href="/lodgment/sellerDetailMain.do"     class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 객실 일정관리</a></li>
+        <li><a href="/lodgment/roomRegister.do"         class="${pageTitle == 'roomRegister' ? 'active' : ''}"> * 객실 등록/수정</a></li>
         <li><a href="/lodgment/sellerGetReservation.do" class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 예약현황 조회</a></li>
     </ul><hr>
     <h2>숙소 관리</h2>
     <ul>
-        <li><a href="/lodgment/sellerPeakInq.do" class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 성수기 일정관리</a></li>
-        <li><a href="/lodgment/.do"              class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 리뷰 조회및관리</a></li>
-        <li><a href="/lodgment/.do"              class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 매출 조회</a></li>
+        <li><a href="/lodgment/sellerPeakInq.do"   class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 성수기 일정관리</a></li>
+        <li><a href="/lodgment/sellerGetReview.do" class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 리뷰 관리</a></li>
+        <li><a href="/lodgment/sellerGetSales.do"  class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 매출 조회</a></li>
     </ul><hr>
     <h2>숙소 운영</h2>
     <ul>
-        <li><a href="/lodgment/sellerPeakInq.do" class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 숙소 정보 수정</a></li>
-        <li><a href="/lodgment/.do"              class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 객실 정보 수정</a></li>
+        <li><a href="/lodgment/sellerGetLodUpdate.do"   class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 숙소 정보 수정</a></li>
+        <li><a href="/lodgment/sellerGetRoomUpdate.do"  class="${pageTitle == 'roomInformation' ? 'active' : ''}"> * 객실 정보 수정</a></li>
     </ul>
 </aside>
 <script>

@@ -1,3 +1,4 @@
+<%@ page import="java.math.BigInteger" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -23,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css"/>
 
     <script src="/js/lodsearch.js"></script>
+    <script src="/js/lodlike.js"></script>
     <%-- 판매자 팝업 --%>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -39,29 +41,39 @@
             }
         });
     </script>
-
 </head>
 <body>
 <div class="wrap">
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
     <div class="container">
-        <!-- 숙소 정보 -->
+        <%-- 세션에서 user_idx 가져오기 --%>
+        <%
+            BigInteger userIdx = (BigInteger) session.getAttribute("user_idx");
+        %>
+        <input type="hidden" id="user-id" value="<%= userIdx != null ? userIdx : "" %>">
+
+
+
+    <%-- 숙소 정보 --%>
         <div class="lodgment-container">
             <div class="top-container">
                 <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
                 <div class="header-text">숙소 상세</div>
             </div>
+
+            <%-- 찜 하트 아이콘 --%>
             <div class="reserve-info">
                 <c:if test="${not empty lodgmentDTO}">
-                    <img src="${lodgmentDTO.lod_img_url}" alt="${lodgmentDTO.lod_name}"
-                         style="margin-top: 30px; width: 1280px; height: 800px">
-                    <p style="font-size: 24px; font-weight: bold">${lodgmentDTO.lod_name}</p>
-                </c:if>
-                <c:if test="${empty lodgmentDTO}">
-                    <img src="<c:url value='/img/search_no_result.svg'/>" alt="결과 없음">
+                    <p style="font-size: 24px; font-weight: bold">
+                            ${lodgmentDTO.lod_name}
+                    </p>
+                    <span class="heart-icon ${lodLikeDTO.like_idx != null ? 'active' : ''}" data-lod-idx="${lodgmentDTO.lod_idx}">
+                            ${lodLikeDTO.like_idx != null ? "❤️" : "🤍"}
+                    </span>
                 </c:if>
             </div>
         </div>
+
         <!-- 리뷰 더보개 -->
         <div class="lod-review-container">
             <!-- 리뷰 통계 영역 -->

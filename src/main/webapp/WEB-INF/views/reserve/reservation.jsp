@@ -285,8 +285,7 @@
                     <span style="font-size: 20px; font-weight:bold; color: #352018; margin-left: 5px">${formattedRoomPrice}원</span>
                 </div>
 
-                <%-- TODO 유저 정보 로그인 구현 되면 수정 필요 --%>
-                <input type="hidden" id="user_idx" name="reservationDTO.user_idx" value="1">
+                <input type="hidden" id="user_idx" name="reservationDTO.user_idx" value="${userDTO.USER_IDX}">
                 <input type="hidden" id="lod_idx" name="reservationDTO.lod_idx" value="${roomDTO.lod_idx}"/>
                 <input type="hidden" id="room_idx" name="reservationDTO.room_idx" value="${roomDTO.room_idx}"/>
                 <input type="hidden" id="res_people_cnt" name="reservationDTO.res_people_cnt"
@@ -329,7 +328,7 @@
                     <span style="font-size: 20px; color: #564B4B">(세금 및 봉사료 포함)</span>
                 </div>
                 <div class="payment-right" style="font-size: 16px; font-weight: bold">
-                    <input type="number" id="paid_money" name="paymentDTO.paid_money" value="${roomDTO.room_price}">원
+                    <input type="number" id="paid_money" name="paymentDTO.paid_money" value="${roomDTO.total_room_price}">원
                 </div>
             </div>
 

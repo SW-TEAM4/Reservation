@@ -27,7 +27,9 @@
 <form action="/sellerlogin" method="get">
     <button type="submit">Go to Seller Login</button>
 </form>
-
+<form action="/lodgment/sellerMain.do" method="get">
+    <button type="submit">사장님 페이지</button>
+</form>
 <form action="/mypage.do" method="get">
     <button type="submit">Go to MyPage</button>
 </form>

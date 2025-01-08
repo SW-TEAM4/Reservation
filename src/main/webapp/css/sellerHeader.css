@@ -8,35 +8,35 @@
        - 2024.12.23 : JDeok(최초작성)
 */
 .header {
-    background-color: #8A5642;             /* 헤더 배경색 설정             */
-    padding: 0px 20px;                     /* 상하 2px, 좌우 20px 패딩    */
-    color: white;                          /* 텍스트 색상을 흰색으로 설정    */
-    font-size: 24px;                       /* 텍스트 크기를 24px로 설정     */
-    display: flex;                         /* 플렉스 박스 사용             */
-    align-items: center;                   /* 내부 아이템을 수직 중앙 정렬   */
-    z-index: 10;                           /* 다른 요소 위에 표시되도록 설정 */
+    background-color: #8A5642;
+    padding: 10px 20px;
+    height: 60px; /* 고정 높이 */
+    line-height: 40px;
+    color: white;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 10;
 }
+
 .logo {
-    font-family: 'Bagel Fat One', cursive; /* "같이가개"에 Bagel Fat One 폰트를 적용 */
-    font-size: 30px;                       /* 텍스트 크기를 30px로 설정              */
-    margin-right: 10px;                    /* 텍스트와 로고 이미지 간격 조정          */
-    color:#DDAC7E;                         /* 텍스트 색상을 흰색으로 설정             */
+    font-family: 'Bagel Fat One', cursive;
+    font-size: 30px;
+    margin: 0; /* 여백 초기화 */
+    color: #DDAC7E;
+    display: flex;
+    align-items: center;
 }
 
-.logo-image {
-    width: 40px;                            /* 로고 이미지 너비를 40px로 설정  */
-    height: 40px;                           /* 로고 이미지 높이를 40px로 설정  */
-    object-fit: contain;                    /* 이미지 비율을 유지하며 축소/확대 */
-    border: none;                           /* 이미지 테두리를 제거           */
-    background: transparent;                /* 이미지 배경을 투명하게 설정     */
-}
 .header-extra {
-    font-family: 'Noto Sans', sans-serif;   /* 기본 폰트를 Noto Sans로 설정 */
-    position: absolute;                     /* 절대 위치 지정              */
-    left: 50%;                              /* 왼쪽에서 50% 이동           */
-    transform: translateX(-50%);            /* 가운데 정렬                 */
-    font-size: 20px;                        /* 문구 크기                  */
-    color: #DDAC7E;                         /* 문구 색상                  */
-    font-weight: bold;                      /* 굵은 글씨                  */
+    font-family: 'Noto Sans', sans-serif;
+    position: absolute; /* 절대 위치 고정 */
+    top: 50%; /* 상하 중앙 정렬 */
+    left: 50%; /* 좌우 중앙 정렬 */
+    transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
+    font-size: 20px;
+    color: #DDAC7E;
+    font-weight: bold;
+    white-space: nowrap; /* 줄바꿈 방지 */
 }
-
