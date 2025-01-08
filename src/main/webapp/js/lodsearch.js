@@ -72,8 +72,10 @@ document.addEventListener("DOMContentLoaded", function () {
         roomListContainer.innerHTML = ''; // 기존 리스트 초기화
 
         if (roomList && roomList.length > 0) {
+
             roomList.forEach(room => {
                 // HTML 구조 생성
+                const roomPrice = room.room_price.toLocaleString() + '원'
                 const roomCard = `
                 <div class="room-card">
                     <!-- 객실 이미지 -->
@@ -96,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                         <!-- 하단 영역 -->
                         <div class="room-footer">
-                            <p class="room-price">${room.room_price}원</p>
+                            <p class="room-price">${roomPrice}</p>
                             <!-- 예약 버튼 -->
                             <button class="booking-button" onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
                                 <img src="../img/button_foot.svg" alt="icon" class="button-icon">

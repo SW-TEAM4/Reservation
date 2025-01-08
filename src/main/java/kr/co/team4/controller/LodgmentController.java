@@ -2,6 +2,7 @@ package kr.co.team4.controller;
 
 import kr.co.team4.model.dto.*;
 import kr.co.team4.model.service.LodFacilityService;
+import kr.co.team4.model.service.LodLikeService;
 import kr.co.team4.model.service.LodgmentService;
 import kr.co.team4.model.service.LodReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,8 +30,11 @@ public class LodgmentController {
     @Autowired
     private LodFacilityService lodFacilityService; // LodFacilityService 추가
 
+    @Autowired
+    private LodLikeService lodLikeService;
+
     @GetMapping("/lodgment.do")
-    public String index(Model model, LodgmentDTO lodgmentDTO,
+    public String index(Model model, LodgmentDTO lodgmentDTO, HttpSession session,
                         @RequestParam int lod_idx,
                         @RequestParam String checkinDate,
                         @RequestParam String checkoutDate,
@@ -75,6 +80,19 @@ public class LodgmentController {
         model.addAttribute("checkoutDate", checkoutDate);
         model.addAttribute("guestCount", guestCount);
         model.addAttribute("petCount", petCount);
+
+        // 좋아요 정보 가져오기
+        LodLikeDTO lodLikeDTO = new LodLikeDTO();
+        lodLikeDTO.setLod_idx(lod_idx);
+
+        if (session.getAttribute("usersession") != null) {
+            UserDTO user = (UserDTO)session.getAttribute("usersession");
+            lodLikeDTO.setUser_idx(user.getUSER_IDX());
+            lodLikeDTO = lodLikeService.findByUserAndLod(lodLikeDTO) != null
+                    ? lodLikeService.findByUserAndLod(lodLikeDTO)
+                    : lodLikeDTO;
+        }
+        model.addAttribute("lodLikeDTO", lodLikeDTO);
 
         return "lodgment/lodgment"; // "lodgment" 페이지로 이동
     }
