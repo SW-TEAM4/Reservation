@@ -18,11 +18,33 @@
 
     <!-- 상세 -->
     <select id="detail" parameterType="int" resultType="kr.co.team4.model.dto.BoardDTO">
-        SELECT B.BOARD_IDX, U.USER_ID AS WRITER_NAME, B.BOARD_TITLE, B.BOARD_CONTENT
+        SELECT B.BOARD_IDX, U.USER_ID AS WRITER_NAME,B.created, B.BOARD_TITLE, B.BOARD_CONTENT
         FROM BOARD B
         JOIN USERS U
         ON B.USER_IDX = U.USER_IDX
         WHERE BOARD_IDX = #{BOARD_IDX}
+    </select>
+
+    <insert id="insertComment" parameterType="kr.co.team4.model.dto.CommentResDTO">
+        INSERT INTO COMMENT (BOARD_IDX, USER_IDX, COMMENT)
+        VALUES (#{BOARD_IDX}, #{USER_IDX}, #{COMMENT})
+    </insert>
+
+    <select id="selectComment" parameterType="int" resultType="kr.co.team4.model.dto.CommentResDTO">
+        SELECT
+            c.BOARD_IDX,
+            c.USER_IDX,
+            u.USER_NAME,
+            c.COMMENT,
+            c.CREATED
+        FROM
+            COMMENT c
+                JOIN
+            USERS u
+            ON
+                c.USER_IDX = u.USER_IDX
+        WHERE
+            c.BOARD_IDX = #{BOARD_IDX}
     </select>
 
 </mapper>

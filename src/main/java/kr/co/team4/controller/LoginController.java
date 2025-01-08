@@ -70,6 +70,37 @@ public class LoginController {
         return "login/userlogin";
     }
 
+    /** 유저 로그아웃 **/
+    @GetMapping("/userlogout")
+    public String userlogout(HttpServletRequest request) throws Exception {
+        try {
+            HttpSession session = request.getSession(false); // 세션 존재 확인
+            if (session != null) {
+                session.invalidate();
+                System.out.println("회원 로그아웃 성공");
+            }
+            return "redirect:/home.do";
+        } catch (Exception e) {
+            throw new Exception("회원 로그아웃 실패.");
+        }
+    }
+
+
+    /** 사장님 로그아웃 **/
+    @GetMapping("/sellerlogout")
+    public String sellerlogout(HttpServletRequest request) throws Exception {
+        try {
+            HttpSession session = request.getSession(false); // 세션 존재 확인
+            if (session != null) {
+                session.invalidate();
+                System.out.println("사장님 로그아웃 성공");
+            }
+            return "redirect:/home.do"; //(변경 할 거)리다이렉트 페이지는 사장님페이지 첫 화면으로 이동
+        } catch (Exception e) {
+            throw new Exception("사장님 로그아웃 실패.");
+        }
+    }
+
     @GetMapping("/sellerlogin")
     public String showSellerLoginForm() {
         logger.info("사장님 로그인 페이지 진입");

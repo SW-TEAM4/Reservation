@@ -625,7 +625,7 @@ p.popup-subtitle {
     flex-wrap: wrap;
     gap: 30px;
     margin-top: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 100px;
     max-width: 1200px;
     width: 100%;
 }

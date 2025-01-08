@@ -1,17 +1,48 @@
-.room-detail {
-    margin-left: 80px;
-    margin-right: 80px;
+.top-container {
+    height: 70px;
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc; /* 위쪽 선 */
+    padding: 10px 20px; /* 컨테이너 내부 여백 */
 }
+
+.top-container .arrow-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.top-container .header-text {
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.reserve-info {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #ccc;
+    max-width: 1280px;
+}
+
+.room-detail {
+    margin-top: 30px;
+}
+
 .lod-tool-bar {
     margin: 0 80px;
 }
- .custom-slider {
-     position: relative;
-     width: 100%;
-     max-width: 1280px;
-     margin: 0 auto;
-     overflow: hidden;
- }
+
+.custom-slider {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    overflow: hidden;
+}
 
 .slider-wrapper {
     display: flex;
@@ -59,5 +90,13 @@
     justify-content: center; /* 텍스트 가운데 정렬 */
 }
 
-
-
+.room-room-card {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    width: 1280px; /* 카드 전체 크기 */
+    height: 368px;
+    margin-top: 30px;
+}
