@@ -268,6 +268,16 @@ p.popup-subtitle {
     width: 20px; /* 아이콘 크기 조정 (필요시) */
     height: auto;
 }
+.heart-icon {
+    cursor: pointer;
+    font-size: 24px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.heart-icon.active {
+    color: red;
+}
 
 .lodgment-seller-notice {
     flex-direction: column;
