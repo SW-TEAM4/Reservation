@@ -125,7 +125,9 @@ h1 {
 .form-group input[type="text"],
 .form-group input[type="tel"],
 .form-group input[type="file"],
-.form-group input[type="time"] {
+.form-group input[type="time"],
+.form-group input[type="email"]
+{
     width: 50%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -301,4 +303,15 @@ select {
 }
 #checkoutAmPm{
     margin-left: 10px;
+}
+textarea{
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    resize: none; /* 필요 시 크기 조절 비활성화 */
+
 }

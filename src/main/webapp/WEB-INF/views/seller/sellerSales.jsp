@@ -49,7 +49,8 @@
         <!-- 이번달 매출 -->
         <div class="monthly-sales">
             <p>사장님,</p>
-            <p class="highlight">이번달 매출은 <span>${total_money[6]}원</span> 입니다.</p>
+            <p class="highlight">이번달 매출은 <span>${total_money[6]}원</span> 입니다!</p>
+            <p class="highlight">최근 6개월 매출은 <span>${total_money[6]}원</span> 입니다!</p>
         </div>
 
         <!-- 월간 매출 그래프 -->

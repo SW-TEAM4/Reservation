@@ -315,6 +315,7 @@
         WHERE 1=1
           AND A.RESERVATION_IDX = B.RESERVATION_IDX
           AND A.LOD_IDX         = C.LOD_IDX
+          AND A.ROOM_IDX        = C.ROOM_IDX
           AND A.LOD_IDX         = #{lod_idx}
           AND B.STATUS          = 'paid'
         <if test="startDate != null and endDate != null">
