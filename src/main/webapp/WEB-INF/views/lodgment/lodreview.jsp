@@ -51,28 +51,13 @@
 
                         <div class="lod-review-card-content">
                             <div class="lod-review-card-header">
-                                <div class="lod-review-star-container">
-                                    <c:choose>
-                                        <c:when test="${lodreview.reviewer_rating >= 0.0 && lodreview.reviewer_rating < 1.0}">
-                                            ☆
-                                        </c:when>
-                                        <c:when test="${lodreview.reviewer_rating >= 1.0 && lodreview.reviewer_rating < 2.0}">
-                                            ⭐
-                                        </c:when>
-                                        <c:when test="${lodreview.reviewer_rating >= 2.0 && lodreview.reviewer_rating < 3.0}">
-                                            ⭐ ⭐
-                                        </c:when>
-                                        <c:when test="${lodreview.reviewer_rating >= 3.0 && lodreview.reviewer_rating < 4.0}">
-                                            ⭐ ⭐ ⭐
-                                        </c:when>
-                                        <c:when test="${lodreview.reviewer_rating >= 4.0 && lodreview.reviewer_rating < 5.0}">
-                                            ⭐ ⭐ ⭐ ⭐
-                                        </c:when>
-                                        <c:when test="${lodreview.reviewer_rating >= 5.0}">
-                                            ⭐ ⭐ ⭐ ⭐ ⭐
-                                        </c:when>
-                                    </c:choose>
-                                </div>
+                                <span class="lod-review-star-container">
+                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 1}'>-filled</c:if>">&#9733;</span>
+                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 2}'>-filled</c:if>">&#9733;</span>
+                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 3}'>-filled</c:if>">&#9733;</span>
+                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 4}'>-filled</c:if>">&#9733;</span>
+                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 5}'>-filled</c:if>">&#9733;</span>
+                                </span>
                                 <div class="lod-review-created">${lodreview.reviewer_created}</div>
                             </div>
                             <!-- 사용자 댓글 -->

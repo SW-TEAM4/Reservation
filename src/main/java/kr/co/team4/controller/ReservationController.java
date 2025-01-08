@@ -9,19 +9,13 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.math.BigInteger;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -130,8 +124,6 @@ public class ReservationController {
         return "GetReservationListPage";
     }
 
-
-
     /**
      * 예약 상세 정보 페이지
      * @paramsession 세션에서 user_idx와 reservation_idx를 가져옴
@@ -193,21 +185,24 @@ public class ReservationController {
         try{
             // 세션에 저장되어 있는 유저 idx 정보를 통해 유저 정보 가져오기
             UserDTO userSession = (UserDTO) session.getAttribute("usersession");
-            if(userSession == null){
-                return "redirect:/userlogin";
-            }
+
+            // 방 정보 가져오기
+            RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
+            // 숙소 정보 가져오기
+            LodgmentDTO lodDTO = roomService.getRoomLodDetail(roomDTO.getLod_idx());
+
+            // 예약 정보 세팅
             reservationDTO.setUser_idx(userSession.getUSER_IDX());
+            reservationDTO.setLod_idx(BigInteger.valueOf(lodDTO.getLod_idx()));
             reservationDTO.setRoom_idx(BigInteger.valueOf(room_idx));
             reservationDTO.setRes_str_date(checkinDate);
             reservationDTO.setRes_end_date(checkoutDate);
             reservationDTO.setRes_people_cnt(res_people_cnt);
             reservationDTO.setRes_pets_cnt(res_pets_cnt);
 
-            // 숙빅 기간에 따른 총 가격 세팅한 roomDTO
-            RoomDTO roomDTO = roomService.getRoomDetail(room_idx);
+            // 숙박 기간에 따른 총 가격 roomDTO에 세팅
             roomDTO.setTotal_room_price(reservationService.getReservationPayment(reservationDTO));
 
-            LodgmentDTO lodDTO = roomService.getRoomLodDetail(roomDTO.getLod_idx());
             UserDTO userDTO = reservationService.getUserInform(reservationDTO);
             model.addAttribute("formattedCheckinTime", lodDTO.getFormattedLodCheckIn());
             model.addAttribute("formattedCheckoutTime", lodDTO.getFormattedLodCheckOut());

@@ -154,7 +154,7 @@
             margin-right: 5px;
         }
 
-        .star.filled {
+        .star filled {
             color: #FFDF86;
         }
 

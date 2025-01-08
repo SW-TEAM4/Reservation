@@ -122,6 +122,13 @@ public class LoginController {
         session.setAttribute("usersession", user); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
         session.setAttribute("user_idx", user.getUSER_IDX()); // 세션에 USER_IDX 저장
 
+        // 로그인 성공 후 만약 필터링을 통해 로그인 화면을 왔다면
+        String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
+        if(redirectUrl != null){
+            // 기존의 리다이렉트 세션 삭제
+            request.getSession().removeAttribute("redirectUrl");  // 세션에서 redirectUrl 삭제
+            return "redirect:" + redirectUrl;
+        }
         // 서버 콘솔에 user_idx 출력
         System.out.println("로그인 성공: user_idx = " + user.getUSER_IDX());
 
