@@ -329,8 +329,8 @@
         *  변경사항
         *     - 2025.01.03 : JDeok(최초작성)
         ************************************************************* */
-                SELECT ROUND(AVG(A.RATING),1)  AS avg_rating
-                     , COUNT(*)                AS count_num
+                SELECT ROUND(AVG(A.RATING),1)  AS avg_rating        -- 평균평점
+                     , COUNT(*)                AS count_num         -- 리뷰 갯수
                  FROM REVIEW      A
                     , ROOM        B
                     , LODGMENT    C
@@ -355,13 +355,13 @@
         *     - 2025.01.03 : JDeok(최초작성)
         *     - 2025.01.05 : review_idx 추가, RES_NAME -> USER_NAME 변경(JDeok)
         ************************************************************* */
-        SELECT E.USER_NAME                                   AS user_name
-             , A.RATING                                      AS rating
-             , B.ROOM_NAME                                   AS room_name
-             , A.USER_COMMENT                                AS user_comment
-             , A.REVIEW_IMG_URL                              AS review_img_url
-             , IF(A.LOD_COMMENT IS NULL, "Y", A.LOD_COMMENT) AS comment_status
-             , A.REVIEW_IDX                                  AS review_idx
+        SELECT E.USER_NAME                                   AS user_name          -- 사용자이름
+             , A.RATING                                      AS rating             -- 평점
+             , B.ROOM_NAME                                   AS room_name          -- 객실명
+             , A.USER_COMMENT                                AS user_comment       -- 리뷰내용
+             , A.REVIEW_IMG_URL                              AS review_img_url     -- 리뷰이미지
+             , IF(A.LOD_COMMENT IS NULL, "Y", A.LOD_COMMENT) AS comment_status     -- 사장님답글
+             , A.REVIEW_IDX                                  AS review_idx         -- 리뷰IDX
         FROM REVIEW      A
            , ROOM        B
            , LODGMENT    C
@@ -401,27 +401,27 @@
         *  변경사항
         *     - 2025.01.05 : JDeok(최초작성)
         ************************************************************* */
-        SELECT A.CURRENT_MONTH                 AS current_month
-             , IFNULL(A.MONTH_MONEY, 0)        AS month_money
-             , A.MIN1_MONTH_DATE               AS min1_month_date
-             , IFNULL(A.MIN1_MONTH_MONEY, 0)   AS min1_month_money
-             , A.MIN2_MONTH_DATE               AS min2_month_date
-             , IFNULL(A.MIN2_MONTH_MONEY, 0)   AS min2_month_money
-             , A.MIN3_MONTH_DATE               AS min3_month_date
-             , IFNULL(A.MIN3_MONTH_MONEY, 0)   AS min3_month_money
-             , A.MIN4_MONTH_DATE               AS min4_month_date
-             , IFNULL(A.MIN4_MONTH_MONEY, 0)   AS min4_month_money
-             , A.MIN5_MONTH_DATE               AS min5_month_date
-             , IFNULL(A.MIN5_MONTH_MONEY, 0)   AS min5_month_money
-             , A.MIN6_MONTH_DATE               AS min6_month_date
-             , IFNULL(A.MIN6_MONTH_MONEY, 0)   AS min6_month_money
+        SELECT A.CURRENT_MONTH                 AS current_month         -- 이번달
+             , IFNULL(A.MONTH_MONEY, 0)        AS month_money           -- 이번달합계금액
+             , A.MIN1_MONTH_DATE               AS min1_month_date       -- 1개월 전 달
+             , IFNULL(A.MIN1_MONTH_MONEY, 0)   AS min1_month_money      -- 1개월 전 합계금액
+             , A.MIN2_MONTH_DATE               AS min2_month_date       -- 2개월 전 달
+             , IFNULL(A.MIN2_MONTH_MONEY, 0)   AS min2_month_money      -- 2개월 전 합계금액
+             , A.MIN3_MONTH_DATE               AS min3_month_date       -- 3개월 전 달
+             , IFNULL(A.MIN3_MONTH_MONEY, 0)   AS min3_month_money      -- 3개월 전 합계금액
+             , A.MIN4_MONTH_DATE               AS min4_month_date       -- 4개월 전 달
+             , IFNULL(A.MIN4_MONTH_MONEY, 0)   AS min4_month_money      -- 4개월 전 합계금액
+             , A.MIN5_MONTH_DATE               AS min5_month_date       -- 5개월 전 달
+             , IFNULL(A.MIN5_MONTH_MONEY, 0)   AS min5_month_money      -- 5개월 전 합계금액
+             , A.MIN6_MONTH_DATE               AS min6_month_date       -- 6개월 전 달
+             , IFNULL(A.MIN6_MONTH_MONEY, 0)   AS min6_month_money      -- 6개월 전 합계금액
              , IFNULL(( A.MONTH_MONEY +
                         A.MIN1_MONTH_MONEY   +
                         A.MIN2_MONTH_MONEY   +
                         A.MIN3_MONTH_MONEY   +
                         A.MIN4_MONTH_MONEY   +
                         A.MIN5_MONTH_MONEY   +
-                        A.MIN6_MONTH_MONEY),0) AS total_money
+                        A.MIN6_MONTH_MONEY),0) AS total_money            -- 총합계금액
         FROM(
                 SELECT DATE_FORMAT(CURDATE(), '%Y-%m') AS CURRENT_MONTH
                      , SUM(CASE
@@ -464,7 +464,112 @@
                   AND  A.RESERVATION_IDX = B.RESERVATION_IDX
                   AND  A.LOD_IDX = #{rod_idx}
             ) as A
-
-
     </select>
+    <select id="getLodInformation" parameterType="int" resultType="map">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2025.01.06
+        *  시 간  : 오전 11:57
+        *  기 능  : 숙소정보 조회
+        *  변경사항
+        *     - 2025.01.06 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT LOD_NAME               -- 숙소명
+             , BIZ_EMAIL              -- 숙소 이메일
+             , LOD_PHONE_NUMBER       -- 숙소 전화번호
+             , SELLER_NOTICE          -- 숙소 소개글
+             , RESERVATION_NOTICE     -- 숙소 공지사항
+             , LOD_CHECK_IN           -- 숙소 체크인 시간
+             , LOD_CHECK_OUT          -- 숙소 체크아웃 시간
+        FROM LODGMENT
+        WHERE 1=1
+          AND LOD_IDX = #{rod_idx}
+    </select>
+    <select id="getLodService" parameterType="int" resultType="java.lang.String">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2025.01.06
+        *  시 간  : 오후 12:32
+        *  기 능  : 시설/서비스 조회
+        *  변경사항
+        *     - 2025.01.06 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT A.LOD_FACILITY_NAME
+        FROM LOD_FACILITY             A
+           , LODGMENT_MAPPING_SERVICE B
+        WHERE 1=1
+          AND A.LOD_FACILITY_IDX = B.LOD_FACILITY_IDX
+          AND B.LOD_IDX =  #{lod_idx}
+    </select>
+    <update id="UpdateLod" parameterType="kr.co.team4.model.dto.LodRegisterDTO">
+        /* ************************************************************
+         *  생성자 : JDeok
+         *  날 짜  : 2025.01.06
+         *  시 간  : 오후 06:20
+         *  기 능  : 숙소정보 Update
+         *  변경사항
+         *     - 2025.01.06 : JDeok(최초작성)
+         ************************************************************* */
+        UPDATE LODGMENT
+        SET SELLER_NOTICE      = #{seller_notice}            -- 사장님알려주개
+          , RESERVATION_NOTICE = #{reservation_notice}       -- 예약공지
+          , LOD_CHECK_IN       = #{lod_check_in}             -- 체크인시간
+          , LOD_CHECK_OUT      = #{lod_check_out}            -- 체크아웃시간
+        WHERE 1=1
+          AND LOD_IDX = #{lod_idx}
+    </update>
+    <delete id="deleteLodMapper" parameterType="kr.co.team4.model.dto.LodRegisterDTO">
+        /* ************************************************************
+         *  생성자 : JDeok
+         *  날 짜  : 2025.01.07
+         *  시 간  : 오전 10:39
+         *  기 능  : 매핑테이블 삭제
+         *  변경사항
+         *     - 2025.01.07 : JDeok(최초작성)
+         ************************************************************* */
+            DELETE
+            FROM LODGMENT_MAPPING_SERVICE
+            WHERE 1=1
+              AND LOD_IDX = #{lod_idx}
+    </delete>
+    <select id="getRoomInformation" parameterType="int" resultType="kr.co.team4.model.dto.RoomRegisterDTO">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2025.01.06
+        *  시 간  : 오후 04:44
+        *  기 능  : 객실정보 조회
+        *  변경사항
+        *     - 2025.01.06 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT ROOM_NAME           -- 객실명
+             , ROOM_PRICE          -- 객실가격
+             , MAX_PEOPLE_CNT      -- 최대 인원
+             , MAX_PET_CNT         -- 최대 반려동물 수
+             , ROOM_NOTICE         -- 객실 기본정보
+             , MAX_PETS_WEIGHT     -- 반려동물 사이즈
+             , ROOM_IDX            -- 객실IDX
+             , LOD_IDX             -- 숙소IDX
+        FROM ROOM
+        WHERE 1=1
+          AND LOD_IDX = #{lod_idx}
+    </select>
+    <update id="updateRoom" parameterType="kr.co.team4.model.dto.RoomRegisterDTO">
+        /* ************************************************************
+         *  생성자 : JDeok
+         *  날 짜  : 2025.01.08
+         *  시 간  : 오전 10:28
+         *  기 능  : 객실정보 Update
+         *  변경사항
+         *     - 2025.01.08 : JDeok(최초작성)
+         ************************************************************* */
+        UPDATE ROOM
+           SET ROOM_NAME = #{room_name}
+             , ROOM_PRICE = #{room_price}
+             , MAX_PEOPLE_CNT = #{max_people_cnt}
+             , MAX_PET_CNT = #{max_pet_cnt}
+             , ROOM_NOTICE = #{room_notice}
+             , MAX_PETS_WEIGHT = #{max_pets_weight}
+           WHERE 1=1
+             AND ROOM_IDX = #{room_idx}
+    </update>
 </mapper>

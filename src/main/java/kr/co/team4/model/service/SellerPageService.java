@@ -35,4 +35,14 @@ public interface SellerPageService {
 
     /* 매출 관리 */
     Map<String, Object> getSales(int lodIdx);                                         // 사장님 매출관리
+
+    /* 숙소정보 수정  */
+    Map<String, Object>       getLodInformation(int lodIdx);                          // 숙소정보 조회
+    List<String>              getLodService(int lodIdx);                              // 숙소서비스 조회
+    void                      UpdateLod(LodRegisterDTO dto);                          // 숙소정보 수정
+    void                      UpdateFacility(LodRegisterDTO dto);                     // 시설/서비스 수정
+
+    /* 객실정보 조회및변경 */
+    List<RoomRegisterDTO> getRoomInformation(int lodIdx);                              // 객실정보 조회
+    void updateRoom(List<RoomRegisterDTO> rooms);                                      // 객실 수정
 }

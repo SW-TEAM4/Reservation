@@ -100,7 +100,7 @@ h1 {
     margin: 5px 0;
 }
 
-.room-table td input[type="checkbox"] {
+.room-table td input[type="radio"] {
     margin-right: 5px;
 }
 
@@ -168,3 +168,18 @@ h1 {
 .menu-link:hover {
     color: #f7d3c5;
 }
+.image-preview {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+

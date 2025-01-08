@@ -3,8 +3,8 @@ package kr.co.team4.controller;
 import kr.co.team4.model.dto.*;
 import kr.co.team4.model.service.SellerPageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Pattern;
 
 @Controller
 @RequestMapping("/lodgment")
@@ -29,7 +30,6 @@ public class SellerPageController {
     public String lodRegister(@ModelAttribute LodRegisterDTO dto, HttpSession session) throws IOException {
 
         dto.setSeller_idx((int) session.getAttribute("seller_idx"));
-        dto.setLod_img_url("");
 
         sellerPageService.registerLod(dto);
 
@@ -99,7 +99,7 @@ public class SellerPageController {
      */
     @GetMapping("/lodRegister.do")
     public String lodRegister(HttpSession session) {
-        session.setAttribute("seller_idx", 1);
+        session.setAttribute("seller_idx", 2);
         int seller_idx = (int) session.getAttribute("seller_idx");
         /* 여기서 숙소테이블에 존재 여부 확인 후 if else로 나눠서 없으면 숙소등록 아니면 바로 숙소메인페이지 */
         String checkYn = sellerPageService.lodCheck(seller_idx);
@@ -122,6 +122,9 @@ public class SellerPageController {
      */
     @GetMapping("/roomRegister")
     public String roomRegister(HttpSession session) {
+        int lod_idx = (int)session.getAttribute("lod_idx");
+
+        /*sellerPageService.getRoomInformation(lod_idx);*/
 
         return "seller/roomRegister";
     }
@@ -329,6 +332,101 @@ public class SellerPageController {
         return "seller/sellerSales";
     }
 
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소 정보 수정
+     * 변경사항
+     * - 2024.12.24 : JDeok(최초생성)
+     */
+    @GetMapping("/sellerGetLodUpdate")
+    public String sellerGetLodUpdate(Model model, HttpSession session) {
+        int lod_idx = (int) session.getAttribute("lod_idx");
+
+       /* 숙소 데이터 가져오기 */
+        Map<String, Object> lodMap = sellerPageService.getLodInformation(lod_idx);
+       /* 시설/서비스 가져오기 */
+        List<String> service = sellerPageService.getLodService(lod_idx);
+
+
+        model.addAttribute("lodMap", lodMap);
+        model.addAttribute("service", service);
+
+       return "seller/sellerLodUpdate";
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소 업데이트
+     * 변경사항
+     * - 2025.01.06 : JDeok(최초생성)
+     */
+    @PostMapping("/UpdateLod")
+    @Transactional // 트랜잭션 적용
+    public String UpdateLod(@ModelAttribute LodRegisterDTO dto, HttpSession session, Model model) throws IOException {
+        try {
+            int lod_idx = (int) session.getAttribute("lod_idx");
+            dto.setLod_idx(lod_idx);
+
+            // 숙소 업데이트 로직
+            sellerPageService.UpdateLod(dto);
+
+            // 시설/서비스 업데이트 로직
+            sellerPageService.UpdateFacility(dto);
+
+            // 성공 상태를 Model에 추가
+            model.addAttribute("success", true);
+        } catch (Exception e) {
+            e.printStackTrace(); // 로그 출력
+            // 실패 상태를 Model에 추가
+            model.addAttribute("success", false);
+            model.addAttribute("errorMessage", "처리 중 오류가 발생했습니다.");
+        }
+
+
+        return "seller/sellerLodUpdate";
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 사장님 객실정보
+     * 변경사항
+     * - 2025.01.07 : JDeok(최초생성)
+     */
+    @GetMapping("/sellerGetRoomUpdate")
+    public String sellerGetRoomUpdate(Model model, HttpSession session) {
+        int lod_idx = (int) session.getAttribute("lod_idx");
+
+        List<RoomRegisterDTO> roomList  = sellerPageService.getRoomInformation(lod_idx);
+
+
+        model.addAttribute("roomList", roomList);
+
+        return "seller/sellerRoomUpdate";
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 사장님 객실정보
+     * 변경사항
+     * - 2025.01.07 : JDeok(최초생성)
+     */
+    @PostMapping("/updateRoom")
+    public String UpdateLod(@ModelAttribute RoomListDTO dto, HttpSession session, Model model) {
+        List<RoomRegisterDTO> rooms = dto.getRooms();
+
+        try {
+            sellerPageService.updateRoom(rooms);
+
+            // 성공 상태를 Model에 추가
+            model.addAttribute("success", true);
+        }catch (Exception e){
+
+            model.addAttribute("success", false);
+            model.addAttribute("errorMessage", "처리 중 오류가 발생했습니다.");
+        }
+
+
+        return "seller/sellerRoomUpdate";
+    }
+
 }
-
-

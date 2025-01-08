@@ -22,7 +22,6 @@ body {
     padding: 0;
     background-color: #f4f4f4;
     color: #333;
-    line-height: 1.6;
 }
 
 .layout {
@@ -41,8 +40,6 @@ h1 {
     font-weight: bold;
     margin-bottom: 10px;
     color: #8A5642;
-    border-left: 5px solid #8A5642;
-    padding-left: 10px;
 }
 
 .sub-title {
@@ -51,12 +48,6 @@ h1 {
     margin-bottom: 30px;
     font-weight: bold;
     text-align: left;
-}
-
-hr {
-    border: 0;
-    border-top: 1px solid #ddd;
-    margin: 20px 0;
 }
 
 .monthly-sales p {

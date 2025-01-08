@@ -1,3 +1,6 @@
+<%@ page import="com.fasterxml.jackson.databind.ObjectMapper" %>
+<%@ page import="java.math.BigDecimal" %>
+<%@ page import="java.util.List" %>
 <%--
   파일명 : sellerSales.jsp
   생성자 : JDeok
@@ -6,6 +9,16 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%!
+    // Java 코드에서 JSON 변환을 위해 ObjectMapper 초기화
+    ObjectMapper objectMapper = new ObjectMapper();
+%>
+
+<%
+    // month_date와 total_money를 JSON 문자열로 변환
+    String chartLabelsJson = objectMapper.writeValueAsString((List<String>) request.getAttribute("month_date"));
+    String chartDataJson = objectMapper.writeValueAsString((List<BigDecimal>) request.getAttribute("total_money"));
+%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -53,7 +66,8 @@
 <script>
     $(document).ready(function () {
         // JSP에서 전달된 데이터
-        const chartLabels = <c:out value='${month_date}' escapeXml="false"/>;     // 월별 날짜 리스트 (예: ["2023-07", "2023-08", "2023-09", ...])
+        const chartLabels = <%= chartLabelsJson %>
+        /*const chartLabels = <c:out value='${month_date}' escapeXml="false"/>; */    // 월별 날짜 리스트 (예: ["2023-07", "2023-08", "2023-09", ...])
         const chartData   = <c:out value='${total_money}' escapeXml="false"/>;    // 월별 매출 데이터 리스트 (예: [500000, 600000, 700000, ...])
 
 
