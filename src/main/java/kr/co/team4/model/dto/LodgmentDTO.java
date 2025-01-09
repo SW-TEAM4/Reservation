@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.sql.Date;
 import java.util.Map;
 
@@ -31,6 +32,8 @@ public class LodgmentDTO {
     private Date updated;
     private String status;
 
+    private BigInteger like_idx; // 찜 상태 (null이면 찜하지 않은 상태)
+
     // 숙소 최소 가격
     private int min_room_price;
 
@@ -49,4 +52,6 @@ public class LodgmentDTO {
 
     private int reviewCount;
     private double avgRating;
+
+
 }

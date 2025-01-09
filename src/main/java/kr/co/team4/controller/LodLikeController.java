@@ -1,16 +1,19 @@
 package kr.co.team4.controller;
 
 import kr.co.team4.model.dto.LodLikeDTO;
+import kr.co.team4.model.dto.LodgmentDTO;
 import kr.co.team4.model.service.LodLikeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigInteger;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -62,8 +65,21 @@ public class LodLikeController {
     }
 
     @GetMapping("/lodwish.do")
-    public String goWish(){
+    public String goWish(HttpSession session, Model model) {
+        BigInteger sessionUserIdx = (BigInteger) session.getAttribute("user_idx");
+        if (sessionUserIdx == null) {
+            session.setAttribute("redirectUrl", "/lodlike/lodwish.do");
+            return "redirect:/userlogin";
+        }
 
+        List<LodgmentDTO> wishlist = lodLikeService.getLikeList(sessionUserIdx);
+
+        // 디버깅: 찜 데이터 확인
+        for (LodgmentDTO lodgment : wishlist) {
+            System.out.println("lod_idx: " + lodgment.getLod_idx() + ", like_idx: " + lodgment.getLike_idx());
+        }
+
+        model.addAttribute("wishlist", wishlist);
         return "like/lodLikeList";
     }
 

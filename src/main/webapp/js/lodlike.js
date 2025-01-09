@@ -22,8 +22,11 @@ $(document).ready(function () {
                     alert("로그인이 필요합니다.")
                     return window.location.href = "/userlogin";
                 } else if (response.status === "added") { // 찜 추가 성공
-                    likeIcon.addClass("active");
-                    likeIcon.attr("src", "img/like_full_heart.png"); // 빨간색 하트 이미지로 변경
+                    likeIcon.addClass("active"); // 클래스 추가
+                    likeIcon.attr("src", "/img/like_full_heart.png"); // 빨간 하트 이미지로 변경
+                    if (confirm("찜 목록으로 이동하시겠습니까?")) {
+                        window.location.href = "/lodlike/lodwish.do"; // 찜 목록 페이지로 이동
+                    }
 
                 } else if (response.status === "removed") { // 찜 제거 성공
                     likeIcon.removeClass("active");

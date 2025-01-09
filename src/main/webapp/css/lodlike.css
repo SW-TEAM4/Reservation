@@ -1,0 +1,54 @@
+.top-container {
+    height: 70px;
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc; /* 위쪽 선 */
+    padding: 10px 20px; /* 컨테이너 내부 여백 */
+}
+
+.top-container .arrow-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.top-container .header-text {
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.card-container {
+    flex-wrap: wrap; /* 여러 줄로 카드 배치 */
+    gap: 20px; /* 카드 간의 간격 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: flex-start;
+    padding: 20px;
+    margin: 20px;
+    width: 1200px;
+    height: 700px;
+}
+
+.card {
+    position: relative;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+}
+
+.heart-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: auto;
+    cursor: pointer;
+    z-index: 10;
+}
+
+
