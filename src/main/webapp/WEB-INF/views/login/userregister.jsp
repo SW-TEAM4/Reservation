@@ -18,17 +18,26 @@
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
 
+        * {
+            margin-bottom: 2px;
+        }
+
         .container {
             width: 40%;
             margin: auto;
             padding: 20px;
             align-items: center;
             box-sizing: border-box;
+            margin-bottom: 30px;
+        }
+
+        .container h2 {
+            color: #8A5642;
         }
 
         .name_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .USER_NAME {
@@ -47,13 +56,13 @@
         }
 
         .name_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
         .nick_name_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .NICK_NAME {
@@ -72,13 +81,13 @@
         }
 
         .nick_name_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
         .phone_number_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .USER_PHONE_NUMBER {
@@ -97,13 +106,13 @@
         }
 
         .phone_number_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
         .id_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .USER_ID {
@@ -122,13 +131,13 @@
         }
 
         .id_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
         .pw_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .USER_PWD {
@@ -147,13 +156,13 @@
         }
 
         .pw_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
         .pwck_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .USER_PWD_CK {
@@ -172,13 +181,13 @@
         }
 
         .pwck_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
         .email_wrap {
             width: 486px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .USER_EMAIL {
@@ -197,7 +206,7 @@
         }
 
         .email_wrap input::placeholder {
-            color: #8A5642;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -210,8 +219,8 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 2px;
-            margin-left: 70px;
             text-align: center;
+            margin-bottom: 10px;
         }
 
         .email_check_input {
@@ -221,7 +230,7 @@
             margin: 2px;
             border: 2px solid #8A5642;
             border-radius: 5px;
-            margin-left: 70px;
+            margin-bottom: 10px;
         }
 
         .register_button {
@@ -231,10 +240,10 @@
             margin: 2px;
             border: 2px solid #8A5642;
             border-radius: 5px;
-            margin-left: 72px;
             cursor: pointer;
             background-color: #8A5642;
             color: white;
+            margin-bottom: 10px;
         }
 
         /* 아이디가 존재하지 않을 경우 */
@@ -249,12 +258,19 @@
             display: none;
         }
 
+        /* 아이디가 형식에 만족하지 않을 경우 */
+        .id_input_re_3 {
+            color: red;
+            display: none;
+        }
+
     </style>
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
 
     <div class="container">
+        <h2>회원가입</h2>
         <form id="register_form" method="post" onsubmit="return registerCheck();">
             <div class="name_wrap">
                 <div class="USER_NAME">이름</div>
@@ -272,6 +288,7 @@
                 <div class="USER_PHONE_NUMBER">휴대폰번호</div>
                 <div class="user_phone_number_input_box">
                     <input type="text" id="USER_PHONE_NUMBER" class="User_Phone_Number_input" name="USER_PHONE_NUMBER" placeholder="010-1234-5678" pattern="\d{3}-\d{4}-\d{4}" required>
+                    <span id="phone_error_message" style="color: red; display: none;">올바른 전화번호 형식을 입력하시오.</span>
                 </div>
             </div>
             <div class="id_wrap">
@@ -281,11 +298,12 @@
                 </div>
                 <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
                 <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
+                <span class="id_input_re_3">사용 불가능한 아이디입니다. 형식에 맞춰 입력해주세요</span>
             </div>
             <div class="pw_wrap">
                 <div class="USER_PWD">비밀번호</div>
                 <div class="pwd_input_box">
-                    <input type="password" class="pwd_input" id="USER_PWD" name="USER_PWD" placeholder="영문+숫자+특수기호 8자 이상" required>
+                    <input type="password" class="pwd_input" id="USER_PWD" name="USER_PWD" maxlength="16" placeholder="영문+숫자+특수기호 8자 이상 16자 이하" required>
                     <span id="passwordWarning" style="color: red; display: none;">사용할 수 없는 비밀번호입니다.</span>
                 </div>
             </div>
@@ -300,14 +318,14 @@
                 <div class="USER_EMAIL">이메일 주소</div>
                 <div class="email_input_box">
                     <input type="email" class="email_input" name="USER_EMAIL" id="USER_EMAIL" placeholder="이메일 주소" required>
-                    <input type="button" value="인증번호 전송" class="email_send_button" id="email_auth" on>
+                    <input type="button" value="인증번호 전송" class="email_send_button" id="email_auth" style="margin-bottom: 10px">
                     <div class="timerDisplay" id="timerDisplay" style="display: none"></div>
                     <input type="text" class="email_check_input" placeholder="인증번호 6자리를 입력해주세요." maxlength="6" name="authCode" id="authCode">
                     <span id="emailAuthWarn"></span>
                </div>
             </div>
             <div>
-                <input type="submit" value="가입하기" class="register_button" id="register_button" disabled="disabled">
+                <input type="submit" value="가입하기" class="register_button" id="register_button">
             </div>
         </form>
     </div>
@@ -357,13 +375,36 @@
         $('.user_id_input').on("propertychange change keyup paste input", function() {
 
             var USER_ID = $('.user_id_input').val();
+
+            // 입력값에서 한글 및 특수기호 제거 (영문, 숫자, 언더스코어(_)만 허용)
+            var filteredID = USER_ID.replace(/[^a-zA-Z0-9_]/g, '');
+            if (USER_ID !== filteredID) {
+                $(this).val(filteredID); // 잘못된 문자가 포함된 경우 필터링된 값으로 업데이트
+                USER_ID = filteredID; // 필터링된 값을 변수에 다시 할당
+            }
+
             var data = {USER_ID : USER_ID}
+
+            // 정규 표현식, 최소 4자 이상, 영문, 숫자, 언더스코어(_)만 허용
+            var idPattern = /^[a-zA-Z0-9]{4,}$/;
+
 
             if (USER_ID === "") {
                 // 입력 필드가 비어 있을 경우
                 $('.id_input_re_1').css("display", "none"); // "사용 가능한 아이디입니다." 숨김
                 $('.id_input_re_2').css("display", "none"); // 경고 메시지 표시 x
+                $('.id_input_re_3').css("display", "none"); // 아이디 형식에 만족하지 않을 경우 경고 메시지
+                return false;
+            } else if(!idPattern.test(USER_ID)) {
+                // 유효성 검사 실패
+                $('.id_input_re_1').css("display", "none"); // "사용 가능한 아이디입니다." 숨김
+                $('.id_input_re_2').css("display", "none"); // 경고 메시지 표시 x
+                $('.id_input_re_3').css("display", "inline-block"); // 아이디 형식에 만족하지 않을 경우 경고 메시지
+                return false;
             } else {
+                // 유효성 검사 통과
+                $('.id_input_re_3').css("display", "none");
+
                 $.ajax({
                 type : "POST",
                 url : "/ID_CHECK",
@@ -405,7 +446,7 @@
         // 비밀번호 입력 시 유효성 검사
         document.getElementById('USER_PWD').addEventListener('input', validatePassword);
 
-        // 빈 입력칸 alert문
+        // 빈 입력칸 alert문 및 회원가입 버튼 클릭 예외 처리
         function registerCheck() {
             if ($(".name_input").val() == '') {
                 alert("이름을 입력해 주세요");
@@ -417,13 +458,27 @@
                 $("#NICK_NAME").focus();
                 return false;
             }
-            if ($("#USER_PHONE_NUMBER").val() == '') {
+            const PHONE_NUMBER = $("#USER_PHONE_NUMBER").val();
+            const phonePattern = /^(\d{3})-(\d{4})-(\d{4})$/;
+
+            if(PHONE_NUMBER === '') {
                 alert("전화번호를 입력해 주세요");
                 $("#USER_PHONE_NUMBER").focus();
                 return false;
+            } else if(!phonePattern.test(PHONE_NUMBER)) {
+                alert("올바른 전화번호 형식을 입력해 주세요. 예) : 010-1234-5678 ");
+                $("#USER_PHONE_NUMBER").focus();
+                return false;
             }
-            if ($("#USER_ID").val() == '') {
+            const idPattern = /^[a-zA-Z0-9]{4,}$/;
+            const USER_ID = $("#USER_ID").val();
+
+            if(USER_ID === '') {
                 alert("아이디를 입력해 주세요");
+                $("#USER_ID").focus();
+                return false;
+            } else if(!idPattern.test(USER_ID)) {
+                alert("올바른 아이디 형식을 입력해 주세요.");
                 $("#USER_ID").focus();
                 return false;
             }
@@ -432,7 +487,7 @@
                 $("#USER_PWD").focus();
                 return false;
             }
-            if (!validatePassword()){
+            if (!validatePassword()) {
                 alert("조건을 만족하는 비밀번호를 입력해 주세요")
                 $("#USER_PWD").focus();
                 return false;
@@ -442,13 +497,18 @@
                 $("#USER_PWD2").focus();
                 return false;
             }
+            if ($("#USER_PWD").val() !== $("#USER_PWD2").val()) {
+                alert("비밀번호가 일치하지 않습니다");
+                $("#USER_PWD2").focus();
+                return false;
+            }
             if ($("#USER_EMAIL").val() == '') {
                 alert("이메일을 입력해 주세요");
                 $("#USER_EMAIL").focus();
                 return false;
             }
             if ($("#authCode").val() == '') {
-                alert("인증번호를 입력해 주세요");
+                alert("이메일 인증 후 인증번호를 입력해 주세요");
                 $("#authCode").focus();
                 return false;
             }
@@ -456,7 +516,7 @@
 
         // 전화번호 입력 시 자동으로 "-" 추가
         document.getElementById("USER_PHONE_NUMBER").addEventListener("input", function(e) {
-            let input = e.target.value;
+            var input = e.target.value;
 
             // 숫자만 남기기
             input = input.replace(/\D/g, "");
@@ -468,6 +528,18 @@
                 e.target.value = input.slice(0, 3) + "-" + input.slice(3);
             } else {
                 e.target.value = input.slice(0, 3) + "-" + input.slice(3, 7) + "-" + input.slice(7, 11);
+            }
+
+            // 전화번호 유효성 검사 (010-xxxx-xxxx 형식으로만 허용)
+            const phonePattern = /^(\d{3})-(\d{4})-(\d{4})$/;
+
+            if (phonePattern.test(e.target.value)) {
+                // 유효한 전화번호일 경우 경고 메시지 숨기기
+                document.getElementById("phone_error_message").style.display = "none";
+            } else {
+                // 유효하지 않은 전화번호일 경우 경고 메시지 표시
+                document.getElementById("phone_error_message").style.display = "block";
+                return false;
             }
         });
 
@@ -502,6 +574,7 @@
 
             // 인증번호 이메일 전송
             let code;
+            $("#authCode").attr("disabled", true); // 인증번호 입력 비활성화
 
             $("#email_auth").click(function() {
                 const USER_EMAIL = $("#USER_EMAIL").val(); // 사용자가 입력한 이메일 값 얻어오기
@@ -521,10 +594,10 @@
                     type : "POST",
                     dataType : "json",
                     success : function(result) {
-                        $("authCode").attr("disabled", false); // 인증번호 입력 활성화
+                        $("#authCode").attr("disabled", false); // 인증번호 입력 활성화
                         $("#email_auth").attr("disabled", true); // 인증번호 전송 버튼 비활성화
                         code = result;
-                        alert("인증 번호가 입력하신 이메일로 전송 되었습니다.");
+                        alert("인증번호가 입력하신 이메일로 전송되었습니다.");
                         $("#timerDisplay").css("display", "block");
                         startTimer(); // 타이머 시작
                     }, // success 종료
@@ -537,20 +610,15 @@
             $("#authCode").on("focusout", function() {
                 const inputCode = $("#authCode").val(); // 인증번호 입력 칸에 작성한 내용 가져오기
 
-                // console.log("입력 번호 : " + inputCode);
-                // console.log("인증 번호 : " + code);
-
                 if(Number(inputCode) === code) {
                     $("#emailAuthWarn").html('인증번호가 일치합니다.');
                     $("#emailAuthWarn").css('color', 'green');
                     $("#email_auth").attr('disabled', true);
                     $("#USER_EMAIL").attr('readonly', true);
-                    $("#register_button").attr('disabled', false);
                     clearInterval(timer); // 타이머 중지
                 } else {
                     $("#emailAuthWarn").html('인증번호가 불일치합니다. 다시 확인해주세요!');
                     $("#emailAuthWarn").css('color', 'red');
-                    $("#register_button").attr('disabled', true);
                 }
             });
             // 초기 타이머 표시 업데이트
@@ -570,12 +638,14 @@
             if ( USER_PWD.value == "" || USER_PWD2.value == ""){
                 confirmMsg.style.color = wrongColor;
                 confirmMsg.innerHTML = "비밀번호를 입력해주세요.";
+                return false;
             } else if( USER_PWD.value === USER_PWD2.value) {
                 confirmMsg.style.color = correctColor;
                 confirmMsg.innerHTML = "비밀번호가 일치합니다.";
             } else {
                 confirmMsg.style.color = wrongColor;
                 confirmMsg.innerHTML = "비밀번호가 일치하지 않습니다.";
+                return false;
             }
         }
 

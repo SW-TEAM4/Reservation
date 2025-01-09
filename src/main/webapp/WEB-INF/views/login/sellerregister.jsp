@@ -86,7 +86,7 @@
         }
 
         .name_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -111,7 +111,7 @@
         }
 
         .nick_name_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -136,7 +136,7 @@
         }
 
         .phone_number_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -161,7 +161,7 @@
         }
 
         .id_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -186,7 +186,7 @@
         }
 
         .pw_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -211,7 +211,7 @@
         }
 
         .pwck_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -236,7 +236,7 @@
         }
 
         .email_wrap input::placeholder {
-            color: #DDAC7E;
+            color: #aaaaaa;
             font-family: "Noto Sans KR";
         }
 
@@ -272,6 +272,9 @@
             border-radius: 5px;
             margin-left: 72px;
             cursor: pointer;
+            background-color: #8A5642;
+            color: white;
+            margin-bottom: 10px;
         }
 
         /* 아이디가 존재하지 않을 경우 */
@@ -282,6 +285,12 @@
 
         /* 아이디가 존재하는 경우 */
         .id_input_re_2 {
+            color: red;
+            display: none;
+        }
+
+        /* 아이디가 현식엥 만족하지 않을 경우 */
+        .id_input_re_3 {
             color: red;
             display: none;
         }
@@ -309,7 +318,7 @@
     </div>
 
     <div class="container">
-        <form id="register_form" method="post">
+        <form id="register_form" method="post" onsubmit="return registerCheck();">
             <div class="name_wrap">
                 <div class="SELLER_NAME">이름</div>
                 <div class="name_input_box">
@@ -326,6 +335,7 @@
                 <div class="SELLER_PHONE_NUMBER">휴대폰번호</div>
                 <div class="seller_phone_number_input_box">
                     <input type="text" class="Seller_Phone_Number_input" id="SELLER_PHONE_NUMBER" name="SELLER_PHONE_NUMBER" placeholder="01012345678" required>
+                    <span id="phone_error_message" style="display: none; color: red"></span>
                 </div>
             </div>
             <div class="id_wrap">
@@ -335,11 +345,12 @@
                 </div>
                 <span class="id_input_re_1">사용 가능한 아이디입니다.</span>
                 <span class="id_input_re_2">아이디가 이미 존재합니다.</span>
+                <span class="id_input_re_3">사용 불가능한 아이디입니다. 형식에 맞춰 입력해주세요</span>
             </div>
             <div class="pw_wrap">
                 <div class="SELLER_PWD">비밀번호</div>
                 <div class="pwd_input_box">
-                    <input type="password" class="pwd_input" id="SELLER_PWD" name="SELLER_PWD" placeholder="영문+숫자+특수기호 8자 이상" required>
+                    <input type="password" class="pwd_input" id="SELLER_PWD" name="SELLER_PWD" maxlength="16" placeholder="영문+숫자+특수기호 8자 이상 16자 이하" required>
                     <span id="passwordWarning" style="color: red; display: none;">사용할 수 없는 비밀번호입니다.</span>
                 </div>
             </div>
@@ -361,7 +372,7 @@
                </div>
             </div>
             <div>
-                <input type="submit" value="가입하기" class="register_button" id="register_button" disabled="disabled">
+                <input type="submit" value="가입하기" class="register_button" id="register_button">
             </div>
         </form>
         <div class="footer">
@@ -413,24 +424,51 @@
         $('.seller_id_input').on("propertychange change keyup paste input", function() {
 
             var SELLER_ID = $('.seller_id_input').val();
+
+            // 입력값에서 한글 및 특수기호 제거 (영문, 숫자, 언더스코어(_)만 허용)
+            var filteredID = SELLER_ID.replace(/[^a-zA-Z0-9_]/g, '');
+            if (SELLER_ID !== filteredID) {
+                $(this).val(filteredID); // 잘못된 문자가 포함된 경우 필터링된 값으로 업데이트
+                SELLER_ID = filteredID; // 필터링된 값을 변수에 다시 할당
+            }
+
             var data = {SELLER_ID : SELLER_ID}
 
-            $.ajax({
-                type : "POST",
-                url : "/SELLER_ID_CHECK",
-                data : data,
-                success : function(result) {
-                    console.log("성공 여부 : " + result);
-                    if(result != 'fail') {
-                        $('.id_input_re_1').css("display", "inline-block");
-                        $('.id_input_re_2').css("display", "none");
-                    } else {
-                        $('.id_input_re_2').css("display", "inline-block");
-                        $('.id_input_re_1').css("display", "none");
-                    }
-                } // success 종료
-            }); // ajax 종료
+            // 정규 표현식, 최소 4자 이상, 영문, 숫자, 언더스코어(_)만 허용
+            var idPattern = /^[a-zA-Z0-9]{4,}$/;
 
+            if (SELLER_ID === "") {
+                // 입력 필드가 비어 있을 경우
+                $('.id_input_re_1').css("display", "none"); // "사용 가능한 아이디입니다." 숨김
+                $('.id_input_re_2').css("display", "none"); // 경고 메시지 표시 x
+                $('.id_input_re_3').css("display", "none"); // 아이디 형식에 만족하지 않을 경우 경고 메시지
+                return false;
+            } else if(!idPattern.test(SELLER_ID)) {
+                // 유효성 검사 실패
+                $('.id_input_re_1').css("display", "none"); // "사용 가능한 아이디입니다." 숨김
+                $('.id_input_re_2').css("display", "none"); // 경고 메시지 표시 x
+                $('.id_input_re_3').css("display", "inline-block"); // 아이디 형식에 만족하지 않을 경우 경고 메시지
+                return false;
+            } else {
+                //유효성 검사 통과
+                $('.id_input_re_3').css("display", "none");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/SELLER_ID_CHECK",
+                    data: data,
+                    success: function (result) {
+                        console.log("성공 여부 : " + result);
+                        if (result != 'fail') {
+                            $('.id_input_re_1').css("display", "inline-block");
+                            $('.id_input_re_2').css("display", "none");
+                        } else {
+                            $('.id_input_re_2').css("display", "inline-block");
+                            $('.id_input_re_1').css("display", "none");
+                        }
+                    } // success 종료
+                }); // ajax 종료
+            }
         }); // function 종료
 
         // 비밀번호 유효성 검사
@@ -454,9 +492,9 @@
             }
         }
         // 비밀번호 입력 시 유효성 검사
-        document.getElementById('USER_PWD').addEventListener('input', validatePassword);
+        document.getElementById('SELLER_PWD').addEventListener('input', validatePassword);
 
-        // 빈 입력칸 alert문
+        // 빈 입력칸 alert문 및 회원가입 버튼 클릭 예외 처리
         function registerCheck() {
             if ($("#SELLER_NAME").val() == '') {
                 alert("이름을 입력해 주세요");
@@ -468,13 +506,27 @@
                 $("#SELLER_NICK_NAME").focus();
                 return false;
             }
-            if ($("#SELLER_PHONE_NUMBER").val() == '') {
+            const PHONE_NUMBER = $("#SELLER_PHONE_NUMBER").val();
+            const phonePattern = /^(\d{3})-(\d{4})-(\d{4})$/;
+
+            if(PHONE_NUMBER === '') {
                 alert("전화번호를 입력해 주세요");
                 $("#SELLER_PHONE_NUMBER").focus();
                 return false;
+            } else if(!phonePattern.test(PHONE_NUMBER)) {
+                alert("올바른 전화번호 형식을 입력해 주세요. 예) : 010-1234-5678 ");
+                $("#SELLER_PHONE_NUMBER").focus();
+                return false;
             }
-            if ($("#SELLER_ID").val() == '') {
+            const idPattern = /^[a-zA-Z0-9]{4,}$/;
+            const SELLER_ID = $("#SELLER_ID").val();
+
+            if(SELLER_ID === '') {
                 alert("아이디를 입력해 주세요");
+                $("#SELLER_ID").focus();
+                return false;
+            } else if(!idPattern.test(SELLER_ID)) {
+                alert("올바른 아이디 형식을 입력해 주세요.");
                 $("#SELLER_ID").focus();
                 return false;
             }
@@ -485,11 +537,16 @@
             }
             if (!validatePassword()){
                 alert("조건을 만족하는 비밀번호를 입력해 주세요")
-                $("#USER_PWD").focus();
+                $("#SELLER_PWD").focus();
                 return false;
             }
             if ($("#SELLER_PWD2").val() == '') {
                 alert("비밀번호를 재입력해 주세요");
+                $("#SELLER_PWD2").focus();
+                return false;
+            }
+            if ($("#SELLER_PWD").val() !== $("#SELLER_PWD2").val()) {
+                alert("비밀번호가 일치하지 않습니다");
                 $("#SELLER_PWD2").focus();
                 return false;
             }
@@ -499,7 +556,7 @@
                 return false;
             }
             if ($("#authCode").val() == '') {
-                alert("인증번호를 입력해 주세요");
+                alert("이메일 인증 후 인증번호를 입력해 주세요");
                 $("#authCode").focus();
                 return false;
             }
@@ -519,6 +576,18 @@
                 e.target.value = input.slice(0, 3) + "-" + input.slice(3);
             } else {
                 e.target.value = input.slice(0, 3) + "-" + input.slice(3, 7) + "-" + input.slice(7, 11);
+            }
+
+            // 전화번호 유효성 검사 (010-xxxx-xxxx 형식으로만 허용)
+            const phonePattern = /^(\d{3})-(\d{4})-(\d{4})$/;
+
+            if (phonePattern.test(e.target.value)) {
+                // 유효한 전화번호일 경우 경고 메시지 숨기기
+                document.getElementById("phone_error_message").style.display = "none";
+            } else {
+                // 유효하지 않은 전화번호일 경우 경고 메시지 표시
+                document.getElementById("phone_error_message").style.display = "block";
+                return false;
             }
         });
 
@@ -553,6 +622,7 @@
 
             // 인증번호 이메일 전송
             let code;
+            $("#authCode").attr("disabled", true); // 인증번호 입력 비활성화
 
             $("#email_auth").click(function() {
                 const SELLER_EMAIL = $("#SELLER_EMAIL").val(); // 사용자가 입력한 이메일 값 얻어오기
@@ -566,11 +636,10 @@
                     type : "POST",
                     dataType : "json",
                     success : function(result) {
-                        // console.log("result : " + result);
-                        $("authCode").attr("disabled", false); // 인증번호 입력 활성화
+                        $("#authCode").attr("disabled", false); // 인증번호 입력 활성화
                         $("#email_auth").attr("disabled", true); // 인증번호 전송 버튼 비활성화
                         code = result;
-                        alert("인증 번호가 입력하신 이메일로 전송 되었습니다.");
+                        alert("인증번호가 입력하신 이메일로 전송 되었습니다.");
                         startTimer(); // 타이머 시작
                     }, // success 종료
                     error: function() {
@@ -582,20 +651,15 @@
             $("#authCode").on("focusout", function() {
                 const inputCode = $("#authCode").val(); // 인증번호 입력 칸에 작성한 내용 가져오기
 
-                // console.log("입력 번호 : " + inputCode);
-                // console.log("인증 번호 : " + code);
-
                 if(Number(inputCode) === code) {
                     $("#emailAuthWarn").html('인증번호가 일치합니다.');
                     $("#emailAuthWarn").css('color', 'green');
                     $("#email_auth").attr('disabled', true);
                     $("#SELLER_EMAIL").attr('readonly', true);
-                    $("#register_button").attr('disabled', false);
                     clearInterval(timer); // 타이머 중지
                 } else {
                     $("#emailAuthWarn").html('인증번호가 불일치합니다. 다시 확인해주세요!');
                     $("#emailAuthWarn").css('color', 'red');
-                    $("#register_button").attr('disabled', true);
                 }
             });
             // 초기 타이머 표시 업데이트
@@ -612,12 +676,17 @@
             var correctColor = "#008000FF"
             var wrongColor = "#FF0000FF"
 
-            if(SELLER_PWD.value === SELLER_PWD2.value) {
+            if ( SELLER_PWD.value == "" || SELLER_PWD2.value == "") {
+                confirmMsg.style.color = wrongColor;
+                confirmMsg.innerHTML = "비밀번호를 입력해주세요.";
+                return false;
+            } else if(SELLER_PWD.value === SELLER_PWD2.value) {
                 confirmMsg.style.color = correctColor;
                 confirmMsg.innerHTML = "비밀번호가 일치합니다.";
             } else {
                 confirmMsg.style.color = wrongColor;
                 confirmMsg.innerHTML = "비밀번호가 일치하지 않습니다.";
+                return false;
             }
         }
 
