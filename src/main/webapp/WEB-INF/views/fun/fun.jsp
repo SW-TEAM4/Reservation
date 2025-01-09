@@ -18,6 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
+        * {
+            margin-bottom: 2px;
+        }
 
         a {
             color: black;
@@ -62,6 +65,7 @@
             height: 300px;
             overflow: hidden;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .card1 img {
@@ -108,6 +112,7 @@
             height: 300px;
             overflow: hidden;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .card2 img {
@@ -154,6 +159,7 @@
             height: 300px;
             overflow: hidden;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .card3 img {
