@@ -27,6 +27,7 @@
     <style>
         * {
             font-family: "Noto Sans KR";
+            margin-bottom: 2px;
         }
 
         .write_container {
@@ -57,7 +58,7 @@
             border-radius: 5px;
             cursor: pointer;
             width: 80px;
-            height: 30px;
+            height: 50px;
             margin-top: 15px;
 
         }
@@ -65,16 +66,18 @@
         .back_container {
             display: flex;
             justify-content: center;
-            margin: 0 auto;
+            margin-top: 30px;
+            margin-right: 80px;
         }
 
         .back {
             padding: 10px 20px;
-            background-color: #352018;
+            background-color: #8A5642;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 16px;
+            margin-right: 220px;
         }
 
         .back:hover {
@@ -91,16 +94,10 @@
                 <form method="post" action="write" onsubmit="return writeCheck();">
                     <table>
                         <tr>
-                            <td>글쓴이 : </td>
-                            <td>
-                                <%= USER_ID != null ? USER_ID : "알 수 없음" %>
-                            </td>
+                            <td>글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %></td>
                         </tr>
                         <tr>
-                            <td>제목 : </td>
-                            <td>
-                                <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE">
-                            </td>
+                            <td>제목 : <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE"></td>
                         </tr>
                         <tr>
                             <td colspan="2">내용 : </td>
