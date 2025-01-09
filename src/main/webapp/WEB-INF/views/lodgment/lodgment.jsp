@@ -52,22 +52,32 @@
         %>
         <input type="hidden" id="user-id" value="<%= userIdx != null ? userIdx : "" %>">
 
-        <div class="lodgment-container">
-            <div class="top-container">
-                <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
-                <div class="header-text">숙소 상세</div>
+            <div class="lodgment-container">
+                <div class="top-container">
+                    <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg" />
+                    <div class="header-text">숙소 상세</div>
+                </div>
+
+                <div class="reserve-info">
+                    <img src="${lodgmentDTO.lod_img_url}" width="1280px" height="800px" />
+                    <!-- 텍스트와 좋아요 아이콘을 한 줄에 배치 -->
+                    <div class="lodgment-header">
+                        <span class="lodgment-name">${lodgmentDTO.lod_name}</span>
+                        <!-- 좋아요 하트 아이콘 -->
+                        <img
+                                class="heart-icon ${lodLikeDTO.like_idx != null ? 'active' : ''}"
+                                id="heart-icon"
+                                src="${lodLikeDTO.like_idx != null ? 'img/like_full_heart.png' : 'img/like_empty_heart.png'}"
+                                alt="Heart Icon"
+                                width="30"
+                                height="30"
+                                data-lod-idx="${lodgmentDTO.lod_idx}"
+                        />
+                    </div>
+
+                </div>
             </div>
 
-            <div class="reserve-info">
-                    <img src="${lodgmentDTO.lod_img_url}" width="1280px" height="800px">
-                    <p style="font-size: 24px; font-weight: bold">
-                            ${lodgmentDTO.lod_name}
-                    </p>
-                    <span class="heart-icon ${lodLikeDTO.like_idx != null ? 'active' : ''}" data-lod-idx="${lodgmentDTO.lod_idx}">
-                            ${lodLikeDTO.like_idx != null ? "❤️" : "🤍"}
-                    </span>
-            </div>
-        </div>
 
         <!-- 리뷰 더보개 -->
         <div class="lod-review-container">

@@ -3,9 +3,32 @@ document.addEventListener("DOMContentLoaded", function () {
     let guestCount = parseInt(document.getElementById("guest-count").textContent);
     let petCount = parseInt(document.getElementById("pet-count").textContent);
     let checkinDate = document.getElementById("checkin-date").textContent;
-
     let checkoutDate = document.getElementById("checkout-date").textContent;
     let lod_idx = document.getElementById("lod_idx").value;
+
+    // 서버로 검색 요청 전송
+    function sendSearchAjax() {
+        var url = "/lodgment.do?lod_idx=" + lod_idx + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate + "&guestCount=" + guestCount + "&petCount=" + petCount;
+        console.log(url);
+        $.ajax({
+            url: '/lodgment/availableRooms.do',
+            type: 'GET',
+            dataType: 'json',
+            data: {
+                lod_idx: lod_idx,
+                checkinDate: checkinDate,
+                checkoutDate: checkoutDate,
+                guestCount: guestCount,
+                petCount: petCount
+            },
+            success: function (response) {
+                updateRoomList(response); // 결과 업데이트 함수 호출
+            },
+            error: function (xhr, status, error) {
+                alert('객실 정보를 가져오는 데 실패했습니다.');
+            }
+        });
+    }
 
     // === saveToRecent 함수 ===
     function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
@@ -49,6 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // AJAX 요청 전송
         sendSearchAjax();
     });
+
 
     // === 객실 카드 템플릿 함수 ===
     function createRoomCard(room, checkinTime, checkoutTime) {
@@ -98,45 +122,30 @@ document.addEventListener("DOMContentLoaded", function () {
         const roomListContainer = document.getElementById("room-list");
         roomListContainer.innerHTML = ''; // 기존 리스트 초기화
 
-        const roomList =  response.roomList;
+        const roomList = response.roomList;
         const checkinTime = response.checkinTime;
         const checkoutTime = response.checkoutTime;
-        if (roomList && roomList.length > 0) {
-            roomList.forEach(room => {
+
+        // 인원 및 반려동물 조건에 맞는 객실만 필터링
+        const filteredRoomList = roomList.filter(room =>
+            room.max_people_cnt >= guestCount && room.max_pet_cnt >= petCount
+        );
+
+        if (filteredRoomList.length > 0) {
+            filteredRoomList.forEach(room => {
                 const roomCard = createRoomCard(room, checkinTime, checkoutTime);
                 roomListContainer.insertAdjacentHTML('beforeend', roomCard);
             });
         } else {
+            // 조건에 맞는 객실이 없을 경우 메시지 표시
             roomListContainer.innerHTML = `
-                <p>예약 가능한 방이 없습니다!</p>
-                <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 20px auto;"></div>
-            `;
+            <p>현재 이용 가능한 객실이 없습니다.</p>
+            <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 20px auto;"></div>
+        `;
         }
     }
 
-    // 서버로 검색 요청 전송
-    function sendSearchAjax() {
-        var url = "/lodgment.do?lod_idx=" + lod_idx + "&checkinDate=" + checkinDate + "&checkoutDate=" + checkoutDate + "&guestCount=" + guestCount + "&petCount=" + petCount;
-        console.log(url);
-        $.ajax({
-            url: '/lodgment/availableRooms.do',
-            type: 'GET',
-            dataType: 'json',
-            data: {
-                lod_idx: lod_idx,
-                checkinDate: checkinDate,
-                checkoutDate: checkoutDate,
-                guestCount: guestCount,
-                petCount: petCount
-            },
-            success: function (response) {
-                updateRoomList(response); // 결과 업데이트 함수 호출
-            },
-            error: function (xhr, status, error) {
-                alert('객실 정보를 가져오는 데 실패했습니다.');
-            }
-        });
-    }
+
 
     // === 팝업 요소 가져오기 ===
     const guestPopup = document.getElementById("guest-popup");

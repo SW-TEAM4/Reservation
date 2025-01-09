@@ -15,7 +15,15 @@ public class RoomServiceImpl implements RoomService {
 
     @Override
     public RoomDTO getRoomDetail(int room_idx) {
-        return roomMapper.getRoomDetail(room_idx); // Mapper 호출
+        RoomDTO room = roomMapper.getRoomDetail(room_idx);
+
+        // room_notice 포맷팅 (줄바꿈 -> <br>)
+        if (room.getRoom_notice() != null) {
+            String formattedNotice = room.getRoom_notice().replace("\n", "<br>");
+            room.setRoom_notice(formattedNotice);
+        }
+
+        return room;
     }
 
     @Override

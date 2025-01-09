@@ -23,10 +23,11 @@ $(document).ready(function () {
                     return window.location.href = "/userlogin";
                 } else if (response.status === "added") { // 찜 추가 성공
                     likeIcon.addClass("active");
-                    likeIcon.text("❤️"); // 빨간 하트로 변경
+                    likeIcon.attr("src", "img/like_full_heart.png"); // 빨간색 하트 이미지로 변경
+
                 } else if (response.status === "removed") { // 찜 제거 성공
                     likeIcon.removeClass("active");
-                    likeIcon.text("🤍"); // 빈 하트로 변경
+                    likeIcon.attr("src", "img/like_empty_heart.png"); // 하얀색 하트 이미지로 변경
                 }
             },
             error: function () {
