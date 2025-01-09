@@ -106,8 +106,13 @@
         <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 
     <script>
+        // 로그인 필터에서 메시지 전달 받을시 경고창 출력
+        <c:if test="${ msg != null}">
+            alert('<c:out value="${msg}" escapeXml="true" />');
+        </c:if>
+
         /* 로그인 버튼 클릭 메서드 */
-        $(".login_button").click(function() {
+        $(".login_button").click(function () {
 
             // alert("로그인 버튼 작동");
 
@@ -129,6 +134,8 @@
                 return false;
             }
         }
+
+
     </script>
 </body>
 </html>
