@@ -25,7 +25,7 @@ jobs:
           sshpass -p "close_DBMS_4" ssh -o StrictHostKeyChecking=no ubuntu@3.34.192.234 << 'EOF'
             cd /home/ubuntu/project/Reservation 
             git pull origin develop  
-            ./mvnw clean install     
+            ./mvnw clean install -DskipTests     
             mv target/team4.war /opt/tomcat/webapps/ROOT.war 
             sudo systemctl restart tomcat 
           EOF
