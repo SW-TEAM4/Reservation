@@ -31,13 +31,13 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // === saveToRecent 함수 ===
-    function saveToRecent(roomIdx, roomName, roomImgUrl, roomPrice) {
+    window.saveToRecent = function(roomIdx, roomName, roomImgUrl, roomPrice) {
         const recentlyRooms = JSON.parse(localStorage.getItem('recentlyRooms') || '[]');
         const updatedRooms = recentlyRooms.filter(room => room.roomIdx !== roomIdx);
         updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice });
         if (updatedRooms.length > 5) updatedRooms.pop();
         localStorage.setItem('recentlyRooms', JSON.stringify(updatedRooms));
-    }
+    };
 
 
     // Date Range Picker 초기화
@@ -91,11 +91,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             <div class="room-name" style="margin-bottom: 5px;">${room.room_name}</div>
                             <div class="check-in-out">체크인 ${checkinTime}  ~ 체크아웃 ${checkoutTime}</div>
                         </div>
-                        <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
-                           class="details-link"
-                           onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
-                            상세보기
-                        </a>
+                       <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
+                          class="details-link"
+                          onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
+                           상세보기
+                       </a>
+
                     </div>
                     <!-- 하단 영역 -->
                     <div class="room-footer">
