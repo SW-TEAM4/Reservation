@@ -1,0 +1,78 @@
+.top-container {
+    height: 70px;
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc; /* 위쪽 선 */
+    padding: 10px 20px; /* 컨테이너 내부 여백 */
+}
+
+.top-container .arrow-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.top-container .header-text {
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 항상 가로로 2개씩 배치 */
+    gap: 20px; /* 카드 간격 */
+    padding: 20px;
+    width: 1280px; /* 카드 전체 크기 */
+    height: auto;
+}
+.no-like-room-container {
+    display: flex; /* 플렉스 박스 활성화 */
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    height: 100%; /* 부모 컨테이너 높이를 기준으로 정렬 */
+    min-height: 300px; /* 최소 높이 설정 (필요에 따라 조정 가능) */
+}
+
+.no-like-room-image {
+    max-width: 100%; /* 이미지가 부모 크기를 넘지 않도록 제한 */
+    height: auto; /* 비율 유지하며 크기 조정 */
+}
+
+/* 카드 전체 스타일 */
+.card {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 이미지 섹션 (카드의 절반 차지) */
+.card-image {
+    width: 100%;
+    height: 150px; /* 고정된 높이 */
+    object-fit: cover; /* 비율 유지하며 잘림 방지 */
+}
+.card-header {
+    display: flex; /* 플렉스 박스를 사용하여 가로 정렬 */
+    justify-content: space-between; /* 제목과 하트 아이콘을 양 끝으로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    padding: 0 10px; /* 좌우 여백 추가 */
+    height: 50px; /* 헤더 높이를 50px로 설정 (필요에 따라 조정 가능) */
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.heart-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}

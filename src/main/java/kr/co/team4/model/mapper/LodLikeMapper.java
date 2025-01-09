@@ -22,7 +22,7 @@ public interface LodLikeMapper {
     LodLikeDTO findByUserAndLod(LodLikeDTO dto);
 
     // 유저의 찜한 숙소 리스트 가져오기
-    List<LodgmentDTO> getLikedLodgments(BigInteger userIdx);
+    List<LodgmentDTO> getLikeList(BigInteger userIdx);
 }
 
 

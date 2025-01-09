@@ -1,88 +1,61 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
+         pageEncoding="UTF-8" isELIgnored="false" %>
+<%
+    String todayDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+    String tomorrowDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000));
+%>
+<c:set var="today" value="<%= todayDate %>" />
+<c:set var="tomorrow" value="<%= tomorrowDate %>" />
 <!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>찜한 숙소 목록</title>
-    <style>
-        .card-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .card {
-            position: relative;
-            width: 300px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.2s ease-in-out;
-        }
-        .card:hover {
-            transform: scale(1.05);
-        }
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-        }
-        .heart-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            fill: gray;
-            transition: transform 0.3s ease, fill 0.3s ease;
-        }
-        .heart-icon.active {
-            fill: red;
-        }
-        .heart-icon:hover {
-            transform: scale(1.2);
-        }
-        .card h3 {
-            margin: 10px 0;
-        }
-        .card p {
-            color: #555;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/lodlike.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="/js/lodlike.js"></script>
 </head>
 <body>
-<h1 style="text-align:center;">찜한 숙소 목록</h1>
-<input type="hidden" id="user-id" value="${userIdx}" />
-<div class="card-container">
+<div class="wrap">
+    <%@ include file="/WEB-INF/views/include/header.jsp" %>
+        <input type="hidden" id="user-id" value="${userIdx}" />
+<div class="container">
+    <div class="top-container">
+        <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
+        <div class="header-text">찜 한 숙소</div>
+    </div>
     <c:if test="${empty wishlist}">
-        <p>찜한 숙소가 없습니다.</p>
-    </c:if>
-
-    <c:forEach var="lodgment" items="${wishlist}">
-        <div class="card" onclick="location.href='/lodlike/lodgment/${lodgment.lod_idx}'">
-            <!-- 숙소 이미지 -->
-            <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}">
-
-            <!-- SVG 하트 아이콘 -->
-            <svg class="heart-icon" data-lod-id="${lodgment.lod_idx}" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 6.5 3.5 5 5.5 5c1.54 0 3.04.99 3.57 2.36h1.87C15.46 5.99 16.96 5 18.5 5 20.5 5 22 6.5 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
-            </svg>
-
-            <!-- 숙소 이름 -->
-            <h3>${lodgment.lod_name}</h3>
-
+        <div class="no-like-room-container">
+            <img src="/img/lodlike_no_result.svg" alt="찜한 숙소 없음" class="no-like-room-image">
         </div>
-    </c:forEach>
-</div>
+    </c:if>
+    <div class="card-container">
 
-<input type="hidden" id="user-idx" value="${user_idx}" />
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script src="/js/lodlike.js"></script>
+
+        <c:forEach var="lodgment" items="${wishlist}">
+            <div class="card">
+                <a href="/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${today}&checkoutDate=${tomorrow}&guestCount=2&petCount=1"  class="room-image-link">
+                    <img src="${lodgment.lod_img_url}" alt="${lodgment.lod_name}" class="card-image">
+                </a>
+                <div class="card-header">
+                    <h3 class="card-title">${lodgment.lod_name}</h3>
+                    <img
+                            class="heart-icon ${lodgment.like_idx != null ? 'active' : ''}"
+                            id="heart-icon"
+                            src="${lodgment.like_idx != null ? '/img/like_full_heart.png' : '/img/like_empty_heart.png'}"
+                            alt="Heart Icon"
+                            data-lod-idx="${lodgment.lod_idx}"
+                    />
+                </div>
+            </div>
+
+        </c:forEach>
+    </div>
+</div>
+    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+</div>
 </body>
 </html>

@@ -11,6 +11,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/lodrecently.css"/>
   <script src="/js/recently.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // back 화살표 클릭 동작 이벤트 추가
+      const arrowIcon = document.getElementById("left-arrow");
+      if (arrowIcon) {
+        arrowIcon.addEventListener("click", function () {
+          if (document.referrer) { // 이전 페이지가 있으면
+            window.history.back(); // 이전 페이지로 이동
+          } else { // 이전 페이지가 없으면
+            window.location.href = '/home.do'; // 홈페이지로 이동
+          }
+        });
+      }
+    });
+  </script>
 </head>
 <body>
 <div class="wrap">
@@ -18,7 +33,7 @@
   <div class="container">
     <div class="top-container">
       <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
-      <div class="header-text">최근 본 숙소</div>
+      <div class="header-text">최근 본 객실</div>
     </div>
     <div class="recently-room-list" id="recently-rooms-container"></div>
   </div>

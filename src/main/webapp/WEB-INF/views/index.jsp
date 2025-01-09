@@ -7,6 +7,9 @@
 <form action="recently/recently.do" method="get">
     <button type="submit">Go to Recently</button>
 </form>
+<form action="/lodlike/lodwish.do" method="get">
+    <button type="submit">Go to Like</button>
+</form>
 
 <form action="/home.do" method="get">
     <button type="submit">Go to Home Index</button>
