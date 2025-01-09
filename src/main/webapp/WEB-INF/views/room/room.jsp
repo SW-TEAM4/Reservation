@@ -43,7 +43,7 @@
             <div class="header-text">객실 상세</div>
         </div>
         <div class="reserve-info">
-            <c:if test="${not empty room}">
+            <c:if test="${not empty room}">F
             <div class="room-detail">
 
                 <!-- 객실 이미지 -->
@@ -86,7 +86,7 @@
                                 <img src="/img/ResDetail_user_img.svg" alt="아이콘"
                                      style="width: 16px !important; height: 16px !important; vertical-align: -1.0627px">
                                 성인 ${guestCount}명 /
-                                반려동물: ${petCount}마리
+                                반려동물 ${petCount}마리
                             </p>
                         </div>
                     </div>
