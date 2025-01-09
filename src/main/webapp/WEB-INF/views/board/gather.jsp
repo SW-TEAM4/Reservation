@@ -38,7 +38,7 @@
         }
 
         .boardname h2 {
-            margin: 0 0 0 60px;
+            margin: 0 0 0 190px;
             padding: 5px 20px;
             color: #352018;
             font-family: "Noto Sans KR";
@@ -48,7 +48,7 @@
         }
 
         .boardname p {
-            margin: 25px 0 0 60px;
+            margin: 25px 0 0 190px;
             padding: 5px 20px; /* 텍스트 여백 */
             font-size: 15px;
             color: #352018;
@@ -62,7 +62,7 @@
             position: absolute;
             top: 10px; /* 부모의 상단에 위치 */
             right: 10px; /* 부모의 오른쪽에 위치 */
-            margin: 0 78px 0 0; /* 버튼 기본 마진 제거 */
+            margin: 0 210px 0 0; /* 버튼 기본 마진 제거 */
             background-color: #352018;
             color: #fff;
             border: none;
@@ -86,9 +86,9 @@
         }
 
         .board {
-            margin: 60px auto 0 auto;
+            margin: 60px auto 60px auto;
             padding: 0 20px;
-            max-width: 1600px;
+            max-width: 1300px;
         }
 
         table {
