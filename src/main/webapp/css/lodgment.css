@@ -66,11 +66,38 @@ body, h1, h2, h3, h4, h5, h6, input, textarea, select, button, .result-container
     left: 50%;
     transform: translateX(-50%);
 }
+.lodgment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.lodgment-name {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.heart-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
 
 .reserve-info {
     width: 100%;
     box-sizing: border-box;
     border-top: 1px solid #ccc;
+}
+
+#heart-icon {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+#heart-icon:hover {
+    transform: scale(1.1); /* 클릭 시 확대 효과 */
 }
 
 .lod-review-container {
@@ -126,6 +153,18 @@ body, h1, h2, h3, h4, h5, h6, input, textarea, select, button, .result-container
 .review-rating {
     font-size: 16px;
     color: #FFD700; /* 금색 별 */
+}
+
+.star {
+    font-size: 18px;
+    color: gray;
+    margin-right: 5px;
+}
+
+.star-filled{
+    font-size: 18px;
+    color: #FFDF86;
+    margin-right: 5px;
 }
 
 /* 작성 날짜 스타일 */

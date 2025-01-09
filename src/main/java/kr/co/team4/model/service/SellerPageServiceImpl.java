@@ -280,7 +280,9 @@ public class SellerPageServiceImpl implements SellerPageService {
                 (String) salesData.get("min3_month_date"),          // 3개월 전 달
                 (String) salesData.get("min2_month_date"),          // 2개월 전 달
                 (String) salesData.get("min1_month_date"),          // 1개월 전 달
-                (String) salesData.get("current_month")             // 이번달
+                (String) salesData.get("current_month"  )           // 이번달
+
+
         ));
 
         ArrayList<BigDecimal> total_money = new ArrayList<>(Arrays.asList(
@@ -290,7 +292,8 @@ public class SellerPageServiceImpl implements SellerPageService {
                 (BigDecimal) salesData.get("min3_month_money"),        // 3개월 전 합산금액
                 (BigDecimal) salesData.get("min2_month_money"),        // 2개월 전 합산금액
                 (BigDecimal) salesData.get("min1_month_money"),        // 1개월 전 합산금액
-                (BigDecimal) salesData.get("month_money")              // 이번 달 합산금액
+                (BigDecimal) salesData.get("month_money"     ),        // 이번 달 합산금액
+                (BigDecimal) salesData.get("total_money"     )         // 이번달
         ));
 
         salesData.put("month_date", month_date);

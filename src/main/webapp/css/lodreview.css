@@ -13,6 +13,18 @@
     gap: 20px; /* 항목 간 간격 */
 }
 
+.star {
+    font-size: 18px;
+    color: gray;
+    margin-right: 5px;
+}
+
+.star-filled{
+    font-size: 18px;
+    color: #FFDF86;
+    margin-right: 5px;
+}
+
 .lod-review-card {
     display: flex;
     background-color: #ffffff;
@@ -101,4 +113,29 @@
     border-top: 1px solid #ccc;
     max-width: 1280px;
     padding: 20px;
+}
+
+/* 리뷰가 없을 때 no-review-container 스타일 */
+.no-review-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 300px; /* 적절한 높이를 설정 */
+    text-align: center;
+}
+
+.no-review-container img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+.lod-review-card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.lod-review-star-container {
+    display: none; /* 리뷰가 없으므로 숨김 */
 }

@@ -92,7 +92,7 @@
                     </div>
                     <!-- 하단 영역 -->
                     <div class="room-footer">
-                        <p class="room-price">${room.total_room_price}원</p>
+                        <p class="room-price">0원</p>
                         <!-- 예약 버튼 -->
                         <button class="booking-button"
                                 onclick="location.href='/reservation/reservation.do?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&res_people_cnt=${guestCount}&res_pets_cnt=${petCount}'">
@@ -107,9 +107,8 @@
 
             <!-- 예약 공지 -->
             <div class="room-notice" style="margin-bottom: 50px;">
-                <div style="font-size: 20px; font-weight: bold;">예약 공지
-                </div>
-                <p>${room.room_notice}</p>
+                <div style="font-size: 20px; font-weight: bold;">예약 공지</div>
+                <p><c:out value="${room.room_notice}" escapeXml="false" /></p>
             </div>
         </div>
 

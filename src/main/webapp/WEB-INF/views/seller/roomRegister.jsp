@@ -46,7 +46,7 @@
                 </thead>
                 <tbody id="roomTableBody">
                 <tr>
-                    <td><input type="text" name="rooms[0].room_name" placeholder="객실명" class="small-input"></td>
+                    <td><input type="text" name="rooms[0].room_name" placeholder="객실명" class="small-input" required></td>
                     <td>
                         <input
                                 type="text"
@@ -59,18 +59,69 @@
                     </td>
 
 
-                    <td><input type="number" name="rooms[0].max_people_cnt" placeholder="최대 인원" class="extra-small-input"></td>
-                    <td><input type="number" name="rooms[0].max_pet_cnt" placeholder="최대 반려동물 수" class="extra-small-input"></td>
+                    <td><input
+                            type="number"
+                            name="rooms[0].max_people_cnt"
+                            placeholder="최대 인원"
+                            class="extra-small-input"
+                            required
+                            min="1"
+                    >
+                    </td>
+                    <td><input
+                            type="number"
+                            name="rooms[0].max_pet_cnt"
+                            placeholder="최대 반려동물 수"
+                            class="extra-small-input"
+                            required
+                            min="0"
+                    ></td>
                     <td>
-                        <textarea name="rooms[0].room_notice" placeholder="객실 기본정보를 입력하세요" class="textarea-input"></textarea>
+                        <textarea
+                                name="rooms[0].room_notice"
+                                placeholder="객실 기본정보를 입력하세요"
+                                class="textarea-input"
+                                required
+                        ></textarea>
                     </td>
                     <td>
-                        <label><input type="radio" name="rooms[0].max_pets_weight" value="2"> 10kg 초과</label>
-                        <label><input type="radio" name="rooms[0].max_pets_weight" value="1"> 5kg 이상 ~ 10kg 이하</label>
-                        <label><input type="radio" name="rooms[0].max_pets_weight" value="0"> 5kg 미만</label>
+                        <label>
+                            <input
+                                    type="radio"
+                                    name="rooms[0].max_pets_weight"
+                                    value="2"
+                                    required
+                            >
+                            10kg 초과
+                        </label>
+                        <label>
+                            <input
+                                    type="radio"
+                                    name="rooms[0].max_pets_weight"
+                                    value="1"
+                                    required
+                            >
+                            5kg 이상 ~ 10kg 이하
+                        </label>
+                        <label>
+                            <input
+                                    type="radio"
+                                    name="rooms[0].max_pets_weight"
+                                    value="0"
+                                    required
+                            >
+                            5kg 미만
+                        </label>
                     </td>
                     <td>
-                        <input type="file" name="rooms[0].room_photos" class="input-file" accept="image/*" multiple>
+                        <input
+                                type="file"
+                                name="rooms[0].room_photos"
+                                class="input-file"
+                                accept="image/*"
+                                required
+                                multiple
+                        >
                         <button type="button" class="delete-photo">삭제</button>
                     </td>
                 </tr>
@@ -106,6 +157,22 @@
         if (activeMenu) {
             activeMenu.style.fontWeight = "bold";
         }
+    });
+
+    document.querySelector("form").addEventListener("submit", (e) => {
+        const requiredFields = document.querySelectorAll("[required]");
+        requiredFields.forEach((field) => {
+            if (!field.value) {
+                e.preventDefault();
+                alert("모든 필드를 입력해야 합니다.");
+                field.focus();
+            }
+        });
+
+        const priceInputs = document.querySelectorAll(".room-price-input");
+        priceInputs.forEach((input) => {
+            input.value = input.value.replace(/,/g, ""); // 쉼표 제거
+        });
     });
 </script>
 <script src="/js/roomRegister.js"></script>
