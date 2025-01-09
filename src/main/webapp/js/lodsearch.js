@@ -138,10 +138,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 roomListContainer.insertAdjacentHTML('beforeend', roomCard);
             });
         } else {
-            // 조건에 맞는 객실이 없을 경우 메시지 표시
+            // 조건에 맞는 객실이 없을 경우 이미지 표시
             roomListContainer.innerHTML = `
-            <p>현재 이용 가능한 객실이 없습니다.</p>
-            <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 20px auto;"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <img src="img/lod_room_no_result.svg" alt="No rooms available" style="max-width: 100%; height: auto;">
+            </div>
         `;
         }
     }
