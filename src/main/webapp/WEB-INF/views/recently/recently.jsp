@@ -33,7 +33,7 @@
   <div class="container">
     <div class="top-container">
       <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
-      <div class="header-text">최근 본 숙소</div>
+      <div class="header-text">최근 본 객실</div>
     </div>
     <div class="recently-room-list" id="recently-rooms-container"></div>
   </div>
