@@ -167,41 +167,48 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 인원 팝업 ===
     document.getElementById('guest-button').addEventListener('click', function (e) {
         e.stopPropagation();
+        updateUI();
         togglePopup(guestPopup, 'guest');
     });
 
     document.getElementById('plus-guest-btn').addEventListener('click', function () {
         if (guestCount < 10) guestCount++;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('minus-guest-btn').addEventListener('click', function () {
         if (guestCount > 1) guestCount--;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('plus-pet-btn').addEventListener('click', function () {
         if (petCount < 5) petCount++;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('minus-pet-btn').addEventListener('click', function () {
         if (petCount > 0) petCount--;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('apply-btn').addEventListener('click', function () {
         guestPopup.classList.add('hidden');
+        updateUI();
         updateCounts();
     });
 
     // === 타입 팝업 ===
     document.getElementById('type-button').addEventListener('click', function (e) {
         e.stopPropagation();
+        updateUI();
         togglePopup(typePopup, 'type');
     });
 
@@ -210,6 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedType = this.getAttribute('value');
             document.querySelector('.type-label').innerText = this.getAttribute('data-value');
             typePopup.classList.add('hidden');
+            updateUI();
             sendSearchAjax();
         });
     });
@@ -217,6 +225,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 몸무게 팝업 ===
     document.getElementById('weight-button').addEventListener('click', function (e) {
         e.stopPropagation();
+        updateUI();
         togglePopup(weightPopup, 'weight');
     });
 
@@ -225,6 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedWeight = this.getAttribute('value');
             document.querySelector('.weight-label').innerText = this.getAttribute('data-value');
             weightPopup.classList.add('hidden');
+            updateUI();
             sendSearchAjax();
         });
     });
@@ -255,27 +265,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // === 탭 UI 활성화 처리 ===
-    document.querySelectorAll('.tab').forEach(tab => {
-        const tabRegion = parseInt(tab.getAttribute('data-region'), 10); // 각 탭의 지역 값
-
-        // 선택된 지역과 일치하면 활성화
-        if (tabRegion === selectedRegion) {
-            tab.classList.add('active'); // 선택된 탭 활성화
-            tab.classList.remove('inactive'); // 비활성화 제거
-        } else {
-            tab.classList.remove('active'); // 선택 해제
-            tab.classList.add('inactive'); // 비활성화 적용
-        }
-
-        // === 탭 클릭 이벤트 추가 ===
-        tab.addEventListener('click', function () {
-            const newRegion = parseInt(this.getAttribute('data-region'), 10); // 클릭한 탭의 지역 값
-            localStorage.setItem('selectedRegion', newRegion); // 선택 지역 로컬스토리지에 저장
-            window.location.href = `/search/search.do?region=${newRegion}`; // 새 지역으로 페이지 이동
-        });
-    });
-
     // === 탭 클릭 이벤트 추가 ===
     const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
     tabs.forEach(tab => {
@@ -293,18 +282,25 @@ document.addEventListener("DOMContentLoaded", function () {
             switch (tabId) {
                 case 'tab-all':
                     selectedRegion = 0; // 전체
+                    tab.classList.add('active'); // 선택된 탭 활성화
                     break;
                 case 'tab-gangwondo':
                     selectedRegion = 1; // 강원도
+                    tab.classList.add('active'); // 선택된 탭 활성화
                     break;
                 case 'tab-gyeonggi':
                     selectedRegion = 2; // 경기
+                    tab.classList.add('active'); // 선택된 탭 활성화
+
                     break;
                 case 'tab-incheon':
                     selectedRegion = 3; // 인천
+                    tab.classList.add('active'); // 선택된 탭 활성화
+
                     break;
                 default:
                     selectedRegion = 0; // 기본값
+                    tab.classList.add('active'); // 선택된 탭 활성화
             }
 
             // AJAX 요청 다시 보내기
@@ -313,7 +309,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    // === 지역 변경 이벤트 ===
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function () {
+            selectedRegion = parseInt(this.getAttribute('data-region'), 10); // 선택한 지역 업데이트
+            updateUI(); // UI 업데이트
+            sendSearchAjax(); // 검색 요청
+        });
+    });
+
+    function updateUI() {
+        document.getElementById('guest-count').innerText = guestCount.toString();
+        document.getElementById('pet-count').innerText = petCount.toString();
+        document.querySelector('.type-label').innerText = document.querySelector(`.type-item[value='${selectedType}']`).getAttribute('data-value');
+        document.querySelector('.weight-label').innerText = document.querySelector(`.weight-item[value='${selectedWeight}']`).getAttribute('data-value');
+        document.getElementById('checkin-date').textContent = moment(checkinDate).format('YYYY-MM-DD');
+        document.getElementById('checkout-date').textContent = moment(checkoutDate).format('YYYY-MM-DD');
+        document.getElementById('cal-date').textContent = `, ${moment(checkoutDate).diff(moment(checkinDate), 'days')}박`;
+    }
+
     // === 초기 UI 렌더링 ===
+    updateUI();
     updateDateUI(moment(checkinDate), moment(checkoutDate)); // 기본값으로 오늘과 내일 표시
     sendSearchAjax();
 });
