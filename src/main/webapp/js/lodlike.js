@@ -7,12 +7,6 @@ $(document).ready(function () {
         const likeIcon = $(this); // 클릭된 하트 아이콘
         console.log("User IDX from hidden input:", userIdx); // 디버깅용 로그
 
-        // 로그인 여부 확인
-        if (!userIdx || userIdx.trim() === "") {
-            alert("로그인이 필요합니다.");
-            window.location.href = "/userlogin";
-            return;
-        }
 
         // AJAX 요청: 찜 상태 토글
         $.ajax({
@@ -26,10 +20,11 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status === "added") { // 찜 추가 성공
                     likeIcon.addClass("active");
-                    likeIcon.text("❤️"); // 빨간 하트로 변경
+                    likeIcon.attr("src", "img/like_full_heart.png"); // 빨간색 하트 이미지로 변경
+
                 } else if (response.status === "removed") { // 찜 제거 성공
                     likeIcon.removeClass("active");
-                    likeIcon.text("🤍"); // 빈 하트로 변경
+                    likeIcon.attr("src", "img/like_empty_heart.png"); // 하얀색 하트 이미지로 변경
                 }
             },
             error: function () {
