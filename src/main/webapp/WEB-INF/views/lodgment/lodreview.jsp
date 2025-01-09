@@ -34,7 +34,7 @@
         </div>
         <div class="reserve-info">
             <div class="lod-review-container">
-                <div class="review-header">
+                <c:if test="${statistics['AVG_RATING'] > 0 && statistics['REVIEW_COUNT'] > 0}">
                     <div class="review-statistics">
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <img src="/img/search_icon_star.svg" class="star-icon" style="width: 26px; height: 26px;"/>
@@ -42,36 +42,49 @@
                             <p style="color: #352018; font-size: 24px;">(${statistics['REVIEW_COUNT']})</p>
                         </div>
                     </div>
-                </div>
-                <c:forEach var="lodreview" items="${reviewList}">
-                    <div class="lod-review-card">
-                        <img class="lod-review-card-image"
-                             src="${empty lodreview.reviewer_image ? '/img/review_defalt_img.svg' : lodreview.reviewer_image}"
-                             alt="리뷰 이미지">
+                </c:if>
 
-                        <div class="lod-review-card-content">
-                            <div class="lod-review-card-header">
-                                <span class="lod-review-star-container">
-                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 1}'>-filled</c:if>">&#9733;</span>
-                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 2}'>-filled</c:if>">&#9733;</span>
-                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 3}'>-filled</c:if>">&#9733;</span>
-                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 4}'>-filled</c:if>">&#9733;</span>
-                                    <span class="star<c:if test='${lodreview.reviewer_rating >= 5}'>-filled</c:if>">&#9733;</span>
-                                </span>
-                                <div class="lod-review-created">${lodreview.reviewer_created}</div>
-                            </div>
-                            <!-- 사용자 댓글 -->
-                            <div class="lod-review-card-description">${lodreview.reviewer_content}</div>
+                <c:choose>
 
-                            <c:if test="${lodreview.manager_reply != null}">
-                                <div class="lod-manager-wrapper">
-                                    <div class="lod-manager-title">사장님</div>
-                                    <div class="lod-manager-reply">${lodreview.manager_reply}</div>
+                    <c:when test="${not empty reviewList}">
+                        <c:forEach var="lodreview" items="${reviewList}">
+                            <div class="lod-review-card">
+                                <img class="lod-review-card-image"
+                                     src="${empty lodreview.reviewer_image ? '/img/review_defalt_img.svg' : lodreview.reviewer_image}"
+                                     alt="리뷰 이미지">
+
+                                <div class="lod-review-card-content">
+                                    <div class="lod-review-card-header">
+
+                                        <div class="lod-review-star-container">
+                                            <span class="star">&#9733;</span>
+                                            <span>(${lodreview.reviewer_rating})</span>
+                                        </div>
+                                        <div class="lod-review-created">${lodreview.reviewer_created}</div>
+                                    </div>
+
+                                    <div class="lod-review-card-description">${lodreview.reviewer_content}</div>
+
+                                    <c:if test="${lodreview.manager_reply != null}">
+                                        <div class="lod-manager-wrapper">
+                                            <div class="lod-manager-title">사장님</div>
+                                            <div class="lod-manager-reply">${lodreview.manager_reply}</div>
+                                        </div>
+                                    </c:if>
                                 </div>
-                            </c:if>
+                            </div>
+                        </c:forEach>
+                    </c:when>
+
+                    <c:otherwise>
+                        <div class="no-review-container">
+                            <img src="/img/lod_no_review.svg" alt="리뷰 없음" />
                         </div>
-                    </div>
-                </c:forEach>
+                    </c:otherwise>
+                </c:choose>
+
+
+
             </div>
         </div>
     </div>
