@@ -26,19 +26,26 @@ public class LodLikeController {
      */
     @PostMapping("/toggle")
     @ResponseBody
-    public ResponseEntity<Map<String, Object>> toggleLike(HttpSession session, @RequestBody LodLikeDTO lodLikeDTO) {
+    public ResponseEntity<Map<String, Object>> toggleLike(HttpSession session, @RequestBody Map<String, Object> requestBody) {
         Map<String, Object> response = new HashMap<>();
 
         try {
+            int lod_idx = (int)requestBody.get("lod_idx");
+
+            String redirectUrl = (String)requestBody.get("redirectUrl");
             // 세션에서 로그인 정보 가져오기
             BigInteger sessionUserIdx = (BigInteger) session.getAttribute("user_idx");
             if (sessionUserIdx == null) {
-                response.put("error", "로그인이 필요합니다.");
-                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
+                response.put("status", "not_login");
+                session.setAttribute("redirectUrl", redirectUrl);
+                return ResponseEntity.ok(response);
             }
+
+            LodLikeDTO lodLikeDTO = new LodLikeDTO();
 
             // 세션 사용자 ID를 DTO에 설정
             lodLikeDTO.setUser_idx(sessionUserIdx);
+            lodLikeDTO.setLod_idx(lod_idx);
 
             // 디버깅 로그 추가
             System.out.println("요청 데이터: USER_IDX = " + lodLikeDTO.getUser_idx() + ", lod_idx = " + lodLikeDTO.getLod_idx());
