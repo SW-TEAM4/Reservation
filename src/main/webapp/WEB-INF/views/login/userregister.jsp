@@ -23,12 +23,9 @@
         }
 
         .container {
-            width: 40%;
-            margin: auto;
             padding: 20px;
-            align-items: center;
-            box-sizing: border-box;
-            margin-bottom: 30px;
+            margin-bottom: 150px;
+            height: 900px;
         }
 
         .container h2 {

@@ -27,12 +27,27 @@
     <style>
         * {
             font-family: "Noto Sans KR";
-            margin-bottom: 2px;
+            margin-bottom: 3px;
+        }
+
+        .head {
+            height: 70px;
+            width: 100%;
+            padding: 5px; /* 컨테이너 내부 여백 */
+            position: relative;
+            margin: 20px 0 20px 0;
+        }
+
+        .head .header-text {
+            left: 0;
+            font-family: "Noto Sans KR";
+            color: #8A5642;
         }
 
         .write_container {
-            margin-left: 300px;
-            padding: 0 50px;
+            margin: 0 auto;
+            padding: 20px;
+            max-width: 1300px;
         }
 
         .board_title {
@@ -45,39 +60,66 @@
 
         }
 
+        .write-table {
+            width: 100%;
+            padding: 50px 50px;
+            height: 600px;
+        }
+
+        .writer {
+            margin-bottom: 5px;
+            color: #8A5642;
+            font-size: 14px;
+        }
+
+        .title {
+            margin-bottom: 5px;
+            color: #8A5642;
+            font-size: 14px;
+        }
+
+        .content {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #8A5642;
+        }
+
         textarea {
             border-radius: 8px;
             border: 2px solid #8A5642;
+            background-color: #ededed;
+            width: 100%;
+            height: 300px;
         }
 
         .submit {
-            background-color: #8A5642;
+            background-color: #352018;
             color: white;
             font-family: "Noto Sans KR";
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             width: 80px;
-            height: 50px;
-            margin-top: 15px;
-
+            height: 44px;
+            position: absolute;
+            top: 50%;
+            right: 170px;
         }
 
-        .back_container {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-            margin-right: 80px;
+        .submit:hover {
+            background-color: #8A5642;
         }
 
         .back {
             padding: 10px 20px;
-            background-color: #8A5642;
+            background-color: #352018;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 16px;
-            margin-right: 220px;
+            position: absolute;
+            top: 50%;
+            right: 0;
         }
 
         .back:hover {
@@ -89,34 +131,43 @@
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
         <div class="write_container">
-            <h2>게시글 작성</h2>
-            <div class="writetable">
-                <form method="post" action="write" onsubmit="return writeCheck();">
-                    <table>
-                        <tr>
-                            <td>글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %></td>
-                        </tr>
-                        <tr>
-                            <td>제목 : <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE"></td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">내용 : </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <textarea rows="10" cols="150" id="BOARD_CONTENT" name="BOARD_CONTENT"></textarea>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <input type="submit" class="submit" value="등록">
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-                <div class="back_container">
+            <div class="write-table">
+                <div class="head">
+                    <div class="header-text">
+                        <h2>게시글 작성</h2>
+                    </div>
+                    <input type="submit" class="submit" value="등록" onsubmit="return writeCheck();">
                     <a href="/gather" class="back">목록으로 돌아가기</a>
                 </div>
+                <div class="body">
+                    <div class="writer">
+                        글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %>
+                    </div>
+                    <div class="title">
+                        제목 : <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE">
+                    </div>
+                    <div class="content">
+                        <textarea rows="10" cols="150" id="BOARD_CONTENT" name="BOARD_CONTENT"></textarea>
+                    </div>
+                </div>
+<%--                <form method="post" action="write" onsubmit="return writeCheck();">--%>
+<%--                        <table>--%>
+<%--                            <tr>--%>
+<%--                                <td>글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %></td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td>제목 : <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE"></td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td colspan="2">내용 : </td>--%>
+<%--                            </tr>--%>
+<%--                            <tr>--%>
+<%--                                <td colspan="2">--%>
+<%--                                    <textarea rows="10" cols="150" id="BOARD_CONTENT" name="BOARD_CONTENT"></textarea>--%>
+<%--                                </td>--%>
+<%--                            </tr>--%>
+<%--                        </table>--%>
+<%--                </form>--%>
             </div>
         </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>

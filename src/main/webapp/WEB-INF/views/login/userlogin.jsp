@@ -17,11 +17,13 @@
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
         * {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .container {
-            align-items: center;
+            height: 800px;
+            padding: 50px 0px;
+            margin-top: 150px;
         }
 
         .login_wrap {
