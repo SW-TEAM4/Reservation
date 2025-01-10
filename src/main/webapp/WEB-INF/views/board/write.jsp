@@ -130,13 +130,14 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
+    <form method="post" action="write" onsubmit="return writeCheck();">
         <div class="write_container">
             <div class="write-table">
                 <div class="head">
                     <div class="header-text">
                         <h2>게시글 작성</h2>
                     </div>
-                    <input type="submit" class="submit" value="등록" onsubmit="return writeCheck();">
+                        <input type="submit" class="submit" value="등록">
                     <a href="/gather" class="back">목록으로 돌아가기</a>
                 </div>
                 <div class="body">
@@ -150,26 +151,9 @@
                         <textarea rows="10" cols="150" id="BOARD_CONTENT" name="BOARD_CONTENT"></textarea>
                     </div>
                 </div>
-<%--                <form method="post" action="write" onsubmit="return writeCheck();">--%>
-<%--                        <table>--%>
-<%--                            <tr>--%>
-<%--                                <td>글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %></td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td>제목 : <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE"></td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td colspan="2">내용 : </td>--%>
-<%--                            </tr>--%>
-<%--                            <tr>--%>
-<%--                                <td colspan="2">--%>
-<%--                                    <textarea rows="10" cols="150" id="BOARD_CONTENT" name="BOARD_CONTENT"></textarea>--%>
-<%--                                </td>--%>
-<%--                            </tr>--%>
-<%--                        </table>--%>
-<%--                </form>--%>
             </div>
         </div>
+    </form>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
     <script>
         function writeCheck() {
