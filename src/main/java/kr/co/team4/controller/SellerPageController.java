@@ -141,30 +141,18 @@ public class SellerPageController {
         System.out.println("start lodRegister");
 
         SellerDTO seller = (SellerDTO) session.getAttribute("sellersession");
-
-        System.out.println("111111111");
-
         int seller_idx = seller.getSELLER_IDX().intValue();
-
-        System.out.println("222222222");
-
         session.setAttribute("seller_idx", seller_idx);
 
-        System.out.println("333333333");
         /* 여기서 숙소테이블에 존재 여부 확인 후 if else로 나눠서 없으면 숙소등록 아니면 바로 숙소메인페이지 */
         String checkYn = sellerPageService.lodCheck(seller_idx);
 
-        System.out.println("444444444");
-
         if ("Y".equals(checkYn)) {
-            System.out.println("555555555");
             session.setAttribute("lod_idx", sellerPageService.getLod(seller_idx));
             return "seller/sellerDetailMain";
         } else if ("N".equals(checkYn)) {
-            System.out.println("6666666666");
             return "seller/lodRegister";
         } else {
-            System.out.println("777777777777");
             return "seller/sellerMain";
         }
     }
