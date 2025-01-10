@@ -19,7 +19,7 @@
     <style>
 
         * {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .container {
@@ -250,18 +250,24 @@
         .id_input_re_1 {
             color: green;
             display: none;
+            font-size: 14px;
+            margin-left: 5px;
         }
 
         /* 아이디가 존재하는 경우 */
         .id_input_re_2 {
             color: red;
             display: none;
+            font-size: 14px;
+            margin-left: 5px;
         }
 
         /* 아이디가 형식에 만족하지 않을 경우 */
         .id_input_re_3 {
             color: red;
             display: none;
+            font-size: 14px;
+            margin-left: 5px;
         }
 
     </style>
@@ -288,7 +294,7 @@
                 <div class="USER_PHONE_NUMBER">휴대폰번호</div>
                 <div class="user_phone_number_input_box">
                     <input type="text" id="USER_PHONE_NUMBER" class="User_Phone_Number_input" name="USER_PHONE_NUMBER" placeholder="010-1234-5678" pattern="\d{3}-\d{4}-\d{4}" required>
-                    <span id="phone_error_message" style="color: red; display: none;">올바른 전화번호 형식을 입력하시오.</span>
+                    <span id="phone_error_message" style="color: red; display: none; font-size: 14px; margin-left: 5px">올바른 전화번호 형식을 입력하시오.</span>
                 </div>
             </div>
             <div class="id_wrap">
@@ -304,14 +310,14 @@
                 <div class="USER_PWD">비밀번호</div>
                 <div class="pwd_input_box">
                     <input type="password" class="pwd_input" id="USER_PWD" name="USER_PWD" maxlength="16" placeholder="영문+숫자+특수기호 8자 이상 16자 이하" required>
-                    <span id="passwordWarning" style="color: red; display: none;">사용할 수 없는 비밀번호입니다.</span>
+                    <span id="passwordWarning" style="color: red; display: none; font-size: 14px; margin-left: 5px">사용할 수 없는 비밀번호입니다.</span>
                 </div>
             </div>
             <div class="pwck_wrap">
                 <div class="USER_PWD_CK">비밀번호 확인</div>
                 <div class="pwck_input_box">
                     <input type="password" class="pwck_input" id="USER_PWD2" name="USER_PWD2" onkeyup="passConfirm()" placeholder="비밀번호 재입력" required>
-                    <span id="confirmMsg"></span>
+                    <span id="confirmMsg" style="font-size: 14px; margin-left: 5px"></span>
                 </div>
             </div>
             <div class="email_wrap">
@@ -321,7 +327,7 @@
                     <input type="button" value="인증번호 전송" class="email_send_button" id="email_auth" style="margin-bottom: 10px">
                     <div class="timerDisplay" id="timerDisplay" style="display: none"></div>
                     <input type="text" class="email_check_input" placeholder="인증번호 6자리를 입력해주세요." maxlength="6" name="authCode" id="authCode">
-                    <span id="emailAuthWarn"></span>
+                    <span id="emailAuthWarn" style="font-size: 14px; margin-left: 5px"></span>
                </div>
             </div>
             <div>
@@ -512,6 +518,13 @@
                 $("#authCode").focus();
                 return false;
             }
+            const inputCode = $("#authCode").val();
+
+            if (Number(inputCode) !== code) {
+                alert("인증번호가 일치하지 않습니다. 다시 확인해주세요!");
+                $("#authCode").focus();
+                return false;
+            }
         }
 
         // 전화번호 입력 시 자동으로 "-" 추가
@@ -543,6 +556,9 @@
             }
         });
 
+        // 인증번호 코드 변수 선언
+        let code;
+
         // 인증번호 타이머 함수
         $(document).ready(function() {
             let timer;
@@ -573,13 +589,12 @@
             };
 
             // 인증번호 이메일 전송
-            let code;
             $("#authCode").attr("disabled", true); // 인증번호 입력 비활성화
 
             $("#email_auth").click(function() {
                 const USER_EMAIL = $("#USER_EMAIL").val(); // 사용자가 입력한 이메일 값 얻어오기
 
-                if(!USER_EMAIL) {
+                if(USER_EMAIL === '') {
                     alert("이메일을 입력해 주세요.");
                     $("#USER_EMAIL").focus();
                     return false;
