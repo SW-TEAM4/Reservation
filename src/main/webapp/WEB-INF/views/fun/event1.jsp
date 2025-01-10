@@ -12,77 +12,70 @@
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
         * {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         .top-container{
             height: 70px;
-            width: 1280px;
+            width: 100%;
+            padding: 5px 20px; /* 컨테이너 내부 여백 */
+            position: relative;
+            margin: 20px 0 20px 0;
+        }
+
+        .top-container .center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
             display: flex;
-            justify-content: center;
             align-items: center;
-            flex-direction: row;
-            padding: 10px 20px; /* 컨테이너 내부 여백 */
+            gap: 10px;
         }
 
         .top-container .header-img {
-            position: absolute;
-            left: 41%;
-            transform: translateX(-50%);
+            width: auto;
+            height: 50px;
         }
 
         .top-container .header-text{
             font-size: 20px;
             font-weight: bold;
-            position: absolute;
-            left: 53%;
-            transform: translateX(-50%);
         }
 
         .event1_container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;  /* 수직 중앙 정렬 */
-            align-items: center;      /* 수평 중앙 정렬 */
-            height: 80vh;            /* 화면 전체 높이 */
-            padding: 0;
-            text-align: left;         /* 텍스트 왼쪽 정렬 */
-            width: 100%;
-            position: relative;
-            margin-bottom: 200px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1280px;
         }
 
         .event1 img {
             width: 100%;
             max-width: 1280px;
             height: auto;
-            margin-bottom: 150px;
         }
 
         .content1 {
-            margin-bottom: 50px;
-            position: absolute;
-            left: 14%;
-            bottom: -70px;
             font-family: "Noto Sans KR";
             font-size: 15px;
-            transform: translateY(100px);
-        }
-
-        .back_container {
-            display: flex;
-            justify-content: right;
-            margin-top: 30px;
+            text-align: left;
+            width: 100%;
+            max-width: 1280px;
+            margin: 25px 0 20px 25px;
         }
 
         .back_btn {
+            position: absolute;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
             padding: 10px 20px;
             background-color: #352018;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 16px;
-            margin-right: 240px;
+            margin-left: auto;
         }
 
         .back_btn:hover {
@@ -92,14 +85,14 @@
 </head>
 <body>
         <%@ include file="/WEB-INF/views/include/header.jsp" %>
-            <div class="top-container">
-                <img src="/img/event.svg" class="header-img">
-                <div class="header-text">너와 함께하개! 미션 스탬프 투어</div>
-            </div>
-            <div class="back_container">
-                <a href="/fun.do" class="back_btn">목록으로 돌아가기</a>
-            </div>
             <div class="event1_container">
+                <div class="top-container">
+                    <div class="center">
+                        <img src="/img/event.svg" class="header-img">
+                        <div class="header-text">너와 함께하개! 미션 스탬프 투어</div>
+                    </div>
+                    <a href="/fun.do" class="back_btn">목록으로 돌아가기</a>
+                </div>
                 <div class="event1">
                     <img src="/img/home_thumbnail_visual_1.svg">
                 </div>

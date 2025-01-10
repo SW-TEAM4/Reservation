@@ -18,7 +18,8 @@
     <style>
 
         * {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
+            font-family: "Noto Sans KR";
         }
 
         a {
@@ -31,38 +32,35 @@
         }
 
         .boardname {
-            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             width: 100%;
             margin-top: 20px;
-            margin-bottom: 20px;
-        }
-
-        .boardname h2 {
-            margin: 0 0 0 190px;
+            max-width: 1300px;
             padding: 5px 20px;
-            color: #352018;
-            font-family: "Noto Sans KR";
-            position: absolute;
-            left: 10px;
-            top: 0;
+            height: 100px;
         }
 
-        .boardname p {
-            margin: 25px 0 0 190px;
-            padding: 5px 20px; /* 텍스트 여백 */
-            font-size: 15px;
+        .text {
+            display: flex;
+            flex-direction: column; /* 수직 정렬 */
+            align-items: flex-start; /* 왼쪽 정렬 */
+            height: 100px;
+        }
+
+        .board-text1 {
+            margin: 0 0 5px 0;
             color: #352018;
-            font-family: "Noto Sans KR";
-            position: absolute; /* 위치 지정 */
-            left: 10px; /* 부모의 왼쪽에 위치 */
-            top: 10px; /* 상단에 위치 */
+            height: 50px;
+        }
+
+        .board-text2 {
+            font-size: 14px;
+            color: #352018;
         }
 
         .boardname button.write-btn {
-            position: absolute;
-            top: 10px; /* 부모의 상단에 위치 */
-            right: 10px; /* 부모의 오른쪽에 위치 */
-            margin: 0 210px 0 0; /* 버튼 기본 마진 제거 */
             background-color: #352018;
             color: #fff;
             border: none;
@@ -72,6 +70,7 @@
             font-size: 14px;
             width: 150px;
             height: 55px;
+            margin-top: 20px;
         }
 
         .boardname button.write-btn a {
@@ -124,14 +123,20 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-        <div class="boardname">
-            <h2>모여보개</h2><br>
-            <p>자유롭게 반려동물 이야기를 나눠보개</p>
-                <button type="button" class="write-btn" onclick="checkSession()">
-                        <img src="/img/write.svg" alt="write">
-                </button>
-        </div>
         <div class="board">
+            <div class="boardname">
+                <div class="text">
+                    <div class="board-text1">
+                        <h1>모여보개</h1><br>
+                    </div>
+                    <div class="board-text2">
+                        <p>자유롭게 반려동물 이야기를 나눠보개</p>
+                    </div>
+                </div>
+                <button type="button" class="write-btn" onclick="checkSession()">
+                    <img src="/img/write.svg" alt="write">
+                </button>
+            </div>
             <table border="1" width="1000px">
                 <colgroup>
                     <col style="width: 5%">
