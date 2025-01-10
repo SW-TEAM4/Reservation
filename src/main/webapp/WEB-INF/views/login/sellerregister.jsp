@@ -31,6 +31,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            box-sizing: border-box;
         }
 
         .header {
@@ -63,6 +64,7 @@
             margin: auto;
             padding: 20px;
             align-items: center;
+            box-sizing: border-box;
         }
 
         .name_wrap {
@@ -281,18 +283,24 @@
         .id_input_re_1 {
             color: green;
             display: none;
+            font-size: 14px;
+            margin-left: 5px;
         }
 
         /* 아이디가 존재하는 경우 */
         .id_input_re_2 {
             color: red;
             display: none;
+            font-size: 14px;
+            margin-left: 5px;
         }
 
         /* 아이디가 현식엥 만족하지 않을 경우 */
         .id_input_re_3 {
             color: red;
             display: none;
+            font-size: 14px;
+            margin-left: 5px;
         }
 
         .footer {
@@ -335,7 +343,7 @@
                 <div class="SELLER_PHONE_NUMBER">휴대폰번호</div>
                 <div class="seller_phone_number_input_box">
                     <input type="text" class="Seller_Phone_Number_input" id="SELLER_PHONE_NUMBER" name="SELLER_PHONE_NUMBER" placeholder="01012345678" required>
-                    <span id="phone_error_message" style="display: none; color: red"></span>
+                    <span id="phone_error_message" style="display: none; color: red; font-size: 14px; margin-left: 5px;">올바른 전화번호 형식을 입력하시오.</span>
                 </div>
             </div>
             <div class="id_wrap">
@@ -351,14 +359,14 @@
                 <div class="SELLER_PWD">비밀번호</div>
                 <div class="pwd_input_box">
                     <input type="password" class="pwd_input" id="SELLER_PWD" name="SELLER_PWD" maxlength="16" placeholder="영문+숫자+특수기호 8자 이상 16자 이하" required>
-                    <span id="passwordWarning" style="color: red; display: none;">사용할 수 없는 비밀번호입니다.</span>
+                    <span id="passwordWarning" style="color: red; display: none; font-size: 14px; margin-left: 5px;">사용할 수 없는 비밀번호입니다.</span>
                 </div>
             </div>
             <div class="pwck_wrap">
                 <div class="SELLER_PWD_CK">비밀번호 확인</div>
                 <div class="pwck_input_box">
                     <input type="password" class="pwck_input" id="SELLER_PWD2" name="SELLER_PWD2" onkeyup="passConfirm()" placeholder="비밀번호 재입력" required>
-                    <span id="confirmMsg"></span>
+                    <span id="confirmMsg" style="font-size: 14px; margin-left: 5px;"></span>
                 </div>
             </div>
             <div class="email_wrap">
@@ -368,7 +376,7 @@
                     <input type="button" value="인증번호 전송" class="email_send_button" id="email_auth">
                     <div class="timerDisplay" id="timerDisplay"></div>
                     <input type="text" class="email_check_input" placeholder="인증번호 6자리를 입력해주세요." maxlength="6" name="authCode" id="authCode">
-                    <span id="emailAuthWarn"></span>
+                    <span id="emailAuthWarn" style="font-size: 14px; margin-left: 5px;"></span>
                </div>
             </div>
             <div>
@@ -560,6 +568,13 @@
                 $("#authCode").focus();
                 return false;
             }
+            const inputCode = $("#authCode").val();
+
+            if (Number(inputCode) !== code) {
+                alert("인증번호가 일치하지 않습니다. 다시 확인해주세요!");
+                $("#authCode").focus();
+                return false;
+            }
         }
 
         // 전화번호 입력 시 자동으로 "-" 추가
@@ -591,6 +606,9 @@
             }
         });
 
+        // 인증번호 코드 변수 선언
+        let code;
+
         // 인증번호 타이머 함수
         $(document).ready(function() {
             let timer;
@@ -621,7 +639,6 @@
             };
 
             // 인증번호 이메일 전송
-            let code;
             $("#authCode").attr("disabled", true); // 인증번호 입력 비활성화
 
             $("#email_auth").click(function() {

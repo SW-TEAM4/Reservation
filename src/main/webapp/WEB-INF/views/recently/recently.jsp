@@ -25,6 +25,13 @@
         });
       }
     });
+    document.addEventListener('click', function (event) {
+      if (event.target.classList.contains('delete-room-button')) {
+        const roomIdx = event.target.getAttribute('data-room-idx');
+        deleteRoomFromLocalStorage(roomIdx); // 로컬 스토리지에서 삭제
+        removeRoomFromDOM(event.target.closest('.room-card')); // 화면에서 제거
+      }
+    });
   </script>
 </head>
 <body>

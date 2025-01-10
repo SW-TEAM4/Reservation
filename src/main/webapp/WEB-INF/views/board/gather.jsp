@@ -16,7 +16,6 @@
 <head>
     <title>모여보개</title>
     <style>
-
         a {
             color: black;
             text-decoration: none;
@@ -60,6 +59,7 @@
             font-size: 14px;
             width: 150px;
             height: 55px;
+            margin-top: 20px;
         }
 
         .main button.write-btn a {
@@ -116,7 +116,7 @@
             <h2>모여보개</h2>
             <p>자유롭게 반려동물 이야기를 나눠보개</p>
                 <button type="button" class="write-btn" onclick="checkSession()">
-                        <img src="/img/write.svg" alt="write">
+                    <img src="/img/write.svg" alt="write">
                 </button>
         </div>
         <div style="width: 1200px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>

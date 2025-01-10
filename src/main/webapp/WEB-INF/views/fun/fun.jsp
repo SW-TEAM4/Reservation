@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
         * {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
         a {
