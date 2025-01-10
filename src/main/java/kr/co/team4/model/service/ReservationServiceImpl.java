@@ -266,9 +266,13 @@ public class ReservationServiceImpl implements ReservationService {
         // 조건에 부합하는 삭제할 예약 인덱스들 가져오기
         List<Integer> expired = reservationMapper.getExpiredReservationIdxs();
 
-        if(expired != null && expired.isEmpty()){
+        if(expired != null && expired.isEmpty()) {
             reservationMapper.deleteExpiredPayments(expired);
             reservationMapper.deleteExpiredReservations(expired);
+
         }
+
+        // 로그 출력
+        System.out.println("배치작업으로 삭제된 예약 인덱스들: " + expired);
     }
 }
