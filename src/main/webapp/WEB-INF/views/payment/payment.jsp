@@ -14,6 +14,7 @@
         }
         .total-container{
             width: 100%;
+            height: 1200px;
             display: flex;
             justify-content: center;
             flex-direction: column;
@@ -23,7 +24,7 @@
         .top-container{
             height: 70px;
             width: 100%;
-            margin: 100px auto;
+            margin: 10px auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -42,7 +43,7 @@
         }
         .button-container {
             display: flex;
-            margin-top: 100px;
+            margin-top: 150px;
             gap: 25px; /* 버튼 간격 */
         }
         .btn-reservation-list, .btn-home{

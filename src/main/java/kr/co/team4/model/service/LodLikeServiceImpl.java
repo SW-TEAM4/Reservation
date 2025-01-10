@@ -39,7 +39,7 @@ public class LodLikeServiceImpl implements LodLikeService {
 
     @Override
     public List<LodgmentDTO> getLikeList(BigInteger userIdx) {
-        return lodLikeMapper.getLikedLodgments(userIdx);
+        return lodLikeMapper.getLikeList(userIdx);
     }
 
     @Override

@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // === saveToRecent 함수 ===
-    window.saveToRecent = function(roomIdx, roomName, roomImgUrl, roomPrice) {
+    window.saveToRecent = function(roomIdx, roomName, roomImgUrl, roomPrice, checkinDate, checkoutDate, guestCount, petCount) {
         const recentlyRooms = JSON.parse(localStorage.getItem('recentlyRooms') || '[]');
         const updatedRooms = recentlyRooms.filter(room => room.roomIdx !== roomIdx);
-        updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice });
+        updatedRooms.unshift({ roomIdx, roomName, roomImgUrl, roomPrice, checkinDate, checkoutDate, guestCount, petCount});
         if (updatedRooms.length > 5) updatedRooms.pop();
         localStorage.setItem('recentlyRooms', JSON.stringify(updatedRooms));
     };
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         </div>
                        <a href="/room/detail?room_idx=${room.room_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}"
                           class="details-link"
-                          onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}')">
+                          onclick="saveToRecent('${room.room_idx}', '${room.room_name}', '${room.room_img_urls[0]}', '${room.room_price}', '${checkinDate}', '${checkoutDate}', '${guestCount}', '${petCount}')">
                            상세보기
                        </a>
 
@@ -138,10 +138,11 @@ document.addEventListener("DOMContentLoaded", function () {
                 roomListContainer.insertAdjacentHTML('beforeend', roomCard);
             });
         } else {
-            // 조건에 맞는 객실이 없을 경우 메시지 표시
+            // 조건에 맞는 객실이 없을 경우 이미지 표시
             roomListContainer.innerHTML = `
-            <p>현재 이용 가능한 객실이 없습니다.</p>
-            <div style="width: 1280px; height: 1px; background-color: #cccccc; margin: 20px auto;"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <img src="img/lod_room_no_result.svg" alt="No rooms available" style="max-width: 100%; height: auto; padding: 100px; margin-bottom: 60px;">
+            </div>
         `;
         }
     }

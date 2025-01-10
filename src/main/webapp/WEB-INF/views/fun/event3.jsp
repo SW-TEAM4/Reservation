@@ -12,58 +12,66 @@
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
         * {
-            margin-bottom: 2px;
+            margin-bottom: 3px;
         }
 
-        .event3_container h2 {
-            margin-bottom: 20px;
+        .top-container{
+            height: 70px;
+            width: 100%;
+            padding: 5px; /* 컨테이너 내부 여백 */
+            position: relative;
+            margin: 20px 0 20px 0;
+        }
+
+        .top-container .center {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .top-container .header-img {
+            width: auto;
+            height: 50px;
+        }
+
+        .top-container .header-text{
+            font-size: 20px;
+            font-weight: bold;
         }
 
         .event3_container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;  /* 수직 중앙 정렬 */
-            align-items: center;      /* 수평 중앙 정렬 */
-            height: 100vh;            /* 화면 전체 높이 */
-            padding: 0;
-            text-align: left;         /* 텍스트 왼쪽 정렬 */
-            width: 100%;
-            position: relative;
-            bottom: 60px;
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1280px;
         }
 
         .event3 img {
-            width: 980px;
-            max-width: 980px;
+            width: 100%;
+            max-width: 1280px;
             height: auto;
-            margin-bottom: 60px;
         }
 
         .content3 {
-            margin-bottom: 50px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-133%);
-            bottom: -120px;
-            max-width: 980px;
             font-family: "Noto Sans KR";
-            font-size: 18px;
-            padding: 20px;
-        }
-
-        .back_container {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
+            font-size: 15px;
+            text-align: left;
+            width: 100%;
+            max-width: 1280px;
+            margin: 25px 0 20px 25px;
         }
 
         .back_btn {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
             padding: 10px 20px;
             background-color: #352018;
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-size: 16px;
+            margin-left: auto;
         }
 
         .back_btn:hover {
@@ -74,20 +82,27 @@
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
         <div class="event3_container">
-            <h2>누가 더 잘 어울리개 내가 싸게 줄개</h2>
+            <div class="top-container">
+                <div class="center">
+                    <img src="/img/home_btn_bazaar.svg" class="header-img">
+                    <div class="header-text">누가 더 잘 어울리개, 내가 싸게 줄개</div>
+                </div>
+                <a href="/fun.do" class="back_btn">목록으로 돌아가기</a>
+            </div>
             <div class="event3">
-                <img src="/img/home_visual3.svg" width="1300px" height="800px">
+                <img src="/img/home_visual3.svg">
             </div>
             <div class="content3">
-                <p>1. 참여 신청기간: 2024.10.28(월)~12.13(금)<br><br>
-                    2. 여행기간: 2024.11.01(금)~12.15(일)<br><br>
-                    3. 모집대상: 반려동물과 옷 사는 경험이<br><br>
-                    4. 규칙: 전혀 못 쓰는 물건은 금지하며...
+                <p>
+                    1. 참여 신청기간 : 2025.01.01(금) 09:00 ~ 2025.02.28(금) 18:00<br><br>
+                    2. 바자회 날짜 : 2025.03.15(토) 09:00 ~ 18:00<br><br>
+                    3. 모집 대상 : 반려동물과 함께 바자회 물품을 나눔을 원하는 반려인♥<br><br>
+                    4. 바자회 지원 물품 : 반려동물과 관련된 반려 동물 아이템 혹은 반려인들끼리 나눌 수 있는 생활용품<br><br>
+                    5. 바자회 금지 물품 : 정상적으로 거래가 되지 않을 물품, 반려동물 또는 반련인들에게 위협이 되는 물품 소지 금지<br><br>
+                    6. 바자회 수익금 이용 안내 ▶ 수익금 발생 시 종합 유기견 보호 센터 전액 기부<br><br>
+                    7. 주의사항 : 입마개가 필요한 견종은 반련인들께서 입마개 직접 필참
                 </p>
             </div>
-        </div>
-        <div class="back_container">
-            <a href="/fun.do" class="back_btn">목록으로 돌아가기</a>
         </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>

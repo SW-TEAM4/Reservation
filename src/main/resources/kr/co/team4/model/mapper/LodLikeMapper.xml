@@ -21,8 +21,8 @@
     </select>
 
     <!-- 유저의 찜한 숙소 리스트 -->
-    <select id="getLikedLodgments" parameterType="BigInteger" resultType="kr.co.team4.model.dto.LodgmentDTO">
-        SELECT l.lod_name, l.lod_img_url
+    <select id="getLikeList" parameterType="BigInteger" resultType="kr.co.team4.model.dto.LodgmentDTO">
+        SELECT l.lod_idx, l.lod_name, l.lod_img_url, li.like_idx AS like_idx
         FROM LOD_LIKE li
                  INNER JOIN LODGMENT l ON li.lod_idx = l.lod_idx
         WHERE li.user_idx = #{userIdx};

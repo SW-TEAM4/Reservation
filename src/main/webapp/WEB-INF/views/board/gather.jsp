@@ -16,11 +16,6 @@
 <head>
     <title>모여보개</title>
     <style>
-
-        * {
-            margin-bottom: 2px;
-        }
-
         a {
             color: black;
             text-decoration: none;
@@ -30,39 +25,31 @@
             color: black;
         }
 
-        .boardname {
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
             position: relative;
-            width: 100%;
-            margin-top: 20px;
-            margin-bottom: 20px;
+            margin-top: 50px;
         }
 
-        .boardname h2 {
-            margin: 0 0 0 60px;
-            padding: 5px 20px;
-            color: #352018;
+        .main h2 {
+            font-weight: bold;
             font-family: "Noto Sans KR";
-            position: absolute;
-            left: 10px;
-            top: 0;
+            margin-bottom: 10px;
+            color: #333;
         }
 
-        .boardname p {
-            margin: 25px 0 0 60px;
-            padding: 5px 20px; /* 텍스트 여백 */
-            font-size: 15px;
-            color: #352018;
+        .main p {
+            color: #666;
+            margin-bottom: 30px;
+            /* border-bottom: 1px solid #929292; */
             font-family: "Noto Sans KR";
-            position: absolute; /* 위치 지정 */
-            left: 10px; /* 부모의 왼쪽에 위치 */
-            top: 10px; /* 상단에 위치 */
         }
 
-        .boardname button.write-btn {
+        .main button.write-btn {
             position: absolute;
             top: 10px; /* 부모의 상단에 위치 */
             right: 10px; /* 부모의 오른쪽에 위치 */
-            margin: 0 78px 0 0; /* 버튼 기본 마진 제거 */
             background-color: #352018;
             color: #fff;
             border: none;
@@ -72,23 +59,23 @@
             font-size: 14px;
             width: 150px;
             height: 55px;
+            margin-top: 20px;
         }
 
-        .boardname button.write-btn a {
+        .main button.write-btn a {
             color: #fff;
             text-decoration: none;
         }
 
-        .boardname button.write-btn img {
+        .main button.write-btn img {
             width: 80px;
             height: auto;
             vertical-align: middle;
         }
 
         .board {
-            margin: 60px auto 0 auto;
-            padding: 0 20px;
-            max-width: 1600px;
+            margin: 50px auto 100px auto;
+            max-width: 1200px;
         }
 
         table {
@@ -124,13 +111,15 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-        <div class="boardname">
-            <h2>모여보개</h2><br>
+    <div class="gather-container">
+        <div class="main">
+            <h2>모여보개</h2>
             <p>자유롭게 반려동물 이야기를 나눠보개</p>
                 <button type="button" class="write-btn" onclick="checkSession()">
-                        <img src="/img/write.svg" alt="write">
+                    <img src="/img/write.svg" alt="write">
                 </button>
         </div>
+        <div style="width: 1200px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
         <div class="board">
             <table border="1" width="1000px">
                 <colgroup>
@@ -165,5 +154,6 @@
             </table>
         </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+    </div>
 </body>
 </html>

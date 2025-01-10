@@ -62,7 +62,7 @@ html, body {
 .header {
     height: 260px; /* 높이 조정 */
     background-color: #8A5642; /* 배경색 설정 */
-    border-bottom: 4.5px solid #352018; /* 선 추가, 색상은 예제 */
+    border-bottom: 4.6px solid #352018; /* 선 추가, 색상은 예제 */
 }
 
 .logo {

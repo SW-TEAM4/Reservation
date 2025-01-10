@@ -18,6 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
+        * {
+            margin-bottom: 3px;
+        }
 
         a {
             color: black;
@@ -31,7 +34,7 @@
         .main {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            margin-top: 50px;
         }
 
         .main h2 {
@@ -51,7 +54,7 @@
         .card_container1 {
             display: flex;
             flex-direction: row;
-            border-top: 2px solid #929292;
+            border-top: 1px solid #cccccc;
             padding-bottom: 10px;
         }
 
@@ -62,6 +65,7 @@
             height: 300px;
             overflow: hidden;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .card1 img {
@@ -96,7 +100,7 @@
         .card_container2 {
             display: flex;
             flex-direction: row;
-            border-top: 2px solid #929292;
+            border-top: 1px solid #cccccc;
             margin-bottom: 20px;
             padding-bottom: 10px;
         }
@@ -108,6 +112,7 @@
             height: 300px;
             overflow: hidden;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .card2 img {
@@ -142,7 +147,7 @@
         .card_container3 {
             display: flex;
             flex-direction: row;
-            border-top: 2px solid #929292;
+            border-top: 1px solid #cccccc;
             margin-bottom: 20px;
             padding-bottom: 10px;
         }
@@ -154,6 +159,7 @@
             height: 300px;
             overflow: hidden;
             margin-top: 20px;
+            cursor: pointer;
         }
 
         .card3 img {
