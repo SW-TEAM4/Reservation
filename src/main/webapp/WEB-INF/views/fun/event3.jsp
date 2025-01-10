@@ -18,16 +18,12 @@
         .top-container{
             height: 70px;
             width: 100%;
-            padding: 5px 20px; /* 컨테이너 내부 여백 */
+            padding: 5px; /* 컨테이너 내부 여백 */
             position: relative;
             margin: 20px 0 20px 0;
         }
 
         .top-container .center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
             gap: 10px;
@@ -67,7 +63,7 @@
         .back_btn {
             position: absolute;
             top: 50%;
-            right: 20px;
+            right: 0;
             transform: translateY(-50%);
             padding: 10px 20px;
             background-color: #352018;

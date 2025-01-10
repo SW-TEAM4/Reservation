@@ -6,6 +6,10 @@
     <title>게시글 상세보기</title>
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
+        * {
+            margin-bottom: 3px;
+        }
+
         .main-container {
             padding: 30px;
         }
