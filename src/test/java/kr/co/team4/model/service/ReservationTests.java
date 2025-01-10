@@ -54,7 +54,7 @@ public class ReservationTests {
 
         // 1. 데이터 세팅: 실제 db에 존재하는 user idx로 테스트
         // 예약 데이터가 존재하는 경우의 유저
-        testDTO.setUser_idx(BigInteger.valueOf(17));
+        testDTO.setUser_idx(BigInteger.valueOf(16));
 
         // 2. 서비스 메서드 호출
         List<UserReservedDTO> reservations = reservationService.getUserReservations(testDTO);

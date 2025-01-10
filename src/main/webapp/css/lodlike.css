@@ -20,9 +20,17 @@
     left: 50%;
     transform: translateX(-50%);
 }
+.lod-like-info {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #ccc;
+    max-width: 1280px;
+    padding-top: 20px;
+}
+
 .card-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* 항상 가로로 2개씩 배치 */
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px; /* 카드 간격 */
     padding: 20px;
     width: 1280px; /* 카드 전체 크기 */

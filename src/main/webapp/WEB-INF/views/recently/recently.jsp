@@ -6,7 +6,9 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>최근 본 숙소</title>
+  <title>최근 본 객실</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
   <link rel="stylesheet" href="/css/style.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/css/lodrecently.css"/>
@@ -42,9 +44,13 @@
       <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
       <div class="header-text">최근 본 객실</div>
     </div>
+    <div class="lod-recently-info">
     <div class="recently-room-list" id="recently-rooms-container"></div>
+
+    </div>
+
+    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
   </div>
-  <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
 </body>
 </html>

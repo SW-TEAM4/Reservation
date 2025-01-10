@@ -136,8 +136,13 @@
                 <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
             </div>
             <div class="listItem" onclick="location.href='recently/recently.do'">
-                <img src="/img/mypage_icon_3.svg" alt="최근 본 숙소">
-                <span>최근 본 숙소</span>
+                <img src="/img/mypage_icon_3.svg" alt="최근 본 객실">
+                <span>최근 본 객실</span>
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
+            </div>
+            <div class="listItem" onclick="location.href='/lodlike/lodwish.do'">
+                <img src="/img/mypage_icon_3.svg" alt="찜한 숙소">
+                <span>찜한 숙소</span>
                 <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
             </div>
         </div>

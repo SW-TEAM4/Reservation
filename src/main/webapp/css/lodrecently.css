@@ -19,7 +19,17 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+
 }
+
+.lod-recently-info {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #ccc;
+    max-width: 1280px;
+    padding-top: 20px;
+}
+
 .room-info {
     flex: 1; /* 이미지와 동일한 비율 */
     padding: 30px;
