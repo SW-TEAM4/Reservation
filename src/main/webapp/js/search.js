@@ -239,7 +239,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-
     // === 외부 클릭 처리 ===
     document.addEventListener('click', function (e) {
         const isInsidePopup =
@@ -249,21 +248,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if (!isInsidePopup) closeAllPopups();
     });
-
-    // === URL 파라미터에서 지역 값 가져오기 ===
-    const urlParams = new URLSearchParams(window.location.search);
-    const regionParam = urlParams.get('region'); // URL에서 지역 값 읽기
-
-    if (regionParam) {
-        selectedRegion = parseInt(regionParam, 10); // URL 파라미터 값 적용
-        localStorage.setItem('selectedRegion', selectedRegion); // 로컬스토리지에 저장
-    } else {
-        // 지역 값이 없으면 로컬스토리지에서 불러오기
-        const storedRegion = localStorage.getItem('selectedRegion');
-        if (storedRegion !== null) {
-            selectedRegion = parseInt(storedRegion, 10); // 저장된 값 적용
-        }
-    }
 
     // === 탭 클릭 이벤트 추가 ===
     const tabs = document.querySelectorAll('.tab'); // 모든 탭 가져오기
@@ -307,15 +291,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sendSearchAjax();
         });
 
-    });
-
-    // === 지역 변경 이벤트 ===
-    document.querySelectorAll('.tab').forEach(tab => {
-        tab.addEventListener('click', function () {
-            selectedRegion = parseInt(this.getAttribute('data-region'), 10); // 선택한 지역 업데이트
-            updateUI(); // UI 업데이트
-            sendSearchAjax(); // 검색 요청
-        });
     });
 
     function updateUI() {

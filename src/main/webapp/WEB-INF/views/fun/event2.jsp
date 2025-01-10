@@ -37,6 +37,7 @@
         .top-container .header-text{
             font-size: 20px;
             font-weight: bold;
+            margin-left: 20px;
         }
 
         .event2_container {

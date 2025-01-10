@@ -27,10 +27,6 @@
             text-decoration: none;
         }
 
-        a:visited {
-            color: black;
-        }
-
         .main {
             max-width: 1200px;
             margin: 0 auto;
