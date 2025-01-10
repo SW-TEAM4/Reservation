@@ -43,7 +43,7 @@
             <div class="header-text">객실 상세</div>
         </div>
         <div class="reserve-info">
-            <c:if test="${not empty room}">F
+            <c:if test="${not empty room}">
             <div class="room-detail">
 
                 <!-- 객실 이미지 -->

@@ -7,8 +7,12 @@
     <link rel="stylesheet" href="/css/style.css?after"/>
     <style>
         .main-container {
-            padding: 30px;
+            /* padding: 30px; */
+            width: 100%;
+            max-width: 1200px;
+            display: contents;
         }
+
         .boardname {
             text-align: left; /* 텍스트 중앙 정렬 */
             max-width: 1200px; /* 화면 중앙 정렬 */
@@ -17,7 +21,7 @@
         }
 
         .boardname h2 {
-            font-size: 32px; /* 제목 크기 */
+            font-size: 26px; /* 제목 크기 */
             font-weight: bold;
             margin-bottom: 10px; /* 제목과 설명 간격 */
             color: #352018; /* 제목 색상 */
@@ -194,7 +198,7 @@
 <div class="main-container">
     <div class="boardname">
         <h2 style="display: inline-block;">모여보개</h2>
-        <img src="/img/board_detail_footprint_img.svg" alt="아이콘" style="width: 32px; height: 32px; margin-left: 10px;">
+        <img src="/img/board_detail_footprint_img.svg" alt="아이콘" style="width: 26px; height: 26px; transform: translateY(3px);">
         <p>자유롭게 반려동물 이야기를 나눠보개</p>
     </div>
     <div class="detail_container">

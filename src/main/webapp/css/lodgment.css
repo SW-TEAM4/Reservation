@@ -97,6 +97,9 @@ body, h1, h2, h3, h4, h5, h6, input, textarea, select, button, .result-container
 #heart-icon {
     cursor: pointer;
     transition: transform 0.3s ease;
+    margin-left: 5px;
+    width: 18px;
+    height: 18px;
 }
 
 #heart-icon:hover {
@@ -299,12 +302,6 @@ p.popup-subtitle {
 .address-icon {
     width: 20px; /* 아이콘 크기 조정 (필요시) */
     height: auto;
-}
-.heart-icon {
-    cursor: pointer;
-    font-size: 24px;
-    margin-left: 10px;
-    vertical-align: middle;
 }
 
 .heart-icon.active {

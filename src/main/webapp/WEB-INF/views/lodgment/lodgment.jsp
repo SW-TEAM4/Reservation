@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="reserve-info">
-                    <img src="${lodgmentDTO.lod_img_url}" width="1280px" height="800px" />
+                    <img src="${lodgmentDTO.lod_img_url}" style="margin-top: 20px; width: 1280px; height: 800px;" />
                     <!-- 텍스트와 좋아요 아이콘을 한 줄에 배치 -->
                     <div class="lodgment-header">
                         <span class="lodgment-name">${lodgmentDTO.lod_name}</span>
