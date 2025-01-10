@@ -23,6 +23,14 @@
     <%
         }
     %>
+    <%
+        String lod_name = (String) request.getAttribute("lodgmentName");
+        if(lod_name != null && !lod_name.equals("")){
+    %>
+    <span class="header-lodgment">숙소 명 : ${lodgmentName}</span>
+    <%
+        }
+    %>
 </header>
 
 

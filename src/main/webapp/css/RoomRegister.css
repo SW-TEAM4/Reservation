@@ -63,7 +63,6 @@ h1 {
 .room-table td input[type="text"],
 .room-table td input[type="number"],
 .room-table td input[type="file"] {
-    width: 70%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 8px;
@@ -182,4 +181,15 @@ h1 {
     border: 1px solid #ddd;
     border-radius: 4px;
 }
-
+.room-table td input::placeholder{
+    font-size: 10px;
+}
+.extra-small-input {
+    width: 100px; /* 기존보다 더 넓게 설정 */
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fdf7f3;
+    color: #8A5642;
+}

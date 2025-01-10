@@ -8,6 +8,7 @@
      - 2024.12.24 : JDeok(최초작성)
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -66,6 +67,7 @@
                             class="extra-small-input"
                             required
                             min="1"
+                            max="9"
                     >
                     </td>
                     <td><input
@@ -75,6 +77,7 @@
                             class="extra-small-input"
                             required
                             min="0"
+                            max="5"
                     ></td>
                     <td>
                         <textarea
@@ -135,10 +138,46 @@
         </form>
     </main>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const success = "${success}" === "true"; // JSP에서 모델 속성 읽기
+        const errorMessage = "${fn:escapeXml(errorMessage)}"; // 오류 메시지 처리 (Null-safe)
 
+        if (success) {
+            alert("정상적으로 처리됐습니다.");
+            window.location.href = "/lodgment/sellerDetailMain.do";
+        } else if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+</script>
 <script>
     document.addEventListener("DOMContentLoaded", () => {
         const priceInput = document.getElementById('roomPrice');
+        const peopleInputs = document.querySelectorAll('input[name$=".max_people_cnt"]'); // 최대 인원 입력 필드
+        const petInputs = document.querySelectorAll('input[name$=".max_pet_cnt"]'); // 최대 반려동물 수 입력 필드
+
+        // 최대 인원 입력값 확인
+        peopleInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (parseInt(input.value, 10) > 9) {
+                    alert("최대 인원은 9명까지 입력할 수 있습니다.");
+                    input.value = ""; // 필드 초기화
+                    input.focus(); // 다시 입력 가능하도록 포커스
+                }
+            });
+        });
+
+        // 최대 반려동물 수 입력값 확인
+        petInputs.forEach(input => {
+            input.addEventListener('input', () => {
+                if (parseInt(input.value, 10) > 5) {
+                    alert("최대 반려동물 수는 5마리까지 입력할 수 있습니다.");
+                    input.value = ""; // 필드 초기화
+                    input.focus(); // 다시 입력 가능하도록 포커스
+                }
+            });
+        });
 
         priceInput.addEventListener('input', (event) => {
             // 숫자가 아닌 문자를 제거
