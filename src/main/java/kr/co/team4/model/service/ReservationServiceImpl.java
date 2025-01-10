@@ -12,6 +12,7 @@ import kr.co.team4.model.mapper.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -256,5 +257,18 @@ public class ReservationServiceImpl implements ReservationService {
             response.put("reason", e.getMessage());
         }
         return response;
+    }
+
+    @Transactional
+    @Scheduled(cron = "${db.batch.clean}")
+    @Override
+    public void runBatchJob() {
+        // 조건에 부합하는 삭제할 예약 인덱스들 가져오기
+        List<Integer> expired = reservationMapper.getExpiredReservationIdxs();
+
+        if(expired != null && expired.isEmpty()){
+            reservationMapper.deleteExpiredPayments(expired);
+            reservationMapper.deleteExpiredReservations(expired);
+        }
     }
 }
