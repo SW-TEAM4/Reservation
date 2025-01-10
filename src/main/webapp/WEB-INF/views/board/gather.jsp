@@ -16,12 +16,6 @@
 <head>
     <title>모여보개</title>
     <style>
-
-        * {
-            margin-bottom: 3px;
-            font-family: "Noto Sans KR";
-        }
-
         a {
             color: black;
             text-decoration: none;
@@ -31,36 +25,31 @@
             color: black;
         }
 
-        .boardname {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            margin-top: 20px;
-            max-width: 1300px;
-            padding: 5px 20px;
-            height: 100px;
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            margin-top: 50px;
         }
 
-        .text {
-            display: flex;
-            flex-direction: column; /* 수직 정렬 */
-            align-items: flex-start; /* 왼쪽 정렬 */
-            height: 100px;
+        .main h2 {
+            font-weight: bold;
+            font-family: "Noto Sans KR";
+            margin-bottom: 10px;
+            color: #333;
         }
 
-        .board-text1 {
-            margin: 0 0 5px 0;
-            color: #352018;
-            height: 50px;
+        .main p {
+            color: #666;
+            margin-bottom: 30px;
+            /* border-bottom: 1px solid #929292; */
+            font-family: "Noto Sans KR";
         }
 
-        .board-text2 {
-            font-size: 14px;
-            color: #352018;
-        }
-
-        .boardname button.write-btn {
+        .main button.write-btn {
+            position: absolute;
+            top: 10px; /* 부모의 상단에 위치 */
+            right: 10px; /* 부모의 오른쪽에 위치 */
             background-color: #352018;
             color: #fff;
             border: none;
@@ -73,21 +62,20 @@
             margin-top: 20px;
         }
 
-        .boardname button.write-btn a {
+        .main button.write-btn a {
             color: #fff;
             text-decoration: none;
         }
 
-        .boardname button.write-btn img {
+        .main button.write-btn img {
             width: 80px;
             height: auto;
             vertical-align: middle;
         }
 
         .board {
-            margin: 60px auto 60px auto;
-            padding: 0 20px;
-            max-width: 1300px;
+            margin: 50px auto 100px auto;
+            max-width: 1200px;
         }
 
         table {
@@ -123,20 +111,16 @@
 </head>
 <body>
     <%@ include file="/WEB-INF/views/include/header.jsp" %>
-        <div class="board">
-            <div class="boardname">
-                <div class="text">
-                    <div class="board-text1">
-                        <h1>모여보개</h1><br>
-                    </div>
-                    <div class="board-text2">
-                        <p>자유롭게 반려동물 이야기를 나눠보개</p>
-                    </div>
-                </div>
+    <div class="gather-container">
+        <div class="main">
+            <h2>모여보개</h2>
+            <p>자유롭게 반려동물 이야기를 나눠보개</p>
                 <button type="button" class="write-btn" onclick="checkSession()">
                     <img src="/img/write.svg" alt="write">
                 </button>
-            </div>
+        </div>
+        <div style="width: 1200px; height: 1px; background-color: #cccccc; margin: 30px auto;"></div>
+        <div class="board">
             <table border="1" width="1000px">
                 <colgroup>
                     <col style="width: 5%">
@@ -170,5 +154,6 @@
             </table>
         </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+    </div>
 </body>
 </html>

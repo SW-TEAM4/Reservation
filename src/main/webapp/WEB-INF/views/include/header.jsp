@@ -49,8 +49,34 @@
                 구경하개
             </a>
         </li>
-        <li><a href="/gather" class="${currentURI.endsWith('/WEB-INF/views/board/gather.jsp') ? 'active' : ''}">모여보개</a></li>
-        <li><a href="/fun.do" class="${currentURI.endsWith('/WEB-INF/views/fun/fun.jsp') ? 'active' : ''}">재미나개</a></li>
+        <li><a href="/gather" class="<c:choose>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/board/gather.jsp")}'>
+                        active
+                    </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/board/detail.jsp")}'>
+                        active
+                    </c:when>
+                    <c:otherwise>
+                        ''
+                    </c:otherwise>
+                </c:choose>">모여보개</a></li>
+        <li><a href="/fun.do" class="<c:choose>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/fun/fun.jsp")}'>
+                        active
+                    </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/fun/event1.jsp")}'>
+                        active
+                    </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/fun/event2.jsp")}'>
+                        active
+                    </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/fun/event3.jsp")}'>
+                        active
+                    </c:when>
+                    <c:otherwise>
+                        ''
+                    </c:otherwise>
+                </c:choose>">재미나개</a></li>
     </ul>
 </div>
 

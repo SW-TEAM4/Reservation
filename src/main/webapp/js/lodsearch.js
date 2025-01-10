@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // 조건에 맞는 객실이 없을 경우 이미지 표시
             roomListContainer.innerHTML = `
             <div style="text-align: center; margin-top: 20px;">
-                <img src="img/lod_room_no_result.svg" alt="No rooms available" style="max-width: 100%; height: auto;">
+                <img src="img/lod_room_no_result.svg" alt="No rooms available" style="max-width: 100%; height: auto; padding: 100px; margin-bottom: 60px;">
             </div>
         `;
         }
