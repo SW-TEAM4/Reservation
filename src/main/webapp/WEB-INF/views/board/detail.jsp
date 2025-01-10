@@ -71,6 +71,8 @@
             border-radius: 4px;
             border: 1px solid #ddd;
             height: 300px;
+            word-wrap: break-word; /* 긴 단어나 URL 등을 자동으로 줄바꿈 */
+            white-space: normal;
         }
 
         .comment_list {
