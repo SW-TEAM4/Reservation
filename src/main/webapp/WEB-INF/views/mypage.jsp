@@ -55,7 +55,7 @@
             <div class="listItem" onclick="location.href='/lodlike/lodwish.do'">
                 <img src="/img/mypage_heart.png" class="heart-icon" alt="찜한 숙소">
                 <span>찜한 숙소</span>
-                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon">
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon"/>
             </div>
         </div>
     </div>
