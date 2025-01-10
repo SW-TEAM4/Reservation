@@ -48,4 +48,7 @@ public interface SellerPageMapper {
    // 객실 수정 
    List<RoomRegisterDTO> getRoomInformation(int lodIdx);                         // 객실정보 가져오기
    void                  updateRoom(RoomRegisterDTO dto);                        // 객실정보 변경
+
+   // 숙소명 가져오기
+    String getLodgmentName(int lodIdx);                                          // 숙소명 가져오기
 }

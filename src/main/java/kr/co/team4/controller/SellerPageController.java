@@ -17,6 +17,31 @@ import java.util.regex.Pattern;
 @Controller
 @RequestMapping("/lodgment")
 public class SellerPageController {
+
+  /*  @ModelAttribute
+    public void addCommonAttributes(HttpSession session, Model model) {
+        // 로그인 상태 확인
+        Object sellerSession = session.getAttribute("sellersession");
+        if (sellerSession == null) {
+            return; // 로그인하지 않았으면 실행하지 않음
+        }
+
+        // 숙소명 설정 (로그인한 경우에만)
+        String lodgmentName = (String) session.getAttribute("lodgmentName");
+        if (lodgmentName == null) {
+            Integer lod_idx = (Integer) session.getAttribute("lod_idx");
+            if (lod_idx != null) {
+                lodgmentName = sellerPageService.getLodgmentName(lod_idx);
+                session.setAttribute("lodgmentName", lodgmentName);
+            }
+        }
+
+        // 모델에 추가 (모든 JSP에서 사용 가능)
+        if (lodgmentName != null) {
+            model.addAttribute("lodgmentName", lodgmentName);
+        }
+    }*/
+
     /**
      * 생성자   : JDeok
      * 기 능   : 사장님 숙소등록 로직
@@ -50,18 +75,29 @@ public class SellerPageController {
      * - 2024.12.30 : JDeok(최초생성)
      */
     @PostMapping("/insertRoom")
-    public String insertRoom(@ModelAttribute RoomListDTO roomListDto, HttpSession session) throws IOException {
-        List<RoomRegisterDTO> rooms = roomListDto.getRooms();
-        // 각 객실 정보 처리
-        for (RoomRegisterDTO roomDto : rooms) {
-            //객실 예약
-            sellerPageService.registerRoom(roomDto);
+    public String insertRoom(@ModelAttribute RoomListDTO roomListDto, HttpSession session, Model model) throws IOException {
 
-            // 객실 이미지 저장
-            sellerPageService.registerRoomImg(roomDto);
+
+        try {
+            List<RoomRegisterDTO> rooms = roomListDto.getRooms();
+            // 각 객실 정보 처리
+            for (RoomRegisterDTO roomDto : rooms) {
+                //객실 예약
+                sellerPageService.registerRoom(roomDto);
+
+                // 객실 이미지 저장
+                sellerPageService.registerRoomImg(roomDto);
+            }
+
+            // 성공 상태를 Model에 추가
+            model.addAttribute("success", true);
+        }catch (Exception e){
+
+            model.addAttribute("success", false);
+            model.addAttribute("errorMessage", "처리 중 오류가 발생했습니다.");
         }
 
-        return "redirect:/lodgment/roomRegister";
+        return "seller/roomRegister";
     }
 
     /**
@@ -83,7 +119,8 @@ public class SellerPageController {
      * - 2024.12.23 : JDeok(최초생성)
      */
     @GetMapping("/sellerMain.do")
-    public String sellerMain() {
+    public String sellerMain(HttpSession session) {
+        session.invalidate();
         /**
          * [check] 로그인상태인지 확인
          * 로그인 상태이면 들어올 필요 X
@@ -101,18 +138,33 @@ public class SellerPageController {
     public String lodRegister(HttpSession session) {
 
         /*session.setAttribute("seller_idx", 2);*/
+        System.out.println("start lodRegister");
+
         SellerDTO seller = (SellerDTO) session.getAttribute("sellersession");
+
+        System.out.println("111111111");
+
         int seller_idx = seller.getSELLER_IDX().intValue();
+
+        System.out.println("222222222");
+
         session.setAttribute("seller_idx", seller_idx);
+
+        System.out.println("333333333");
         /* 여기서 숙소테이블에 존재 여부 확인 후 if else로 나눠서 없으면 숙소등록 아니면 바로 숙소메인페이지 */
         String checkYn = sellerPageService.lodCheck(seller_idx);
 
+        System.out.println("444444444");
+
         if ("Y".equals(checkYn)) {
+            System.out.println("555555555");
             session.setAttribute("lod_idx", sellerPageService.getLod(seller_idx));
             return "seller/sellerDetailMain";
         } else if ("N".equals(checkYn)) {
+            System.out.println("6666666666");
             return "seller/lodRegister";
         } else {
+            System.out.println("777777777777");
             return "seller/sellerMain";
         }
     }
@@ -239,7 +291,7 @@ public class SellerPageController {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy년 MM월 dd일 a hh시 mm분");
-        SimpleDateFormat periodFormat = new SimpleDateFormat("yyyy년 MM월 dd일(E)");
+        SimpleDateFormat periodFormat = new SimpleDateFormat("yyyy년 MM월 dd일(E)"); // local.korean 추가
 
         for (LodReservationDTO reservation : reservations) {
             try {

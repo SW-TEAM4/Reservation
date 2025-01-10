@@ -60,11 +60,11 @@
                         </td>
                         <td>
                             <input type="number" name="rooms[${room.room_idx}].max_people_cnt"
-                                   value="${room.max_people_cnt}" placeholder="최대 인원" class="extra-small-input">
+                                   value="${room.max_people_cnt}" placeholder="최대 인원" class="extra-small-input" min="1" max="9">
                         </td>
                         <td>
                             <input type="number" name="rooms[${room.room_idx}].max_pet_cnt"
-                                   value="${room.max_pet_cnt}" placeholder="최대 반려동물 수" class="extra-small-input">
+                                   value="${room.max_pet_cnt}" placeholder="최대 반려동물 수" class="extra-small-input" min="0" max="5">
                         </td>
                         <td>
                             <textarea name="rooms[${room.room_idx}].room_notice"

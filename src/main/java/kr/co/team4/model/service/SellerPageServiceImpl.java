@@ -48,6 +48,7 @@ public class SellerPageServiceImpl implements SellerPageService {
     @Override
     public int getLod(int seller_idx) {
         int lod_idx = sellerPageMapper.getLod(seller_idx);
+
         return lod_idx;
     }
 
@@ -402,5 +403,16 @@ public class SellerPageServiceImpl implements SellerPageService {
             }
         }
 
+    }
+
+    /**
+     * 생성자   : JDeok
+     * 기 능   : 숙소명 가져오기
+     * 변경사항
+     * - 2025.01.08 : JDeok(최초생성)
+     */
+    @Override
+    public String getLodgmentName(int lod_idx) {
+        return sellerPageMapper.getLodgmentName(lod_idx);
     }
 }

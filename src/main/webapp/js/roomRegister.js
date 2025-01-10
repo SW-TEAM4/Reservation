@@ -11,7 +11,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const roomTableBody = document.getElementById('roomTableBody');
     const addRoomButton = document.getElementById('addRoomButton');
     const form = document.querySelector('form');
-A
+    const success = "${success}" === "true"; // JSP에서 모델 속성 읽기
+    /*const errorMessage = "${fn:escapeXml(errorMessage)}"; // 오류 메시지 처리 (Null-safe)*/
+
+    if (success) {
+        alert("정상적으로 처리됐습니다.");
+        window.location.href = "/lodgment/sellerDetailMain.do";
+    }
+    /*else if (errorMessage) {
+        alert(errorMessage);
+    }*/
     // 페이지 로드 시 초기 필드에 포맷터 연결
     document.querySelectorAll('.room-price-input').forEach(input => attachPriceFormatter(input));
 
@@ -110,5 +119,6 @@ A
 
     // 기존 행들에 포맷터 연결
     document.querySelectorAll('.room-price-input').forEach(input => attachPriceFormatter(input));
+
 });
 

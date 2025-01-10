@@ -45,4 +45,7 @@ public interface SellerPageService {
     /* 객실정보 조회및변경 */
     List<RoomRegisterDTO> getRoomInformation(int lodIdx);                              // 객실정보 조회
     void updateRoom(List<RoomRegisterDTO> rooms);                                      // 객실 수정
+
+    // 숙소명 조회
+    String getLodgmentName(int lod_idx);                                               // 숙소명 조회
 }

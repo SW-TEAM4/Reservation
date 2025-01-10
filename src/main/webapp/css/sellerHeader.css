@@ -27,6 +27,7 @@
     color: #DDAC7E;
     display: flex;
     align-items: center;
+    font-weight: 400;
 }
 
 .header-extra {
@@ -37,6 +38,14 @@
     transform: translate(-50%, -50%); /* 정확히 중앙으로 이동 */
     font-size: 20px;
     color: #DDAC7E;
+    font-weight: bold;
+    white-space: nowrap; /* 줄바꿈 방지 */
+}
+.header-lodgment {
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 16px;
+    color: #DDAC7E;
+    margin-left: 20px; /* 로고 이미지와 간격 */
     font-weight: bold;
     white-space: nowrap; /* 줄바꿈 방지 */
 }

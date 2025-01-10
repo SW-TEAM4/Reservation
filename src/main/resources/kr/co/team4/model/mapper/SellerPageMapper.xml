@@ -187,13 +187,14 @@
         *  기 능  : 숙소IDX 가져오기
         *  변경사항
         *     - 2024.12.31 : JDeok(최초작성)
+        *     - 2025.01.10 : JDeok(if문 추가)
         ************************************************************* */
-        SELECT A.LOD_IDX
+        SELECT IF(COUNT(A.LOD_IDX) > 0, A.LOD_IDX, 0) AS lod_idx
         FROM LODGMENT A
            , SELLER   B
         WHERE 1=1
           AND A.SELLER_IDX = B.SELLER_IDX
-          AND A.SELLER_IDX =  #{seller_idx}
+          AND A.SELLER_IDX =  16
     </select>
     <insert id="insertPhoto" parameterType="kr.co.team4.model.dto.RoomRegisterDTO" >
         /* ************************************************************
@@ -578,4 +579,18 @@
            WHERE 1=1
              AND ROOM_IDX = #{room_idx}
     </update>
+    <select id="getLodgmentName" parameterType="int" resultType="java.lang.String">
+        /* ************************************************************
+        *  생성자 : JDeok
+        *  날 짜  : 2025.01.10
+        *  시 간  : 오전 11:27
+        *  기 능  : 숙소명 조회
+        *  변경사항
+        *     - 2025.01.10 : JDeok(최초작성)
+        ************************************************************* */
+        SELECT LOD_NAME
+        FROM LODGMENT
+        WHERE 1=1
+          AND LOD_IDX = #{lod_idx}
+    </select>
 </mapper>
