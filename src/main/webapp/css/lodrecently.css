@@ -124,3 +124,12 @@
 .booking-button:hover {
     background-color: #3a2116; /* 호버 시 배경색 변경 */
 }
+
+.no-recently-rooms-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 300px;
+    margin-bottom: 30px;
+}
