@@ -57,6 +57,7 @@
         .back-button img {
             width: 24px;
             height: 24px;
+            margin-top: 8px;
         }
 
         .header-title {
@@ -119,6 +120,7 @@
         .right-back-button img {
             width: 35px; /* 이미지 크기 */
             height: 35px; /* 이미지 크기 */
+            margin-top: 8px;
         }
 
 
@@ -130,7 +132,7 @@
 
         .review-button {
             align-self: flex-start;
-            padding: 20px 35px;
+            padding: 20px 35px 20px 30px;
             background-color: #352018;
             color: #ffffff;
             border: none;
@@ -190,7 +192,7 @@
                     <c:choose>
                         <c:when test="${dto.res_end_date <= currentTime}">
                             <a href="/review?user_idx=${dto.user_idx}&reservation_idx=${dto.reservation_idx}&room_idx=${dto.room_idx}" class="review-button">
-                                <img src="/img/dog_footprint.svg" alt="발자국" style="width: 40px; height: 40px; vertical-align: middle; margin-right: -5px;">
+                                <img src="/img/dog_footprint.svg" alt="발자국" style="width: 40px; height: 40px; vertical-align: middle;">
                                 리뷰쓰기
                             </a>
                         </c:when>
@@ -213,7 +215,7 @@
             </div>
         </c:otherwise>
     </c:choose>
-    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>

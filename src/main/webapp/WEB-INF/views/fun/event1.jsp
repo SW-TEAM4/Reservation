@@ -37,6 +37,7 @@
         .top-container .header-text{
             font-size: 20px;
             font-weight: bold;
+            margin-left: 20px;
         }
 
         .event1_container {
@@ -89,6 +90,7 @@
                     </div>
                     <a href="/fun.do" class="back_btn">목록으로 돌아가기</a>
                 </div>
+                <div style="width: 1240px; height: 1px; background-color: #DBD6D6; margin-bottom: 30px;"></div>
                 <div class="event1">
                     <img src="/img/home_thumbnail_visual_1.svg">
                 </div>
