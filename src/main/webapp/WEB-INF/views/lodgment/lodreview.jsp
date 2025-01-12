@@ -57,8 +57,9 @@
                                     <div class="lod-review-card-header">
 
                                         <div class="lod-review-star-container">
-                                            <span class="star">&#9733;</span>
-                                            <span>(${lodreview.reviewer_rating})</span>
+                                            <c:forEach var="i" begin="1" end="5">
+                                                <span class="${i <= lodreview.reviewer_rating ? 'star-filled' : 'star'}">&#9733;</span>
+                                            </c:forEach>
                                         </div>
                                         <div class="lod-review-created">${lodreview.reviewer_created}</div>
                                     </div>

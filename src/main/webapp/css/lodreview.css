@@ -138,5 +138,6 @@
 
 
 .lod-review-star-container {
-    display: none; /* 리뷰가 없으므로 숨김 */
+    display: flex; /* Flexbox를 사용하여 정렬 */
 }
+

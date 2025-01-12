@@ -152,14 +152,14 @@
         .star {
             font-size: 18px;
             color: gray;
-            cursor: pointer;
             margin-right: 5px;
         }
 
-        .star filled {
+        .star-filled{
+            font-size: 18px;
             color: #FFDF86;
+            margin-right: 5px;
         }
-
         .card-image {
             width: 240px;
             height: 300px;
@@ -240,11 +240,16 @@
                 <div class="card-room-name">${dto.room_name}</div>
 
                 <div class="star-container">
-                    <span class="star <c:if test="${dto.rating >= 1}">filled</c:if>">&#9733;</span>
-                    <span class="star <c:if test="${dto.rating >= 2}">filled</c:if>">&#9733;</span>
-                    <span class="star <c:if test="${dto.rating >= 3}">filled</c:if>">&#9733;</span>
-                    <span class="star <c:if test="${dto.rating >= 4}">filled</c:if>">&#9733;</span>
-                    <span class="star <c:if test="${dto.rating >= 5}">filled</c:if>">&#9733;</span>
+                    <c:forEach var="i" begin="1" end="5">
+                        <c:choose>
+                            <c:when test="${i <= dto.rating}">
+                                <span class="star-filled">&#9733;</span>
+                            </c:when>
+                            <c:otherwise>
+                                <span class="star">&#9733;</span>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:forEach>
                 </div>
 
 
