@@ -33,7 +33,7 @@
         .head {
             height: 70px;
             width: 100%;
-            padding: 5px; /* 컨테이너 내부 여백 */
+            padding: 5px 0px;
             position: relative;
             margin: 20px 0 20px 0;
         }

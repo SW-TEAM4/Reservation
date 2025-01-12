@@ -18,7 +18,7 @@ window.onload = function () {
                   <!-- 상단 영역: 숙소 이름과 삭제 버튼 -->
                   <div class="room-header" style="display: flex; justify-content: space-between; align-items: center;">
                     <h3 class="room-name">${room.roomName}</h3>
-                    <button class="delete-room-button" data-room-idx="${room.roomIdx}" style="background: none; border: none; font-size: 30px; cursor: pointer;">x</button>
+                    <button class="delete-room-button" data-room-idx="${room.roomIdx}" style="background: none; border: none; font-size: 30px; cursor: pointer;">×</button>
                   </div>
                   <!-- 하단 영역 -->
                   <div class="room-footer">

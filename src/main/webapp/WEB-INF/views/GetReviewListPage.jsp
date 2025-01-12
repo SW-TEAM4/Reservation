@@ -56,6 +56,7 @@
         .back-button img {
             width: 24px;
             height: 24px;
+            margin-top: 8px;
         }
         .header-title {
             font-size: 20px;
@@ -83,6 +84,7 @@
         .container2 {
             max-width: 1200px;
             margin: 0 auto;
+            margin-bottom: 80px;
         }
 
         .card {
@@ -129,8 +131,8 @@
         }
 
         .right-back-button img {
-            width: 35px; /* 이미지 크기 */
-            height: 35px; /* 이미지 크기 */
+            width: 30px; /* 이미지 크기 */
+            height: 30px; /* 이미지 크기 */
         }
 
 
@@ -160,7 +162,7 @@
 
         .card-image {
             width: 240px;
-            /*height: 300px;*/
+            height: 300px;
             object-fit: cover;
             border-radius: 5px;
         }
@@ -264,9 +266,7 @@
         </div>
     </c:otherwise>
 </c:choose>
-
-    <%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </div>
-
+<%@ include file="/WEB-INF/views/include/footer.jsp" %>
 </body>
 </html>
