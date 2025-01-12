@@ -26,7 +26,9 @@ document.addEventListener("DOMContentLoaded", function () {
         autoApply: true,
         startDate: checkinDate,
         endDate: checkoutDate,
-        minDate: moment().format('YYYY-MM-DD') // 오늘 이후 날짜만 선택 가능
+        minDate: moment().format('YYYY-MM-DD'), // 오늘 이후 날짜만 선택 가능
+        maxSpan: { days: 30 } // 최대 30일까지만 선택 가능
+
     }, function (start, end) {
         // 선택된 날짜 업데이트
         checkinDate = start.format('YYYY-MM-DD');

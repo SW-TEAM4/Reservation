@@ -181,4 +181,29 @@
         set status = #{status}
         where payment_idx = #{payment_idx}
     </update>
+
+    <select id="getExpiredReservationIdxs" resultType="int">
+        SELECT reservation_idx
+        FROM PAYMENT
+        WHERE status = 'pending'
+        AND DATE_ADD(NOW(), INTERVAL -30 MINUTE) > created;
+    </select>
+
+    <delete id="deleteExpiredReservations" parameterType="list">
+        DELETE FROM RESERVATION
+        WHERE reservation_idx IN (
+           <foreach item="idx" collection="list" open="(" separator="," close=")">
+               #{idx}
+           </foreach>
+        );
+    </delete>
+
+    <delete id="deleteExpiredPayments" parameterType="list">
+        DELETE FROM PAYMENT
+        WHERE reservation_idx IN (
+            <foreach item="idx" collection="list" open="(" separator="," close=")">
+                #{idx}
+            </foreach>
+        );
+    </delete>
 </mapper>

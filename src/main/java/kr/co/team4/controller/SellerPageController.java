@@ -120,7 +120,7 @@ public class SellerPageController {
      */
     @GetMapping("/sellerMain.do")
     public String sellerMain(HttpSession session) {
-        session.invalidate();
+        session.removeAttribute("seller_idx");
         /**
          * [check] 로그인상태인지 확인
          * 로그인 상태이면 들어올 필요 X

@@ -38,7 +38,7 @@ window.onload = function () {
         // 최근 본 숙소가 없으면 안내 이미지로 표시
         recentlyContainer.innerHTML = `
             <div class="no-recently-rooms-container">
-                <img src="/img/recently_no_result.svg" alt="최근 본 숙소 없음" class="no-recently-rooms-image">
+                <img src="/img/room_recently_no_result.svg" alt="최근 본 숙소 없음" class="no-recently-rooms-image">
             </div>
         `;
     }
@@ -66,7 +66,7 @@ window.onload = function () {
         if (!recentlyContainer.querySelector('.room-card')) { // 남은 카드가 없으면 안내 메시지 표시
             recentlyContainer.innerHTML = `
                 <div class="no-recently-rooms-container">
-                    <img src="/img/recently_no_result.svg" alt="최근 본 숙소 없음" class="no-recently-rooms-image">
+                    <img src="/img/room_recently_no_result.svg" alt="최근 본 숙소 없음" class="no-recently-rooms-image">
                 </div>
             `;
         }

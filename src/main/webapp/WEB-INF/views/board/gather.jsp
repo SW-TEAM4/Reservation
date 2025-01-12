@@ -16,7 +16,16 @@
 <head>
     <title>모여보개</title>
     <style>
+        * {
+            margin-bottom: 3px;
+        }
+
         a {
+            color: black;
+            text-decoration: none;
+        }
+
+        a:visited {
             color: black;
             text-decoration: none;
         }

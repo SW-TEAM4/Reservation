@@ -21,9 +21,8 @@
         }
 
         .container {
-            height: 800px;
+            height: 700px;
             padding: 50px 0px;
-            margin-top: 150px;
         }
 
         .login_wrap {

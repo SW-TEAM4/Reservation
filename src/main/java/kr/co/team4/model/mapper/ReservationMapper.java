@@ -26,5 +26,10 @@ public interface ReservationMapper {
     void paymentRemove(PaymentDTO dto);
     PaymentDTO getPaymentInform(String res_merchant_id);
     void updatePayment(PaymentDTO dto);
+
+    // 배치 관련
+    List<Integer> getExpiredReservationIdxs();
+    void deleteExpiredReservations(List<Integer> reservations);
+    void deleteExpiredPayments(List<Integer>reservations);
 }
 

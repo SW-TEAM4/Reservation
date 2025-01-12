@@ -74,13 +74,8 @@ public class LodLikeController {
 
         List<LodgmentDTO> wishlist = lodLikeService.getLikeList(sessionUserIdx);
 
-        // 디버깅: 찜 데이터 확인
-        for (LodgmentDTO lodgment : wishlist) {
-            System.out.println("lod_idx: " + lodgment.getLod_idx() + ", like_idx: " + lodgment.getLike_idx());
-        }
-
         model.addAttribute("wishlist", wishlist);
-        return "like/lodLikeList";
+        return "like/like";
     }
 
 

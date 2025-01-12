@@ -56,6 +56,9 @@
                     <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/board/detail.jsp")}'>
                         active
                     </c:when>
+                    <c:when test='${pageContext.request.requestURI.endsWith("/WEB-INF/views/board/write.jsp")}'>
+                        active
+                    </c:when>
                     <c:otherwise>
                         ''
                     </c:otherwise>

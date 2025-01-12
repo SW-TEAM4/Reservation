@@ -27,14 +27,13 @@
         <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
         <div class="header-text">찜 한 숙소</div>
     </div>
+    <div class="lod-like-info">
     <c:if test="${empty wishlist}">
         <div class="no-like-room-container">
             <img src="/img/lodlike_no_result.svg" alt="찜한 숙소 없음" class="no-like-room-image">
         </div>
     </c:if>
     <div class="card-container">
-
-
         <c:forEach var="lodgment" items="${wishlist}">
             <div class="card">
                 <a href="/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${today}&checkoutDate=${tomorrow}&guestCount=2&petCount=1"  class="room-image-link">
@@ -51,11 +50,11 @@
                     />
                 </div>
             </div>
-
         </c:forEach>
     </div>
-</div>
+    </div>
     <%@ include file="/WEB-INF/views/include/footer.jsp" %>
+</div>
 </div>
 </body>
 </html>

@@ -194,7 +194,7 @@
            , SELLER   B
         WHERE 1=1
           AND A.SELLER_IDX = B.SELLER_IDX
-          AND A.SELLER_IDX =  16
+          AND A.SELLER_IDX =  #{seller_idx}
     </select>
     <insert id="insertPhoto" parameterType="kr.co.team4.model.dto.RoomRegisterDTO" >
         /* ************************************************************
