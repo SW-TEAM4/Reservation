@@ -80,7 +80,7 @@
             document.getElementById("btn-reservation-list").addEventListener("click", function (){
                 var loginInfo = '${sessionScope.usersession}';
                 if(loginInfo){
-                    window.location.href = '/reservation/list';
+                    window.location.href = '/reservation/list/redirect';
                 }else{
                     window.location.href = '/userlogin';
                 }

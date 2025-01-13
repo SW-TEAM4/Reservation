@@ -83,12 +83,12 @@ public class ReservationController {
     @GetMapping("/reservation/list")
     public String listReservationList(HttpSession session, Model model) {
         // 세션에서 user_Idx 값 가져오기
-        BigInteger user_Idx = (BigInteger) session.getAttribute("user_Idx");
-        if (user_Idx == null) {
-            user_Idx = BigInteger.valueOf(0);
+        BigInteger user_idx = (BigInteger) session.getAttribute("user_idx");
+        if (user_idx == null) {
+            user_idx = BigInteger.valueOf(0);
         }
         UserReservedDTO dto = new UserReservedDTO();
-        dto.setUser_idx(user_Idx); // 세션에서 가져온 user_Idx 값 설정
+        dto.setUser_idx(user_idx); // 세션에서 가져온 user_Idx 값 설정
 
         // 현재 시간 가져오기
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -123,6 +123,12 @@ public class ReservationController {
 
         return "GetReservationListPage";
     }
+
+    @GetMapping("/reservation/list/redirect")
+    public String redirectReservationList(){
+        return "redirect:/reservation/list";
+    }
+
 
     /**
      * 예약 상세 정보 페이지
