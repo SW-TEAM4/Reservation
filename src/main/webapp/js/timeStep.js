@@ -61,11 +61,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 페이지 로드 시 초기값 설정 (선택된 값이 없을 경우만 기본값 설정)
     if (!document.getElementById('checkinTime').value || !document.getElementById('checkoutTime').value) {
-        document.getElementById('checkinAmPm').value = "AM";
-        document.getElementById('checkinHour').value = "08";
+        document.getElementById('checkinAmPm').value = "PM";
+        document.getElementById('checkinHour').value = "03";
         document.getElementById('checkinMinute').value = "00";
-        document.getElementById('checkoutAmPm').value = "PM";
-        document.getElementById('checkoutHour').value = "10";
+        document.getElementById('checkoutAmPm').value = "AM";
+        document.getElementById('checkoutHour').value = "11";
         document.getElementById('checkoutMinute').value = "00";
         updateHiddenFields();
     }

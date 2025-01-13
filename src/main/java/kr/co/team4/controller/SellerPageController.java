@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -203,7 +204,7 @@ public class SellerPageController {
                 Map<String, Object> peakEvent = new HashMap<>();
                 peakEvent.put("title", "성수기");
                 peakEvent.put("start", dto.getPeak_str_dt());
-                peakEvent.put("end", dto.getPeak_end_dt());
+                peakEvent.put("end", LocalDate.parse(dto.getPeak_end_dt()).plusDays(1).toString());
                 peakEvent.put("color", "#8A5642");
                 events.add(peakEvent);
             }
@@ -213,7 +214,7 @@ public class SellerPageController {
                 Map<String, Object> highPeakEvent = new HashMap<>();
                 highPeakEvent.put("title", "극성수기");
                 highPeakEvent.put("start", dto.getHpeak_str_dt());
-                highPeakEvent.put("end", dto.getHpeak_end_dt());
+                highPeakEvent.put("end", LocalDate.parse(dto.getHpeak_end_dt()).plusDays(1).toString());
                 highPeakEvent.put("color", "#DDAC7E");
                 events.add(highPeakEvent);
             }
