@@ -16,4 +16,5 @@ public class BoardDTO {
     private String WRITER_NAME;
     private BigInteger USER_IDX;
     private String USER_NAME;
+    private String NICK_NAME;
 }
