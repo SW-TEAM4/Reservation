@@ -44,12 +44,14 @@
             padding: 20px;
             margin: 0 auto;
             max-width: 1280px;
+            text-align: center;
         }
 
         .event2 img {
             width: 100%;
-            max-width: 1280px;
+            max-width: 900px;
             height: auto;
+            margin: 0 auto;
         }
 
         .content2 {
@@ -57,8 +59,8 @@
             font-size: 15px;
             text-align: left;
             width: 100%;
-            max-width: 1280px;
-            margin: 25px 0 20px 25px;
+            max-width: 900px;
+            margin: 25px auto;
         }
 
         .back_btn {
@@ -92,7 +94,7 @@
             </div>
             <div style="width: 1240px; height: 1px; background-color: #DBD6D6; margin-bottom: 30px;"></div>
             <div class="event2">
-                <img src="/img/home_thumbnail_visual_2.svg">
+                <img src="/img/home_visual2.svg">
             </div>
             <div class="content2">
                 <p>
