@@ -15,7 +15,7 @@
         return;
     }
 
-    String USER_ID = user.getUSER_ID();
+    String USER_NAME = user.getUSER_NAME();
 %>
 <html>
 <head>
@@ -148,7 +148,7 @@
                 <div style="width: 1100px; height: 1px; background-color: #cccccc; margin: 25px auto;"></div>
                 <div class="body">
                     <div class="writer">
-                        글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %>
+                        글쓴이 : <%= USER_NAME != null ? USER_NAME : "알 수 없음" %>
                     </div>
                     <div class="title">
                         제목 : <input type="text" class="board_title" id="BOARD_TITLE" name="BOARD_TITLE">

@@ -129,13 +129,23 @@
     max-width: 100%;
     height: auto;
 }
-
+/* 닉네임 및 프로필 이미지 섹션 */
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; /* 별점과 간격 */
+    margin-bottom: 10px; /* 리뷰 내용과 간격 */
+}
+.userId {
+    font-size: 14px;
+    font-weight: bold;
+    color: #352018; /* 기존 텍스트 색상과 일치 */
+}
 
 .lod-review-card-content {
     display: flex;
     flex-direction: column;
 }
-
 
 .lod-review-star-container {
     display: flex; /* Flexbox를 사용하여 정렬 */
