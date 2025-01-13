@@ -80,7 +80,6 @@
 
         <%-- 지역 유형 선택 (강원/경기/인천) --%>
         <div class="other-group">
-            <div class="box"></div>
             <label class="other-label">지역 유형</label>
             <div class="other-type">
                 <label><input type="radio" class="location" name="region_idx" value="1" required> 강원</label>
@@ -89,39 +88,37 @@
             </div>
         </div>
 
-            <!-- 우편번호 버튼 -->
-        <div class="lod-group">
-            <div class="box"></div>
+        <!-- 우편번호 버튼 -->
+        <div class="other-group">
             <label for="postcode" class="lod-label">숙소 주소</label>
             <div class="address-inputs">
-                <input type="text" id="postcode" name="postcode" placeholder="우편번호"  readonly required>
+                <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly required>
                 <button type="button" class="btn-postcode">우편주소</button>
             </div>
         </div>
-        <div>
-            <label></label>
-            <input type="text" id="detailedAddress" name="lod_address" placeholder="주소" class="address-input"  readonly required>
-        </div>
-            <input type="hidden" id="mapX" name="x">
-            <input type="hidden" id="mapY" name="y">
+         <%--<div class="address-field-container">
+            <input type="text" id="detailedAddress" name="lod_address" placeholder="주소" class="address-input" readonly required>
+         </div>--%>
+
+        <input type="hidden" id="mapX" name="x">
+        <input type="hidden" id="mapY" name="y">
 
         <%-- 숙소 소개 입력 --%>
         <div class="form-group">
             <label for="description">예약 공지</label>
-            <textarea id="description" name="reservation_notice" rows="4" cols="50" required></textarea>
+            <textarea id="description" name="reservation_notice" rows="8" cols="100" required></textarea>
         </div>
 
 
         <%-- 사장님이 알려주개 입력 --%>
         <div class="form-group">
             <label for="ownerTip">사장님이 알려주개</label>
-            <textarea id="ownerTip" name="seller_notice" rows="4" cols="50" required></textarea>
+            <textarea id="ownerTip" name="seller_notice" rows="8" cols="100" required></textarea>
         </div>
 
         <%-- 체크인/체크아웃 시간 선택 --%>
             <%-- [check] UI 조절 필요 --%>
-        <div class="time-selection">
-            <div class="box"></div>
+        <div class="other-group">
             <label class="time-label">체크인/아웃 시간</label>
             <select id="checkinAmPm" name="checkinAmPm" required>
                 <option value="AM">오전</option>
@@ -159,10 +156,9 @@
             <input type="hidden" id="checkoutTime" name="lod_check_out">
 
         <%-- 시설/서비스 추가 --%>
-        <div class="facility-container">
-            <div class="box"></div>
+        <div class="other-group">
             <label class="other-label">시설/서비스</label>
-            <div>
+            <div class="facility-container">
                 <div class="facility-input">
                     <input type="text" id="facilityText" placeholder="시설/서비스를 입력하세요">
                     <button id="addFacilityBtn" type="button">추가</button>
