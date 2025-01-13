@@ -17,6 +17,16 @@
     <link rel="stylesheet" href="/css/lodlike.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/js/lodlike.js"></script>
+    <style>
+        .arrow-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+    </style>
 </head>
 <body>
 <div class="wrap">
@@ -24,7 +34,9 @@
         <input type="hidden" id="user-id" value="${userIdx}" />
 <div class="container">
     <div class="top-container">
-        <img class="arrow-icon" id="left-arrow" src="/img/home_icon_left_arrow.svg"/>
+        <button class="arrow-button" id="left-arrow" onclick="history.back();">
+            <img src="/img/home_icon_left_arrow.svg" alt="뒤로 가기">
+        </button>
         <div class="header-text">찜 한 숙소</div>
     </div>
     <div class="lod-like-info">
