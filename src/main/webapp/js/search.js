@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", function () {
             firstDay: 0
 
         },
-        autoApply: true,
         startDate: checkinDate,
         endDate: checkoutDate,
         minDate: moment().format('YYYY-MM-DD'), // 오늘 이후 날짜만 선택 가능
@@ -31,13 +30,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }, function (start, end) {
         // 선택된 날짜 업데이트
+        console.log("start:" + start + "end" + end);
         checkinDate = start.format('YYYY-MM-DD');
         checkoutDate = end.format('YYYY-MM-DD');
+        checkinDate = checkinDate.trim();
+        checkoutDate = checkoutDate.trim();
 
         // UI 업데이트
-        updateDateUI(start, end);
+        document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
+        document.getElementById('checkout-date').textContent = end.format('YYYY-MM-DD');
+        document.getElementById('cal-date').textContent = `, ${end.diff(start, 'days')}박`;
 
-        console.log("searchJS에서 ajax요청 전의 날짜" + checkinDate + " and " + checkoutDate);
         // AJAX 요청 전송
         sendSearchAjax();
     });
@@ -264,6 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedRegion = parseInt(storedRegion, 10); // 저장된 값 적용
         }
     }
+
     // === 탭 UI 활성화 처리 ===
     document.querySelectorAll('.tab').forEach(tab => {
         const tabRegion = parseInt(tab.getAttribute('data-region'), 10); // 각 탭의 지역 값
@@ -276,12 +280,6 @@ document.addEventListener("DOMContentLoaded", function () {
             tab.classList.remove('active'); // 선택 해제
             tab.classList.add('inactive'); // 비활성화 적용
         }
-        // === 탭 클릭 이벤트 추가 ===
-        tab.addEventListener('click', function () {
-            const newRegion = parseInt(this.getAttribute('data-region'), 10); // 클릭한 탭의 지역 값
-            localStorage.setItem('selectedRegion', newRegion); // 선택 지역 로컬스토리지에 저장
-            window.location.href = `/search/search.do?region=${newRegion}`; // 새 지역으로 페이지 이동
-        });
     });
 
     // === 탭 클릭 이벤트 추가 ===
