@@ -60,6 +60,7 @@
         WHERE
             r.USER_IDX = #{user_idx}
           AND p.STATUS = 'paid'
+        ORDER BY r.CREATED DESC
 
     </select>
 

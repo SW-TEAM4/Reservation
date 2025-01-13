@@ -230,7 +230,7 @@
                     <img src="/img/ResDetail_user_img.svg" alt="프로필">
                 </div>
                 <div class="comment_content">
-                    <div class="comment_author">${comment.USER_NAME}</div>
+                    <div class="comment_author">${comment.NICK_NAME}</div>
                     <div class="comment_text">${comment.COMMENT}</div>
                     <div class="comment_date">
                         <fmt:formatDate value="${comment.CREATED}" pattern="yyyy-MM-dd HH:mm"/>
