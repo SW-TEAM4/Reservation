@@ -53,7 +53,7 @@
         .board_title {
             border: 2px solid #8A5642;
             border-radius: 5px;
-            width: 912px;
+            width: 1061px;
         }
 
         td {
