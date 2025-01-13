@@ -207,6 +207,12 @@
             cursor: pointer;
         }
 
+        .back-button img {
+            width: 24px;
+            height: 24px;
+            margin-top: 8px;
+        }
+
         .header-title {
             font-size: 20px;
             color: #352018;
@@ -359,10 +365,11 @@
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <%-------------------------------------------------------------------------------------------------------------------------------%>
 <div class="header-bar">
-    <button class="back-button" onclick="history.back();">&lt;</button>
+    <button class="back-button" onclick="history.back();">
+        <img src="/img/arrow-left.svg" alt="Back" />
+    </button>
     <span class="header-title">리뷰쓰기</span>
 </div>
-
 <div class="content">
     <!-- 숙소 이름과 방 이름 표시 -->
 <%--    <p>숙소 이름: ${lod_name}</p>--%>
