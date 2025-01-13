@@ -24,11 +24,6 @@ $(document).ready(function () {
                 } else if (response.status === "added") { // 찜 추가 성공
                     likeIcon.addClass("active"); // 클래스 추가
                     likeIcon.attr("src", "/img/like_full_heart.png"); // 빨간 하트 이미지로 변경
-                    if (window.location.pathname !== "/lodlike/lodwish.do") {
-                        if (confirm("찜 목록으로 이동하시겠습니까?")) {
-                            window.location.href = "/lodlike/lodwish.do";
-                        }
-                    }
                 } else if (response.status === "removed") { // 찜 제거 성공
                     likeIcon.removeClass("active");
                     likeIcon.attr(
