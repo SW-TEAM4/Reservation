@@ -12,9 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Controller
 @RequestMapping("/review")
@@ -99,25 +101,6 @@ public class ReviewController {
         try {
             String reviewImgUrl = null;
 
-            //파일 업로드 부분
-            if (reviewImgFile != null && !reviewImgFile.isEmpty()) {
-                // S3에 업로드할 파일 Key 생성
-                String fileExtension = "";
-                String originalFileName = reviewImgFile.getOriginalFilename();
-                if (originalFileName != null && originalFileName.contains(".")) {
-                    fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-                }
-                String imgKey = String.format("review/%d%s", reservation_idx, fileExtension);
-
-                // S3에 파일 업로드
-                boolean uploadSuccess = s3Service.uploadFileToS3(imgKey, reviewImgFile);
-                if (uploadSuccess) {
-                    // 업로드된 파일의 URL 생성
-                    reviewImgUrl = s3Service.getFileFromS3(imgKey);
-                } else {
-                    throw new RuntimeException("S3 파일 업로드 실패");
-                }
-            }
             // DTO 생성 및 데이터 설정
             ReviewDTO reviewDTO = new ReviewDTO();
             reviewDTO.setUser_idx(BigInteger.valueOf(user_idx));
@@ -130,13 +113,46 @@ public class ReviewController {
             // 리뷰 등록 처리
             int result = reviewService.insertReview(reviewDTO);
             if (result == 1) {
+                // 예약 상태 업데이트
                 reviewService.updateReservationStatus(
                         reviewDTO.getUser_idx(),
                         reviewDTO.getReservation_idx(),
                         reviewDTO.getRoom_idx()
                 );
+
+                // 이미지가 있을 경우 비동기적으로 파일 업로드 및 URL 업데이트 처리
+                if (reviewImgFile != null && !reviewImgFile.isEmpty()) {
+                    // 비동기적으로 이미지 업로드 처리
+                    CompletableFuture.runAsync(() -> {
+                        try {
+                            // S3에 업로드할 파일 Key 생성
+                            String fileExtension = "";
+                            String originalFileName = reviewImgFile.getOriginalFilename();
+                            if (originalFileName != null && originalFileName.contains(".")) {
+                                fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+                            }
+                            String imgKey = String.format("review/%d%s", reservation_idx, fileExtension);
+
+                            // S3에 파일 업로드
+                            boolean uploadSuccess = s3Service.uploadFileToS3(imgKey, reviewImgFile);
+                            if (uploadSuccess) {
+                                // 업로드된 파일의 URL 생성
+                                String finalReviewImgUrl = s3Service.getFileFromS3(imgKey);
+
+                                // 리뷰 이미지 URL 업데이트 처리
+                                reviewService.updateReviewImageUrl(reservation_idx, finalReviewImgUrl);
+                            } else {
+                                throw new RuntimeException("S3 파일 업로드 실패");
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    });
+                }
+                // 리뷰가 성공적으로 등록되었으므로 사용자에게 성공 메시지 전송
                 response.put("status", "success");
                 response.put("message", "리뷰가 성공적으로 등록되었습니다.");
+
             } else {
                 response.put("status", "fail");
                 response.put("message", "리뷰 등록에 실패했습니다.");

@@ -82,6 +82,7 @@
         function handleFileSelect(event) {
             const file = event.target.files[0];
             const preview = document.getElementById('imagePreview'); // 미리보기 이미지 요소
+            const deleteButton = document.getElementById('deleteImageButton'); // 삭제 버튼 요소
 
             if (file) {
                 // 선택된 파일 저장
@@ -93,12 +94,29 @@
                 reader.onload = function (e) {
                     preview.src = e.target.result; // 파일 내용을 이미지 소스로 설정
                     preview.style.display = 'block'; // 이미지 표시
+                    deleteButton.style.display = 'inline-block'; // 삭제 버튼 표시
                 };
                 reader.readAsDataURL(file); // 파일 읽기
             } else {
                 // 파일이 없을 경우 미리보기 숨김
                 preview.style.display = 'none';
+                deleteButton.style.display = 'none';
             }
+        }
+
+        // 이미지 삭제 기능
+        function deleteImage() {
+            const preview = document.getElementById('imagePreview'); // 미리보기 이미지 요소
+            const deleteButton = document.getElementById('deleteImageButton'); // 삭제 버튼 요소
+            const fileInput = document.getElementById('reviewImageInput'); // 파일 입력 요소
+
+            // 이미지 초기화
+            review_Image = null;
+            fileInput.value = ""; // 파일 입력 필드 초기화
+            preview.style.display = 'none'; // 미리보기 숨김
+            deleteButton.style.display = 'none'; // 삭제 버튼 숨김
+
+            console.log("Image deleted");
         }
 
         // 리뷰 제출
@@ -287,9 +305,23 @@
         }
 
         #imagePreview {
-            max-width: 100%;
-            max-height: 100%;
+            width: 250px;
+            height: 250px;
             object-fit: cover;
+        }
+
+        #deleteImageButton {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #deleteImageButton:hover {
+            background-color: #c0392b;
         }
 
         #user_comment {
@@ -377,6 +409,7 @@
         <!-- 사진 미리보기 -->
         <div id="imagePreviewContainer">
             <img id="imagePreview" style="display: none;" alt="사진 미리보기">
+            <button id="deleteImageButton" style="display: none;" onclick="deleteImage()">삭제</button>
         </div>
     </div>
 
