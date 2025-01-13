@@ -43,6 +43,7 @@
                     <th>객실 기본정보</th>
                     <th>반려동물 사이즈</th>
                     <th>객실 사진</th>
+                    <th>삭제</th>
                 </tr>
                 </thead>
                 <tbody id="roomTableBody">
@@ -125,6 +126,8 @@
                                 required
                                 multiple
                         >
+                    </td>
+                    <td>
                         <button type="button" class="delete-photo">삭제</button>
                     </td>
                 </tr>
