@@ -195,7 +195,7 @@
         <p>운동회 / 바자회 / 스탬프 투어 등 다양한 이벤트에 참여해 보개</p>
         <div class="card_container1">
             <div class="card1">
-                <img src="/img/home_thumbnail_visual_1.svg" alt="이벤트1" onclick="location.href='event1'">
+                <img src="/img/home_visual1.svg" alt="이벤트1" onclick="location.href='event1'">
             </div>
             <div class="card_content1">
                 <div class="notice1">
@@ -216,7 +216,7 @@
         </div>
         <div class="card_container2">
             <div class="card2">
-                <img src="/img/home_thumbnail_visual_2.svg" alt="이벤트2" onclick="location.href='event2'">
+                <img src="/img/home_visual2.svg" alt="이벤트2" onclick="location.href='event2'">
             </div>
             <div class="card_content2">
                 <div class="notice2">
