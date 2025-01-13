@@ -53,7 +53,7 @@
         .board_title {
             border: 2px solid #8A5642;
             border-radius: 5px;
-            width: 1120px;
+            width: 912px;
         }
 
         td {
@@ -63,7 +63,7 @@
 
         .write-table {
             width: 100%;
-            padding: 50px 50px;
+            padding: 50px 80px;
             height: 600px;
         }
 
@@ -76,7 +76,6 @@
         .title {
             margin-bottom: 5px;
             color: #8A5642;
-            margin-bottom: 10px;
             font-size: 14px;
         }
 
