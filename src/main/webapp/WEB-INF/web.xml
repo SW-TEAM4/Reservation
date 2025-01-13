@@ -30,6 +30,11 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+    <!-- listener apply -->
+    <listener>
+        <listener-class>filter.SessionListener</listener-class>
+    </listener>
+
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

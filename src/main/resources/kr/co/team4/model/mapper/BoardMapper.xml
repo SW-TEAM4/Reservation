@@ -10,7 +10,7 @@
     
     <!-- 게시글 조회 -->
     <select id="getBoardList" resultType="kr.co.team4.model.dto.BoardDTO">
-        SELECT B.BOARD_IDX, B.BOARD_TITLE, U.USER_ID AS WRITER_NAME, B.CREATED
+        SELECT B.BOARD_IDX, B.BOARD_TITLE, U.USER_NAME AS WRITER_NAME, B.CREATED
         FROM BOARD B
         JOIN USERS U ON B.USER_IDX = U.USER_IDX
         ORDER BY B.BOARD_IDX DESC
@@ -18,7 +18,7 @@
 
     <!-- 상세 -->
     <select id="detail" parameterType="int" resultType="kr.co.team4.model.dto.BoardDTO">
-        SELECT B.BOARD_IDX, U.USER_ID AS WRITER_NAME,B.created, B.BOARD_TITLE, B.BOARD_CONTENT
+        SELECT B.BOARD_IDX, U.NICK_NAME AS WRITER_NAME,B.created, B.BOARD_TITLE, B.BOARD_CONTENT
         FROM BOARD B
         JOIN USERS U
         ON B.USER_IDX = U.USER_IDX
@@ -34,7 +34,7 @@
         SELECT
             c.BOARD_IDX,
             c.USER_IDX,
-            u.USER_NAME,
+            u.NICK_NAME,
             c.COMMENT,
             c.CREATED
         FROM

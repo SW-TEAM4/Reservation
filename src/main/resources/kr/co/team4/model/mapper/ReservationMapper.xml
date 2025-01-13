@@ -22,6 +22,7 @@
         WHERE
             R.USER_IDX = #{user_idx}
           AND P.STATUS = 'paid'
+        ORDER BY R.RES_STR_DATE DESC
     </select>
 
     <select id="getResDetail" parameterType="kr.co.team4.model.dto.GetResDetailResDTO" resultType="kr.co.team4.model.dto.GetResDetailResDTO">

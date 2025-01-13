@@ -49,23 +49,34 @@
                     <c:when test="${not empty reviewList}">
                         <c:forEach var="lodreview" items="${reviewList}">
                             <div class="lod-review-card">
+                                <!-- 리뷰 이미지 -->
                                 <img class="lod-review-card-image"
                                      src="${empty lodreview.reviewer_image ? '/img/review_defalt_img.svg' : lodreview.reviewer_image}"
                                      alt="리뷰 이미지">
-
                                 <div class="lod-review-card-content">
+
+                                    <!-- 리뷰 헤더 -->
                                     <div class="lod-review-card-header">
 
+                                        <!-- 별점 -->
                                         <div class="lod-review-star-container">
                                             <c:forEach var="i" begin="1" end="5">
                                                 <span class="${i <= lodreview.reviewer_rating ? 'star-filled' : 'star'}">&#9733;</span>
                                             </c:forEach>
                                         </div>
+                                        <!-- 작성일 -->
                                         <div class="lod-review-created">${lodreview.reviewer_created}</div>
                                     </div>
 
+                                    <!-- 리뷰 작성한 닉네임-->
+                                    <div class="reviewer-info">
+                                        <span class="userId">${lodreview.reviewer_nickname}</span>
+                                    </div>
+
+                                    <!-- 리뷰 내용 -->
                                     <div class="lod-review-card-description">${lodreview.reviewer_content}</div>
 
+                                    <!-- 사장님 답변 -->
                                     <c:if test="${lodreview.manager_reply != null}">
                                         <div class="lod-manager-wrapper">
                                             <div class="lod-manager-title">사장님</div>

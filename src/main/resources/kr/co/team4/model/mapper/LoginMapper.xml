@@ -23,7 +23,7 @@
 
     <!-- 사용자 로그인 -->
     <select id="userlogin" resultType="kr.co.team4.model.dto.UserDTO">
-        SELECT USER_ID, USER_IDX FROM USERS WHERE USER_ID = #{USER_ID} AND USER_PWD = #{USER_PWD}
+        SELECT USER_ID, USER_IDX, USER_NAME FROM USERS WHERE USER_ID = #{USER_ID} AND USER_PWD = #{USER_PWD}
     </select>
 
     <!-- 사장님 로그인 -->
