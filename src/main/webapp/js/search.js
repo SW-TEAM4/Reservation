@@ -261,11 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedRegion = parseInt(regionParam, 10); // URL 파라미터 값 적용
         localStorage.setItem('selectedRegion', selectedRegion); // 로컬스토리지에 저장
     } else {
-        // 지역 값이 없으면 로컬스토리지에서 불러오기
-        const storedRegion = localStorage.getItem('selectedRegion');
-        if (storedRegion !== null) {
-            selectedRegion = parseInt(storedRegion, 10); // 저장된 값 적용
-        }
+        // 지역 값이 없으면 기본값을 전체(0)로 설정
+        selectedRegion = 0;
     }
 
     // === 탭 UI 활성화 처리 ===
