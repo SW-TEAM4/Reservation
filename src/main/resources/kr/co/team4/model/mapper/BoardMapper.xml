@@ -18,7 +18,7 @@
 
     <!-- 상세 -->
     <select id="detail" parameterType="int" resultType="kr.co.team4.model.dto.BoardDTO">
-        SELECT B.BOARD_IDX, U.NICK_NAME AS WRITER_NAME,B.created, B.BOARD_TITLE, B.BOARD_CONTENT
+        SELECT B.BOARD_IDX, U.USER_NAME AS WRITER_NAME,B.created, B.BOARD_TITLE, B.BOARD_CONTENT
         FROM BOARD B
         JOIN USERS U
         ON B.USER_IDX = U.USER_IDX
