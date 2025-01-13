@@ -14,12 +14,13 @@
         }
         .total-container{
             width: 100%;
-            height: 1200px;
             display: flex;
             justify-content: center;
             flex-direction: column;
             align-items: center;
             text-align: center;
+            margin-top: 20px;
+            margin-bottom: 100px;
         }
         .top-container{
             height: 70px;

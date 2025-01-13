@@ -254,11 +254,12 @@ public class ReservationController {
             paymentDTO.setStatus("pending");
             reservationDTO.setStatus("A");
             reservationService.saveReservationPayment(paymentDTO, reservationDTO);
+            UserDTO userDTO = reservationService.getUserInform(reservationPaymentDTO.getReservationDTO());
 
             // PaymentDTO, ReservationDTO 리턴 (merchant_id 필요함, completePayment에 )
             response.put("success", true);
             response.put("message", "예약 정보와 결제 정보가 저장되었습니다.");
-            response.put("userDTO", reservationService.getUserInform(reservationPaymentDTO.getReservationDTO()));
+            response.put("email", userDTO.getUSER_EMAIL());
             response.put("reservationPaymentDTO", reservationPaymentDTO);
 
             return ResponseEntity.ok(response);
