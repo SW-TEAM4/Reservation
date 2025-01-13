@@ -105,7 +105,7 @@
             </div>
             <!-- 오른쪽 영역 -->
             <div class="news_right">
-                <a href=""><img src="/img/home_thumbnail_fun.svg" style="width: 530px; height: 250px;"></a>
+                <a href="/event3"><img src="/img/home_thumbnail_fun.svg" style="width: 530px; height: 250px;"></a>
             </div>
         </div>
         <div style="width: 1200px; height: 1px; background-color: #DBD6D6; margin: 60px auto;"></div>

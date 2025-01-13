@@ -204,7 +204,7 @@
 <div class="main-container">
     <div class="boardname">
         <h2 style="display: inline-block;">모여보개</h2>
-        <img src="/img/board_detail_footprint_img.svg" alt="아이콘" style="width: 26px; height: 26px; transform: translateY(3px);">
+        <img src="/img/board_detail_footprint_img.svg" alt="아이콘" style="width: 26px; height: 26px; transform: translateY(6px);">
         <p>자유롭게 반려동물 이야기를 나눠보개</p>
     </div>
     <div class="detail_container">
