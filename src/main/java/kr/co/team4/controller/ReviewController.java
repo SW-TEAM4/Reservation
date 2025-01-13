@@ -34,14 +34,13 @@ public class ReviewController {
      */
     @GetMapping("/list")
     public String listReviewController(HttpSession session, Model model) {
-        BigInteger user_Idx = (BigInteger) session.getAttribute("user_Idx");
-        if (user_Idx == null) {
-            user_Idx = BigInteger.valueOf(0);
+        BigInteger user_idx = (BigInteger) session.getAttribute("user_idx");
+        if (user_idx == null) {
+            user_idx = BigInteger.valueOf(0);
         }
         ReviewDTO dto = new ReviewDTO();
-        dto.setUser_idx(user_Idx);
+        dto.setUser_idx(user_idx);
         model.addAttribute("count",reviewService.getReviewCount(dto));
-//        System.out.println("Total review count: " + reviewService.getReviewCount(dto));
         model.addAttribute("map",reviewService.getReviewList(dto));
 
         // reviewListPage.jsp로 이동
