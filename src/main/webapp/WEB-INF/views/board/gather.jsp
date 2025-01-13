@@ -64,7 +64,6 @@
             font-size: 14px;
             width: 150px;
             height: 55px;
-            margin-top: 20px;
         }
 
         .main button.write-btn a {

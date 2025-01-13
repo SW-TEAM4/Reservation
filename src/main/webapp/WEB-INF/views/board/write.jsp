@@ -41,7 +41,11 @@
         .head .header-text {
             left: 0;
             font-family: "Noto Sans KR";
-            color: #8A5642;
+            color: #352018;
+        }
+
+        .button-container {
+            margin-top: 30px;
         }
 
         .write_container {
@@ -63,8 +67,8 @@
 
         .write-table {
             width: 100%;
-            padding: 50px 80px;
-            height: 600px;
+            padding: 0px 80px;
+            height: 500px;
         }
 
         .writer {
@@ -103,7 +107,7 @@
             width: 80px;
             height: 44px;
             position: absolute;
-            top: 50%;
+            top: 35%;
             right: 170px;
         }
 
@@ -119,7 +123,7 @@
             border-radius: 8px;
             font-size: 16px;
             position: absolute;
-            top: 50%;
+            top: 35%;
             right: 0;
         }
 
@@ -137,10 +141,11 @@
                 <div class="head">
                     <div class="header-text">
                         <h2>게시글 작성</h2>
+                            <input type="submit" class="submit" value="등록">
+                            <a href="/gather" class="back">목록으로 돌아가기</a>
                     </div>
-                        <input type="submit" class="submit" value="등록">
-                    <a href="/gather" class="back">목록으로 돌아가기</a>
                 </div>
+                <div style="width: 1100px; height: 1px; background-color: #cccccc; margin: 25px auto;"></div>
                 <div class="body">
                     <div class="writer">
                         글쓴이 : <%= USER_ID != null ? USER_ID : "알 수 없음" %>
