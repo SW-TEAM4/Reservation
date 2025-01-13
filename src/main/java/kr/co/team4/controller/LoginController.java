@@ -95,7 +95,7 @@ public class LoginController {
                 session.invalidate();
                 System.out.println("사장님 로그아웃 성공");
             }
-            return "redirect:/home.do"; //(변경 할 거)리다이렉트 페이지는 사장님페이지 첫 화면으로 이동
+            return "redirect:/lodgment/sellerMain.do"; //(변경 할 거)리다이렉트 페이지는 사장님페이지 첫 화면으로 이동
         } catch (Exception e) {
             throw new Exception("사장님 로그아웃 실패.");
         }
