@@ -393,7 +393,6 @@
                 }
                 current[keys[keys.length - 1]] = value;
             });
-            console.log("JSON 데이터: ", JSON.stringify(jsonObject));
 
             // AJAX로 서버에 결제 정보 처리 저장 요청
             fetch('/reservation/saveReservationPayment.do', {
@@ -406,11 +405,7 @@
                     if (data.success) {
                         // 예약 정보가 성공적으로 저장되었을 때 결제 예정 정보 저장 후 결제 진행
                         const reservationPaymentDTO = data.reservationPaymentDTO;
-                        const userDTO = data.userDTO;
-                        // #debug
-                        console.log("data.ReservationPaymentDTO: ", reservationPaymentDTO + "message: " + data.message);
-                        console.log("userDTO: " + userDTO);
-                        showPaymentMethods("card", reservationPaymentDTO, userDTO);
+                        showPaymentMethods("card", reservationPaymentDTO, data.email);
                     } else {
                         console.log(data.message);
                         alert(data.message);
@@ -463,8 +458,10 @@
 
 
     // db에 예약 정보 저장 후 결제 수단 띄우기
-    function showPaymentMethods(paymentMethod, reservationPaymentDTO, userDTO) {
+    function showPaymentMethods(paymentMethod, reservationPaymentDTO, email) {
         const {paymentDTO, reservationDTO} = reservationPaymentDTO;
+        const resName = $('#res_name').val().trim();
+        const resPhoneNumber = $('#res_phone_number').val().trim();
         // 아임포트 SDK 초기화
         const IMP = window.IMP;
         IMP.init("imp46755844");
@@ -477,9 +474,9 @@
                 merchant_uid: reservationDTO.res_merchant_id, // 서버에서 받은 주문번호
                 name: `결제 테스트 ${lodDTO.lod_name} ${roomDTO.room_name}`,
                 amount: paymentDTO.paid_money, // 결제 금액
-                buyer_email: userDTO.USER_EMAIL,
-                buyer_name: userDTO.USER_NAME,
-                buyer_tel: userDTO.USER_PHONE_NUMBER,
+                buyer_email: email,
+                buyer_name: resName,
+                buyer_tel: resPhoneNumber,
             },
             async function (response) {
                 // 결제 과정에서 error 발생시 생성했던 reservation, payment 정보 삭제
