@@ -11,7 +11,7 @@
                 <a href="/userregister">회원가입</a>
             </c:if>
             <c:if test="${!empty usersession }">
-                <a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a> |
+                    <a href="javascript:void(0);" onclick="confirmLogout()">로그아웃</a> |
                 <a href="/mypage.do">마이페이지</a>
             </c:if>
         </div>
