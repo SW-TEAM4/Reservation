@@ -23,6 +23,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartResolver;
@@ -44,9 +46,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 @MapperScan(basePackages = {"kr.co.team4.model.mapper"}, annotationClass = Mapper.class)
 @EnableTransactionManagement
+@EnableScheduling
 @ComponentScan(basePackages = {"kr.co", "Interceptor"})
 public class MvcConfig implements WebMvcConfigurer {
-
 
     // ViewResolver - 포워딩할 경로 앞/뒤 설정
     @Override
@@ -78,6 +80,15 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean // 트랜잭션매니저 등록
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean // 배치작업 빈 등록
+    public ThreadPoolTaskScheduler taskScheduler(){
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(10);  // 스케줄러의 스레드 풀 크기 설정
+        scheduler.setThreadNamePrefix("scheduled-task-");
+        scheduler.initialize();
+        return scheduler;
     }
 
     @Bean
