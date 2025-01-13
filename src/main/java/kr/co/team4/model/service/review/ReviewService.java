@@ -30,6 +30,9 @@ public interface ReviewService {
 
    int getReviewCount(ReviewDTO dto);
 
+   int updateReviewImageUrl(@Param("reservationIdx") int reservationIdx,
+                            @Param("reviewImgUrl") String reviewImgUrl);
+
 
 
 

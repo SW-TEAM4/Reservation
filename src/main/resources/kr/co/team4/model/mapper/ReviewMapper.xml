@@ -15,6 +15,12 @@
           AND room_idx = #{roomIdx}
     </update>
 
+    <update id="updateReviewImageUrl" parameterType="map">
+        UPDATE REVIEW
+        SET review_img_url = #{reviewImgUrl}
+        WHERE reservation_idx = #{reservationIdx}
+    </update>
+
     <select id="getRoomAndLodgmentName" parameterType="kr.co.team4.model.dto.UserReservedDTO" resultType="kr.co.team4.model.dto.UserReservedDTO">
         SELECT
             l.LOD_NAME AS lod_name,

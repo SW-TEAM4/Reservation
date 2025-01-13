@@ -96,6 +96,16 @@ public class ReviewServiceImpl implements ReviewService {
 
 
 
+    /**
+     * 리뷰 이미지 URL 업데이트
+     *
+     * @param reservationIdx 예약 ID
+     * @param reviewImgUrl   리뷰 이미지 URL
+     * @return 업데이트된 행의 수
+     */
+    public int updateReviewImageUrl(int reservationIdx, String reviewImgUrl) {
+        return reviewMapper.updateReviewImageUrl(reservationIdx, reviewImgUrl); // 업데이트된 행의 수 반환
+    }
 
 
 
