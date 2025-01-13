@@ -42,7 +42,7 @@
         color: #352018;
         font-weight: bold;
         cursor: pointer;
-        font-size: 28px;
+        font-size: 24px;
     }
 
     .owner-btn {
@@ -57,7 +57,7 @@
         color: #352018;
         font-weight: bold;
         cursor: pointer;
-        font-size: 28px;
+        font-size: 24px;
     }
 
 </style>
