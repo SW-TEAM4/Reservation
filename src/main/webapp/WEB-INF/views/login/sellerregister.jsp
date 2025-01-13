@@ -5,7 +5,7 @@
   Time: 오전 11:56
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
 <html>
 <head>
     <title>같이가개 회원가입</title>
@@ -14,12 +14,18 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<%--    <link rel="stylesheet" href="/css/sellerHeader.css">--%>
     <style>
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        .total {
+            width: 1280px;
+            height: 800px;
         }
 
         body {
@@ -30,46 +36,55 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            box-sizing: border-box;
         }
 
         .header {
             width: 100%;
             background-color: #8A5642;
             padding: 20px;
-            text-align: center;
-            position: absolute;
-            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
         }
 
         .header .logo {
             height: 44px;
             width: 150.91px;
-            margin-right: 1500px;
-            text-align: center;
-            top: 24px;
+            position: absolute;
+            left: 20px;
+            cursor: pointer;
+            top: 5px;
         }
 
         .header .register {
             width: 74px;
             height: 22px;
-            margin-right: 60px;
-            text-align: center;
-            top: 46px;
+            margin: 0 auto;
+            cursor: pointer;
         }
 
         .container {
-            width: 40%;
-            margin: auto;
+            width: 100%;
+            max-width: 1280px;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            box-sizing: border-box;
+            justify-content: center;
+        }
+
+        .register-form {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
         }
 
         .name_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_NAME {
@@ -94,7 +109,6 @@
 
         .nick_name_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_NICK_NAME {
@@ -119,7 +133,6 @@
 
         .phone_number_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_PHONE_NUMBER {
@@ -144,7 +157,6 @@
 
         .id_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_ID {
@@ -169,7 +181,6 @@
 
         .pw_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_PWD {
@@ -194,7 +205,6 @@
 
         .pwck_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_PWD_CK {
@@ -219,7 +229,6 @@
 
         .email_wrap {
             width: 486px;
-            margin-left: 70px;
         }
 
         .SELLER_EMAIL {
@@ -251,7 +260,6 @@
             border-radius: 5px;
             cursor: pointer;
             margin: 2px;
-            margin-left: 70px;
             text-align: center;
         }
 
@@ -262,7 +270,6 @@
             margin: 2px;
             border: 2px solid #8A5642;
             border-radius: 5px;
-            margin-left: 70px;
         }
 
         .register_button {
@@ -272,7 +279,6 @@
             margin: 2px;
             border: 2px solid #8A5642;
             border-radius: 5px;
-            margin-left: 72px;
             cursor: pointer;
             background-color: #8A5642;
             color: white;
@@ -304,29 +310,43 @@
         }
 
         .footer {
-            padding: 10px;
-            font-size: 13px;
-            color: #666;
+            width: 100%; /* 푸터의 너비를 전체로 설정 */
             text-align: center;
-            position: absolute;
-            bottom: 0;
-            margin-left: 180px;
+            border-top: 1px solid #929292; /* 상단 테두리 설정: 너비, 스타일, 색상 */
         }
 
-        .footer p {
-            margin: 5px 0;
+        .footer > .size {
+            height: 156px;
+            margin: 0 auto;
+        }
+
+        .size {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .footer > .size > .info > p {
+            line-height: 20px;
+            color: gray;
+            font-weight: bold;
+            margin: 0;
         }
 
     </style>
 </head>
 <body>
     <div class="header">
-        <img src="/img/main_logo.svg" class="logo" alt="logo">
-        <img src="/img/register.svg" class="register" alt="register">
+        <a href="/home.do">
+            <img src="/img/main_logo.svg" class="logo" alt="logo">
+        </a>
+        <a href="/sellerregister">
+            <img src="/img/register.svg" class="register" alt="register">
+        </a>
     </div>
-
+<div class="total">
     <div class="container">
-        <form id="register_form" method="post" onsubmit="return registerCheck();">
+        <form class="register-form" id="register_form" method="post" onsubmit="return registerCheck();">
             <div class="name_wrap">
                 <div class="SELLER_NAME">이름</div>
                 <div class="name_input_box">
@@ -383,9 +403,14 @@
                 <input type="submit" value="가입하기" class="register_button" id="register_button">
             </div>
         </form>
-        <div class="footer">
-            <p>이용약관 | 개인정보처리방침</p>
-            <p>대표번호 010-6566-4932 | ⓒ4Team Corp.</p>
+    </div>
+</div>
+    <div class="footer">
+        <div class="size">
+            <div class="info">
+                <p>이용약관 | 개인정보처리방침 | 고객센터</p><br>
+                <p>ⓒ4Team Corp.</p>
+            </div>
         </div>
     </div>
 
