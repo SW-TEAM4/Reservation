@@ -80,7 +80,7 @@
                                   AND A.MAX_PET_CNT >= #{petCount}
                             <include refid="searchSql" />
                             GROUP BY B.LOD_IDX
-                            ORDER BY B.LOD_NAME
+                            ORDER BY B.LOD_NAME 
         </select>
 </mapper>
 
