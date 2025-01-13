@@ -41,7 +41,7 @@
         }
 
         .event3_container {
-            padding: 20px;
+            padding: 20px 60px;
             margin: 0 auto;
             max-width: 1280px;
         }
@@ -90,7 +90,7 @@
                 </div>
                 <a href="/fun.do" class="back_btn">목록으로 돌아가기</a>
             </div>
-            <div style="width: 1240px; height: 1px; background-color: #DBD6D6; margin-bottom: 30px;"></div>
+            <div style="width: 1155px; height: 1px; background-color: #DBD6D6; margin-bottom: 30px;"></div>
             <div class="event3">
                 <img src="/img/home_visual3.svg">
             </div>
