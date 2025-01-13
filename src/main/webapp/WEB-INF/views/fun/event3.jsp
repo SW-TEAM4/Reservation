@@ -44,12 +44,14 @@
             padding: 20px 60px;
             margin: 0 auto;
             max-width: 1280px;
+            text-align: center;
         }
 
         .event3 img {
             width: 100%;
-            max-width: 1280px;
+            max-width: 900px;
             height: auto;
+            margin: 0 auto;
         }
 
         .content3 {
@@ -57,8 +59,8 @@
             font-size: 15px;
             text-align: left;
             width: 100%;
-            max-width: 1280px;
-            margin: 25px 0 20px 25px;
+            max-width: 900px;
+            margin: 25px auto;
         }
 
         .back_btn {
