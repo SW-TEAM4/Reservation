@@ -49,8 +49,15 @@
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .detail_header {
+        .detail_title {
             font-size: 20px;
+            font-weight: bold;
+            color: #352018;
+            margin-bottom: 10px;
+        }
+
+        .detail_header {
+            font-size: 18px;
             font-weight: bold;
             color: #352018;
             margin-bottom: 15px;
@@ -208,6 +215,7 @@
         <p>자유롭게 반려동물 이야기를 나눠보개</p>
     </div>
     <div class="detail_container">
+        <div class="detail_title">제목 : ${detail.BOARD_TITLE}</div>
         <div class="detail_header">작성자 : ${detail.WRITER_NAME}</div>
         <div class="detail_writer">
             작성일 :
