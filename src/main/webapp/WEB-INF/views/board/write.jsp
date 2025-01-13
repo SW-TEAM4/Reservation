@@ -53,6 +53,7 @@
         .board_title {
             border: 2px solid #8A5642;
             border-radius: 5px;
+            width: 1120px;
         }
 
         td {
@@ -75,6 +76,7 @@
         .title {
             margin-bottom: 5px;
             color: #8A5642;
+            margin-bottom: 10px;
             font-size: 14px;
         }
 
@@ -87,7 +89,7 @@
         textarea {
             border-radius: 8px;
             border: 2px solid #8A5642;
-            background-color: #ededed;
+            background-color: white;
             width: 100%;
             height: 300px;
         }
