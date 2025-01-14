@@ -132,7 +132,7 @@ h1 {
     text-align: center;
 }
 /* 우편번호 텍스트박스 */
-.address-inputs input[type="text"] { 
+.address-inputs input[type="text"] {
     width: 300px;             /* 텍스트박스 크기 */
     padding: 10px;            /* 내부 여백 */
     border: 1px solid #ccc;   /* 테두리 */

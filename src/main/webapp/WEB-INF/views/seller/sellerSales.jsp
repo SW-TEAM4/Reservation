@@ -50,7 +50,7 @@
         <div class="monthly-sales">
             <p>사장님,</p>
             <p class="highlight">이번달 매출은 <span>${total_money[6]}원</span> 입니다!</p>
-            <p class="highlight">최근 6개월 매출은 <span>${total_money[6]}원</span> 입니다!</p>
+            <p class="highlight1">최근 6개월 매출은 <span>${total_money[7]}원</span> 입니다!</p>
         </div>
 
         <!-- 월간 매출 그래프 -->
@@ -75,9 +75,11 @@
         const numericData = chartData.map(value => Number(value));
         const formatter = new Intl.NumberFormat('ko-KR', { style: 'decimal' });
         const thisMonthSales = formatter.format(numericData[6]);
+        const totalMoneySales = formatter.format(numericData[7]);
 
         // HTML에 포맷팅된 금액 삽입
         $('.highlight span').text(thisMonthSales + "원");
+        $('.highlight1 span').text(totalMoneySales + "원");
 
         // Chart.js 초기화
         const ctx = document.getElementById('salesChart').getContext('2d');
