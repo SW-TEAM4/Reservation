@@ -73,6 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
             </td>
             <td>
                 <input type="file" name="rooms[${rowIndex}].room_photos" class="input-file" accept="image/*" multiple>
+            </td>
+            <td>
                 <button type="button" class="delete-photo">삭제</button>
             </td>
         `;
