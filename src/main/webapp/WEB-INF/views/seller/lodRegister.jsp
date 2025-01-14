@@ -88,7 +88,7 @@
             </div>
         </div>
 
-        <!-- 우편번호 버튼 -->
+        <!-- 우편번호 버튼 --> 
         <div class="other-group">
             <label for="detailedAddress" class="lod-label">숙소 주소</label>
             <div class="address-inputs">
