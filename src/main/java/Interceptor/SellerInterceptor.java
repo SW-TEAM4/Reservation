@@ -26,17 +26,13 @@ public class SellerInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        HttpSession session = request.getSession();
-        Object userSession = session.getAttribute("sellersession");
-
-/*        // 로그인 상태가 아니면 로그인 페이지로 리다이렉트
-        if (userSession == null) {
-            response.sendRedirect("/auth/login");
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            response.sendRedirect("/sellerlogin");
             return false; // 요청 진행 중단
-        }*/
-
-        // 로그인 상태면 요청 계속 진행
-        return true;
+        }else{
+            return true;
+        }
     }
 
     @Override
