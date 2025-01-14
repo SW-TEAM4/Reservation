@@ -275,13 +275,14 @@ public class SellerPageServiceImpl implements SellerPageService {
         Map<String, Object> salesData = sellerPageMapper.getSales(lodIdx);
 
         List<String> month_date = new ArrayList<>(Arrays.asList(
-                (String) salesData.get("min6_month_date"),          // 6개월 전 달
-                (String) salesData.get("min5_month_date"),          // 5개월 전 달
-                (String) salesData.get("min4_month_date"),          // 4개월 전 달
-                (String) salesData.get("min3_month_date"),          // 3개월 전 달
-                (String) salesData.get("min2_month_date"),          // 2개월 전 달
-                (String) salesData.get("min1_month_date"),          // 1개월 전 달
-                (String) salesData.get("current_month"  )           // 이번달
+                (String) salesData.get("min6_month_date"),                // 6개월 전 달
+                (String) salesData.get("min5_month_date"),                // 5개월 전 달
+                (String) salesData.get("min4_month_date"),                // 4개월 전 달
+                (String) salesData.get("min3_month_date"),                // 3개월 전 달
+                (String) salesData.get("min2_month_date"),                // 2개월 전 달
+                (String) salesData.get("min1_month_date"),                // 1개월 전 달
+                (String) salesData.get("current_month"  )                 // 이번달
+                
 
 
         ));

@@ -56,7 +56,8 @@ h1 {
     color: #5C4033;
 }
 
-.monthly-sales .highlight {
+.monthly-sales .highlight,
+.monthly-sales .highlight1{
     font-size: 26px;
     font-weight: bold;
     color: #8A5642;

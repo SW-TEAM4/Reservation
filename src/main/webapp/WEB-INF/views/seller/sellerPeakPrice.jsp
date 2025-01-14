@@ -42,7 +42,7 @@
                 <li><b>성수기: </b> 비수기 가격기준 평일 20%, 금/토 30% 인상</li>
                 <li><b>극성수기:</b> 비수기 가격기준 평일 40%, 금/토 50% 인상</li>
             </ul>
-        </div> 
+        </div>
 
         <form action="/lodgment/savePeakPrice.do" method="post">
             <table class="table">
