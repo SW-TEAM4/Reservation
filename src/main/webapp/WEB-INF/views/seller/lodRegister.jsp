@@ -88,12 +88,13 @@
             </div>
         </div>
 
-        <!-- 우편번호 버튼 -->
+        <!-- 우편번호 버튼 --> 
         <div class="other-group">
-            <label for="postcode" class="lod-label">숙소 주소</label>
+            <label for="detailedAddress" class="lod-label">숙소 주소</label>
             <div class="address-inputs">
-                <input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly required>
-                <button type="button" class="btn-postcode">우편주소</button>
+                <%--<input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly required>--%>
+                <input type="text" id="detailedAddress" name="lod_address" placeholder="주소" class="address-input" readonly required>
+                <button type="button" class="btn-postcode">주소검색</button>
             </div>
         </div>
          <%--<div class="address-field-container">
@@ -193,22 +194,19 @@
 <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=cd3f60c442b3dcdb9c54d4dc8c7282d7&libraries=services"></script>
 <script>
-    /*우편주소*/
     document.addEventListener('DOMContentLoaded', () => {
-        const postcodeButton = document.querySelector('.btn-postcode');
+        const addressSearchButton = document.querySelector('.btn-postcode');
 
-        postcodeButton.addEventListener('click', function () {
+        addressSearchButton.addEventListener('click', function () {
             new daum.Postcode({
                 oncomplete: function (data) {
-                    const addressInput         = document.getElementById('postcode');
                     const detailedAddressInput = document.getElementById('detailedAddress');
-                    const mapX                 = document.getElementById('mapX');
-                    const mapY                 = document.getElementById('mapY');
+                    const mapX = document.getElementById('mapX');
+                    const mapY = document.getElementById('mapY');
 
-                    addressInput.value = data.zonecode; // 우편번호
-                    detailedAddressInput.value = data.address; // 기본 주소
+                    detailedAddressInput.value = data.address; // 기본 주소 입력
 
-                    // Kakao Maps API가 로드되었는지 확인
+                    // Kakao Maps API로 좌표 검색
                     if (window.kakao && kakao.maps && kakao.maps.services) {
                         const geocoder = new kakao.maps.services.Geocoder();
                         geocoder.addressSearch(data.address, function (result, status) {
@@ -216,9 +214,8 @@
                                 const lat = result[0].y;
                                 const lng = result[0].x;
 
-                                mapX.value = lat;
-                                mapY.value = lng;
-
+                                mapX.value = lat; // 위도
+                                mapY.value = lng; // 경도
                             } else {
                                 console.error('Kakao Geocoding 실패:', status);
                             }
@@ -226,6 +223,9 @@
                     } else {
                         console.error('Kakao Maps API가 로드되지 않았습니다.');
                     }
+                },
+                onclose: function () {
+                    console.log('주소 검색 창 닫힘');
                 }
             }).open();
         });

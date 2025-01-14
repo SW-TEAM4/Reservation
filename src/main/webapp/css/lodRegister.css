@@ -22,7 +22,7 @@ body {
     width: 40%;
     margin: 50px auto;
     background-color: #fff;
-    padding: 20px 40px;
+    padding: 20px 100px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -122,7 +122,6 @@ h1 {
     text-align: left; /* 텍스트 왼쪽 정렬 */
 }
 .btn-postcode {
-    width: 100%; /* 버튼이 입력 필드와 동일한 너비 */
     padding: 10px;
     background-color: #d7b4a3;
     color: #5a382a;
@@ -134,7 +133,7 @@ h1 {
 }
 /* 우편번호 텍스트박스 */
 .address-inputs input[type="text"] {
-    width: 200px;             /* 텍스트박스 크기 */
+    width: 300px;             /* 텍스트박스 크기 */
     padding: 10px;            /* 내부 여백 */
     border: 1px solid #ccc;   /* 테두리 */
     border-radius: 4px;       /* 모서리 둥글게 */
