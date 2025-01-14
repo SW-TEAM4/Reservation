@@ -14,7 +14,7 @@ public class SessionListener implements HttpSessionListener {
         // 세션 유지 시간 1시간
 //        session.setMaxInactiveInterval(60 * 60);
         System.out.println("새로운 세션 생성: 세션 ID: " + session.getId());
-        session.setMaxInactiveInterval(30);
+        session.setMaxInactiveInterval(60 * 60);
     }
 
     @Override
