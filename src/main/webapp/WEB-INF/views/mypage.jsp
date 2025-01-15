@@ -17,100 +17,10 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/mypageStyle.css"/>
-    <style>
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-        }
-
-        .background {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100%;
-            background-color: #FFFFFF;
-            width: 1200px;
-        }
-
-        .profile {
-            width: 200px;
-            height: 110px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 100px auto 100px;
-        }
-
-        .profile img {
-            width: 120px;
-            height: 120px;
-        }
-
-        .profileId {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            cursor: pointer;
-            margin-top: -80px;
-            margin-left: 10px;
-        }
-
-        .userId {
-            font-size: 20px;
-            color: black;
-            font-family: 'Noto Sans KR', sans-serif;
-            margin: 0 8px 0 0;
-        }
-
-        .listWrapper {
-            background-color: #8A5642;
-            width: 600px;
-            height: 352px;
-            border-radius: 30px 30px 30px 30px;
-            padding-top: 30px;
-            margin: 90px auto;
-            position: relative;
-            margin-bottom: 300px;
-        }
-
-        .list {
-            width: 90%;
-            margin: 0 auto;
-        }
-
-        .listItem {
-            display: flex;
-            align-items: center;
-            padding: 50px 20px;
-        }
-
-        .listItem img:first-child {
-            margin-right: 20px;
-        }
-
-        .listItem:last-child {
-            border-bottom: none;
-        }
-
-        .listItem span {
-            font-size: 20px;
-            font-family: 'Noto Sans KR', sans-serif;
-            color: #FFFFFF;
-            margin-left: 20px;
-            flex-grow: 1;
-        }
-
-    </style>
+    <script src="/js/home.js"></script>
+    <link rel="stylesheet" href="/css/style.css?after"/>
+    <link rel="stylesheet" href="/css/mypage.css"/>
+<%--    <link rel="stylesheet" href="/css/mypageStyle.css"/>--%>
 </head>
 <body>
 <div class="background">
@@ -136,6 +46,16 @@
                 <img src="/img/mypage_icon_1.svg" alt="리뷰내역 아이콘">
                 <span>리뷰내역</span>
                 <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
+            </div>
+            <div class="listItem" onclick="location.href='recently/recently.do'">
+                <img src="/img/mypage_icon_3.svg" alt="최근 본 객실">
+                <span>최근 본 객실</span>
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon" />
+            </div>
+            <div class="listItem" onclick="location.href='/lodlike/lodwish.do'">
+                <img src="/img/mypage_heart.png" class="heart-icon" alt="찜한 숙소">
+                <span>찜한 숙소</span>
+                <img src="/img/Arrow_Icon.svg" alt="Arrow Icon"/>
             </div>
         </div>
     </div>

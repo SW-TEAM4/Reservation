@@ -35,8 +35,12 @@
     <div class="visual">
         <div class="swiper swiper-visual">
             <div class="swiper-wrapper">
-                <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_1.svg');"></div>
-                <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_2.svg');"></div>
+                <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_1.svg');">
+                    <a href="/event1" style="display:block; width:100%; height:100%;"></a>
+                </div>
+                <div class="swiper-slide" style="background-image:url('/img/home_thumbnail_visual_2.svg');">
+                    <a href="/event2" style="display:block; width:100%; height:100%;"></a>
+                </div>
             </div>
         </div>
     </div>
@@ -81,27 +85,27 @@
             <div class="news_left">
                 <div class="news_left_title">
                     <img src="/img/home_txt_sub_fun.svg" style="width: 246px; height: 52px;">
-                    <a href=""><img src="/img/home_btn_fun_plus.svg" style="width: 24px; height: 24px;"></a>
+                    <a href="/fun.do"><img src="/img/home_btn_fun_plus.svg" style="width: 24px; height: 24px;"></a>
                 </div>
                 <div class="news_item">
-                    <div class="news_item_icon"><a href=""><img src="/img/home_btn_event.svg"
+                    <div class="news_item_icon"><a href="/event1"><img src="/img/home_btn_event.svg"
                                                                 style="width: 126px; height: 45px;"></a></div>
-                    <div class="news_item_text"><a href="">너와 함께하개! 미션 스탬프 투어</a></div>
+                    <div class="news_item_text"><a href="/event1">너와 함께하개! 미션 스탬프 투어</a></div>
                 </div>
                 <div class="news_item">
-                    <div class="news_item_icon"><a href=""><img src="/img/home_btn_sports.svg"
+                    <div class="news_item_icon"><a href="/event2"><img src="/img/home_btn_sports.svg"
                                                                 style="width: 126px; height: 45px;"></a></div>
-                    <div class="news_item_text"><a href="">누가 누가 제일 잘 달리나 시험하개</a></div>
+                    <div class="news_item_text"><a href="/event2">누가 누가 제일 잘 달리나 시험하개</a></div>
                 </div>
                 <div class="news_item">
-                    <div class="news_item_icon"><a href=""><img src="/img/home_btn_bazaar.svg"
+                    <div class="news_item_icon"><a href="/event3"><img src="/img/home_btn_bazaar.svg"
                                                                 style="width: 126px; height: 45px;"></a></div>
-                    <div class="news_item_text"><a href="">너가 더 잘 어울리개 내가 싸게 줄개</a></div>
+                    <div class="news_item_text"><a href="/event3">너가 더 잘 어울리개 내가 싸게 줄개</a></div>
                 </div>
             </div>
             <!-- 오른쪽 영역 -->
             <div class="news_right">
-                <a href=""><img src="/img/home_thumbnail_fun.svg" style="width: 530px; height: 250px;"></a>
+                <a href="/event3"><img src="/img/home_thumbnail_fun.svg" style="width: 530px; height: 250px;"></a>
             </div>
         </div>
         <div style="width: 1200px; height: 1px; background-color: #DBD6D6; margin: 60px auto;"></div>

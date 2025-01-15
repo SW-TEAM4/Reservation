@@ -27,11 +27,13 @@ public class RoomDTO {
     // 이미지 URL 리스트
     private List<String> room_img_urls;
 
+    private int total_room_price;
+
     public String getFormattedRoomPrice(){
         // 가격을 1,000 단위로 쉼표를 추가하는 포맷터 설정
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         // 가격을 쉼표 형식으로 포맷팅
-        return decimalFormat.format(room_price);
+        return decimalFormat.format(total_room_price);
     }
 }
 

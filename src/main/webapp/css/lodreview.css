@@ -1,13 +1,28 @@
-.lod-review-header {
+.review-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 10px;
+    padding: 0px 5px;
 }
 
-.lod-review-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.review-statistics {
+    font-size: 14px;
+    display: flex; /* Flexbox 활성화 */
+    align-items: flex-start;
+    justify-content: space-between; /* 좌우로 공간 배분 */
+    gap: 20px; /* 항목 간 간격 */
+}
+
+.star {
+    font-size: 18px;
+    color: gray;
+    margin-right: 5px;
+}
+
+.star-filled{
+    font-size: 18px;
+    color: #FFDF86;
+    margin-right: 5px;
 }
 
 .lod-review-card {
@@ -19,17 +34,25 @@
     margin-bottom: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 .lod-review-card-content {
     flex: 1;
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
 }
 
+.lod-review-card-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
 .lod-review-card-image {
-    width: 240px;
+    width: 300px;
+    height: 400px;
     object-fit: cover;
-    border-radius: 5px;
 }
 
 .lod-review-card-description {
@@ -37,13 +60,15 @@
     font-size: 16px;
     color: #352018;
     font-weight: 700;
+    margin-left: 3px;
 }
 
 .lod-manager-wrapper {
-    margin-top: 30px;
+    margin-top: 50px;
     padding: 20px 0px 20px 20px;
     background-color: #d9d9d985;
     border-radius: 5px;
+    margin-left: 3px;
 }
 
 .lod-manager-title {
@@ -58,3 +83,71 @@
     color: #352018;
     line-height: 1.6;
 }
+
+.top-container {
+    height: 70px;
+    width: 1280px;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid #ccc; /* 위쪽 선 */
+    padding: 10px 20px; /* 컨테이너 내부 여백 */
+}
+
+.top-container .arrow-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+}
+
+.top-container .header-text {
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.reserve-info {
+    width: 100%;
+    box-sizing: border-box;
+    border-top: 1px solid #ccc;
+    max-width: 1280px;
+    padding: 20px;
+    margin-bottom: 10px;
+}
+
+/* 리뷰가 없을 때 no-review-container 스타일 */
+.no-review-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 1200px;
+    text-align: center;
+}
+
+.no-review-container img {
+    max-width: 100%;
+    height: auto;
+}
+/* 닉네임 및 프로필 이미지 섹션 */
+.reviewer-info {
+    display: flex;
+    align-items: center;
+    margin-top: 10px; /* 별점과 간격 */
+    margin-bottom: 10px; /* 리뷰 내용과 간격 */
+}
+.userId {
+    font-size: 14px;
+    font-weight: bold;
+    color: #352018; /* 기존 텍스트 색상과 일치 */
+}
+
+.lod-review-card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.lod-review-star-container {
+    display: flex; /* Flexbox를 사용하여 정렬 */
+}
+

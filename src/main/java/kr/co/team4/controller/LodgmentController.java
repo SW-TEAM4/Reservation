@@ -1,9 +1,7 @@
 package kr.co.team4.controller;
 
 import kr.co.team4.model.dto.*;
-import kr.co.team4.model.service.LodFacilityService;
-import kr.co.team4.model.service.LodgmentService;
-import kr.co.team4.model.service.LodReviewService;
+import kr.co.team4.model.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,13 +22,19 @@ public class LodgmentController {
     private LodgmentService lodgmentService;
 
     @Autowired
+    private RoomService roomService;
+
+    @Autowired
     private LodReviewService lodReviewService; // LodReviewService 추가
 
     @Autowired
     private LodFacilityService lodFacilityService; // LodFacilityService 추가
 
+    @Autowired
+    private LodLikeService lodLikeService;
+
     @GetMapping("/lodgment.do")
-    public String index(Model model, LodgmentDTO lodgmentDTO,
+    public String index(Model model, LodgmentDTO lodgmentDTO, HttpSession session,
                         @RequestParam int lod_idx,
                         @RequestParam String checkinDate,
                         @RequestParam String checkoutDate,
@@ -76,18 +81,31 @@ public class LodgmentController {
         model.addAttribute("guestCount", guestCount);
         model.addAttribute("petCount", petCount);
 
+        // 좋아요 정보 가져오기
+        LodLikeDTO lodLikeDTO = new LodLikeDTO();
+        lodLikeDTO.setLod_idx(lod_idx);
+
+        if (session.getAttribute("usersession") != null) {
+            UserDTO user = (UserDTO)session.getAttribute("usersession");
+            lodLikeDTO.setUser_idx(user.getUSER_IDX());
+            lodLikeDTO = lodLikeService.findByUserAndLod(lodLikeDTO) != null
+                    ? lodLikeService.findByUserAndLod(lodLikeDTO)
+                    : lodLikeDTO;
+        }
+        model.addAttribute("lodLikeDTO", lodLikeDTO);
+
         return "lodgment/lodgment"; // "lodgment" 페이지로 이동
     }
 
     @GetMapping("/lodgment/availableRooms.do")
     @ResponseBody
-    public List<RoomDTO> getAvailableRooms(@RequestParam int lod_idx,
+    public Map<String, Object> getAvailableRooms(@RequestParam int lod_idx,
                                            @RequestParam String checkinDate,
                                            @RequestParam String checkoutDate,
                                            @RequestParam int guestCount,
                                            @RequestParam int petCount) {
 
-
+        Map<String, Object> rooms = new HashMap<>();
         Map<String, Object> params = new HashMap<>();
         params.put("lod_idx", lod_idx);
         params.put("checkinDate", checkinDate);
@@ -95,7 +113,14 @@ public class LodgmentController {
         params.put("guestCount", guestCount);
         params.put("petCount", petCount);
 
+        LodgmentDTO lodgmentDTO = roomService.getRoomLodDetail(lod_idx);
+        List<RoomDTO> roomList = lodgmentService.getAvailableRooms(params);
+
+        rooms.put("roomList", roomList);
+        rooms.put("checkinTime", lodgmentDTO.getFormattedLodCheckIn());
+        rooms.put("checkoutTime", lodgmentDTO.getFormattedLodCheckOut());
+
         // Service를 호출하여 예약 가능한 객실 리스트를 가져옴
-        return lodgmentService.getAvailableRooms(params);
+        return rooms;
     }
 }

@@ -32,8 +32,8 @@
         반려견과 즐거운 추억을 쌓을 수 있는 장소를 제공하는 "같이가개"입니다.</p>      <!-- 본문 텍스트 -->
     </div>
     <div class="buttons">
-      <button onclick="location.href='/lodgment/lodRegister.do'" class="btn">로그인</button>               <!-- 로그인 버튼 -->
-      <button onclick="location.href='signup.jsp'" class="btn btn-signup">회원가입</button>       <!-- 회원가입 버튼 -->
+      <button onclick="location.href='/sellerlogin'" class="btn">로그인</button>                   <!-- 로그인 버튼 -->
+      <button onclick="location.href='/sellerregister'" class="btn btn-signup">회원가입</button>    <!-- 회원가입 버튼 -->
     </div>
   </main>
 </div>

@@ -39,15 +39,18 @@ public class LoginController {
     }
 
     @PostMapping("/userregister")
-    public String UserRegister(UserDTO dto) throws Exception {
+    public String UserRegister(UserDTO dto, Model model) throws Exception {
         logger.info("사용자 회원가입 진입");
+        try {
+            // 회원가입 서비스 실행
+            service.userregister(dto);
+            logger.info("register Service 성공");
 
-        // 회원가입 서비스 실행
-        service.userregister(dto);
-
-        logger.info("register Service 성공");
-
-        return "login/userlogin";
+            // 회원가입 성공 후 로그인 페이지로 리다이렉트
+            return "login/usersuccess";
+        } catch (Exception e) {
+            throw new Exception("비밀번호 암호화에 실패하였습니다."+ e.getMessage()); // 에러 메시지 전달
+        }
     }
 
     @PostMapping("/sellerregister")
@@ -58,13 +61,44 @@ public class LoginController {
 
         logger.info("register Service 성공");
 
-        return "sellersuccess";
+        return "login/sellersuccess";
     }
 
     @GetMapping("/userlogin")
     public String showLoginForm() {
         logger.info("로그인 페이지 진입");
         return "login/userlogin";
+    }
+
+    /** 유저 로그아웃 **/
+    @GetMapping("/userlogout")
+    public String userlogout(HttpServletRequest request) throws Exception {
+        try {
+            HttpSession session = request.getSession(false); // 세션 존재 확인
+            if (session != null) {
+                session.invalidate();
+                System.out.println("회원 로그아웃 성공");
+            }
+            return "redirect:/home.do";
+        } catch (Exception e) {
+            throw new Exception("회원 로그아웃 실패.");
+        }
+    }
+
+
+    /** 사장님 로그아웃 **/
+    @GetMapping("/sellerlogout")
+    public String sellerlogout(HttpServletRequest request) throws Exception {
+        try {
+            HttpSession session = request.getSession(false); // 세션 존재 확인
+            if (session != null) {
+                session.invalidate();
+                System.out.println("사장님 로그아웃 성공");
+            }
+            return "redirect:/lodgment/sellerMain.do"; //(변경 할 거)리다이렉트 페이지는 사장님페이지 첫 화면으로 이동
+        } catch (Exception e) {
+            throw new Exception("사장님 로그아웃 실패.");
+        }
     }
 
     @GetMapping("/sellerlogin")
@@ -85,9 +119,21 @@ public class LoginController {
             return "redirect:/userlogin";
         }
 
-        session.setAttribute("dto", user); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
+        session.setAttribute("usersession", user); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
+        session.setAttribute("user_idx", user.getUSER_IDX()); // 세션에 USER_IDX 저장
 
-        return "login/main";
+        // 로그인 성공 후 만약 필터링을 통해 로그인 화면을 왔다면
+        String redirectUrl = (String) request.getSession().getAttribute("redirectUrl");
+        if(redirectUrl != null){
+            // 기존의 리다이렉트 세션 삭제
+            request.getSession().removeAttribute("redirectUrl");  // 세션에서 redirectUrl 삭제
+            return "redirect:" + redirectUrl;
+        }
+        // 서버 콘솔에 user_idx 출력
+        System.out.println("로그인 성공: user_idx = " + user.getUSER_IDX());
+
+        return "redirect:/home.do";
+
     }
 
     @PostMapping("/sellerlogin")
@@ -102,9 +148,10 @@ public class LoginController {
             return "redirect:/sellerlogin";
         }
 
-        session.setAttribute("dto", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
 
-        return "login/main";
+        session.setAttribute("sellersession", seller); // 일치하는 아이디, 비밀번호 입력(로그인 성공)
+
+        return "redirect:/lodgment/lodRegister.do";
     }
 
     @GetMapping("/main")
@@ -116,14 +163,6 @@ public class LoginController {
         model.addAttribute("dto", dto);
         return "login/main";
     }
-
-//    @GetMapping("/dupUSER_ID")
-//    public ResponseEntity<Map<String, Boolean>> dupUSER_ID(@RequestParam String USER_ID) {
-//        boolean exists = service.dupUSER_ID(USER_ID);
-//        Map<String, Boolean> response = new HashMap<>();
-//        response.put("exists", exists);
-//        return ResponseEntity.ok(response);
-//    }
 
     @PostMapping("/ID_CHECK")
     @ResponseBody
@@ -234,34 +273,5 @@ public class LoginController {
         return checkNum;
 
     }
-
-//    @GetMapping("/EMAIL_CHECK")
-//    @ResponseBody
-//    public void emailCheck(String USER_EMAIL) throws Exception{
-//
-//        // 인증번호 난수 생성
-//        Random random = new Random();
-//        int checkNum = random.nextInt(888888) + 111111;
-//
-//        // 이메일 전송
-//        String setFrom = "hjm8565@naver.com";
-//        String toMail = USER_EMAIL;
-//        String title = "같이가개 회원가입 인증 이메일입니다.";
-//        String content = "인증 번호는 " + checkNum + "입니다." + "<br>" + "해당 인증 번호를 인증 번호 입력란에 입력해주세요.";
-//
-//        try {
-//            MimeMessage msg = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(msg, true, "utf-8");
-//            helper.setFrom(setFrom);
-//            helper.setTo(toMail);
-//            helper.setSubject(title);
-//            helper.setText(content, true);
-//            mailSender.send(msg);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
 
 }

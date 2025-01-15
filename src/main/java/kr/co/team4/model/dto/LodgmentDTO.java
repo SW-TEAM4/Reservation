@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigInteger;
 import java.sql.Date;
+import java.util.Map;
 
 @Data // @Getter, @Setter, @ToString, @EqualsAndHashCode, @RequiredArgsConstructor 포함
 @NoArgsConstructor // 기본 생성자 자동 생성
@@ -24,18 +26,16 @@ public class LodgmentDTO {
     private String reservation_notice; // 숙소 예약공지
     private String lod_check_in;
     private String lod_check_out;
-    private double avg_rating;
     private double x; // 숙소 위도
     private double y; // 숙소 경도
     private Date created;
     private Date updated;
     private String status;
 
+    private BigInteger like_idx; // 찜 상태 (null이면 찜하지 않은 상태)
+
     // 숙소 최소 가격
     private int min_room_price;
-
-    // 리뷰 수
-    private int count_reviews;
 
     public String getFormattedLodCheckIn(){
         if(lod_check_in != null && lod_check_in.length() >= 8){
@@ -49,5 +49,9 @@ public class LodgmentDTO {
         }
         return getFormattedLodCheckIn();
     }
+
+    private int reviewCount;
+    private double avgRating;
+
 
 }

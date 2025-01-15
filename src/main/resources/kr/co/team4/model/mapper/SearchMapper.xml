@@ -25,21 +25,62 @@
 
     <select id="searchLodgments" parameterType="kr.co.team4.model.dto.SearchFilterDTO" resultType="kr.co.team4.model.dto.LodgmentDTO">
         SELECT DISTINCT B.*,
-        MIN(A.ROOM_PRICE) AS MIN_ROOM_PRICE,
-        NUMBER_OF_REVIEW AS COUNT_REVIEWS
-        FROM ROOM A
-        JOIN LODGMENT B ON A.LOD_IDX = B.LOD_IDX
-        LEFT JOIN RESERVATION C ON A.LOD_IDX = C.LOD_IDX
-            AND (
-                #{checkinDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
-                AND
-                #{checkoutDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
-            )
-        WHERE 1=1
-          AND A.MAX_PEOPLE_CNT >= #{guestCount}
-          AND A.MAX_PET_CNT    >= #{petCount}
-          <include refid="searchSql" />
-        GROUP BY B.LOD_IDX
-    </select>
+                        (
+                        SELECT MIN(calculated.room_price)
+                        FROM (
+                             WITH RECURSIVE DateSeries AS (
+                                                          SELECT #{checkinDate} AS stay_date
+                                                          UNION ALL
+                                                          SELECT DATE_ADD(stay_date, INTERVAL 1 DAY)
+                                                          FROM DateSeries
+                                                          WHERE #{checkoutDate} > stay_date
+                                                          )
+                             SELECT
+                             r.room_idx,
+                             FLOOR(SUM(
+                             CASE
+                             WHEN DAYOFWEEK(d.stay_date) IN (6, 7, 1) THEN
+                             CASE
+                             WHEN d.stay_date BETWEEN p.hpeak_str_dt AND p.hpeak_end_dt THEN r.room_price * 1.50
+                             WHEN d.stay_date BETWEEN p.peak_str_dt AND p.peak_end_dt THEN r.room_price * 1.30
+                             ELSE r.room_price * 1.10
+                             END
+                             ELSE
+                             CASE
+                             WHEN d.stay_date BETWEEN p.hpeak_str_dt AND p.hpeak_end_dt THEN r.room_price * 1.40
+                             WHEN d.stay_date BETWEEN p.peak_str_dt AND p.peak_end_dt THEN r.room_price * 1.20
+                             ELSE r.room_price * 1.00
+                             END
+                             END
+                             )) AS room_price
+                             FROM ROOM r LEFT JOIN PRICE p
+                                  ON p.lod_idx = r.lod_idx JOIN DateSeries d
+                                  ON d.stay_date >= #{checkinDate} AND #{checkoutDate} > d.stay_date
+                             WHERE
+                                  r.lod_idx = B.LOD_IDX
+                                  AND NOT EXISTS (
+                                  SELECT 1
+                                  FROM RESERVATION res
+                                  WHERE res.room_idx = r.room_idx
+                                  AND res.lod_idx = r.lod_idx
+                                  AND res.res_end_date > #{checkinDate}
+                                  AND   #{checkoutDate} > res.res_str_date
+                                  )
+                            GROUP BY r.room_idx
+                                  ) AS calculated
+                                  ) AS MIN_ROOM_PRICE,
+                                  NUMBER_OF_REVIEW AS COUNT_REVIEWS
+                                  FROM ROOM A JOIN LODGMENT B
+                                  ON A.LOD_IDX = B.LOD_IDX
+                                  LEFT JOIN RESERVATION C ON A.LOD_IDX = C.LOD_IDX
+                                  AND (#{checkinDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE
+                                  AND #{checkoutDate} NOT BETWEEN C.RES_STR_DATE AND C.RES_END_DATE)
+                                  WHERE 1=1
+                                  AND A.MAX_PEOPLE_CNT >= #{guestCount}
+                                  AND A.MAX_PET_CNT >= #{petCount}
+                            <include refid="searchSql" />
+                            GROUP BY B.LOD_IDX
+                            ORDER BY B.LOD_NAME
+        </select>
 </mapper>
 

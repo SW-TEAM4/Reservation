@@ -12,8 +12,12 @@ import kr.co.team4.model.mapper.ReservationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
@@ -28,6 +32,9 @@ import java.util.Map;
 public class ReservationServiceImpl implements ReservationService {
     @Autowired
     private ReservationMapper reservationMapper;
+
+    @Autowired
+    private PlatformTransactionManager transactionManager;
 
     @Override
     public List<UserReservedDTO> getUserReservations(UserReservedDTO dto) {
@@ -125,6 +132,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public UserDTO getUserInform(ReservationDTO dto) {
         return reservationMapper.getUserInform(dto);
+    }
+
+    @Override
+    public int getReservationPayment(ReservationDTO dto) {
+        return reservationMapper.calcReservePayment(dto);
     }
 
     @Override
@@ -251,5 +263,30 @@ public class ReservationServiceImpl implements ReservationService {
             response.put("reason", e.getMessage());
         }
         return response;
+    }
+
+    @Scheduled(cron = "${db.batch.clean}")
+    @Override
+    public void runBatchJob() {
+
+        // Transaction 처리
+        TransactionStatus status = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        try{
+            // 조건에 부합하는 삭제할 예약 인덱스들 가져오기
+            List<Integer> expired = reservationMapper.getExpiredReservationIdxs();
+
+            if(expired != null && !expired.isEmpty()) {
+                reservationMapper.deleteExpiredPayments(expired);
+                reservationMapper.deleteExpiredReservations(expired);
+            }
+
+            // 트랜잭션 커밋
+            transactionManager.commit(status);
+            System.out.println("배치작업으로 삭제된 예약 인덱스들: " + expired);
+        } catch (Exception e){
+            // 트랜잭션 롤백
+            transactionManager.rollback(status);
+            System.out.println("배치작업 실패: " + e.getMessage());
+        }
     }
 }

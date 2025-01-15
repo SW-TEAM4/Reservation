@@ -1,16 +1,21 @@
 package config;
 
+import Interceptor.CommonDataInterceptor;
+import Interceptor.SellerInterceptor;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import kr.co.team4.model.service.SellerPageService;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -18,6 +23,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.MultipartResolver;
@@ -31,13 +38,18 @@ import software.amazon.awssdk.services.s3.internal.resource.S3BucketResource;
 import javax.sql.DataSource;
 import java.awt.*;
 import java.util.Date;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 @ComponentScan(basePackages = {"kr.co"})
 @EnableWebMvc
 @MapperScan(basePackages = {"kr.co.team4.model.mapper"}, annotationClass = Mapper.class)
 @EnableTransactionManagement
+@EnableScheduling
+@ComponentScan(basePackages = {"kr.co", "Interceptor"})
 public class MvcConfig implements WebMvcConfigurer {
+
     // ViewResolver - 포워딩할 경로 앞/뒤 설정
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -68,6 +80,15 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean // 트랜잭션매니저 등록
     public DataSourceTransactionManager transactionManager(DataSource dataSource) {
         return new DataSourceTransactionManager(dataSource);
+    }
+
+    @Bean // 배치작업 빈 등록
+    public ThreadPoolTaskScheduler taskScheduler(){
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(10);  // 스케줄러의 스레드 풀 크기 설정
+        scheduler.setThreadNamePrefix("scheduled-task-");
+        scheduler.initialize();
+        return scheduler;
     }
 
     @Bean
@@ -168,6 +189,26 @@ public class MvcConfig implements WebMvcConfigurer {
         return javaMailSender;
     }
 
+    /*2025.01.10 JDeok 추가 */
+    private final SellerInterceptor sellerInterceptor;
+    private final CommonDataInterceptor commonDataInterceptor;
+
+    public MvcConfig(@Lazy SellerInterceptor sellerInterceptor, @Lazy CommonDataInterceptor commonDataInterceptor) {
+        this.sellerInterceptor = sellerInterceptor;
+        this.commonDataInterceptor = commonDataInterceptor;
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        // 1. LoginInterceptor 등록
+        registry.addInterceptor(sellerInterceptor)
+                .addPathPatterns("/lodgment/**")  // 로그인 필수 URL
+                .excludePathPatterns("/auth/**", "/static/**"); // 제외 URL
+
+        // 2. CommonDataInterceptor 등록
+        registry.addInterceptor(commonDataInterceptor)
+                .addPathPatterns("/lodgment/**"); // 공통 데이터 적용 URL
+    }
 
 
 }

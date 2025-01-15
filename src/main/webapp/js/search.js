@@ -23,22 +23,28 @@ document.addEventListener("DOMContentLoaded", function () {
             firstDay: 0
 
         },
-        autoApply:true,
         startDate: checkinDate,
         endDate: checkoutDate,
-        minDate: moment().format('YYYY-MM-DD') // 오늘 이후 날짜만 선택 가능
+        minDate: moment().format('YYYY-MM-DD'), // 오늘 이후 날짜만 선택 가능
+        maxSpan: { days: 30 } // 최대 30일까지만 선택 가능
+
     }, function (start, end) {
         // 선택된 날짜 업데이트
+        console.log("start:" + start + "end" + end);
         checkinDate = start.format('YYYY-MM-DD');
         checkoutDate = end.format('YYYY-MM-DD');
+        checkinDate = checkinDate.trim();
+        checkoutDate = checkoutDate.trim();
 
         // UI 업데이트
-        updateDateUI(start, end);
+        document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
+        document.getElementById('checkout-date').textContent = end.format('YYYY-MM-DD');
+        document.getElementById('cal-date').textContent = `, ${end.diff(start, 'days')}박`;
 
-        console.log("searchJS에서 ajax요청 전의 날짜" + checkinDate +" and " + checkoutDate);
         // AJAX 요청 전송
         sendSearchAjax();
     });
+
     // === UI 업데이트 함수 ===
     function updateDateUI(start, end) {
         document.getElementById('checkin-date').textContent = start.format('YYYY-MM-DD');
@@ -54,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         $.ajax({
             url: "/search/updateUI.do",
             type: "GET",
-            dataType:'json',
+            dataType: 'json',
             data: {
                 checkinDate: checkinDate instanceof Date ? checkinDate.toISOString().split('T')[0] : checkinDate,
                 checkoutDate: checkoutDate instanceof Date ? checkoutDate.toISOString().split('T')[0] : checkoutDate,
@@ -62,7 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 petCount: petCount,
                 type: selectedType,
                 weight: selectedWeight,
-                region: selectedRegion
+                region: selectedRegion,
             },
             cache: false,
             success: function (response) {
@@ -97,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const imgUrl = lodgment.lod_img_url ? lodgment.lod_img_url : '/img/search_img_no_lodgment_thumbnail.svg';
                 const lodCategory = lodgment.lod_category_idx === 1 ? '펜션' : (lodgment.lod_category_idx === 2 ? '글램핑' : '기타');
                 const checkIn = formatTime(lodgment.lod_check_in);
-                const minPrice = lodgment.min_room_price ? lodgment.min_room_price.toLocaleString() + '원' : '가격 정보 없음'; // 최소 가격 추가
+                const minPrice = lodgment.min_room_price ? lodgment.min_room_price.toLocaleString() + '원 ~' : '예약 마감'; // 최소 가격 추가
                 console.log(lodgment);
 
                 resultItem.innerHTML = `
@@ -107,23 +113,23 @@ document.addEventListener("DOMContentLoaded", function () {
                         <img src="${imgUrl}" alt="${lodgment.lod_name}" class="result-img" width="240px" height="300px">
                     </div>
                     <div class="result-item-left-container">
-                        <p style="color: #352018; font-size: 20px; font-weight: bold">${lodgment.lod_name}</p>
+                        <p style="color: #352018; font-size: 18px; font-weight: bold">${lodgment.lod_name}</p>
                         <div style="display: flex; align-items: center; gap: 5px;">
                             <img src="/img/search_icon_star.svg" class="star-icon" style="width: 16px; height: 16px;"/>
-                            <div style="font-weight: bold">${lodgment.avg_rating}</div>
-                            (${lodgment.count_reviews})
+                            <p style="color: #352018; font-size: 14px; font-weight: bold; margin-top: 0.5px;">${lodgment.avgRating}</p>
+                            <p style="color: #352018; font-size: 14px; margin-top: 0.7px;">(${lodgment.reviewCount})</p>
                         </div>                
                         <p style="color: gray; font-size: 14px; font-weight: bold">${lodCategory}</p>
                         <div style="position: absolute; right: 20px; bottom: 20px; text-align: right;">
                             <p style="color: gray; font-size: 14px; font-weight: bold">숙박 ${checkIn} ~ </p>
-                            <p style="color: #352018; font-size: 20px; font-weight: bold">${minPrice} ~ </p>
+                            <p style="color: #352018; font-size: 20px; font-weight: bold">${minPrice}</p>
                         </div>                
                     </div>
                 </div>
             `;
                 // 클릭 이벤트 추가
                 resultItem.addEventListener('click', () => {
-                    window.location.href= `/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}`;
+                    window.location.href = `/lodgment.do?lod_idx=${lodgment.lod_idx}&checkinDate=${checkinDate}&checkoutDate=${checkoutDate}&guestCount=${guestCount}&petCount=${petCount}`;
                 });
                 resultContainer.appendChild(resultItem);
             });
@@ -166,41 +172,48 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 인원 팝업 ===
     document.getElementById('guest-button').addEventListener('click', function (e) {
         e.stopPropagation();
+        updateUI();
         togglePopup(guestPopup, 'guest');
     });
 
     document.getElementById('plus-guest-btn').addEventListener('click', function () {
         if (guestCount < 10) guestCount++;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('minus-guest-btn').addEventListener('click', function () {
         if (guestCount > 1) guestCount--;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('plus-pet-btn').addEventListener('click', function () {
         if (petCount < 5) petCount++;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('minus-pet-btn').addEventListener('click', function () {
         if (petCount > 0) petCount--;
         updateCounts();
+        updateUI();
         sendSearchAjax();
     });
 
     document.getElementById('apply-btn').addEventListener('click', function () {
         guestPopup.classList.add('hidden');
+        updateUI();
         updateCounts();
     });
 
     // === 타입 팝업 ===
     document.getElementById('type-button').addEventListener('click', function (e) {
         e.stopPropagation();
+        updateUI();
         togglePopup(typePopup, 'type');
     });
 
@@ -209,6 +222,7 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedType = this.getAttribute('value');
             document.querySelector('.type-label').innerText = this.getAttribute('data-value');
             typePopup.classList.add('hidden');
+            updateUI();
             sendSearchAjax();
         });
     });
@@ -216,6 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // === 몸무게 팝업 ===
     document.getElementById('weight-button').addEventListener('click', function (e) {
         e.stopPropagation();
+        updateUI();
         togglePopup(weightPopup, 'weight');
     });
 
@@ -224,10 +239,10 @@ document.addEventListener("DOMContentLoaded", function () {
             selectedWeight = this.getAttribute('value');
             document.querySelector('.weight-label').innerText = this.getAttribute('data-value');
             weightPopup.classList.add('hidden');
+            updateUI();
             sendSearchAjax();
         });
     });
-
 
     // === 외부 클릭 처리 ===
     document.addEventListener('click', function (e) {
@@ -242,16 +257,12 @@ document.addEventListener("DOMContentLoaded", function () {
     // === URL 파라미터에서 지역 값 가져오기 ===
     const urlParams = new URLSearchParams(window.location.search);
     const regionParam = urlParams.get('region'); // URL에서 지역 값 읽기
-
     if (regionParam) {
         selectedRegion = parseInt(regionParam, 10); // URL 파라미터 값 적용
         localStorage.setItem('selectedRegion', selectedRegion); // 로컬스토리지에 저장
     } else {
-        // 지역 값이 없으면 로컬스토리지에서 불러오기
-        const storedRegion = localStorage.getItem('selectedRegion');
-        if (storedRegion !== null) {
-            selectedRegion = parseInt(storedRegion, 10); // 저장된 값 적용
-        }
+        // 지역 값이 없으면 기본값을 전체(0)로 설정
+        selectedRegion = 0;
     }
 
     // === 탭 UI 활성화 처리 ===
@@ -266,13 +277,6 @@ document.addEventListener("DOMContentLoaded", function () {
             tab.classList.remove('active'); // 선택 해제
             tab.classList.add('inactive'); // 비활성화 적용
         }
-
-        // === 탭 클릭 이벤트 추가 ===
-        tab.addEventListener('click', function () {
-            const newRegion = parseInt(this.getAttribute('data-region'), 10); // 클릭한 탭의 지역 값
-            localStorage.setItem('selectedRegion', newRegion); // 선택 지역 로컬스토리지에 저장
-            window.location.href = `/search/search.do?region=${newRegion}`; // 새 지역으로 페이지 이동
-        });
     });
 
     // === 탭 클릭 이벤트 추가 ===
@@ -292,18 +296,25 @@ document.addEventListener("DOMContentLoaded", function () {
             switch (tabId) {
                 case 'tab-all':
                     selectedRegion = 0; // 전체
+                    tab.classList.add('active'); // 선택된 탭 활성화
                     break;
                 case 'tab-gangwondo':
                     selectedRegion = 1; // 강원도
+                    tab.classList.add('active'); // 선택된 탭 활성화
                     break;
                 case 'tab-gyeonggi':
                     selectedRegion = 2; // 경기
+                    tab.classList.add('active'); // 선택된 탭 활성화
+
                     break;
                 case 'tab-incheon':
                     selectedRegion = 3; // 인천
+                    tab.classList.add('active'); // 선택된 탭 활성화
+
                     break;
                 default:
                     selectedRegion = 0; // 기본값
+                    tab.classList.add('active'); // 선택된 탭 활성화
             }
 
             // AJAX 요청 다시 보내기
@@ -312,7 +323,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
     });
 
+    function updateUI() {
+        document.getElementById('guest-count').innerText = guestCount.toString();
+        document.getElementById('pet-count').innerText = petCount.toString();
+        document.querySelector('.type-label').innerText = document.querySelector(`.type-item[value='${selectedType}']`).getAttribute('data-value');
+        document.querySelector('.weight-label').innerText = document.querySelector(`.weight-item[value='${selectedWeight}']`).getAttribute('data-value');
+        document.getElementById('checkin-date').textContent = moment(checkinDate).format('YYYY-MM-DD');
+        document.getElementById('checkout-date').textContent = moment(checkoutDate).format('YYYY-MM-DD');
+        document.getElementById('cal-date').textContent = `, ${moment(checkoutDate).diff(moment(checkinDate), 'days')}박`;
+    }
+
     // === 초기 UI 렌더링 ===
+    updateUI();
     updateDateUI(moment(checkinDate), moment(checkoutDate)); // 기본값으로 오늘과 내일 표시
     sendSearchAjax();
 });

@@ -11,12 +11,12 @@
 
 <!-- JSP에서 동적 데이터 전달 -->
 <script type="text/javascript">
-  var centerX = ${lodgmentDTO.x != null ? lodgmentDTO.x : 0};
-  var centerY = ${lodgmentDTO.y != null ? lodgmentDTO.y : 0};
+  var centerX = ${lodgmentDTO.x};
+  var centerY = ${lodgmentDTO.y};
 </script>
 
 <script type="text/javascript"
-        src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=1d380a4ab6f52b94fa5c601a140044ca&autoload=false&libraries=clusterer,services"></script>
+        src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=1d380a4ab6f52b94fa5c601a140044ca&autoload=false&libraries=clusterer,services"></script>
 <script type="text/javascript">
   // Kakao Maps API 초기화
   kakao.maps.load(function() {

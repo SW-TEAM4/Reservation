@@ -19,10 +19,10 @@ body {
 }
 
 .container {
-    width: 60%;
+    width: 40%;
     margin: 50px auto;
     background-color: #fff;
-    padding: 20px 40px;
+    padding: 20px 100px;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -37,7 +37,7 @@ h1 {
 .form-group {
     display: flex;
     align-items: center;
-    justify-content: center; /* 모든 텍스트와 입력 필드 중앙 정렬 */
+    /*justify-content: center;*/ /* 모든 텍스트와 입력 필드 중앙 정렬 */
     margin-bottom: 40px; /* 간격 확대 */
 }
 
@@ -53,19 +53,33 @@ h1 {
     vertical-align: top;      /* 레이블 상단 정렬 */
 }
 
-/* 지역 유형 그룹 */
 .other-group {
-    display: flex;            /* 레이블과 라디오 버튼을 한 줄에 배치 */
-    align-items: center;      /* 세로축 중앙 정렬 */
-    margin-bottom: 40px;      /* 아래 간격 추가 */
+    display: flex;
+    align-items: center; /* 세로축 중앙 정렬 */
+    /*justify-content: center;*/ /* form-group과 동일하게 중앙 정렬 */
+    margin-bottom: 40px; /* form-group과 동일한 간격 */
+}
 
+/* 레이블 스타일 (other-group에만 적용) */
+.other-group label {
+    width: 260px; /* form-group과 동일한 너비 */
+    font-weight: bold;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: left; /* 왼쪽 정렬 */
+    margin-right: 20px; /* 입력 필드와 간격 유지 */
+    display: inline-block;
 }
-/* 지역 유형 라디오 버튼 */
+
+/* 라디오 버튼 영역 스타일 */
 .other-type {
-    display: flex;            /* 라디오 버튼을 한 줄에 배치 */
-    gap: 210px;                /* 버튼 간 간격 */
-    align-items: center;      /* 세로축 중앙 정렬 */
+    display: flex;
+    gap: 20px; /* 버튼 간 간격 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    width: 50%; /* 입력 필드와 동일한 너비 */
 }
+
+
 /* 숙소 주소 그룹 */
 .lod-group {
     display: flex;            /* 레이블과 라디오 버튼을 한 줄에 배치 */
@@ -84,35 +98,48 @@ h1 {
     display: inline-block;    /* 고정된 너비로 정렬 */
     vertical-align: top;      /* 레이블 상단 정렬 */
 }
-
-/* 주소 입력 필드와 버튼 */
 .address-inputs {
-    display: flex;            /* 우편번호 텍스트박스와 버튼을 한 줄에 배치 */
-    gap: 10px;                /* 텍스트박스와 버튼 간 간격 */
-    flex-wrap: nowrap;        /* 한 줄에서 감싸지 않도록 설정 */
+    display: flex;
+    align-items: center; /* 우편번호와 버튼을 같은 줄에 정렬 */
+    gap: 10px; /* 간격 설정 */
 }
 
+/* 주소 입력 필드 컨테이너 */
+.address-field-container {
+    margin-top: -30px;
+    margin-bottom: 30px;
+}
+
+/* 상세 주소 입력 필드 */
+.address-field-container .address-input {
+    width: calc(100% - 40px); /* 여유 공간 유지 */
+    max-width: 400px; /* 최대 너비 제한 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+.btn-postcode {
+    padding: 10px;
+    background-color: #d7b4a3;
+    color: #5a382a;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-align: center;
+}
 /* 우편번호 텍스트박스 */
 .address-inputs input[type="text"] {
-    width: 200px;             /* 텍스트박스 크기 */
+    width: 300px;             /* 텍스트박스 크기 */
     padding: 10px;            /* 내부 여백 */
     border: 1px solid #ccc;   /* 테두리 */
     border-radius: 4px;       /* 모서리 둥글게 */
     font-size: 16px;          /* 텍스트 크기 */
     color: #8A5642;           /* 텍스트 색상 */
     text-align: center;       /* 텍스트 중앙 정렬 */
-}
-
-/* 우편번호 버튼 */
-.btn-postcode {
-    background-color: #d7b4a3; /* 버튼 배경색 */
-    color: #5a382a;           /* 버튼 텍스트 색상 */
-    border: none;             /* 테두리 제거 */
-    border-radius: 4px;       /* 모서리 둥글게 */
-    padding: 10px 20px;       /* 버튼 크기 */
-    font-size: 14px;          /* 버튼 텍스트 크기 */
-    cursor: pointer;          /* 커서 포인터 */
-    transition: background-color 0.3s ease; /* 호버 애니메이션 */
 }
 
 /* 우편번호 버튼 호버 */
@@ -125,7 +152,9 @@ h1 {
 .form-group input[type="text"],
 .form-group input[type="tel"],
 .form-group input[type="file"],
-.form-group input[type="time"] {
+.form-group input[type="time"],
+.form-group input[type="email"]
+{
     width: 50%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -134,24 +163,7 @@ h1 {
     color: #8A5642;
     text-align: center;
 }
-/* 우편번호 및 버튼 그룹 */
-.address-inputs {
-    display: flex;
-    gap: 10px; /* 우편번호 텍스트박스와 버튼 간 간격 */
-}
 
-/* 주소 텍스트박스 */
-.address-input {
-    width: 50%; /* 텍스트박스 크기 */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    color: #8A5642;
-    text-align: center; /* 텍스트박스 내부 텍스트 중앙 정렬 */
-    margin-left: 415px;
-    margin-bottom: 40px; /* 간격 확대 */
-}
 /* 체크인/체크아웃 시간 */
 .time-input {
     display: flex;
@@ -200,41 +212,32 @@ h1 {
 }
 .facility-container {
     display: flex;
-    align-items: flex-start;  /* 레이블과 콘텐츠의 정렬을 위쪽으로 */
-    margin-bottom: 40px;      /* 아래 간격 추가 */
-    font-family: 'Noto Sans', sans-serif;
-    color: #8A5642;
-}
-
-.other-label {
-    width: 160px;             /* 레이블 고정 너비 */
-    font-weight: bold;        /* 텍스트 굵게 */
-    font-size: 16px;          /* 텍스트 크기 */
-    text-align: left;         /* 텍스트를 왼쪽 정렬 */
-    margin-right: 115px;      /* 텍스트박스와 간격 유지 */
-    display: inline-block;    /* 고정된 너비로 정렬 */
-    vertical-align: top;      /* 레이블 상단 정렬 */
+    flex-direction: column; /* 세로 정렬 */
+    align-items: flex-start; /* 좌측 정렬 */
+    gap: 10px; /* 각 요소 간 간격 */
+    width: 100%; /* 부모 컨테이너 너비를 채움 */
 }
 
 .facility-input {
     display: flex;
-    gap: 10px;                /* 텍스트박스와 버튼 간 간격 */
-    align-items: center;      /* 세로축 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 10px; /* 입력 필드와 버튼 간 간격 */
+    width: 100%; /* 부모 너비를 채움 */
 }
 
 .facility-input input[type="text"] {
-    width: 300px;             /* 텍스트박스 크기 */
-    padding: 10px;            /* 내부 여백 */
-    border: 1px solid #ccc;   /* 테두리 */
-    border-radius: 4px;       /* 모서리 둥글게 */
-    font-size: 16px;          /* 텍스트 크기 */
-    color: #8A5642;           /* 텍스트 색상 */
+    flex: 1; /* 입력 필드가 가능한 공간을 차지하도록 설정 */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
 }
 
 .facility-input button {
+    padding: 10px 20px;
     background-color: #8A5642;
     color: white;
-    padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -246,10 +249,16 @@ h1 {
 }
 
 .selected-facilities {
-    margin-top: 10px;         /* 위 입력창과 간격 추가 */
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    flex-wrap: wrap; /* 태그가 줄 바꿈되도록 설정 */
+    gap: 10px; /* 태그 간 간격 */
+    max-height: 150px; /* 최대 높이 제한 */
+    overflow-y: auto; /* 내용이 많을 경우 스크롤 생성 */
+    border: 1px solid #ddd; /* 테두리 추가 */
+    padding: 10px; /* 내부 여백 */
+    width: 100%; /* 부모 컨테이너 너비를 채움 */
+    background-color: #f9f9f9; /* 배경색 */
+    border-radius: 4px; /* 둥근 모서리 */
 }
 
 .facility-tag {
@@ -274,6 +283,13 @@ h1 {
 .facility-tag button:hover {
     color: #8A5642;
 }
+.selected-facilities {
+    margin-top: 10px;         /* 위 입력창과 간격 추가 */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .time-label {
     width: 140px;             /* 레이블 고정 너비 (줄임) */
     font-weight: bold;        /* 텍스트 굵게 */
@@ -301,4 +317,15 @@ select {
 }
 #checkoutAmPm{
     margin-left: 10px;
+}
+textarea{
+    width: 50%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #8A5642;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    resize: none; /* 필요 시 크기 조절 비활성화 */
+    min-height: 400px;
 }

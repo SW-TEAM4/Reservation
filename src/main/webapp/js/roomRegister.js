@@ -1,8 +1,26 @@
+/*
+    파일명 : roomRegister.js
+    생성자 : JDeok
+    날 짜  : 2024.12.24
+    시 간  : 오전 10:01
+    기 능  : 사장님 상세 페이지
+    변경사항
+    - 2024.12.24 : JDeok(최초작성)
+*/
 document.addEventListener('DOMContentLoaded', function () {
     const roomTableBody = document.getElementById('roomTableBody');
     const addRoomButton = document.getElementById('addRoomButton');
     const form = document.querySelector('form');
+    const success = "${success}" === "true"; // JSP에서 모델 속성 읽기
+    /*const errorMessage = "${fn:escapeXml(errorMessage)}"; // 오류 메시지 처리 (Null-safe)*/
 
+    if (success) {
+        alert("정상적으로 처리됐습니다.");
+        window.location.href = "/lodgment/sellerDetailMain.do";
+    }
+    /*else if (errorMessage) {
+        alert(errorMessage);
+    }*/
     // 페이지 로드 시 초기 필드에 포맷터 연결
     document.querySelectorAll('.room-price-input').forEach(input => attachPriceFormatter(input));
 
@@ -55,6 +73,8 @@ document.addEventListener('DOMContentLoaded', function () {
             </td>
             <td>
                 <input type="file" name="rooms[${rowIndex}].room_photos" class="input-file" accept="image/*" multiple>
+            </td>
+            <td>
                 <button type="button" class="delete-photo">삭제</button>
             </td>
         `;
@@ -101,4 +121,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // 기존 행들에 포맷터 연결
     document.querySelectorAll('.room-price-input').forEach(input => attachPriceFormatter(input));
+
 });
+

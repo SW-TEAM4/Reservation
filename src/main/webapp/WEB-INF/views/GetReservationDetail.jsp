@@ -17,11 +17,11 @@
   <title>같이가개 - 예약상세</title>
   <!-- Google Fonts에서 Noto Sans KR 불러오기 -->
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/css/mypageStyle.css"/>
+  <link rel="stylesheet" href="/css/style.css?after"/>
+<%--  <link rel="stylesheet" href="/css/mypageStyle.css"/>--%>
 
   <style>
     body {
-      font-family: 'Noto Sans KR', sans-serif; /* 전체 페이지에 폰트 적용 */
       margin: 0;
       padding: 0;
       background-color: #ffffff;
@@ -38,7 +38,6 @@
       border-top: 1px solid #929292;
       border-bottom: 1px solid #929292;
       padding: 20px 0;
-      /*font-family: 'Noto Sans', sans-serif;*/
       margin-top: 50px;
       margin-bottom: 30px;
     }
@@ -52,11 +51,15 @@
       cursor: pointer;
     }
 
+    .back-button img {
+      width: 24px;
+      height: 24px;
+    }
+
     .header-title {
       font-size: 20px;
       color: #352018;
       font-weight: bold;
-      /*font-family: 'Noto Sans KR', sans-serif;*/
     }
 
     .reservation-container {
@@ -71,13 +74,13 @@
       flex-wrap: wrap;
       background-color: #ffffff;
       border-radius: 10px;
-      /*padding: 20px;*/
       margin-bottom: 50px;
+      font-weight: bold;
     }
 
     .reservation-header {
       width: 100%;
-      margin-bottom: 20px;
+      line-height: 0.8;
       text-align: left;
     }
 
@@ -204,7 +207,6 @@
       padding: 20px 0; /* 위아래 여백 */
       border-bottom: 1px solid #929292; /* 상단 구분선 */
       padding: 30px 0; /* 위아래 여백 */
-      font-family: 'Noto Sans KR', sans-serif;
     }
 
     .reservation-footer .left {
@@ -212,8 +214,9 @@
       text-align: left; /* 왼쪽 정렬 */
       font-size: 26px; /* 조금 작은 글씨 */
     }
-    .left2{
-      font-family: 'Noto Sans KR', sans-serif;
+    .left2 span{
+      all: unset;
+      display: inline; /* 기본 inline으로 설정 */
       font-size: 14px; /* 조금 작은 글씨 */
       color: #564B4B;
 
@@ -221,7 +224,6 @@
 
     .reservation-footer .right {
       text-align: right; /* 오른쪽 정렬 */
-      font-family: 'Noto Sans KR', sans-serif;
       font-size: 26px; /* 조금 작은 글씨 */
       color: #352018;
     }
@@ -242,7 +244,6 @@
       border-radius: 10px;
       margin-top: 40px;
       margin-bottom: 100px;
-      font-family: 'Noto Sans KR', sans-serif;
     }
 
     .reservation-request h4 {
@@ -264,7 +265,9 @@
 <body>
 <%@ include file="/WEB-INF/views/include/header.jsp" %>
 <div class="header-bar">
-  <button class="back-button" onclick="history.back();">&lt;</button>
+  <button class="back-button" onclick="history.back();">
+    <img src="/img/arrow-left.svg" alt="Back" />
+  </button>
   <span class="header-title">예약상세</span>
 </div>
 
@@ -294,8 +297,8 @@
             ${fn:substring(reservation.lod_check_in, 0, 5)}
           </p>
           <p class="checkin-people">
-            <img src="/img/ResDetail_user_img.svg" alt="아이콘" class="usericon"> 성인 ${reservation.res_people_cnt}명 /
-            반려동물: ${reservation.res_pets_cnt}마리
+            <img src="/img/reservation_icon_user.svg" alt="아이콘" class="usericon"> 성인 ${reservation.res_people_cnt}명 /
+            반려동물 ${reservation.res_pets_cnt}마리
           </p>
         </div>
       </div>
@@ -318,9 +321,10 @@
     <div class="right">
       <p class="notice">취소 및 환불불가</p>
       <p class="left2">
-        <span style="font-size: 14px; color: #564B4B;">숙박 / ${reservation.total_res_day} 박</span>
-        <span style="font-size: 26px; color: #352018;font-weight: bold;">총</span>
-        <span style="font-size: 26px; color: #352018; font-weight: bold;">${reservation.paid_money}원</span>
+        <span  style="font-size: 14px; color: #564B4B;">숙박 / ${reservation.total_res_day} 박</span>
+        <span  style="font-size: 26px; color: #352018;font-weight: bold;">총</span>
+        <span id="formattedMoney" style="font-size: 26px; color: #352018; font-weight: bold;">${reservation.paid_money}원</span>
+
       </p>
     </div>
   </div>
@@ -337,6 +341,10 @@
 </div>
 
 <%@ include file="/WEB-INF/views/include/footer.jsp" %>
-
+<script>
+  let paidMoney = document.getElementById("formattedMoney").textContent;
+  paidMoney = paidMoney.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  document.getElementById("formattedMoney").textContent = paidMoney;
+</script>
 </body>
 </html>

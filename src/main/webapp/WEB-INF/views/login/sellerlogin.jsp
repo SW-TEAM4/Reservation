@@ -4,15 +4,20 @@
   Date: 2024-12-12
   Time: 오전 11:06
   To change this template use File | Settings | File Templates.
+  변경사항
+    2025.01.08 : sellerHeader include
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html>
 <head>
     <title>로그인</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="/css/sellerHeader.css">
     <link href="https://fonts.googleapis.com/css2?family=Gamja+Flower&family=Noto+Sans+KR:wght@100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -41,12 +46,6 @@
             top: 0;
         }
 
-        .header img {
-            height: 44px;
-            width: 150.91px;
-            margin-right: 1500px;
-            top: 24px;
-        }
 
         /*.header h1 {*/
         /*    !*background-image: url("/img/main_logo.svg");*!*/
@@ -103,10 +102,6 @@
             height: 55px;
         }
 
-        /*button:hover {*/
-        /*    background-color: #734235;*/
-        /*}*/
-
         .login_warn {
             color: red;
             margin-top: 20px;
@@ -131,25 +126,12 @@
     </style>
 </head>
 <body>
-    <div class="header">
-        <img src="/img/main_logo.svg" alt="logo">
-<%--        <h1>같이가개 🐾</h1>--%>
-    </div>
+<%@ include file="/WEB-INF/views/include/sellerHeader.jsp" %>
 
     <div class="container">
         <h1>로그인</h1>
         <form id="login" method="post" onsubmit="return loginCheck();">
             <div class="login_wrap">
-<%--                <<div class="id_wrap">--%>
-<%--                    <div class="id_input_box">--%>
-<%--                        <input type="text" class="id_input" name="USER_ID" placeholder="아이디" required>--%>
-<%--                    </div>--%>
-<%--                </div>--%>
-<%--                <div class="pwd_wrap">--%>
-<%--                    <div class="pwd_input_box">--%>
-<%--                        <input type="password" class="pwd_input" name="USER_PWD" placeholder="비밀번호" required>--%>
-<%--                    </div>--%>
-<%--                </div>>--%>
                 <div class="login_box">
                     <input type="text" id="SELLER_ID" name="SELLER_ID" placeholder="아이디" required>
                     <input type="password" id="SELLER_PWD" name="SELLER_PWD" placeholder="비밀번호" required>

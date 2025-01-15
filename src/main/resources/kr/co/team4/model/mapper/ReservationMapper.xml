@@ -22,8 +22,8 @@
         WHERE
             R.USER_IDX = #{user_idx}
           AND P.STATUS = 'paid'
+        ORDER BY R.RES_STR_DATE DESC
     </select>
-
 
     <select id="getResDetail" parameterType="kr.co.team4.model.dto.GetResDetailResDTO" resultType="kr.co.team4.model.dto.GetResDetailResDTO">
         SELECT
@@ -77,9 +77,9 @@
     </delete>
 
     <select id="getUserInform" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="kr.co.team4.model.dto.UserDTO">
-        select user_name, user_email, user_phone_number
+        select USER_IDX, USER_NAME, USER_EMAIL, USER_PHONE_NUMBER
         from USERS
-        where user_idx = #{user_idx}
+        where USER_IDX = #{user_idx}
     </select>
 
     <select id="isAlreadyReserved" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="int">
@@ -95,7 +95,7 @@
                 WHERE res2.room_idx = r.room_idx
                 AND res2.lod_idx = r.lod_idx
                 AND (
-                        ( res2.res_end_date >#{res_str_date} AND #{res_end_date} > res2.res_str_date)
+                        ( res2.res_end_date > DATE(#{res_str_date}) AND Date(#{res_end_date}) > res2.res_str_date)
                     )
                 )
             )
@@ -118,6 +118,40 @@
           and r.lod_idx = l.lod_idx
           and r.room_idx = rm.room_idx
           and l.lod_category_idx = lc.lod_category_idx
+    </select>
+
+    <select id="calcReservePayment" parameterType="kr.co.team4.model.dto.ReservationDTO" resultType="int" >
+        WITH RECURSIVE DateSeries AS (
+            SELECT #{res_str_date} AS stay_date
+            UNION ALL
+            SELECT DATE_ADD(stay_date, INTERVAL 1 DAY)
+            FROM DateSeries
+            WHERE #{res_end_date} > stay_date
+        )
+        SELECT
+            FLOOR(
+                SUM(
+                    CASE
+                        WHEN DAYOFWEEK(d.stay_date) IN (6, 7, 1) THEN
+                            CASE
+                                WHEN d.stay_date BETWEEN p.hpeak_str_dt AND p.hpeak_end_dt THEN r.room_price * 1.50
+                                WHEN d.stay_date BETWEEN p.peak_str_dt AND p.peak_end_dt THEN r.room_price * 1.30
+                                ELSE r.room_price * 1.10
+                                END
+                        ELSE
+                            CASE
+                                WHEN d.stay_date BETWEEN p.hpeak_str_dt AND p.hpeak_end_dt THEN r.room_price * 1.40
+                                WHEN d.stay_date BETWEEN p.peak_str_dt AND p.peak_end_dt THEN r.room_price * 1.20
+                                ELSE r.room_price * 1.00
+                                END
+                        END
+                )
+            ) AS sum_room_price
+        FROM ROOM r LEFT JOIN PRICE p
+            ON p.lod_idx = #{lod_idx} JOIN DateSeries d
+            ON d.stay_date >= #{res_str_date} AND #{res_end_date} > d.stay_date
+        WHERE
+            r.room_idx = #{room_idx}
     </select>
 
     <insert id="paymentAdd" parameterType="kr.co.team4.model.dto.PaymentDTO" useGeneratedKeys="true" keyProperty="payment_idx">
@@ -148,4 +182,29 @@
         set status = #{status}
         where payment_idx = #{payment_idx}
     </update>
+
+    <select id="getExpiredReservationIdxs" resultType="int">
+        SELECT reservation_idx
+        FROM PAYMENT
+        WHERE status = 'pending'
+        AND DATE_ADD(NOW(), INTERVAL -30 MINUTE) > created;
+    </select>
+
+    <delete id="deleteExpiredReservations" parameterType="list">
+        DELETE FROM RESERVATION
+        WHERE reservation_idx IN (
+           <foreach item="idx" collection="list" open="(" separator="," close=")">
+               #{idx}
+           </foreach>
+        );
+    </delete>
+
+    <delete id="deleteExpiredPayments" parameterType="list">
+        DELETE FROM PAYMENT
+        WHERE reservation_idx IN (
+            <foreach item="idx" collection="list" open="(" separator="," close=")">
+                #{idx}
+            </foreach>
+        );
+    </delete>
 </mapper>

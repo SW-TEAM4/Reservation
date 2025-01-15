@@ -1,0 +1,129 @@
+/*
+    파일명 : sellerShowReservation.css
+    생성자 : JDeok
+    날 짜  : 2025.01.03
+    기 능   : 예약현황 조회 스타일
+    변경사항
+        - 2025.01.03 : JDeok(최초작성)
+*/
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fbf7f3;
+    color: #5C4033;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+.content {
+    flex: 1;
+    padding: 20px; /* 통일된 패딩 값 */
+    background-color: #ffffff;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 28px;
+    color: #8A5642;
+    margin-bottom: 10px;
+}
+
+
+.reservation-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.no-reservation {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    color: #7a5744;
+}
+
+.reservation-item {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fef9f4;
+    padding: 20px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reservation-header {
+    font-size: 14px;
+    color: #999;
+    margin-bottom: 15px;
+}
+
+.reservation-content {
+    font-size: 16px;
+    line-height: 1.6;
+}
+
+.reservation-content h3 {
+    font-size: 20px;
+    margin: 0 0 15px;
+    color: #5C4033;
+}
+
+.reservation-content p {
+    margin: 5px 0;
+}
+
+.reservation-content p span {
+    font-weight: bold;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .content {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .reservation-content p {
+        font-size: 14px;
+    }
+}
+/* 필터 폼 스타일 */
+.filter-form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-form label {
+    font-size: 16px;
+    color: #5C4033;
+}
+
+.filter-form input[type="text"] {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    width: 200px;
+}
+
+.btn-filter {
+    background-color: #5C4033;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-filter:hover {
+    background-color: #7a5744;
+}
