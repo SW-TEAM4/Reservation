@@ -323,6 +323,7 @@
           AND #{endDate}       >= A.RES_STR_DATE
           AND A.RES_END_DATE   >= #{startDate}
         </if>
+        ORDER BY A.CREATED DESC
     </select>
     <select id="getrating" parameterType="int" resultType="map">
         /* ************************************************************
